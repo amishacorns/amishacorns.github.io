@@ -1,49 +1,70 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Summary"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-This is the front page of a website that is powered by the [Academic Pages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the respository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. You can fork [this repository](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and markdown files, add your own PDFs and other content, and have your own site for free, with no ads! An older version of this template powers my own personal website at [stuartgeiger.com](http://stuartgeiger.com), which uses [this Github repository](https://github.com/staeiou/staeiou.github.io).
+I enjoy exploring the fundamental and intractable questions, including the foundations of consciousness, quantitative ethical frameworks, and most promising recipes for general artificial intelligence. I believe we are currently within the most dynamic and exciting era of human discovery, where the number of fundamental unanswered questions remains high and the tools required to probe them are finally being built. Within the next decade, general artificial intelligence will accelerate the rate of discovery faster than ever before on Earth and push us into a new intelligence revolution. This will bring with it the most incredible benefits across society and simultaneously the most destructive side effects.
 
-A data-driven personal website
+Academics
 ======
-Like many other Jekyll-based GitHub Pages templates, Academic Pages makes you separate the website's content from its form. The content & metadata of your website are in structured markdown files, while various other files constitute the theme, specifying how to transform that content & metadata into HTML pages. You keep these various markdown (.md), YAML (.yml), HTML, and CSS files in a public GitHub repository. Each time you commit and push an update to the repository, the [GitHub pages](https://pages.github.com/) service creates static HTML pages based on these files, which are hosted on GitHub's servers free of charge.
+Currently, I am a final-year PhD Candidate at the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research focuses on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
 
-Many of the features of dynamic content management systems (like Wordpress) can be achieved in this fashion, using a fraction of the computational resources and with far less vulnerability to hacking and DDoSing. You can also modify the theme to your heart's content without touching the content of your site. If you get to a point where you've broken something in Jekyll/HTML/CSS beyond repair, your markdown files describing your talks, publications, etc. are safe. You can rollback the changes or even delete the repository and start over -- just be sure to save the markdown files! Finally, you can also write scripts that process the structured data on the site, such as [this one](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb) that analyzes metadata in pages about talks to display [a map of every location you've given a talk](https://academicpages.github.io/talkmap.html).
 
-Getting started
+Publications
 ======
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
 
-Site-wide configuration
-------
-The main configuration file for the site is in the base directory in [_config.yml](https://github.com/academicpages/academicpages.github.io/blob/master/_config.yml), which defines the content in the sidebars and other site-wide features. You will need to replace the default variables with ones about yourself and your site's github repository. The configuration file for the top menu is in [_data/navigation.yml](https://github.com/academicpages/academicpages.github.io/blob/master/_data/navigation.yml). For example, if you don't have a portfolio or blog posts, you can remove those items from that navigation.yml file to remove them from the header. 
+- **Learning from Students: Applying T-Distributions to Explore Accurate and Efficient Formats for LLMs <a href="https://arxiv.org/abs/2405.03103"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel, Y. Chen, B. Kotb, S. Prasad, G. Wu, S. Li, M. S. Abdelfattah, Z. Zhang  
+  *International Conference on Machine Learning, 2024*  
 
-Create content & metadata
-------
-For site content, there is one markdown file for each type of content, which are stored in directories like _publications, _talks, _posts, _teaching, or _pages. For example, each talk is a markdown file in the [_talks directory](https://github.com/academicpages/academicpages.github.io/tree/master/_talks). At the top of each markdown file is structured data in YAML about the talk, which the theme will parse to do lots of cool stuff. The same structured data about a talk is used to generate the list of talks on the [Talks page](https://academicpages.github.io/talks), each [individual page](https://academicpages.github.io/talks/2012-03-01-talk-1) for specific talks, the talks section for the [CV page](https://academicpages.github.io/cv), and the [map of places you've given a talk](https://academicpages.github.io/talkmap.html) (if you run this [python file](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.py) or [Jupyter notebook](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb), which creates the HTML for the map based on the contents of the _talks directory).
+- **FLIQS: One-Shot Mixed-Precision Floating-Point and Integer Quantization Search <a href="https://arxiv.org/abs/2308.03290"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel, G. Wu, A. Li, M. Umar, Y. Ni, M. S. Abdelfattah, Z. Zhang, L. Cheng, N. Jouppi, Q. Le, S. Li 
+  *International Conference on Automated Machine Learning, 2024*  
 
-**Markdown generator**
+- **Exploring the Limits of Semantic Image Compression at Micro-Bits per Pixel <a href="https://arxiv.org/abs/2402.13536"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel, B. Kotb, J. Dotzel, M. S. Abdelfattah, Z. Zhang  
+  *The Second Tiny Papers Track at ICLR, 2024*  
 
-I have also created [a set of Jupyter notebooks](https://github.com/academicpages/academicpages.github.io/tree/master/markdown_generator
-) that converts a CSV containing structured data about talks or presentations into individual markdown files that will be properly formatted for the Academic Pages template. The sample CSVs in that directory are the ones I used to create my own personal website at stuartgeiger.com. My usual workflow is that I keep a spreadsheet of my publications and talks, then run the code in these notebooks to generate the markdown files, then commit and push them to the GitHub repository.
+- **Opportunities for Post-Training Dynamic Layer Sparsity in Large Vision and Language Models <a href="https://arxiv.org/abs/2404.04900"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel, C. Jiang, M. Abdelfattah, Z. Zhang  
+  *Efficient Large Vision Models Workshop at CVPR, 2024*
 
-How to edit your site's GitHub repository
-------
-Many people use a git client to create files on their local computer and then push them to GitHub's servers. If you are not familiar with git, you can directly edit these configuration and markdown files directly in the github.com interface. Navigate to a file (like [this one](https://github.com/academicpages/academicpages.github.io/blob/master/_talks/2012-03-01-talk-1.md) and click the pencil icon in the top right of the content preview (to the right of the "Raw | Blame | History" buttons). You can delete a file by clicking the trashcan icon to the right of the pencil icon. You can also create new files or upload files by navigating to a directory and clicking the "Create new file" or "Upload files" buttons. 
+- **M4BRAM: Mixed-Precision Matrix-Matrix Multiplication in FPGA Block RAMs <a href="https://arxiv.org/abs/2311.02758"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  Y. Chen, J. Dotzel, M. S. Abdelfattah  
+  *2023 International Conference on Field Programmable Technology, 2023*  
 
-Example: editing a markdown file for a talk
-![Editing a markdown file for a talk](/images/editing-talk.png)
+- **Logic Synthesis Meets Machine Learning: Trading Exactness for Generalization <a href="https://arxiv.org/abs/2012.02530"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  S. Rai, W. L. Neto, ..., Y. Zhou, Y. Zhang, J. Dotzel, Z. Zhang, ...  
+  *2021 Design, Automation & Test in Europe Conference & Exhibition, 2021*
 
-For more info
-------
-More info about configuring Academic Pages can be found in [the guide](https://academicpages.github.io/markdown/). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful.
+- **Enabling Design Methodologies and Future Trends for Edge AI: Specialization and Co-Design <a href="https://arxiv.org/abs/2103.15750"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  C. Hao, J. Dotzel, J. Xiong, L. Benini, Z. Zhang, D. Chen  
+  *IEEE Design & Test, 2021*
+
+- **Improving Neural Network Quantization Without Retraining Using Outlier Channel Splitting <a href="https://arxiv.org/abs/1901.09504"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  R. Zhao, Y. Hu, J. Dotzel, C. De Sa, Z. Zhang  
+  *International Conference on Machine Learning, 2019*  
+
+- **Building Efficient Deep Neural Networks With Unitary Group Convolutions <a href="https://arxiv.org/abs/1811.07755"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  R. Zhao, Y. Hu, J. Dotzel, C. D. Sa, Z. Zhang  
+  *Conference on Computer Vision and Pattern Recognition, 2019*
+
+- **OverQ: Opportunistic Outlier Quantization for Neural Network Accelerators <a href="https://arxiv.org/abs/1910.06909"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel*, R. Zhao*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
+  *arXiv, 2019*  
+
+
+Experience
+======
+
+- **Google, TPU Performance Team**  
+  *Student Researcher*  
+  *June 2024 - Present*  
+
+- **Google, Platforms-Aware AutoML**  
+  *Student Researcher*  
+  *June 2022 - May 2024*  
