@@ -12,7 +12,7 @@ title                    : "Jordan Dotzel"
 title_separator          : "-"
 name                     : &name "Jordan Dotzel"
 description              : &description "Artifical Intelligence, Esports, and Travel"
-url                      : https://amishacorns.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : url: "https://jordandotzel.com" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "amishacorns.github.io"
 
