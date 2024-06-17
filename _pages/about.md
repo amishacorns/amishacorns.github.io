@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-I enjoy exploring the fundamental and intractable questions, including the foundations of consciousness, quantitative ethical frameworks, and most promising recipes for general artificial intelligence. I believe we are currently within the most dynamic and exciting era of human discovery, where the number of fundamental unanswered questions remains high and the tools required to probe them are finally being built. Within the next decade, general artificial intelligence will accelerate the rate of discovery faster than ever before on Earth and push us into a new intelligence revolution. This will bring with it the most incredible benefits across society and simultaneously the most destructive side effects.
+I enjoy exploring the fundamental unsolved questions of nature, including the foundations of consciousness, quantitative ethical frameworks, and most promising recipes for general artificial intelligence. I believe we are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built. Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within a decade. It will accelerate the rate of discovery faster than ever before on Earth and push us into a new intelligence revolution. Beyond previous techologies, it will bring opportunities for the most incredible benefits across society and simultaneously the most destructive forces.
 
 Academics
 ======
