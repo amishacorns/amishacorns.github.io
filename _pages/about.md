@@ -7,13 +7,15 @@ redirect_from:
   - /about.html
 ---
 
-I enjoy exploring the fundamental unsolved questions of nature, including the foundations of consciousness, quantitative ethical frameworks, and most promising recipes for general artificial intelligence. I believe we are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built. 
+Like many others, I enjoy exploring the fundamental unsolved questions of nature, including the foundations of consciousness, quantitative ethical frameworks, and most promising recipes for general artificial intelligence. We are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built.
 
-Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within a decade. It will accelerate the rate of discovery faster than ever before on Earth and push us into a new intelligence revolution. Even beyond previous techologies, it will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
+Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within a decade. It will accelerate the rate of discovery faster than ever before and push us into a new intelligence revolution. It will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
+
+Within a short period of time, the majority of science needs to shift toward designing, engineering, and deploying effective and safe intelligence. This requires new neural architectures, wide international cooperation, and appropriate government regulation. Failure is not an option since the choices we make now will lead to a society filled with either flourishing and happiness, decline and suffering, or even none at all.
 
 Academics
 ======
-Currently, I am a final-year PhD Candidate at the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research focuses on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
+Currently, I am a final-year PhD Candidate at the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research currently focuses on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
 
 
 Publications
@@ -70,3 +72,11 @@ Experience
 - **Google, Platforms-Aware AutoML**  
   *Student Researcher*  
   *June 2022 - May 2024*  
+
+- **Computer Systems Laboratory, Cornell**  
+*PhD Candidate*  
+*August 2019 - Present*  
+
+- **Datto**  
+*Software Engineer*  
+*June 2017 - Jun 2018*  
