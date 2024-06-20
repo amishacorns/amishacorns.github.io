@@ -11,7 +11,7 @@ Like many others, I enjoy exploring the fundamental unsolved questions of nature
 
 Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within a decade. It will accelerate the rate of discovery faster than ever before and push us into a new intelligence revolution. It will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
 
-Within a short period of time, the majority of science needs to shift toward designing, engineering, and deploying effective and safe intelligence. This requires new neural architectures, wide international cooperation, and appropriate government regulation. Failure is not an option since the choices we make now will lead to a society filled with either flourishing and happiness, decline and suffering, or even none at all.
+Within a short period of time, the majority of science needs to shift toward designing, engineering, and deploying effective and safe intelligence. This requires new neural architectures, wide international cooperation, and appropriate government regulation. The choices we make now will lead to a society filled with either flourishing and happiness, decline and suffering, or even none at all.
 
 Academics
 ======
