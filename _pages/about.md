@@ -9,7 +9,7 @@ redirect_from:
 
 We are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built. Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within the next decade. It will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
 
-Within a short period of time, the majority of science needs to shift toward designing and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation, and targeted international regulation. The choices we make now within research will lead to a society filled that either flourishes, declines, or ceases to be.
+Within a short period of time, the majority of science needs to shift toward designing and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation, and targeted international regulation. The research decisions we make now will lead to a society that eventually either flourishes, decays, or even disappears.
 
 Academics
 ======
