@@ -35,6 +35,10 @@ Publications
   J. Dotzel, C. Jiang, M. Abdelfattah, Z. Zhang  
   *Efficient Large Vision Models Workshop at CVPR, 2024*
 
+- **ShadowLLM: Predictor-based Contextual Sparsity for Large Language Models <a href="https://arxiv.org/abs/2406.16635"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  Y. Akhauri, A. F. AbouElhamayed, J. Dotzel, Z. Zhang, A. M. Rush, S. Huda, M. S. Abdelfattah  
+  *arxiv, 2024* 
+
 - **M4BRAM: Mixed-Precision Matrix-Matrix Multiplication in FPGA Block RAMs <a href="https://arxiv.org/abs/2311.02758"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   Y. Chen, J. Dotzel, M. S. Abdelfattah  
   *2023 International Conference on Field Programmable Technology, 2023*  
