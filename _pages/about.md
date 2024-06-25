@@ -7,9 +7,9 @@ redirect_from:
   - /about.html
 ---
 
-We are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built. Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within the next decade. It will accelerate the rate of discovery faster than ever before and push us into a new intelligence revolution. It will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
+We are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built. Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within the next decade. It will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
 
-Within a short period of time, the majority of science needs to shift toward designing, engineering, and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation instead of competition, and targeted and enforceable international regulation. These are necessary to introduce super intelligence in a positive and controllable way. The choices we make now within research will lead to a society filled with either flourishing and happiness, decline and suffering, or even none at all.
+Within a short period of time, the majority of science needs to shift toward designing and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation, and targeted international regulation. The choices we make now within research will lead to a society filled that either flourishes, declines, or ceases to be.
 
 Academics
 ======
