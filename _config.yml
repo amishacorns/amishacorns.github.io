@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Jordan Dotzel"
+title                    : "Home"
 title_separator          : "-"
 name                     : &name "Jordan Dotzel"
 description              : &description "Artifical Intelligence, Esports, and Travel"
