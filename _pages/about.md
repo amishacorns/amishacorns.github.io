@@ -35,11 +35,11 @@ Publications
   J. Dotzel, C. Jiang, M. Abdelfattah, Z. Zhang  
   *Efficient Large Vision Models Workshop at CVPR, 2024*
 
-  - **Semantic Compression of 3D Objects for Open and Collaborative Worlds <img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16">**  
+- **Semantic Compression of 3D Objects for Open and Collaborative Worlds <img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16">**  
   J. Dotzel, T. Montes, M. S. Abdelfattah, Z. Zhang  
   *arXiv, 2024 (under submission)* 
 
-  - **Radial Networks: Dynamic Layer Routing for High-Performance Large Language Models <a href="https://arxiv.org/abs/2404.04900"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+- **Radial Networks: Dynamic Layer Routing for High-Performance Large Language Models <a href="https://arxiv.org/abs/2404.04900"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, Y. Akhauri, A. AbouElhamayed, C. Jiang, M. Abdelfattah, Z. Zhang  
   *arxiv, 2024 (under submission)*  
 
