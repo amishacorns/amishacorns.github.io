@@ -21,7 +21,7 @@ Publications
 
 - **Learning from Students: Applying T-Distributions to Explore Accurate and Efficient Formats for LLMs <a href="https://arxiv.org/abs/2405.03103"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, Y. Chen, B. Kotb, S. Prasad, G. Wu, S. Li, M. S. Abdelfattah, Z. Zhang  
-  *International Conference on Machine Learning, 2024*  
+  *International Conference on Machine Learning, 2024*  **[BEST PAPER]**
 
 - **FLIQS: One-Shot Mixed-Precision Floating-Point and Integer Quantization Search <a href="https://arxiv.org/abs/2308.03290"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, G. Wu, A. Li, M. Umar, Y. Ni, M. S. Abdelfattah, Z. Zhang, L. Cheng, N. Jouppi, Q. Le, S. Li 
@@ -35,9 +35,17 @@ Publications
   J. Dotzel, C. Jiang, M. Abdelfattah, Z. Zhang  
   *Efficient Large Vision Models Workshop at CVPR, 2024*
 
+  - **Semantic Compression of 3D Objects for Open and Collaborative Worlds <img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel, T. Montes, M. S. Abdelfattah, Z. Zhang  
+  *arXiv, 2024 (under submission)* 
+
 - **ShadowLLM: Predictor-based Contextual Sparsity for Large Language Models <a href="https://arxiv.org/abs/2406.16635"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   Y. Akhauri, A. F. AbouElhamayed, J. Dotzel, Z. Zhang, A. M. Rush, S. Huda, M. S. Abdelfattah  
   *arxiv, 2024* 
+
+- **SparAMX: Accelerating Compressed LLMs Token Generation on AMX-powered CPUs <img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Elhamayed, J. Dotzel, Y. Akhauri, C. Chang, ..., M. Abdelfattah  
+  *arXiv, 2024*  
 
 - **M4BRAM: Mixed-Precision Matrix-Matrix Multiplication in FPGA Block RAMs <a href="https://arxiv.org/abs/2311.02758"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   Y. Chen, J. Dotzel, M. S. Abdelfattah  
