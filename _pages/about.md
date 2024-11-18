@@ -18,14 +18,13 @@ Currently, I am a final-year PhD Candidate at the [Computer Systems Laboratory](
 
 Publications
 ======
+- **FLIQS: One-Shot Mixed-Precision Floating-Point and Integer Quantization Search <a href="https://arxiv.org/abs/2308.03290"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel, G. Wu, A. Li, M. Umar, Y. Ni, M. S. Abdelfattah, Z. Zhang, L. Cheng, N. Jouppi, Q. Le, S. Li 
+  *International Conference on Automated Machine Learning, 2024*  **[BEST PAPER]**
 
 - **Learning from Students: Applying T-Distributions to Explore Accurate and Efficient Formats for LLMs <a href="https://arxiv.org/abs/2405.03103"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, Y. Chen, B. Kotb, S. Prasad, G. Wu, S. Li, M. S. Abdelfattah, Z. Zhang  
-  *International Conference on Machine Learning, 2024*  **[BEST PAPER]**
-
-- **FLIQS: One-Shot Mixed-Precision Floating-Point and Integer Quantization Search <a href="https://arxiv.org/abs/2308.03290"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
-  J. Dotzel, G. Wu, A. Li, M. Umar, Y. Ni, M. S. Abdelfattah, Z. Zhang, L. Cheng, N. Jouppi, Q. Le, S. Li 
-  *International Conference on Automated Machine Learning, 2024*  
+  *International Conference on Machine Learning, 2024* 
 
 - **Exploring the Limits of Semantic Image Compression at Micro-Bits per Pixel <a href="https://arxiv.org/abs/2402.13536"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, B. Kotb, J. Dotzel, M. S. Abdelfattah, Z. Zhang  
