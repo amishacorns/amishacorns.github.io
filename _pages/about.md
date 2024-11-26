@@ -34,20 +34,24 @@ Publications
   J. Dotzel, C. Jiang, M. Abdelfattah, Z. Zhang  
   *Efficient Large Vision Models Workshop at CVPR, 2024*
 
-- **Semantic Compression of 3D Objects for Open and Collaborative Worlds <img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16">**  
+- **Semantic Compression of 3D Objects for Open and Collaborative Worlds**  
   J. Dotzel, T. Montes, M. S. Abdelfattah, Z. Zhang  
   *arXiv, 2024 (under submission)* 
 
 - **Radial Networks: Dynamic Layer Routing for High-Performance Large Language Models <a href="https://arxiv.org/abs/2404.04900"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, Y. Akhauri, A. AbouElhamayed, C. Jiang, M. Abdelfattah, Z. Zhang  
-  *arxiv, 2024 (under submission)*  
+  *arxiv, 2024 (under submission)* 
+
+  - **OverQ: Opportunistic Outlier Quantization for Neural Network Accelerators <a href="https://arxiv.org/abs/1910.06909"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  J. Dotzel*, R. Zhao*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
+  *arXiv, 2019* 
 
 - **ShadowLLM: Predictor-based Contextual Sparsity for Large Language Models <a href="https://arxiv.org/abs/2406.16635"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   Y. Akhauri, A. F. AbouElhamayed, J. Dotzel, Z. Zhang, A. M. Rush, S. Huda, M. S. Abdelfattah  
   *arxiv, 2024* 
 
-- **SparAMX: Accelerating Compressed LLMs Token Generation on AMX-powered CPUs <img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16">**  
-  J. Elhamayed, J. Dotzel, Y. Akhauri, C. Chang, ..., M. Abdelfattah  
+- **SparAMX: Accelerating Compressed LLMs Token Generation on AMX-powered CPUs**  
+  A. Elhamayed, J. Dotzel, Y. Akhauri, C. Chang, ..., M. Abdelfattah  
   *arXiv, 2024*  
 
 - **M4BRAM: Mixed-Precision Matrix-Matrix Multiplication in FPGA Block RAMs <a href="https://arxiv.org/abs/2311.02758"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
@@ -69,10 +73,6 @@ Publications
 - **Building Efficient Deep Neural Networks With Unitary Group Convolutions <a href="https://arxiv.org/abs/1811.07755"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   R. Zhao, Y. Hu, J. Dotzel, C. D. Sa, Z. Zhang  
   *Conference on Computer Vision and Pattern Recognition, 2019*
-
-- **OverQ: Opportunistic Outlier Quantization for Neural Network Accelerators <a href="https://arxiv.org/abs/1910.06909"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
-  J. Dotzel*, R. Zhao*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
-  *arXiv, 2019*  
 
 
 Experience
