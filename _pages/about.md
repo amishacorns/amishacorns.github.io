@@ -46,7 +46,7 @@ Publications
   J. Dotzel\*, R. Zhao\*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
   *arXiv, 2019* 
 
-  - **Improving Neural Network Quantization Without Retraining Using Outlier Channel Splitting <a href="https://arxiv.org/abs/1901.09504"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+- **Improving Neural Network Quantization Without Retraining Using Outlier Channel Splitting <a href="https://arxiv.org/abs/1901.09504"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   R. Zhao, Y. Hu, J. Dotzel, C. De Sa, Z. Zhang  
   *International Conference on Machine Learning, 2019*  
 
