@@ -46,9 +46,17 @@ Publications
   J. Dotzel\*, R. Zhao\*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
   *arXiv, 2019* 
 
+  - **Improving Neural Network Quantization Without Retraining Using Outlier Channel Splitting <a href="https://arxiv.org/abs/1901.09504"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  R. Zhao, Y. Hu, J. Dotzel, C. De Sa, Z. Zhang  
+  *International Conference on Machine Learning, 2019*  
+
+- **Building Efficient Deep Neural Networks With Unitary Group Convolutions <a href="https://arxiv.org/abs/1811.07755"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+  R. Zhao, Y. Hu, J. Dotzel, C. D. Sa, Z. Zhang  
+  *Conference on Computer Vision and Pattern Recognition, 2019*
+
 - **ShadowLLM: Predictor-based Contextual Sparsity for Large Language Models <a href="https://arxiv.org/abs/2406.16635"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   Y. Akhauri, A. F. AbouElhamayed, J. Dotzel, Z. Zhang, A. M. Rush, S. Huda, M. S. Abdelfattah  
-  *arxiv, 2024* 
+  *Empirical Methods in Natural Language Processing, 2024* 
 
 - **SparAMX: Accelerating Compressed LLMs Token Generation on AMX-powered CPUs**  
   A. Elhamayed, J. Dotzel, Y. Akhauri, C. Chang, ..., M. Abdelfattah  
@@ -65,14 +73,6 @@ Publications
 - **Enabling Design Methodologies and Future Trends for Edge AI: Specialization and Co-Design <a href="https://arxiv.org/abs/2103.15750"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   C. Hao, J. Dotzel, J. Xiong, L. Benini, Z. Zhang, D. Chen  
   *IEEE Design & Test, 2021*
-
-- **Improving Neural Network Quantization Without Retraining Using Outlier Channel Splitting <a href="https://arxiv.org/abs/1901.09504"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
-  R. Zhao, Y. Hu, J. Dotzel, C. De Sa, Z. Zhang  
-  *International Conference on Machine Learning, 2019*  
-
-- **Building Efficient Deep Neural Networks With Unitary Group Convolutions <a href="https://arxiv.org/abs/1811.07755"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
-  R. Zhao, Y. Hu, J. Dotzel, C. D. Sa, Z. Zhang  
-  *Conference on Computer Vision and Pattern Recognition, 2019*
 
 
 Experience
