@@ -30,7 +30,7 @@ Publications
   J. Dotzel, B. Kotb, J. Dotzel, M. S. Abdelfattah, Z. Zhang  
   *The Second Tiny Papers Track at ICLR, 2024*  
 
-- **Opportunities for Post-Training Dynamic Layer Sparsity in Large Vision and Language Models <a href="https://arxiv.org/abs/2404.04900"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
+- **Opportunities for Post-Training Dynamic Layer Sparsity in Large Vision and Language Models <a href="https://openaccess.thecvf.com/content/CVPR2024W/ELVM/papers/Dotzel_Opportunities_for_Post-Training_Dynamic_Layer_Sparsity_in_Large_Vision_and_CVPRW_2024_paper.pdf"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, C. Jiang, M. Abdelfattah, Z. Zhang  
   *Efficient Large Vision Models Workshop at CVPR, 2024*
 
