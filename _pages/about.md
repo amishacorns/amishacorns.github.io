@@ -43,7 +43,7 @@ Publications
   *arxiv, 2024 (under submission)* 
 
 - **OverQ: Opportunistic Outlier Quantization for Neural Network Accelerators <a href="https://arxiv.org/abs/1910.06909"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
-  J. Dotzel*, R. Zhao*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
+  J. Dotzel\*, R. Zhao\*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
   *arXiv, 2019* 
 
 - **ShadowLLM: Predictor-based Contextual Sparsity for Large Language Models <a href="https://arxiv.org/abs/2406.16635"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
