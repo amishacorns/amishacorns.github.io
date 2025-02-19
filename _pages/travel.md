@@ -8,8 +8,8 @@ author_profile: true
 
 <!-- Progress Bar -->
 <div style="width: 100%; background-color: #f3f3f3; border-radius: 5px; margin: 20px 0;">
-  <div style="width: 13%; height: 24px; background-color: #4caf50; text-align: center; line-height: 24px; color: white; border-radius: 5px;">
-    13%
+  <div id="progress-bar" style="width: 0%; height: 24px; background-color: #4caf50; text-align: center; line-height: 24px; color: white; border-radius: 5px;">
+    <span id="progress-text">0%</span>
   </div>
 </div>
 
@@ -26,6 +26,33 @@ author_profile: true
 
 <script>
 window.onload = function() {
+    // Update Progress Bar
+    if (typeof locations !== 'undefined' && Array.isArray(locations)) {
+        // Extract country names from title
+        const countries = locations.map(loc => {
+            const parts = loc.title.split(',').map(part => part.trim());
+            return parts[parts.length - 1]; // Assuming last part is country
+        });
+
+        // Get unique countries
+        const uniqueCountries = [...new Set(countries)];
+
+        // Total countries recognized
+        const totalCountries = 195;
+        const completed = uniqueCountries.length;
+        const percentage = ((completed / totalCountries) * 100).toFixed(1);
+
+        // Update progress bar width and text
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        progressBar.style.width = percentage + '%';
+        progressText.textContent = percentage + '%';
+    } else {
+        console.error('locations array not found or not an array');
+    }
+
+    // Initialize the map
     var map = L.map('map').setView([0, 0], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
