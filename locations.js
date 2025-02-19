@@ -127,7 +127,6 @@ var locations = [
     { lat: 41.0935, lng: -73.8584, title: "Sleepy Hollow, USA" },
     { lat: 40.6023, lng: -75.4714, title: "Allentown, USA" },
     { lat: 36.1069, lng: -112.1129, title: "Grand Canyon, USA" },
-    { lat: 36.1069, lng: -112.1129, title: "Grand Canyon, USA" },
     { lat: 42.5195, lng: -70.8967, title: "Salem, MA, USA" },
     { lat: 44.8012, lng: -68.7778, title: "Bangor, ME, USA" },
     { lat: 33.7490, lng: -84.3880, title: "Atlanta, USA" },
@@ -136,5 +135,7 @@ var locations = [
     { lat: 33.6189, lng: -117.9298, title: "Newport Beach, USA" },
     { lat: 36.6002, lng: -121.8947, title: "Monterey, USA" },
     { lat: 38.5449, lng: -121.7405, title: "Davis, USA" },
-    { lat: 19.6925, lng: -98.8436, title: "Teotihuacan, Mexico" }
+    { lat: 19.6925, lng: -98.8436, title: "Teotihuacan, Mexico" },
+    { lat: 22.3193, lng: 114.1694, title: "Hong Kong, China" },
+    { lat: 8.9824, lng: -79.5199, title: "Panama City, Panama" }
 ];
