@@ -4,7 +4,7 @@ permalink: /travel/
 author_profile: true
 ---
 
-<p>In honor of the Great Drew Binsky, who hit every country in the world and documented it on <a href="https://www.youtube.com/channel/UC0Ize0RLIbGdH5x4wI45G-A">YouTube</a>. Geopolitical borders are not really important, since the languages, sites, and cultures are what matters. But they are the easiest to count. The progress bar counts from the 195 countries recognized by the United Nations. </p>
+<p> In honor of the Great Drew Binsky, who hit every country in the world and documented it on <a href="https://www.youtube.com/channel/UC0Ize0RLIbGdH5x4wI45G-A">YouTube</a>. Assuming a healthy traveling remaining life-span of 40 years, traveling to all the 195 United Nations recognized countries in the world requires about 5 countries per year. This seems doable especially assuing for some late bursts after retirement, cheaper travel in the future, and improved conditions in many currently disadvantaged countries. </p>
 
 <!-- Progress Bar -->
 <div style="width: 100%; background-color: #f3f3f3; border-radius: 5px; margin: 20px 0;">
