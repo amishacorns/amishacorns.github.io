@@ -137,5 +137,7 @@ var locations = [
     { lat: 38.5449, lng: -121.7405, title: "Davis, USA" },
     { lat: 19.6925, lng: -98.8436, title: "Teotihuacan, Mexico" },
     { lat: 22.3193, lng: 114.1694, title: "Hong Kong, China" },
-    { lat: 8.9824, lng: -79.5199, title: "Panama City, Panama" }
+    { lat: 8.9824, lng: -79.5199, title: "Panama City, Panama" },
+    { lat: 37.8651, lng: -119.5383, title: "Yosemite, USA" },
+    { lat: 13.6929, lng: -89.2182, title: "San Salvador, El Salvador" }
 ];

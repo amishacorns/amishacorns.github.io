@@ -18,16 +18,34 @@ window.onload = function() {
         // Update progress bar width and text
         const progressBar = document.getElementById('progress-bar');
         const progressText = document.getElementById('progress-text');
-
         progressBar.style.width = percentage + '%';
         progressText.textContent = percentage + '%';
+
+        // Add a red reference line representing expected progress at current age (29 out of 100 years)
+        const currentAge = 29;
+        const lifeExpectancy = 100;
+        // Expected progress as a percentage (if evenly distributed)
+        const expectedPercentage = ((currentAge / lifeExpectancy) * 100).toFixed(1);
+
+        // Ensure the progress bar container is positioned relatively
+        const progressContainer = progressBar.parentElement;
+        progressContainer.style.position = "relative";
+
+        // Create the red reference line
+        const referenceLine = document.createElement("div");
+        referenceLine.style.position = "absolute";
+        referenceLine.style.top = "0";
+        referenceLine.style.bottom = "0";
+        referenceLine.style.left = expectedPercentage + "%";
+        referenceLine.style.width = "4px";
+        referenceLine.style.backgroundColor = "red";
+        progressContainer.appendChild(referenceLine);
     } else {
         console.error('locations array not found or not an array');
     }
 
     // Initialize the map
     var map = L.map('map').setView([0, 0], 2);
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
