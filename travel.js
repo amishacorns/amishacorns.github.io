@@ -25,7 +25,7 @@ window.onload = function() {
         // Dynamically compute age from birth year (1995)
         const birthYear = 1995;
         const now = new Date();
-        const currentYear = now.getFullYear();
+        const currentYear = now.getFullYear(); 
         const currentAge = currentYear - birthYear; // Year-based age without month/day precision
         const lifeExpectancy = 100;
         // Expected progress as a percentage (if evenly distributed)
