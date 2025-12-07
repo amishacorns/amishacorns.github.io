@@ -21,8 +21,12 @@ window.onload = function() {
         progressBar.style.width = percentage + '%';
         progressText.textContent = percentage + '%';
 
-        // Add a red reference line representing expected progress at current age (29 out of 100 years)
-        const currentAge = 29;
+        // Add a red reference line representing expected progress at current age
+        // Dynamically compute age from birth year (1995)
+        const birthYear = 1995;
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentAge = currentYear - birthYear; // Year-based age without month/day precision
         const lifeExpectancy = 100;
         // Expected progress as a percentage (if evenly distributed)
         const expectedPercentage = ((currentAge / lifeExpectancy) * 100).toFixed(1);
