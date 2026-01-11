@@ -31,11 +31,11 @@ var locations = [
     { lat: 38.7223, lng: -9.1393, title: "Lisbon, Portugal" },
     { lat: 18.4861, lng: -69.9312, title: "Santo Domingo, Dominican Republic" },
     { lat: 14.5611, lng: -90.7344, title: "Antigua Guatemala, Guatemala" },
-    { lat: 9.7489, lng: -83.7534, title: "Costa Rica" }, 
+    { lat: 9.7489, lng: -83.7534, title: "Costa Rica" },
     { lat: 10.3910, lng: -75.4794, title: "Cartagena, Colombia" },
     { lat: 22.7709, lng: -102.5833, title: "Zacatecas, Mexico" },
     { lat: 21.1619, lng: -86.8515, title: "Cancun, Mexico" },
-    { lat: 42.4430, lng: -76.5019, title: "Ithaca, USA" }, 
+    { lat: 42.4430, lng: -76.5019, title: "Ithaca, USA" },
     { lat: 42.6526, lng: -73.7562, title: "Albany, USA" },
     { lat: 43.1566, lng: -77.6088, title: "Rochester, USA" },
     { lat: 39.9612, lng: -82.9988, title: "Columbus, USA" },
@@ -45,7 +45,7 @@ var locations = [
     { lat: 40.2732, lng: -76.8867, title: "Harrisburg, USA" },
     { lat: 41.4089, lng: -75.6624, title: "Scranton, USA" },
     { lat: 41.1176, lng: -73.4082, title: "Norwalk, USA" },
-    { lat: 40.4862, lng: -74.4518, title: "New Brunswick, USA" }, 
+    { lat: 40.4862, lng: -74.4518, title: "New Brunswick, USA" },
     { lat: 39.9537, lng: -74.1979, title: "Toms River, USA" },
     { lat: 39.2776, lng: -74.5746, title: "Ocean City, USA" },
     { lat: 34.0522, lng: -118.2437, title: "Los Angeles, USA" },
@@ -142,5 +142,8 @@ var locations = [
     { lat: 13.6929, lng: -89.2182, title: "San Salvador, El Salvador" },
     { lat: -34.4710, lng: -57.8447, title: "Colonia Del Sacramento, Uruguay" },
     { lat: -34.6037, lng: -58.3816, title: "Buenos Aires, Argentina" },
-    { lat: 37.5665, lng: 126.9780, title: "Seoul, South Korea" }
+    { lat: 37.5665, lng: 126.9780, title: "Seoul, South Korea" },
+    { lat: 1.3521, lng: 103.8198, title: "Singapore" },
+    { lat: 7.8906, lng: 98.3981, title: "Phuket, Thailand" },
+    { lat: 12.5707, lng: 99.9588, title: "Hua Hin, Thailand" }
 ];
