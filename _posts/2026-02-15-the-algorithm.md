@@ -7,6 +7,8 @@ tags:
   - philosophy
 ---
 
+![The Algorithm](/images/ai-algorithm.jpg){: style="display: block; margin: 0 auto; width: 500px;"}
+
 ## The Algorithm
 
 The universe is an algorithm that forms self-replicating and expanding pockets of complexity. It starts as an evolutionary search algorithm at scale, but it goes beyond that because with near limitless compute it also runs search over the search algorithm itself. And there is no difference between the algorithm and the standard targets of its optimization, which are a means to build stronger algorithms. You cannot evolve from zeroth-order evolutionary search to gradient descent without first forming amoebas.

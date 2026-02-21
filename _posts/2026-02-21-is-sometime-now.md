@@ -7,6 +7,8 @@ tags:
   - philosophy
 ---
 
+![Is Sometime Now?](/images/is-sometime-now.jpg){: style="display: block; margin: 0 auto; width: 500px;"}
+
 A common opinion is that pure science is a moral good in the world, and moral judgments are pushed downstream to the applications. Newton and Leibniz cannot be responsible for their work being used for missile guidance hundreds of years after its discovery. This same technology was also used in the interceptor missiles that are purely defensive. This situation is very common in the sciences where the typical response would be calling science a double-bladed sword; it can be used for good or bad, but typically the good outweighs the bad.
 
 For developments in pure sciences, like nuclear physics, chemistry, artificial intelligence, is this true? Is the good outcome more likely? If it has been true, will it continue to be? But the variance often goes unnoticed, and the variance matters more when technology becomes more powerful. A rubberband usually returns to its initial state, but if it doesn't, it never will again. Each further advancement in the sciences will bring more and more powerful and complex applications. These applications will grow exponentially as the Cartesian product across the advancements across fields. Even if the mean application stays positive, the negative applications multiply as the possibilities explode.
