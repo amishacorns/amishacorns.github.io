@@ -13,7 +13,7 @@ Within a short period of time, the majority of science needs to shift toward des
 
 Academics
 ======
-Currently, I am a final-year PhD Candidate at the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research currently focuses on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
+I received my PhD from the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research focused on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
 
 
 Publications
@@ -78,9 +78,13 @@ Publications
 Experience
 ======
 
+- **Gemini+Cloud, Advanced Development Team**  
+  *Neural Architect*  
+  *July 2025 - Present*  
+
 - **Google, TPU Performance Team**  
   *Student Researcher*  
-  *June 2024 - Present*  
+  *June 2024 - June 2025*  
 
 - **Google, Platforms-Aware AutoML**  
   *Student Researcher*  
@@ -88,7 +92,7 @@ Experience
 
 - **Computer Systems Laboratory, Cornell**  
 *PhD Candidate*  
-*August 2019 - Present*  
+*August 2019 - June 2025*  
 
 - **Datto**  
 *Software Engineer*  
