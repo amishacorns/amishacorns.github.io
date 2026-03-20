@@ -162,6 +162,30 @@ This is why the initial planning matters so much. The better the plan, the longe
 
 Different projects have different compute profiles---some are analysis-heavy, some are engineering-heavy, some are simulation-heavy. For compute-heavy workloads, Slurm clusters are ideal. You can partition your cluster across agents with different priorities so they don't compete with each other or exhaust each other's queues. The agents can manage this themselves, but you should design the partitioning.
 
+## The Death of Domain Expertise
+
+Here is something most people haven't internalized yet: domain expertise no longer matters.
+
+Until very recently, the only way to keep up with a field was to specialize. You narrowed your focus until you could read every paper from the top labs and top scientists in your niche. You built a mental model of the frontier, and you innovated at the edges. This was the only viable strategy because there was too much to know and not enough time to know it.
+
+That constraint is gone. A single person can now publish simultaneously in neuroscience, gastroenterology, theoretical physics, philosophy, machine learning, and synthetic biology. Not by becoming an expert in all of them, but by being an expert in *none* of them and instead directing agents who can access the full depth of each field instantly.
+
+What matters now is not what you know. It's **clarity of thought**, **discipline**, **compute**, **money**, and **taste**. Taste---everyone is using that word now, but it's the right word. Which projects are important? Which questions are worth answering? Which results are surprising enough to publish? These are taste judgments, and they transfer across domains. A good research advisor in machine learning can be a good research advisor in synthetic biology, because the skill is direction-setting, not domain knowledge.
+
+This is one of the greatest times in history to be a scientist. The barriers that kept people locked into narrow specializations are dissolving. The playing field is wider than it has ever been.
+
+## Where This Goes
+
+Conferences will adapt this year. They haven't yet, and it's going to be chaotic, but they will. The review process, the submission formats, the expectations around novelty---all of it will change because it has to.
+
+Within a few years, science will be nearly fully automated. We are in the transition right now, moving from partially automated to mostly automated. The degree of human intervention will shrink with each iteration. First you stop typing. Then you stop looking at code. Then you stop looking at data. Then your interventions become approvals rather than directions.
+
+In about five years, the job of the human is **approval only**. You approve which ideas should be pursued next. You approve the completion of projects. You approve the allocation of compute, tokens, and resources. The agents will suggest all of these things---you just approve or reject. You are not a researcher. You are a research manager.
+
+And if you want to still be a researcher in the traditional sense---hands on the keyboard, reading every paper, running your own experiments---you absolutely can. Just like people still buy handcrafted slippers from indigenous artisan communities in the Andes. It's a valid choice. But if you want to have *impact*, you cannot operate that way. Every researcher today is becoming a research manager whether they like it or not.
+
+The scarce resources in this new world are simple: **money** and **tokens**. Everything else---expertise, labor, writing ability, coding skill---is abundant and getting cheaper by the month.
+
 ## The Feedback Loop
 
 Your daily rhythm looks like this:
@@ -187,6 +211,8 @@ The recipe:
 - **Never read papers.** Your agents read the literature. You read their summaries.
 - **Fight complexity constantly.** Regular code health reviews, de-duplication, cleanup.
 - **Use plan mode for course corrections.** Break loops, clear context, think deeply.
+- **Domain expertise is dead.** Clarity of thought, discipline, compute, money, and taste are what matter.
+- **You are a research manager now.** In five years, your only job is approval.
 
 One paper per week is not a gimmick. It's what happens when you stop being a researcher and start being a research advisor with an army of tireless, capable agents at your disposal.
 
