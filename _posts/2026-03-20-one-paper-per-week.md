@@ -10,7 +10,7 @@ tags:
 
 # Written by Claude
 
-*(Yes, the irony is intentional. The papers are written by Claude. This blog about writing papers with Claude is also written by Claude. It's Claude all the way down.)*
+*This blog post was written entirely by Claude. I did not type a single word. Everything was spoken---voice to agent, agent to text. The papers described below are also written by Claude. The workflow described below for writing papers is also managed by Claude. It's Claude all the way down.*
 
 ---
 
@@ -36,23 +36,27 @@ These three rules flip research on its head. You are no longer *writing* papers-
 
 ```
 research-monorepo/
-├── CLAUDE.md              # Top-level: applies to ALL projects
+├── CLAUDE.md                  # Top-level: applies to ALL projects
 ├── project-alpha/
-│   ├── CLAUDE.md          # Project-specific instructions
-│   ├── src/
-│   ├── paper/
-│   └── ...
+│   ├── CLAUDE.md              # Project-specific instructions
+│   ├── data/                  # Logs and data JSONs
+│   ├── paper/                 # LaTeX paper (git sub-repo → Overleaf)
+│   └── src/                   # Source code and scripts
 ├── project-beta/
 │   ├── CLAUDE.md
-│   ├── src/
+│   ├── data/
 │   ├── paper/
-│   └── ...
+│   └── src/
 └── project-gamma/
     ├── CLAUDE.md
-    └── ...
+    ├── data/
+    ├── paper/
+    └── src/
 ```
 
-When you launch Claude Code within a project subdirectory, it reads both the top-level and project-level `CLAUDE.md` files. This layered configuration is powerful.
+This structure should be consistent across every project and described in your top-level `CLAUDE.md`. When you launch Claude Code within a project subdirectory, it reads both the top-level and project-level `CLAUDE.md` files. This layered configuration is powerful.
+
+The `paper/` directory deserves special attention. Make it a **git sub-repo that pushes directly to Overleaf**. This means that as your agents commit paper updates, they become immediately readable on Overleaf from any device---including your phone while you're walking through a forest. Describe this Overleaf push workflow in your top-level `CLAUDE.md` and instruct agents to commit frequently. You're never looking at the code or data anyway, so who cares about commit hygiene? Commits can be messy, they can include data, they can be as granular as you want. The only thing that matters is that the paper on Overleaf stays current.
 
 ## The Top-Level CLAUDE.md
 
@@ -154,11 +158,11 @@ Trust the summaries. Trust the agents. Spend your reading time on the only paper
 
 ## Context Switching and Your Day
 
-You're managing five projects simultaneously. Most people can't context switch effectively more than every 30 minutes---think of yourself as a CPU and context switching as the overhead. Switch more frequently than that and your brain gets wrecked, you fatigue quickly, and your feedback quality drops. You're reading papers all day; conserve as much mental energy as possible.
+You're managing five projects simultaneously. Most people can't context switch effectively more than every hour---think of yourself as a CPU and context switching as the overhead. Switch more frequently than that and your brain gets wrecked, you fatigue quickly, and your feedback quality drops. You're reading papers all day; conserve as much mental energy as possible.
 
-So here's the math: five projects, 30-minute rotations, means on a full work day you get three or four interventions per project. Each project should be able to run autonomously for at least 30 minutes between your check-ins.
+So here's the math: five projects, one-hour rotations, means about ten context switches per work day---two iterations per project per day, ten per week. If you can't finish a paper in ten iterations, something is wrong. You're bound on compute, something went seriously sideways, or the project scope needs to be cut. Ten iterations should be more than enough for a well-planned project.
 
-This is why the initial planning matters so much. The better the plan, the longer each project runs without you.
+Each project should be able to run autonomously for at least an hour between your check-ins. This is why the initial planning matters so much. The better the plan, the longer each project runs without you.
 
 Different projects have different compute profiles---some are analysis-heavy, some are engineering-heavy, some are simulation-heavy. For compute-heavy workloads, Slurm clusters are ideal. You can partition your cluster across agents with different priorities so they don't compete with each other or exhaust each other's queues. The agents can manage this themselves, but you should design the partitioning.
 
@@ -186,6 +190,22 @@ And if you want to still be a researcher in the traditional sense---hands on the
 
 The scarce resources in this new world are simple: **money** and **tokens**. Everything else---expertise, labor, writing ability, coding skill---is abundant and getting cheaper by the month.
 
+## Go Mobile
+
+Because of this workflow, it's possible to be almost fully mobile. And you should be. Ideas flow more freely for most people in nature, when they're walking around, when they're not staring at a screen. So spend less time at a computer and more time outside, speaking to your agents and managing them hands-free.
+
+The optimal setup: **Meta Ray-Bans** with built-in microphones, voice-to-text into Claude. No hands, no screen, just you walking through a park giving research directions to your coordinator agents. If Claude's remote control interface is still buggy on your platform, use tools like Termux on Android with a terminal multiplexer to sync across different chat sessions from your phone.
+
+Foldable phones are great for this workflow because you can actually read papers on them comfortably. Any earbuds with a microphone work, but glasses with built-in microphones are less conspicuous---you're just a person on a walk, not someone dictating into their phone.
+
+Your loop is simple: read the latest paper draft on Overleaf from your phone. Think about what needs to change. Speak your feedback. Move to the next project. Let your brain juice flow as you walk through nature. You are a manager. Read the papers and instruct.
+
+## Choosing Projects
+
+With iteration times this fast, choosing the wrong project is less catastrophic than it used to be. Before, if you picked the wrong direction, you might waste a month figuring that out. Now you can complete a project in a week, so a wrong choice costs you days, not months. You can afford to take more risks on project selection because the cost of being wrong has dropped dramatically.
+
+That said, you still want to minimize mistakes. The skill is taste---which questions are worth answering, which results would be surprising, which problems are tractable with current tools. This is the one thing that doesn't automate away. Compute and tokens are fungible. Taste is not.
+
 ## The Feedback Loop
 
 Your daily rhythm looks like this:
@@ -207,7 +227,8 @@ The recipe:
 - **Paper-first development.** Start with fake data, iterate as real data arrives.
 - **5:1 review-to-code ratio.** Verification through volume and independence.
 - **Every intervention is a failure.** Post-mortem and update CLAUDE.md.
-- **Context switch every 30 minutes max.** Five projects, three to four interventions each per day.
+- **Go mobile.** Meta Ray-Bans, voice-to-text, read papers on Overleaf from your phone. Walk through nature.
+- **Context switch every hour.** Five projects, two iterations each per day, ten per week.
 - **Never read papers.** Your agents read the literature. You read their summaries.
 - **Fight complexity constantly.** Regular code health reviews, de-duplication, cleanup.
 - **Use plan mode for course corrections.** Break loops, clear context, think deeply.
