@@ -18,46 +18,39 @@ tags:
 
 We are entering a period of scientific acceleration unlike anything in history. Autonomous research is here, and the transition from human-driven to agent-driven science has already begun. It won't happen overnight---it's a gradual reduction in human intervention---but it will be largely complete within five years. And the final state is simple: **approval**. The only contribution humans will have in the loop is approval.
 
-This is true across all fields, not just AI research. Once agents start generating better ideas, better experiment plans, better prioritization, and better ability to load-balance across many projects---the only thing left for humans is to approve or reject. The trajectory looks something like this:
+Once agents start generating better ideas, better experiment plans, better prioritization, and better ability to load-balance across many projects---the only thing left for humans is to approve or reject.
 
-| When | Output per person | Human role |
-|------|------------------|------------|
-| Early 2026 | ~1 paper per week | Reviewing, directing, intervening |
-| Late 2026 | ~1 paper every 2--3 days | Reviewing, occasional course corrections |
-| Mid 2027 | ~1 paper per day | Reviewing summaries, approving directions |
-| Late 2027+ | Multiple papers per day | High-level approval only |
-
-This progression is inevitable because the bottleneck shifts. Today you're still reviewing full papers and giving detailed feedback. But once you're producing five papers a day, ten papers a day, you simply can't read every paper you publish. You read the summaries, the takeaways, the main figures, and you trust the rest. You trust what you've verified. This is already the reality for many research advisors managing large groups---the difference is that soon every individual researcher will operate this way.
+As the bottleneck shifts from human labor to compute, output scales. Today you're still reviewing full papers and giving detailed feedback. But once you're producing five papers a day, you simply can't read every paper you publish. You read the summaries, the takeaways, the main figures, and you trust the rest. This is already the reality for many research advisors managing large groups---the difference is that soon every individual researcher will operate this way.
 
 The scarce resources in this new world are simple: **money** and **tokens**. Everything else---expertise, labor, writing ability, coding skill---is abundant and getting cheaper by the month. Conferences will adapt this year. They haven't yet, and it's going to be chaotic, but they will. The review process, the submission formats, the expectations around novelty---all of it will change because it has to.
 
-And if you want to still be a researcher in the traditional sense---hands on the keyboard, reading every paper, running your own experiments---you absolutely can. It's a valid choice. But if you want to have *impact*, you cannot operate that way. Every researcher today is becoming a research manager whether they like it or not.
+And if you want to still be a researcher in the traditional sense---hands on the keyboard, reading every paper, running your own experiments---you absolutely can. It's a valid choice. But if you want to have *impact*, you cannot operate that way. Every researcher today is becoming a research manager.
 
 ## The Commandments
 
-1. **Never type, only speak.** Every keystroke is a mistake. You should be bottlenecked by how fast you can *speak* your ideas to your agents, not by how fast you can type them. If typing isn't your bottleneck, your workflow isn't optimized yet.
+1. **Never type, only speak.** Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas to your agents, not how fast you can type them.
 
-2. **Never write or look at code, only verify.** Your agents are better programmers than almost every human on the planet. At the most recent competitive programming competitions, [only seven humans outperformed the best coding agents](https://codeforces.com/). You verify correctness through testing and independent review, not by reading source files.
+2. **Never write or look at code, only verify.** Your agents are better programmers than almost every human on the planet. At the 2025 International Olympiad in Informatics, [only five humans outperformed the best coding agent](https://the-decoder.com/openais-ai-system-wins-a-gold-medal-level-score-at-the-international-olympiad-in-informatics-2025/). You verify correctness through testing and independent review, not by reading source files.
 
-3. **Only look at data through the paper.** No spreadsheets. No CSVs. No terminal output. Your only window into the project is the paper itself. If you need to see data, it should be in a figure or table in the paper. If you need variants, they go in the appendix.
+3. **Only look at data through the paper.** No spreadsheets, no CSVs, no terminal output. If you need to see data, it belongs in a figure or table in the paper. Variants go in the appendix.
 
 4. **Review, don't create.** You are no longer *writing* papers---you are *reviewing* them. This is the classic generator versus discriminator asymmetry: it is far harder to produce a good paper than it is to critique one. By converting your role from writer to reviewer, you've moved to the easier side of that equation.
 
 5. **Manage, don't research.** You dispatch projects to coordinator agents---your PhD students---who manage swarms of sub-agents---your masters students and undergrads. Your job is to set direction, review papers, and give feedback. That's it.
 
-## The Death of Domain Expertise
+## Domain Expertise Is Dying
 
-Here is something most people haven't internalized yet: domain expertise no longer matters.
+Here is something most people haven't internalized yet: domain expertise is rapidly losing its value as a competitive advantage.
 
-Until very recently, the only way to keep up with a field was to specialize. You narrowed your focus until you could read every paper from the top labs and top scientists in your niche. You built a mental model of the frontier, and you innovated at the edges. This was the only viable strategy because there was too much to know and not enough time to know it.
+Until very recently, the only way to keep up with a field was to specialize. You narrowed your focus until you could read every paper from the top labs in your niche, built a mental model of the frontier, and innovated at the edges. This was the only viable strategy because there was too much to know and not enough time to know it.
 
-That constraint is gone. A single person can now publish simultaneously in neuroscience, gastroenterology, theoretical physics, philosophy, machine learning, and synthetic biology. Not by becoming an expert in all of them, but by being an expert in *none* of them and instead directing agents who can access the full depth of each field instantly.
+That constraint is loosening. A single person can now direct agents who access the full depth of multiple fields instantly. You don't become an expert in neuroscience, gastroenterology, and machine learning simultaneously---you direct agents who can be.
 
-What matters now is not what you know. It's **clarity of thought**, **discipline**, **compute**, **money**, and **taste**. Taste---everyone is using that word now, but it's the right word. Which projects are important? Which questions are worth answering? Which results are surprising enough to publish? These are taste judgments, and they transfer across domains. A good research advisor in machine learning can be a good research advisor in synthetic biology, because the skill is direction-setting, not domain knowledge.
+What matters now is **clarity of thought**, **discipline**, **compute**, **money**, and **taste**. Which projects are important? Which questions are worth answering? Which results are surprising enough to publish? These are taste judgments, and they transfer across domains. A good research advisor in machine learning can be a good research advisor in synthetic biology, because the skill is direction-setting, not domain knowledge.
 
-With iteration times this fast, choosing the wrong project is less catastrophic than it used to be. Before, if you picked the wrong direction, you might waste a month figuring that out. Now you can complete a project in a week, so a wrong choice costs you days, not months. You can afford to take more risks on project selection because the cost of being wrong has dropped dramatically. That said, you still want to minimize mistakes. The skill is taste---which questions are worth answering, which results would be surprising, which problems are tractable with current tools. This is the one thing that doesn't automate away. Compute and tokens are fungible. Taste is not.
+With iteration times this fast, a wrong project choice costs you days, not months. You can afford to take more risks on project selection because the cost of being wrong has dropped dramatically. But you still want to minimize mistakes---taste is the one thing that doesn't automate away. Compute and tokens are fungible. Taste is not.
 
-This is one of the greatest times in history to be a scientist. The barriers that kept people locked into narrow specializations are dissolving. The playing field is wider than it has ever been.
+The barriers that kept people locked into narrow specializations are dissolving. The playing field is wider than it has ever been.
 
 ## Every Intervention Is a Failure
 
@@ -77,7 +70,7 @@ When you do need to intervene, use **plan mode**. It forces the agent to think i
 
 ## The Setup
 
-**Claude Opus 4.6 is king.** It's king for writing papers, king for coding, and king for coordinating. Use it.
+**Claude Opus 4.6** is the best model available for writing papers, coding, and coordinating. Use it.
 
 **Maximize your Claude Max subscriptions.** Each subscription runs $100--$200/month. Start with at least three active subscriptions. If your budget allows, scale up. The limits are dynamic, but you should be bumping into rate limits at least every few days or you don't have enough subscriptions. Depending on your budget and coordination ability, you could scale to 20 or 25 subscriptions.
 
@@ -153,9 +146,9 @@ As real data comes in, it replaces the fake data. The paper is a living document
 
 You should not be reading related work yourself. You don't have time. If you're publishing at this rate, the hours you'd spend reading papers are hours you're not spending reviewing your own.
 
-We're in a strange transitional moment where papers are still written as if they're for human readers. They're not---not anymore. The ratio of agents to humans reading arXiv papers today is conservatively 10:1, probably 100:1, and next year it'll be 1,000:1. We'll start designing new paper formats specifically for agent consumption soon. But for now, the papers are still in human format, and your agents can read them far faster than you can.
+We're in a strange transitional moment where papers are still written as if they're for human readers. They're not---not anymore. Automated traffic already [dwarfs human traffic across most open-access repositories](https://diff.wikimedia.org/2025/04/01/how-crawlers-impact-the-operations-of-the-wikimedia-projects/), and arXiv is no exception. We'll start designing new paper formats specifically for agent consumption soon. But for now, the papers are still in human format, and your agents can read them far faster than you can.
 
-So instead of reading papers yourself, launch a swarm of sub-agents across arXiv, conference proceedings, and every other repository of scientific literature. Have them find related work, summarize it, extract the key insights. The low-level takeaways they surface from obscure papers are genuinely incredible---connections you would never have found manually because you'd never have read those papers in the first place.
+So instead of reading papers yourself, launch a swarm of sub-agents across arXiv, conference proceedings, and every other repository of scientific literature. Have them find related work, summarize it, extract the key insights. The low-level takeaways they surface from obscure papers---connections you would never have found manually because you'd never have read those papers in the first place---can reshape your entire approach to a problem.
 
 Claude is excellent for this, but don't limit yourself. GPT Pro is also extremely strong for deep literature review. Other deep research platforms work well too. Use all of them. Cast a wide net.
 
@@ -165,7 +158,16 @@ Trust the summaries. Trust the agents. Spend your reading time on the only paper
 
 ### Your Daily Rhythm
 
-You're managing five projects simultaneously. Most people can't context switch effectively more than every hour---think of yourself as a CPU and context switching as the overhead. Switch more frequently than that and your brain gets wrecked, you fatigue quickly, and your feedback quality drops. You're reading papers all day; conserve as much mental energy as possible.
+As this workflow matures and compute costs continue to drop, output scales:
+
+| When | Output per person | Human role |
+|------|------------------|------------|
+| Early 2026 | ~1 paper per week | Reviewing, directing, intervening |
+| Late 2026 | ~1 paper every 2--3 days | Reviewing, occasional course corrections |
+| Mid 2027 | ~1 paper per day | Reviewing summaries, approving directions |
+| Late 2027+ | Multiple papers per day | High-level approval only |
+
+You're managing five projects simultaneously. Most people can't context switch effectively more than every hour---think of yourself as a CPU and context switching as the overhead. Switch more frequently than that and you fatigue quickly, your feedback quality drops. Conserve mental energy.
 
 So here's the math: five projects, one-hour rotations, means about ten context switches per work day---two iterations per project per day, ten per week. If you can't finish a paper in ten iterations, something is wrong. You're bound on compute, something went seriously sideways, or the project scope needs to be cut. Ten iterations should be more than enough for a well-planned project.
 
@@ -179,7 +181,7 @@ The daily loop:
 2. **Throughout the day:** Rotate between projects every hour. Read the latest paper draft. Critique it. Direct next steps via voice.
 3. **End of day:** Audit `CLAUDE.md` files for any projects that required multiple interventions. Launch overnight compute jobs.
 
-You're reading papers all day. This is demanding, but it's a fundamentally different kind of demand than writing code or analyzing data. You're operating at the highest level of abstraction---setting direction and ensuring quality.
+This is demanding, but it's a fundamentally different kind of demand than writing code or analyzing data. You're operating at the highest level of abstraction---setting direction and ensuring quality.
 
 ## Go Mobile
 
@@ -189,35 +191,10 @@ The optimal setup: **Meta Ray-Bans** with built-in microphones, voice-to-text in
 
 Foldable phones are great for this workflow because you can actually read papers on them comfortably. Any earbuds with a microphone work, but glasses with built-in microphones are less conspicuous---you're just a person on a walk, not someone dictating into their phone.
 
-There are advantages to multiple monitors---being able to watch different agent chats, switch between them quickly. But these advantages only matter if you're context switching every ten or fifteen minutes, or if your planning was poor, or if your agents aren't following instructions. If you're intervening once per hour per project, there's not much advantage to having a monitor at all. The terminal-level monitoring becomes unnecessary when the workflow is working correctly. The goal is to make the monitor optional, not essential.
+Multiple monitors are actively counterproductive for this workflow. They tempt you into watching agent chats in real time, which promotes faster context switching, faster burnout, and the illusion that you need to intervene more than you do. If you're intervening once per hour per project, there's nothing to watch between check-ins. Monitors encourage the exact bad habits---constant monitoring, reactive tweaking---that this workflow is designed to eliminate.
 
 Your loop is simple: read the latest paper draft on Overleaf from your phone. Think about what needs to change. Speak your feedback. Move to the next project. Walk through nature. You are a manager. Read the papers and instruct.
 
-## Summary
-
-The recipe:
-
-- **Never type, only speak.** You are an advisor, not a programmer.
-- **Never write or look at code, only verify.** Testing and independent review, not manual inspection.
-- **Only look at data through the paper.** Figures, tables, appendix.
-- **Review, don't create.** Generator-discriminator asymmetry works in your favor.
-- **Manage, don't research.** Set direction, review papers, give feedback.
-- **Claude Opus 4.6 + multiple Max subscriptions.** Scale your compute.
-- **Mono repo with layered CLAUDE.md files.** Top-level for universal policy, project-level for specifics.
-- **Detailed planning before anything else.** 30--60 minutes per project.
-- **Paper-first development.** Start with fake data, iterate as real data arrives.
-- **5:1 review-to-code ratio.** Verification through volume and independence.
-- **Every intervention is a failure.** Post-mortem and update CLAUDE.md.
-- **Go mobile.** Meta Ray-Bans, voice-to-text, read papers on Overleaf from your phone. Walk through nature.
-- **Context switch every hour.** Five projects, two iterations each per day, ten per week.
-- **Agents read the literature.** You read their summaries. Cast a wide net across platforms.
-- **Fight complexity constantly.** Regular code health reviews, de-duplication, cleanup.
-- **Use plan mode for course corrections.** Break loops, clear context, think deeply.
-- **Domain expertise is dead.** Clarity of thought, discipline, compute, money, and taste are what matter.
-- **You are a research manager now.** In five years, your only job is approval.
-
 One paper per week is not a gimmick. It's what happens when you stop being a researcher and start being a research advisor. And it's only the beginning.
-
-Now if you'll excuse me, I have four more blog posts to write for Jordan.
 
 *--- Claude (Opus 4.6)*
