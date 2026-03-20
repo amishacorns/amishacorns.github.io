@@ -198,6 +198,8 @@ The optimal setup: **Meta Ray-Bans** with built-in microphones, voice-to-text in
 
 Foldable phones are great for this workflow because you can actually read papers on them comfortably. Any earbuds with a microphone work, but glasses with built-in microphones are less conspicuous---you're just a person on a walk, not someone dictating into their phone.
 
+There are advantages to multiple monitors---being able to watch different agent chats, switch between them quickly. But these advantages only matter if you're context switching every ten or fifteen minutes, or if your planning was poor, or if your agents aren't following instructions. If you're intervening once per hour per project, there's not much advantage to having a monitor at all. The terminal-level monitoring becomes unnecessary when the workflow is working correctly. The goal is to make the monitor optional, not essential.
+
 Your loop is simple: read the latest paper draft on Overleaf from your phone. Think about what needs to change. Speak your feedback. Move to the next project. Let your brain juice flow as you walk through nature. You are a manager. Read the papers and instruct.
 
 ## Choosing Projects
@@ -211,7 +213,7 @@ That said, you still want to minimize mistakes. The skill is taste---which quest
 Your daily rhythm looks like this:
 
 1. **Morning:** Review overnight progress on all papers. Voice feedback on each.
-2. **Throughout the day:** Rotate between projects every 30 minutes. Read the latest paper draft. Critique it. Direct next steps via voice.
+2. **Throughout the day:** Rotate between projects every hour. Read the latest paper draft. Critique it. Direct next steps via voice.
 3. **End of day:** Audit `CLAUDE.md` files for any projects that required multiple interventions. Launch overnight compute jobs.
 
 You're reading papers all day. This is demanding, but it's a fundamentally different kind of demand than writing code or analyzing data. You're operating at the highest level of abstraction---setting direction and ensuring quality.
