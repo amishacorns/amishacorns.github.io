@@ -147,5 +147,7 @@ var locations = [
     { lat: 7.8906, lng: 98.3981, title: "Phuket, Thailand" },
     { lat: 12.5707, lng: 99.9588, title: "Hua Hin, Thailand" },
     { lat: 42.8621, lng: 140.6874, title: "Niseko, Japan" },
-    { lat: 43.0618, lng: 141.3545, title: "Sapporo, Japan" }
+    { lat: 43.0618, lng: 141.3545, title: "Sapporo, Japan" },
+    { lat: 14.5995, lng: 120.9842, title: "Manila, Philippines" },
+    { lat: 11.9674, lng: 121.9248, title: "Boracay, Philippines" }
 ];
