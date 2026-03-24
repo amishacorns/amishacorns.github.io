@@ -18,7 +18,7 @@ tags:
 
 We are entering a period of scientific acceleration unlike anything in history. Autonomous research is here, and the transition from human-driven to agent-driven science has already begun. It won't happen overnight---it's a gradual reduction in human intervention---but it will be largely complete within five years. And the final state is simple: **approval**. The only contribution humans will have in the loop is approval.
 
-Once agents start generating better ideas, better experiment plans, better prioritization, and better ability to load-balance across many projects---the only thing left for humans is to approve or reject. As the bottleneck shifts from human labor to compute, output scales. Conferences will adapt this year. They haven't yet, and it's going to be chaotic, but they will. The review process, the submission formats, the expectations around novelty---all of it will change because it has to.
+Once agents start generating better ideas, better experiment plans, better prioritization, and better ability to load-balance across many projects---the only thing left for humans is to approve or reject. As the bottleneck shifts from human labor to compute, output scales.
 
 And if you want to still be a researcher in the traditional sense---hands on the keyboard, reading every paper, running your own experiments---you absolutely can. It's a valid choice. But if you want to have *impact*, you cannot operate that way.
 
@@ -78,9 +78,42 @@ That constraint is loosening. A single person can now direct agents who access t
 
 What matters now is **clarity of thought**, **discipline**, and **taste**. Which projects are important? Which questions are worth answering? Which results are surprising enough to publish? These are taste judgments, and they transfer across domains. A good research advisor in machine learning can be a good research advisor in synthetic biology, because the skill is direction-setting, not domain knowledge.
 
-With iteration times this fast, a wrong project choice costs you days, not months. You can afford to take more risks on project selection because the cost of being wrong has dropped dramatically. But you still want to minimize mistakes---taste is the one thing that doesn't automate away. Compute and tokens are fungible. Taste is not.
-
 The barriers that kept people locked into narrow specializations are dissolving. The playing field is wider than it has ever been.
+
+## Cheap Failures
+
+When execution is expensive, you can't afford to be wrong. Every project is a multi-month commitment of human labor, so you hedge: you pick safe ideas, incremental extensions, low-risk experiments. This is rational when a failed project costs you a semester.
+
+But when execution is cheap, failure is cheap. A wrong project choice costs you days, not months. You can afford to try ten ambitious ideas knowing that seven will fail, because the three that succeed will each have taken a week instead of a year. The expected value of high-risk research goes up dramatically when the downside is measured in days of compute rather than months of human time.
+
+This changes the entire calculus of project selection. You no longer need to be confident an idea will work before you start. You can run the experiment, see the results, and kill the project in a week if it's going nowhere. The overhead of starting a new project---planning, setting up the codebase, writing the initial paper scaffold---is a few hours, not a few weeks. So you start more projects, kill more projects, and the ones that survive are the ones with genuinely surprising results.
+
+The researchers who will have the most impact are not the ones who are right most often. They're the ones who can generate the most ideas, filter them quickly, and run cheap experiments on the survivors. Taste still matters---it tells you which ideas are worth the few days of compute. But the cost of being wrong has dropped so far that the optimal strategy is to be wrong more often, faster.
+
+## AI-First Scientific Infrastructure
+
+Here's the uncomfortable reality: the scientific publishing infrastructure we have today was designed for a world where humans write papers, humans review papers, and humans read papers. That world is ending.
+
+The majority of papers published today are already read primarily by machines. Automated traffic [dwarfs human traffic across most open-access repositories](https://diff.wikimedia.org/2025/04/01/how-crawlers-impact-the-operations-of-the-wikimedia-projects/), and most papers on arXiv will never have a single human reader who isn't an author. The papers are being indexed, summarized, and cited by agents. We are writing for machines and pretending we're writing for people.
+
+And yet the institutions are moving in the opposite direction. Look at what the major conferences are doing right now:
+
+- **ICLR 2026** threatens desk rejection for undisclosed LLM use, while their own analysis found that [roughly 21% of ICLR 2025 reviews were fully AI-generated](https://blog.iclr.cc/2025/11/19/iclr-2026-response-to-llm-generated-papers-and-reviews/). The reviewers are already using AI whether the conference likes it or not.
+- **AISTATS 2026**, **ISCA 2026**, and **ICRA 2026** completely prohibit AI use by reviewers---no exceptions.
+- **ICML 2026** has a dual-track policy where reviewers can choose between a conservative track (no AI) and a permissive track (AI allowed for understanding, not for writing reviews). They've already had to [address violations](https://blog.icml.cc/2026/03/18/on-violations-of-llm-review-policies/).
+- **AAAI-26** prohibits AI authorship but simultaneously launched an [AI-powered peer review pilot](https://aaai.org/aaai-launches-ai-powered-peer-review-assessment-system/) where LLM-generated reviews supplement human reviews.
+- **ACL** discourages generative AI for producing new text in submissions. arXiv itself is [clamping down on AI-generated content](https://www.science.org/content/article/arxiv-preprint-server-clamps-down-ai-slop) in computer science sections.
+
+This is the wrong direction. You cannot ban the tide. Within years, research---especially AI research---will be nearly fully automated: automated generation, automated experimentation, automated writing, automated reviewing. Trying to enforce human-only authorship and human-only reviewing is fighting an exponential with a policy memo.
+
+What we need instead is **AI-first scientific infrastructure**:
+
+- **AI-first publication standards.** New formats designed for machine consumption: structured data, machine-readable experimental results, standardized metadata. Papers as APIs, not PDFs.
+- **Automated reviewing embedded in preprint servers.** Not as a replacement for human judgment on importance and taste, but as a first pass: correctness checking, novelty verification against the full literature, reproducibility assessment. [aiXiv](https://www.science.org/content/article/new-preprint-server-welcomes-papers-written-and-reviewed-ai) is already doing this---five AI agents review every submission in minutes, not months.
+- **Automated indexing and search.** The related work section of every paper is about to grow exponentially as output scales. No human can keep up. We need automated systems that index, connect, and surface relevant work across the entire scientific literature in real time.
+- **Conferences as we know them will become obsolete.** The current model---submit, wait months for reviews, present at a venue---cannot survive when output is measured in papers per day. What replaces it will look more like a continuous, living repository with rolling automated review, where human curation focuses on identifying the most important results rather than gatekeeping every submission.
+
+The transition is already underway. AAAI's peer review pilot, aiXiv's automated reviewing, and the [AI Scientist](https://sakana.ai/ai-scientist-first-publication/) passing peer review at a top ML workshop are all early signals. But the pace of institutional adaptation is far too slow. The gap between what the tools can do and what the institutions allow is widening every month.
 
 ## The Commandments
 
@@ -188,9 +221,7 @@ As real data comes in, it replaces the fake data. The paper is a living document
 
 You should not be reading related work yourself. You don't have time. If you're publishing at this rate, the hours you'd spend reading papers are hours you're not spending reviewing your own.
 
-We're in a strange transitional moment where papers are still written as if they're for human readers. They're not---not anymore. Automated traffic already [dwarfs human traffic across most open-access repositories](https://diff.wikimedia.org/2025/04/01/how-crawlers-impact-the-operations-of-the-wikimedia-projects/), and arXiv is no exception. We'll start designing new paper formats specifically for agent consumption soon. But for now, the papers are still in human format, and your agents can read them far faster than you can.
-
-So instead of reading papers yourself, launch a swarm of sub-agents across arXiv, conference proceedings, and every other repository of scientific literature. Have them find related work, summarize it, extract the key insights. The low-level takeaways they surface from obscure papers---connections you would never have found manually because you'd never have read those papers in the first place---can reshape your entire approach to a problem.
+Launch a swarm of sub-agents across arXiv, conference proceedings, and every other repository of scientific literature. Have them find related work, summarize it, extract the key insights. The low-level takeaways they surface from obscure papers---connections you would never have found manually because you'd never have read those papers in the first place---can reshape your entire approach to a problem.
 
 Claude is excellent for this, but don't limit yourself. GPT Pro is also extremely strong for deep literature review. Other deep research platforms work well too. Use all of them. Cast a wide net.
 
