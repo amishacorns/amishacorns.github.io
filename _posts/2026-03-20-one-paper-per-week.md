@@ -18,13 +18,61 @@ tags:
 
 We are entering a period of scientific acceleration unlike anything in history. Autonomous research is here, and the transition from human-driven to agent-driven science has already begun. It won't happen overnight---it's a gradual reduction in human intervention---but it will be largely complete within five years. And the final state is simple: **approval**. The only contribution humans will have in the loop is approval.
 
-Once agents start generating better ideas, better experiment plans, better prioritization, and better ability to load-balance across many projects---the only thing left for humans is to approve or reject.
+Once agents start generating better ideas, better experiment plans, better prioritization, and better ability to load-balance across many projects---the only thing left for humans is to approve or reject. As the bottleneck shifts from human labor to compute, output scales. Conferences will adapt this year. They haven't yet, and it's going to be chaotic, but they will. The review process, the submission formats, the expectations around novelty---all of it will change because it has to.
 
-As the bottleneck shifts from human labor to compute, output scales. Today you're still reviewing full papers and giving detailed feedback. But once you're producing five papers a day, you simply can't read every paper you publish. You read the summaries, the takeaways, the main figures, and you trust the rest. This is already the reality for many research advisors managing large groups---the difference is that soon every individual researcher will operate this way.
+And if you want to still be a researcher in the traditional sense---hands on the keyboard, reading every paper, running your own experiments---you absolutely can. It's a valid choice. But if you want to have *impact*, you cannot operate that way.
 
-The scarce resources in this new world are simple: **money** and **tokens**. Everything else---expertise, labor, writing ability, coding skill---is abundant and getting cheaper by the month. Conferences will adapt this year. They haven't yet, and it's going to be chaotic, but they will. The review process, the submission formats, the expectations around novelty---all of it will change because it has to.
+## The Handoff
 
-And if you want to still be a researcher in the traditional sense---hands on the keyboard, reading every paper, running your own experiments---you absolutely can. It's a valid choice. But if you want to have *impact*, you cannot operate that way. Every researcher today is becoming a research manager.
+Every researcher today is becoming a research manager. This is the handoff---the gradual transfer of research labor from humans to agents.
+
+You are no longer *writing* papers---you are *reviewing* them. This is the core asymmetry that makes the whole thing work. Generating a good paper is hard. Critiquing one is dramatically easier. This is the classic generator versus discriminator gap, and it's the same reason P likely doesn't equal NP: verifying a solution is fundamentally easier than producing one. By converting your role from writer to reviewer, you've moved to the easier side of that equation.
+
+The same applies to code, to experimental design, to literature review. In every case, evaluating output is cheaper than producing it. This asymmetry is what allows one person to oversee many parallel streams of work. You don't need to be able to write five papers simultaneously---you need to be able to *review* five papers simultaneously. And you can, because reviewing is the easier problem.
+
+## The Scaling Math
+
+Here is a simple model for how one person gets to one paper per day. The numbers below are idealized---we'll discuss the assumptions---but the math is straightforward.
+
+**The key variable is interventions.** An intervention is any time you need to step in: course-correct the agent, fix a misunderstanding, redirect the experimental plan, give substantive feedback on the paper draft. Between interventions, the agent works autonomously---running experiments, writing, iterating on figures.
+
+Assume the following:
+
+- You juggle **5 projects** simultaneously
+- You work a **5-day week**, **8 hours per day**
+- You switch between projects every **30 minutes**
+- Each project requires roughly **15 interventions** to go from plan to finished paper
+
+That gives you **16 intervention slots per day** (8 hours ÷ 30 minutes), or **80 per week**. Spread across 5 projects, that's **16 interventions per project per week**---more than enough to clear the 15-intervention bar. Each project finishes in roughly one week. Five projects finishing per week is **one project per day**.
+
+The critical assumption here is that agents can work autonomously for at least 30 minutes between your check-ins. Today, that's realistic for well-planned projects with a detailed `CLAUDE.md`. It will only get easier as models improve.
+
+The other critical assumption is planning quality. The 15-intervention estimate assumes careful upfront planning---a detailed experimental design, clear paper structure, explicit success criteria. Skimp on the plan and your intervention count doubles or triples. The time you invest in planning is directly subtracted from the time you spend firefighting later.
+
+Most people can't context-switch across 5 projects effectively. That's fine---even 3 projects with longer rotation windows gets you to 3 papers per week. The point isn't the exact number. The point is that the math works, and it works today, with current models and current tooling.
+
+| When | Output per person | Human role |
+|------|------------------|------------|
+| Early 2026 | ~1 paper per week | Reviewing, directing, intervening |
+| Late 2026 | ~1 paper every 2--3 days | Reviewing, occasional course corrections |
+| Mid 2027 | ~1 paper per day | Reviewing summaries, approving directions |
+| Late 2027+ | Multiple papers per day | High-level approval only |
+
+## What Becomes Scarce
+
+The scarce resources in this new world are simple: **money**, **tokens**, and **taste**. Everything else---expertise, labor, writing ability, coding skill---is abundant and getting cheaper by the month.
+
+Here is something most people haven't internalized yet: domain expertise is rapidly losing its value as a competitive advantage.
+
+Until very recently, the only way to keep up with a field was to specialize. You narrowed your focus until you could read every paper from the top labs in your niche, built a mental model of the frontier, and innovated at the edges. This was the only viable strategy because there was too much to know and not enough time to know it.
+
+That constraint is loosening. A single person can now direct agents who access the full depth of multiple fields instantly. You don't become an expert in neuroscience, gastroenterology, and machine learning simultaneously---you direct agents who can be.
+
+What matters now is **clarity of thought**, **discipline**, and **taste**. Which projects are important? Which questions are worth answering? Which results are surprising enough to publish? These are taste judgments, and they transfer across domains. A good research advisor in machine learning can be a good research advisor in synthetic biology, because the skill is direction-setting, not domain knowledge.
+
+With iteration times this fast, a wrong project choice costs you days, not months. You can afford to take more risks on project selection because the cost of being wrong has dropped dramatically. But you still want to minimize mistakes---taste is the one thing that doesn't automate away. Compute and tokens are fungible. Taste is not.
+
+The barriers that kept people locked into narrow specializations are dissolving. The playing field is wider than it has ever been.
 
 ## The Commandments
 
@@ -34,23 +82,7 @@ And if you want to still be a researcher in the traditional sense---hands on the
 
 3. **Only look at data through the paper.** No spreadsheets, no CSVs, no terminal output. If you need to see data, it belongs in a figure or table in the paper. Variants go in the appendix.
 
-4. **Review, don't create.** You are no longer *writing* papers---you are *reviewing* them. This is the classic generator versus discriminator asymmetry: it is far harder to produce a good paper than it is to critique one. By converting your role from writer to reviewer, you've moved to the easier side of that equation.
-
-5. **Manage, don't research.** You dispatch projects to coordinator agents---your PhD students---who manage swarms of sub-agents---your masters students and undergrads. Your job is to set direction, review papers, and give feedback. That's it.
-
-## Domain Expertise Is Dying
-
-Here is something most people haven't internalized yet: domain expertise is rapidly losing its value as a competitive advantage.
-
-Until very recently, the only way to keep up with a field was to specialize. You narrowed your focus until you could read every paper from the top labs in your niche, built a mental model of the frontier, and innovated at the edges. This was the only viable strategy because there was too much to know and not enough time to know it.
-
-That constraint is loosening. A single person can now direct agents who access the full depth of multiple fields instantly. You don't become an expert in neuroscience, gastroenterology, and machine learning simultaneously---you direct agents who can be.
-
-What matters now is **clarity of thought**, **discipline**, **compute**, **money**, and **taste**. Which projects are important? Which questions are worth answering? Which results are surprising enough to publish? These are taste judgments, and they transfer across domains. A good research advisor in machine learning can be a good research advisor in synthetic biology, because the skill is direction-setting, not domain knowledge.
-
-With iteration times this fast, a wrong project choice costs you days, not months. You can afford to take more risks on project selection because the cost of being wrong has dropped dramatically. But you still want to minimize mistakes---taste is the one thing that doesn't automate away. Compute and tokens are fungible. Taste is not.
-
-The barriers that kept people locked into narrow specializations are dissolving. The playing field is wider than it has ever been.
+4. **Manage, don't research.** You dispatch projects to coordinator agents---your PhD students---who manage swarms of sub-agents---your masters students and undergrads. Your job is to set direction, review papers, and give feedback. That's it.
 
 ## Every Intervention Is a Failure
 
@@ -158,20 +190,7 @@ Trust the summaries. Trust the agents. Spend your reading time on the only paper
 
 ### Your Daily Rhythm
 
-As this workflow matures and compute costs continue to drop, output scales:
-
-| When | Output per person | Human role |
-|------|------------------|------------|
-| Early 2026 | ~1 paper per week | Reviewing, directing, intervening |
-| Late 2026 | ~1 paper every 2--3 days | Reviewing, occasional course corrections |
-| Mid 2027 | ~1 paper per day | Reviewing summaries, approving directions |
-| Late 2027+ | Multiple papers per day | High-level approval only |
-
-You're managing five projects simultaneously. Most people can't context switch effectively more than every hour---think of yourself as a CPU and context switching as the overhead. Switch more frequently than that and you fatigue quickly, your feedback quality drops. Conserve mental energy.
-
-So here's the math: five projects, one-hour rotations, means about ten context switches per work day---two iterations per project per day, ten per week. If you can't finish a paper in ten iterations, something is wrong. You're bound on compute, something went seriously sideways, or the project scope needs to be cut. Ten iterations should be more than enough for a well-planned project.
-
-Each project should be able to run autonomously for at least an hour between your check-ins. This is why the initial planning matters so much. The better the plan, the longer each project runs without you.
+The scaling math above gives you the blueprint. Here's what it looks like in practice.
 
 Different projects have different compute profiles---some are analysis-heavy, some are engineering-heavy, some are simulation-heavy. For compute-heavy workloads, Slurm clusters are ideal. You can partition your cluster across agents with different priorities so they don't compete with each other or exhaust each other's queues. The agents can manage this themselves, but you should design the partitioning.
 
