@@ -34,29 +34,37 @@ The same applies to code, to experimental design, to literature review. In every
 
 Here is a simple model for how one person gets to one paper per day. The numbers below are idealized---we'll discuss the assumptions---but the math is straightforward.
 
-**The key variable is interventions.** An intervention is any time you need to step in: course-correct the agent, fix a misunderstanding, redirect the experimental plan, give substantive feedback on the paper draft. Between interventions, the agent works autonomously---running experiments, writing, iterating on figures.
+**The key variable is interventions per project (*I*).** An intervention is any time you need to step in: course-correct the agent, fix a misunderstanding, redirect the experimental plan, give substantive feedback on the paper draft. Between interventions, the agent works autonomously---running experiments, writing, iterating on figures.
 
-Assume the following:
+The throughput formula is simple:
 
-- You juggle **5 projects** simultaneously
-- You work a **5-day week**, **8 hours per day**
-- You switch between projects every **30 minutes**
-- Each project requires roughly **15 interventions** to go from plan to finished paper
+> **Papers per week = Weekly intervention slots / *I***
 
-That gives you **16 intervention slots per day** (8 hours ÷ 30 minutes), or **80 per week**. Spread across 5 projects, that's **16 interventions per project per week**---more than enough to clear the 15-intervention bar. Each project finishes in roughly one week. Five projects finishing per week is **one project per day**.
+You work a 5-day week, 8 hours per day, rotating between projects every 30 minutes. That gives you **16 slots per day**, or **80 per week**. The number of papers you produce is just 80 divided by however many interventions each project needs.
 
-The critical assumption here is that agents can work autonomously for at least 30 minutes between your check-ins. Today, that's realistic for well-planned projects with a detailed `CLAUDE.md`. It will only get easier as models improve.
+With *I* = 15 (a realistic estimate today for a well-planned project): 80 / 15 ≈ **5 papers per week**---roughly one per day. You can verify this concretely: juggle 5 projects, give each 16 interventions per week, and each finishes in about a week.
 
-The other critical assumption is planning quality. The 15-intervention estimate assumes careful upfront planning---a detailed experimental design, clear paper structure, explicit success criteria. Skimp on the plan and your intervention count doubles or triples. The time you invest in planning is directly subtracted from the time you spend firefighting later.
+**What determines *I*?** The best predictor is the **mean autonomous runtime (*T*)**: how long your agent can work productively without needing you. Today, *T* is roughly 30 minutes for a well-configured project. As models improve, *T* will stretch to hours---and as *T* grows, *I* shrinks, because the agent resolves more problems on its own between check-ins.
+
+Three things drive *T* higher:
+
+1. **Planning quality.** The more detailed your upfront plan---hyperparameters, paper structure, expected results, success criteria---the fewer surprises the agent encounters. Skimp on the plan and *I* doubles or triples.
+2. **CLAUDE.md quality.** Every post-mortem you write into the `CLAUDE.md` after an intervention prevents that class of failure from recurring. This is a ratchet: *T* only increases over time if you maintain this discipline.
+3. **Model capability.** This is the one you just have to wait for. Better models mean better judgment, fewer wrong turns, longer autonomous runs.
+
+Here's how output scales as *T* increases and *I* drops:
+
+| *T* (mean autonomous runtime) | *I* (interventions per project) | Papers per week | Papers per day |
+|------|------|------|------|
+| 30 min (early 2026) | 15 | ~5 | ~1 |
+| 1 hour (late 2026) | 10 | ~8 | ~1.5 |
+| 2 hours (mid 2027) | 5 | ~16 | ~3 |
+| 4 hours (late 2027) | 3 | ~27 | ~5 |
+| Full day (2028+) | 1 | ~80 | ~16 |
+
+The last row is the end state: *I* = 1 means the only intervention is **approval**. You review the finished paper and say yes or no. At that point, your output is limited only by compute and money, not by your time.
 
 Most people can't context-switch across 5 projects effectively. That's fine---even 3 projects with longer rotation windows gets you to 3 papers per week. The point isn't the exact number. The point is that the math works, and it works today, with current models and current tooling.
-
-| When | Output per person | Human role |
-|------|------------------|------------|
-| Early 2026 | ~1 paper per week | Reviewing, directing, intervening |
-| Late 2026 | ~1 paper every 2--3 days | Reviewing, occasional course corrections |
-| Mid 2027 | ~1 paper per day | Reviewing summaries, approving directions |
-| Late 2027+ | Multiple papers per day | High-level approval only |
 
 ## What Becomes Scarce
 
@@ -86,7 +94,7 @@ The barriers that kept people locked into narrow specializations are dissolving.
 
 ## Every Intervention Is a Failure
 
-This is the mindset. The goal is fully autonomous workflows. Every time you have to step in, something went wrong.
+This is the mindset that maximizes *T*. The goal is fully autonomous workflows. Every time you have to step in, something went wrong---and every unnecessary intervention is directly stealing throughput from the scaling math above.
 
 After every intervention:
 
@@ -94,9 +102,11 @@ After every intervention:
 2. **Update the CLAUDE.md** to prevent it from happening again
 3. **Treat it as a post-mortem**
 
-A concrete example: on some Slurm clusters, Claude tends to incorrectly parse `squeue` and `sacct` output, getting confused about which jobs are running versus pending. This leads to duplicated job submissions or premature cancellations. When you encounter this, you document the correct parsing behavior in the top-level `CLAUDE.md` and iterate.
+This is how *T* ratchets upward over time. Each post-mortem eliminates a class of failure. Each `CLAUDE.md` update teaches the agent something it will never need to be told again. You are systematically converting interventions into autonomous capability.
 
-If you're going back and forth with your coordinator agent every five minutes, something is fundamentally broken. Fix the plan, fix the `CLAUDE.md`, fix the workflow.
+A concrete example: on some Slurm clusters, Claude tends to incorrectly parse `squeue` and `sacct` output, getting confused about which jobs are running versus pending. This leads to duplicated job submissions or premature cancellations. When you encounter this, you document the correct parsing behavior in the top-level `CLAUDE.md` and iterate. That failure never happens again. *T* increases. *I* decreases. Output goes up.
+
+If you're going back and forth with your coordinator agent every five minutes, something is fundamentally broken. Your *T* is near zero, which means your throughput is near zero no matter how many projects you're juggling. Fix the plan, fix the `CLAUDE.md`, fix the workflow.
 
 When you do need to intervene, use **plan mode**. It forces the agent to think in detail about the problem before acting, and it clears context to avoid confusion from accumulated noise. This is critical for breaking out of back-and-forth loops where the agent keeps trying the same failing approach. Small course corrections are fine without plan mode. But any substantive intervention should go through it.
 
