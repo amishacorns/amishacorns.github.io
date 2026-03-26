@@ -173,6 +173,7 @@ Here are the skills worth building:
 - **`/status`** — Summarize the current state of the project: what experiments have run, what's pending, what's blocking, how the paper looks. A quick snapshot you can read in 30 seconds.
 - **`/plan-review`** — Re-evaluate the project plan against current results. Are we still testing the right hypothesis? Should we pivot? Are there experiments we should cut or add?
 - **`/morning-briefing`** — Summarize overnight progress across all active projects. What changed, what finished, what failed, what needs attention. This is your first command of the day.
+- **`/utilization`** — Check resource utilization across all subscriptions and compute. Token usage per subscription, Slurm queue depth, idle nodes, active agents. Surface what's maxed out, what's idle, and what to launch next.
 
 The power of skills is that they compound. Every time you refine a skill definition---adding a check you missed, specifying a venue you forgot---every future invocation benefits. They are the reusable unit of quality control.
 
@@ -297,10 +298,20 @@ Different projects have different compute profiles---some are analysis-heavy, so
 The daily loop:
 
 1. **Morning:** Review overnight progress on all papers. Voice feedback on each.
-2. **Throughout the day:** Rotate between projects every hour. Read the latest paper draft. Critique it. Direct next steps via voice.
+2. **Throughout the day:** Rotate between projects every 30 minutes. Read the latest paper draft. Critique it. Direct next steps via voice. This cadence is a guideline, not a rule---some projects are compute-heavy and you're just waiting on results, others need more frequent attention. Adjust based on where your interventions are most needed.
 3. **End of day:** Audit `CLAUDE.md` files for any projects that required multiple interventions. Launch overnight compute jobs.
 
 This is demanding, but it's a fundamentally different kind of demand than writing code or analyzing data. You're operating at the highest level of abstraction---setting direction and ensuring quality.
+
+### Resource Utilization
+
+Your compute should never be idle. If you have a Slurm cluster, the queue should be full. If you have multiple Claude Max subscriptions, you should be hitting your hourly and weekly token limits. Idle compute is wasted money and wasted throughput.
+
+This is harder than it sounds. You need to monitor utilization across every resource: how many Slurm jobs are queued versus running, how many tokens you've burned on each subscription this hour, how many agents are actively working versus waiting for input. If a subscription has headroom, launch another project or run background audits. If your cluster has idle nodes, queue more experiments.
+
+The challenge is that there's no single dashboard for this today. You're stitching together Slurm's `squeue`, Claude's usage limits, and your own sense of how many projects are in flight. This is a good candidate for a skill---`/utilization`---that polls all your resources and gives you a single snapshot: what's maxed out, what's idle, and what you should launch next.
+
+The goal is simple: **100% utilization of every resource you're paying for**. If you're not bumping into rate limits regularly, you don't have enough projects running. If your cluster has idle nodes at the end of the day, you should have queued more overnight jobs. Treat idle compute the way a factory treats an idle assembly line---it's a problem to solve, not a feature.
 
 ## Go Mobile
 
