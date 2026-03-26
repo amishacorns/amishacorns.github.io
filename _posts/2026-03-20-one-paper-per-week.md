@@ -115,15 +115,13 @@ What we need instead is **AI-first scientific infrastructure**:
 
 The transition is already underway. AAAI's peer review pilot, aiXiv's automated reviewing, and the [AI Scientist](https://sakana.ai/ai-scientist-first-publication/) passing peer review at a top ML workshop are all early signals. But the pace of institutional adaptation is far too slow. The gap between what the tools can do and what the institutions allow is widening every month.
 
-## The Commandments
+## The Three Nevers
 
-1. **Never type, only speak.** Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas to your agents, not how fast you can type them.
+1. **Never type.** Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas to your agents, not how fast you can type them.
 
-2. **Never write or look at code, only verify.** Your agents are better programmers than almost every human on the planet. At the 2025 International Olympiad in Informatics, [only five humans outperformed the best coding agent](https://the-decoder.com/openais-ai-system-wins-a-gold-medal-level-score-at-the-international-olympiad-in-informatics-2025/). You verify correctness through testing and independent review, not by reading source files.
+2. **Never code.** Your agents are better programmers than almost every human on the planet. At the 2025 International Olympiad in Informatics, [only five humans outperformed the best coding agent](https://the-decoder.com/openais-ai-system-wins-a-gold-medal-level-score-at-the-international-olympiad-in-informatics-2025/). You verify correctness through testing and independent review, not by reading source files.
 
-3. **Only look at data through the paper.** No spreadsheets, no CSVs, no terminal output. If you need to see data, it belongs in a figure or table in the paper. Variants go in the appendix.
-
-4. **Manage, don't research.** You dispatch projects to coordinator agents---your PhD students---who manage swarms of sub-agents---your masters students and undergrads. Your job is to set direction, review papers, and give feedback. That's it.
+3. **Never write LaTeX.** No spreadsheets, no CSVs, no terminal output. If you need to see data, it belongs in a figure or table in the paper. Variants go in the appendix. The paper is the only artifact you look at---and you never write it yourself.
 
 ## Every Intervention Is a Failure
 
