@@ -119,6 +119,18 @@ The transition is already underway. AAAI's peer review pilot, aiXiv's automated 
 
 # Practice
 
+## Trust
+
+Everything in this section depends on trust. Not blind trust---earned trust. You build it the same way you build trust with any collaborator: by learning where they fail.
+
+When you first start working with agents, you will catch mistakes. They will hallucinate citations, write buggy code, misinterpret your instructions, make poor experimental choices. This is expected. What matters is that these mistakes are *consistent*. Agents fail in predictable ways, and once you learn the failure modes of the current generation of models, you know exactly where to verify and where to let go.
+
+Trust is a function of consistency. Every time an agent handles a task correctly ten times in a row, you stop checking that task. Every time it fails in a new way, you add a new verification step. Over weeks of working this way, you build a mental model of what agents can and cannot do reliably. That mental model is your trust calibration.
+
+And the calibration shifts over time. As models improve, failure modes disappear. Tasks that required close supervision six months ago now run autonomously. The trust boundary expands. You delegate more, verify less, and your throughput increases---not because you're working harder, but because you've learned where the agents are reliable and where they aren't.
+
+The Three Nevers, the intervention philosophy, the entire workflow below---none of it works without this foundation. You can't stop typing, stop coding, stop writing LaTeX unless you trust that the agents will do these things well enough. And you can't trust them until you've spent the time learning their failure modes. There is no shortcut. But the trust compounds, and once it's there, it changes everything.
+
 ## The Three Nevers
 
 1. **Never type.** Never type instructions to your agents. Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas, not how fast you can type them.
