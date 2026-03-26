@@ -131,6 +131,22 @@ And the calibration shifts over time. As models improve, failure modes disappear
 
 The Three Nevers, the intervention philosophy, the entire workflow below---none of it works without this foundation. You can't stop typing, stop coding, stop writing LaTeX unless you trust that the agents will do these things well enough. And you can't trust them until you've spent the time learning their failure modes. There is no shortcut. But the trust compounds, and once it's there, it changes everything.
 
+## Trust but Verify
+
+Trust without verification is negligence. The way you maintain trust at scale is through continuous, automated audits---launched periodically, running in the background, always fighting against the entropy that agents introduce.
+
+You audit everything:
+
+- **The paper.** Is the writing coherent? Are the claims supported by the data? Are the figures correct? Do the numbers in the text match the numbers in the tables? Launch review agents against the latest draft regularly---not just at the end.
+- **The data.** Are the results reproducible? Are there anomalies, corrupted runs, logically impossible values? Agents should be validating data integrity continuously, not waiting for you to spot problems in a figure.
+- **The code.** Not by reading it yourself---that violates the Three Nevers. By launching independent agents to review it. Unit tests, integration tests, functional tests. Every agent that writes code should have multiple agents verifying it from fresh contexts with different perspectives.
+- **The logic.** Does the experimental design actually test the hypothesis? Are there confounds the agent missed? Does the analysis support the conclusions? These are higher-order checks that require launching agents specifically tasked with adversarial review.
+- **The complexity.** Codebases grow. Agents love to add code and rarely delete it. Without periodic cleanup, you end up with duplicated scripts, dead utilities, tangled dependencies. Launch code health sweeps regularly---five or ten agents doing a full audit of the project structure.
+
+The key insight is that none of this requires *you* to do the verification. You are not reading code, not inspecting data, not checking test output. You are *launching agents that do these things and reporting back*. Verification scales the same way production does: through delegation.
+
+Build these audits into your workflow as periodic background tasks. They run whether you remember to launch them or not. They surface problems before those problems reach the paper. This is how you maintain quality at one paper per week without personally reviewing every line of code or every data point.
+
 ## The Three Nevers
 
 1. **Never type.** Never type instructions to your agents. Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas, not how fast you can type them.
