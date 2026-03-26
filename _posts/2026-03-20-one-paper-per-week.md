@@ -14,6 +14,8 @@ tags:
 
 ---
 
+# Background
+
 ## The Acceleration
 
 We are entering a period of scientific acceleration unlike anything in history. Autonomous research is here, and the transition from human-driven to agent-driven science has already begun. It won't happen overnight---it's a gradual reduction in human intervention---but it will be largely complete within five years. And the final state is simple: **approval**. The only contribution humans will have in the loop is approval.
@@ -114,6 +116,8 @@ What we need instead is **AI-first scientific infrastructure**:
 - **Conferences as we know them will become obsolete.** The current model---submit, wait months for reviews, present at a venue---cannot survive when output is measured in papers per day. What replaces it will look more like a continuous, living repository with rolling automated review, where human curation focuses on identifying the most important results rather than gatekeeping every submission.
 
 The transition is already underway. AAAI's peer review pilot, aiXiv's automated reviewing, and the [AI Scientist](https://sakana.ai/ai-scientist-first-publication/) passing peer review at a top ML workshop are all early signals. But the pace of institutional adaptation is far too slow. The gap between what the tools can do and what the institutions allow is widening every month.
+
+# Practice
 
 ## The Three Nevers
 
