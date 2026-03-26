@@ -253,6 +253,33 @@ The `CLAUDE.md` is your constitution. With 1 million tokens of context, you have
 
 ## The Workflow
 
+### The Idea Pipeline
+
+You need a constant stream of ideas feeding into your project queue. This is the top of the funnel, and it should be almost entirely automated. The goal: **~100 raw ideas per day, filtered down to ~10 proposals you manually review, with at most 1 new project started per day.**
+
+**GPT Pro drives this pipeline.** Exhaust an entire GPT Pro subscription on idea generation alone---run multiple instances in parallel, each covering a different field or subfield. Claude is better for execution, but GPT Pro's deep research capability is ideal for surveying the literature at scale and synthesizing ideas from it.
+
+The pipeline runs daily, overnight or early morning:
+
+1. **Monitor.** Multiple GPT Pro instances continuously scan arXiv, Semantic Scholar, and conference proceedings for new papers in your target fields. This is critical because the volume of submissions to arXiv and other repositories is growing exponentially. Within any given area, knowing what has just been published is as important as generating new ideas---speed matters, and you can't publish something novel if someone posted the same result last week. The instances should also track spotlights, best papers, and oral presentations from your target conferences.
+
+2. **Generate.** Each instance proposes research ideas inspired by gaps, contradictions, extensions, and emerging trends it found. With 5--10 instances running across different fields, this produces ~100 raw ideas per day.
+
+3. **Filter (automated).** A second wave of agents scores each idea on novelty (has this been done?), feasibility (can agents execute this in a week?), impact (would anyone care?), and fit (does this align with your research identity and prior work?). Source this filter with your own publication history so ideas build on your strengths and avoid self-duplication. This pass kills ~90% of the raw ideas.
+
+4. **Present.** You wake up to ~10 ranked proposals, each with a one-paragraph summary, key references, feasibility estimate, and a suggested project type. You review these manually---this is a taste judgment that takes minutes, not hours.
+
+**Maintain a backlog.** Not every good idea should start immediately. Keep a running queue of approved ideas ranked by priority. Each day, you pull from the backlog based on your current project balance---how many active projects you have, what compute is available, and what types of projects are already in flight.
+
+**Balance your portfolio.** Your active projects should be a mix along two dimensions:
+
+- **Risk:** Some incremental, some ambitious, some long shots. The cheap failures principle means you can afford the long shots, but you still need a base of projects that are likely to produce publishable results.
+- **Automation level:** Some projects are nearly fully automated---creating new evaluations or benchmarks, analysis-heavy studies, systematic surveys. Others are compute-heavy and involve training runs. Others require more human judgment and intervention. Your infrastructure determines how many of each type you can sustain. If you have a large Slurm cluster, lean heavier on compute-intensive projects. If you're subscription-limited, lean toward analysis and evaluation work.
+
+**Conferences are high signal.** Directly specify which conferences you care about---NeurIPS, ICML, ICLR, ACL, AAAI, or whatever is relevant to your field. The pipeline should specifically monitor accepted papers, spotlights, best paper awards, and oral presentations from these venues. These are curated signals in a world of exponentially growing noise.
+
+You should not start more than one new project per day. The bottleneck is the detailed plan---each project needs 30--60 minutes of your focused attention to set direction properly. Starting too many projects with shallow plans leads to high intervention rates and low throughput. One well-planned project per day, pulled from a healthy backlog, is the sustainable pace.
+
 ### The Detailed Plan
 
 This is the most important artifact. Spend 30 minutes to an hour on it *before* any agent writes a single line of code. When I say detailed, I mean:
