@@ -117,11 +117,11 @@ The transition is already underway. AAAI's peer review pilot, aiXiv's automated 
 
 ## The Three Nevers
 
-1. **Never type.** Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas to your agents, not how fast you can type them.
+1. **Never type.** Never type instructions to your agents. Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas, not how fast you can type them.
 
-2. **Never code.** Your agents are better programmers than almost every human on the planet. At the 2025 International Olympiad in Informatics, [only five humans outperformed the best coding agent](https://the-decoder.com/openais-ai-system-wins-a-gold-medal-level-score-at-the-international-olympiad-in-informatics-2025/). You verify correctness through testing and independent review, not by reading source files.
+2. **Never code.** Never write or read code. Your agents are better programmers than almost every human on the planet. At the 2025 International Olympiad in Informatics, [only five humans outperformed the best coding agent](https://the-decoder.com/openais-ai-system-wins-a-gold-medal-level-score-at-the-international-olympiad-in-informatics-2025/). You verify correctness through testing and independent review, not by reading source files.
 
-3. **Never write LaTeX.** No spreadsheets, no CSVs, no terminal output. If you need to see data, it belongs in a figure or table in the paper. Variants go in the appendix. The paper is the only artifact you look at---and you never write it yourself.
+3. **Never write LaTeX.** Never write or read the paper text directly. Never look at raw data---no spreadsheets, no CSVs, no terminal output. If you need to see data, it belongs in a figure or table in the paper. Variants go in the appendix. The paper is the only artifact you look at---rendered, not source.
 
 ## Every Intervention Is a Failure
 
