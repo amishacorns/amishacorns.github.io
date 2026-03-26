@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bar-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A90D9"/>
+      <stop offset="100%" stop-color="#2C5F8A"/>
+    </linearGradient>
+    <linearGradient id="bar-highlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4A843"/>
+      <stop offset="100%" stop-color="#B8912E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="400" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="350" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Throughput vs. Autonomous Runtime</text>
+
+  <!-- Axes -->
+  <line x1="100" y1="340" x2="650" y2="340" stroke="#ccc" stroke-width="1.5"/>
+  <line x1="100" y1="340" x2="100" y2="55" stroke="#ccc" stroke-width="1.5"/>
+
+  <!-- Y-axis label -->
+  <text x="30" y="200" text-anchor="middle" font-size="12" fill="#666" transform="rotate(-90, 30, 200)">Papers per week</text>
+
+  <!-- Y-axis ticks -->
+  <text x="90" y="344" text-anchor="end" font-size="10" fill="#999">0</text>
+  <line x1="96" y1="304" x2="100" y2="304" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="308" text-anchor="end" font-size="10" fill="#999">10</text>
+  <line x1="96" y1="268" x2="100" y2="268" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="272" text-anchor="end" font-size="10" fill="#999">20</text>
+  <line x1="96" y1="232" x2="100" y2="232" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="236" text-anchor="end" font-size="10" fill="#999">30</text>
+  <line x1="96" y1="196" x2="100" y2="196" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="200" text-anchor="end" font-size="10" fill="#999">40</text>
+  <line x1="96" y1="160" x2="100" y2="160" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="164" text-anchor="end" font-size="10" fill="#999">50</text>
+  <line x1="96" y1="124" x2="100" y2="124" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="128" text-anchor="end" font-size="10" fill="#999">60</text>
+  <line x1="96" y1="88" x2="100" y2="88" stroke="#ccc" stroke-width="1"/>
+  <text x="90" y="92" text-anchor="end" font-size="10" fill="#999">70</text>
+
+  <!-- Gridlines -->
+  <line x1="100" y1="304" x2="650" y2="304" stroke="#eee" stroke-width="0.5"/>
+  <line x1="100" y1="268" x2="650" y2="268" stroke="#eee" stroke-width="0.5"/>
+  <line x1="100" y1="232" x2="650" y2="232" stroke="#eee" stroke-width="0.5"/>
+  <line x1="100" y1="196" x2="650" y2="196" stroke="#eee" stroke-width="0.5"/>
+  <line x1="100" y1="160" x2="650" y2="160" stroke="#eee" stroke-width="0.5"/>
+  <line x1="100" y1="124" x2="650" y2="124" stroke="#eee" stroke-width="0.5"/>
+  <line x1="100" y1="88" x2="650" y2="88" stroke="#eee" stroke-width="0.5"/>
+
+  <!-- Bar 1: T=30min, I=15, ~5 papers/week -->
+  <rect x="130" y="322" width="70" height="18" rx="3" fill="url(#bar-grad)"/>
+  <text x="165" y="316" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C5F8A">~5</text>
+  <text x="165" y="365" text-anchor="middle" font-size="10" fill="#666">30 min</text>
+  <text x="165" y="378" text-anchor="middle" font-size="9" fill="#999">I = 15</text>
+  <text x="165" y="395" text-anchor="middle" font-size="9" fill="#aaa">early 2026</text>
+
+  <!-- Bar 2: T=1hr, I=10, ~8 papers/week -->
+  <rect x="240" y="311" width="70" height="29" rx="3" fill="url(#bar-grad)"/>
+  <text x="275" y="305" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C5F8A">~8</text>
+  <text x="275" y="365" text-anchor="middle" font-size="10" fill="#666">1 hour</text>
+  <text x="275" y="378" text-anchor="middle" font-size="9" fill="#999">I = 10</text>
+  <text x="275" y="395" text-anchor="middle" font-size="9" fill="#aaa">late 2026</text>
+
+  <!-- Bar 3: T=2hr, I=5, ~16 papers/week -->
+  <rect x="350" y="282" width="70" height="58" rx="3" fill="url(#bar-grad)"/>
+  <text x="385" y="276" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C5F8A">~16</text>
+  <text x="385" y="365" text-anchor="middle" font-size="10" fill="#666">2 hours</text>
+  <text x="385" y="378" text-anchor="middle" font-size="9" fill="#999">I = 5</text>
+  <text x="385" y="395" text-anchor="middle" font-size="9" fill="#aaa">mid 2027</text>
+
+  <!-- Bar 4: T=4hr, I=3, ~27 papers/week -->
+  <rect x="460" y="243" width="70" height="97" rx="3" fill="url(#bar-grad)"/>
+  <text x="495" y="237" text-anchor="middle" font-size="12" font-weight="bold" fill="#2C5F8A">~27</text>
+  <text x="495" y="365" text-anchor="middle" font-size="10" fill="#666">4 hours</text>
+  <text x="495" y="378" text-anchor="middle" font-size="9" fill="#999">I = 3</text>
+  <text x="495" y="395" text-anchor="middle" font-size="9" fill="#aaa">late 2027</text>
+
+  <!-- Bar 5: T=full day, I=1, ~80 papers/week (highlighted) -->
+  <rect x="570" y="52" width="70" height="288" rx="3" fill="url(#bar-highlight)"/>
+  <text x="605" y="46" text-anchor="middle" font-size="12" font-weight="bold" fill="#B8912E">~80</text>
+  <text x="605" y="365" text-anchor="middle" font-size="10" fill="#666">Full day</text>
+  <text x="605" y="378" text-anchor="middle" font-size="9" fill="#999">I = 1</text>
+  <text x="605" y="395" text-anchor="middle" font-size="9" fill="#aaa">2028+</text>
+
+  <!-- Annotation on last bar -->
+  <text x="605" y="190" text-anchor="middle" font-size="10" fill="white" font-weight="bold">approval</text>
+  <text x="605" y="204" text-anchor="middle" font-size="10" fill="white" font-weight="bold">only</text>
+
+  <!-- X-axis label -->
+  <text x="390" y="358" text-anchor="middle" font-size="12" fill="#666">Mean autonomous runtime (T)</text>
+</svg>

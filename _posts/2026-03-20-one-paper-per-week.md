@@ -56,6 +56,8 @@ Three things drive *T* higher:
 
 Here's how output scales as *T* increases and *I* drops:
 
+![Throughput vs. Autonomous Runtime](/images/throughput-chart.svg)
+
 | *T* (mean autonomous runtime) | *I* (interventions per project) | Papers per week | Papers per day |
 |------|------|------|------|
 | 30 min (early 2026) | 15 | ~5 | ~1 |
@@ -209,6 +211,8 @@ When you do need to intervene, use **plan mode**. It forces the agent to think i
 
 **Maximize your Claude Max subscriptions.** Each subscription runs $100--$200/month. Start with at least three active subscriptions. If your budget allows, scale up. The limits are dynamic, but you should be bumping into rate limits at least every few days or you don't have enough subscriptions. Depending on your budget and coordination ability, you could scale to 20 or 25 subscriptions.
 
+![The Agent Hierarchy](/images/agent-hierarchy.svg)
+
 **Use a mono repo.** Structure your research as a single repository where each subdirectory is its own project:
 
 ```
@@ -258,6 +262,8 @@ The `CLAUDE.md` is your constitution. With 1 million tokens of context, you have
 You need a constant stream of ideas feeding into your project queue. This is the top of the funnel, and it should be almost entirely automated. The goal: **~100 raw ideas per day, filtered down to ~10 proposals you manually review, with at most 1 new project started per day.**
 
 **GPT Pro drives this pipeline.** Exhaust an entire GPT Pro subscription on idea generation alone---run multiple instances in parallel, each covering a different field or subfield. Claude is better for execution, but GPT Pro's deep research capability is ideal for surveying the literature at scale and synthesizing ideas from it.
+
+![The Idea Pipeline](/images/idea-funnel.svg)
 
 The pipeline runs daily, overnight or early morning:
 
