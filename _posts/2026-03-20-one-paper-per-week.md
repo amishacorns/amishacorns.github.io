@@ -147,6 +147,35 @@ The key insight is that none of this requires *you* to do the verification. You 
 
 Build these audits into your workflow as periodic background tasks. They run whether you remember to launch them or not. They surface problems before those problems reach the paper. This is how you maintain quality at one paper per week without personally reviewing every line of code or every data point.
 
+## Skills
+
+Describing what you want verified every time is slow and error-prone. Instead, encode your verification and research workflows as **skills**---reusable prompts that any agent can invoke with a single command. Define them in your `CLAUDE.md` or as standalone skill files in your repo. Then instead of explaining what a code audit means, you just say "run `/verify-code`."
+
+Here are the skills worth building:
+
+### Verification Skills
+
+- **`/verify-code`** — Scan for duplicated code, dead code, logical flaws, unnecessary complexity. Launch multiple sub-agents from fresh contexts to review independently.
+- **`/verify-tests`** — Audit test coverage. Check for missing edge cases, missing integration tests, tests that pass trivially. Verify that tests actually test what they claim to test.
+- **`/verify-data`** — Check for anomalies, corrupted runs, logically impossible values, data that doesn't match what the code should produce. Validate reproducibility by rerunning a subset.
+- **`/verify-paper`** — Do the claims match the data? Do the numbers in the text match the tables? Are the figures generated from the latest data? Is the related work accurate and properly cited?
+- **`/verify-logic`** — Adversarial review of experimental design. Does the experiment actually test the hypothesis? Are there confounds? Does the analysis support the conclusions?
+
+### Literature Skills
+
+- **`/related-work`** — Deep literature search across arXiv, Semantic Scholar, Google Scholar, and conference proceedings. Specify target venues in the skill definition---ICML, NeurIPS, ICLR, ACL, AAAI, and whatever is relevant to your field. Return structured summaries with citations.
+- **`/survey-group`** — Survey recent output from specific research groups. Useful when you know who the key players are in a subfield and want to know what they've published in the last six months.
+- **`/novelty-check`** — Search the literature specifically for work that overlaps with your current project. The goal is to catch non-novelty before submission, not after.
+
+### Project Skills
+
+- **`/sweep`** — Full code health sweep. De-duplicate, remove dead code, factor out shared utilities, clean up the project structure. Run this periodically in the background.
+- **`/status`** — Summarize the current state of the project: what experiments have run, what's pending, what's blocking, how the paper looks. A quick snapshot you can read in 30 seconds.
+- **`/plan-review`** — Re-evaluate the project plan against current results. Are we still testing the right hypothesis? Should we pivot? Are there experiments we should cut or add?
+- **`/morning-briefing`** — Summarize overnight progress across all active projects. What changed, what finished, what failed, what needs attention. This is your first command of the day.
+
+The power of skills is that they compound. Every time you refine a skill definition---adding a check you missed, specifying a venue you forgot---every future invocation benefits. They are the reusable unit of quality control.
+
 ## The Three Nevers
 
 1. **Never type.** Never type instructions to your agents. Every keystroke is a mistake. Your bottleneck should be how fast you can *speak* your ideas, not how fast you can type them.
