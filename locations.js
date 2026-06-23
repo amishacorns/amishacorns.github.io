@@ -150,5 +150,7 @@ var locations = [
     { lat: 43.0618, lng: 141.3545, title: "Sapporo, Japan" },
     { lat: 11.9674, lng: 121.9248, title: "Boracay, Philippines" },
     { lat: 14.5995, lng: 120.9842, title: "Manila, Philippines" },
-    { lat: 38.9918, lng: -74.8149, title: "Wildwood, NJ, USA" }
+    { lat: 38.9918, lng: -74.8149, title: "Wildwood, NJ, USA" },
+    { lat: 11.5564, lng: 104.9282, title: "Phnom Penh, Cambodia" },
+    { lat: 13.3671, lng: 103.8448, title: "Siem Reap, Cambodia" }
 ];
