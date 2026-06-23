@@ -149,5 +149,6 @@ var locations = [
     { lat: 42.8621, lng: 140.6874, title: "Niseko, Japan" },
     { lat: 43.0618, lng: 141.3545, title: "Sapporo, Japan" },
     { lat: 11.9674, lng: 121.9248, title: "Boracay, Philippines" },
-    { lat: 14.5995, lng: 120.9842, title: "Manila, Philippines" }
+    { lat: 14.5995, lng: 120.9842, title: "Manila, Philippines" },
+    { lat: 38.9918, lng: -74.8149, title: "Wildwood, NJ, USA" }
 ];
