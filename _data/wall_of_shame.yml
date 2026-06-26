@@ -1,0 +1,124 @@
+# Wall of Shame — sourced quotes from leaders in the field that aged poorly,
+# or are on the clock. Every quote must be VERBATIM with a primary source URL
+# and date. Status options: "Aged poorly", "Falsified", "Clock ticking", "Pending".
+# Add a `note` to any quote for a one-line rebuttal in your own voice.
+
+people:
+  - name: "Yann LeCun"
+    title: "Yann LeCant"
+    handle: "@ylecun"
+    role: "Chief AI Scientist, Meta (2013–2025) · Turing Award, 2018"
+    blurb: >-
+      The patron saint of "deep learning can't do that" — a man who has
+      narrated, in real time and with great confidence, a list of things
+      neural networks would never do, right up until they did them.
+    quotes:
+      - text: |-
+          Auto-Regressive LLMs can't plan (and can't really reason).
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1702027572077326505"
+        date: "Sept 2023"
+        status: "Aged poorly"
+        note: ""
+
+      - text: |-
+          Before we reach Human-Level AI (HLAI), we will have to reach
+          Cat-Level & Dog-Level AI. We are nowhere near that. We are still
+          missing something big. LLM's linguistic abilities notwithstanding.
+          A house cat has way more common sense and understanding of the
+          world than any LLM.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1622300311573651458"
+        date: "Feb 2023"
+        status: "Pending"
+        note: ""
+
+      - text: |-
+          It seems to me that before "urgently figuring out how to control AI
+          systems much smarter than us" we need to have the beginning of a
+          hint of a design for a system smarter than a house cat.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1791890883425570823"
+        date: "May 2024"
+        status: "Pending"
+        note: ""
+
+      - text: |-
+          LLMs are useful, but they are an off ramp on the road to human-level
+          AI. If you are a PhD student, don't work on LLMs.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1796982509567180927"
+        date: "June 2024"
+        status: "Aged poorly"
+        note: ""
+
+      - text: |-
+          Auto-Regressive LLMs in their current form will not take us to
+          human-level AI.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1829972956518166881"
+        date: "Aug 2024"
+        status: "Pending"
+        note: ""
+
+      - text: |-
+          [LLMs] can do none of those or they can only do them in a very
+          primitive way, and they don't really understand the physical world.
+        source: "Lex Fridman Podcast #416"
+        url: "https://lexfridman.com/yann-lecun-3-transcript"
+        date: "Mar 2024"
+        status: "Aged poorly"
+        note: ""
+
+      - text: |-
+          The shelf life of the current [LLM] paradigm is fairly short,
+          probably three to five years.
+        source: "Reported from Davos, via TechCrunch"
+        url: "https://techcrunch.com/2025/01/23/metas-yann-lecun-predicts-a-new-ai-architectures-paradigm-within-5-years-and-decade-of-robotics/"
+        date: "Jan 2025"
+        status: "Clock ticking"
+        note: ""
+
+      # --- Below 3 from the Jun 2026 thread. PERMALINKS NEEDED to make them
+      # --- bulletproof (currently attributed but un-linked).
+      - text: |-
+          Economists say there won't be mass unemployment due to AI. Don't
+          listen to Dario, he is not an economist.
+        source: "X (@ylecun), Jun 2026 thread"
+        url: ""
+        date: "Jun 2026"
+        status: "Clock ticking"
+        note: ""
+
+      - text: |-
+          Right now, the deployment of AI in drones is protecting liberal
+          democracy in Europe against an authoritarian invader. Abandon at
+          your own risk. I sure won't.
+        source: "X (@ylecun), Jun 2026 thread"
+        url: ""
+        date: "Jun 2026"
+        status: "Hot take"
+        note: ""
+
+      - context: >-
+          Replying to a claim that "AI is going to replace grad students just
+          as it has replaced private sector coders and researchers."
+        text: |-
+          No it won't. And no, it hasn't.
+        source: "X (@ylecun)"
+        url: ""
+        date: "Jun 2026"
+        status: "Clock ticking"
+        note: ""
+
+      - text: |-
+          LLMs have changed the world (I never said otherwise). But they are
+          not a means to achieve human-level intelligence or even animal-level.
+        source: "X (@ylecun), Jun 2026 thread"
+        url: ""
+        date: "Jun 2026"
+        status: "Pending"
+        note: >-
+          What he can't seem to grasp: the LLMs will build the next
+          architecture. That makes this the last architecture we design by
+          hand — the opposite of a dead end.
