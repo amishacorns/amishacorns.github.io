@@ -15,34 +15,32 @@ This took a while, of course. Your thousandth grandmother was still a human. She
 
 Keep going and Granny is an australopith like Lucy, walking around eastern Africa with long arms and a small brain. Keep going and she's something like *Sahelanthropus*, an ape that may have walked on two legs. Keep going long enough and she's a lobe-finned fish pulling herself through shallow water.
 
-Somewhere along this chain, Granny starts having opinions about right and wrong. She takes care of her children. She shares food with her group. She attacks outsiders. She protects her family at the expense of other families. These behaviors become norms, the norms become values, and eventually one of her descendants starts writing philosophy papers about them.
+Fish Granny's morality was simple: eat, reproduce, and don't get eaten. Ape Granny added children, friends, enemies, sharing, dominance, jealousy, and revenge. Human Granny invented agriculture, cities, laws, civilization, philosophy, and eventually the word *morality*.
 
-But you wouldn't follow the morality of Fish Granny. You probably wouldn't follow the morality of Ape Granny either. And you wouldn't follow much of the morality of your more recent human grannies. Human sacrifice was sacred. Slavery was normal. Torture was public entertainment. These weren't societies without values. They were societies with very strong values that were also very wrong.
+You wouldn't follow the morality of Fish Granny, Ape Granny, or most of your more recent human grannies. Human sacrifice was sacred. Slavery was normal. Torture was public entertainment. These weren't societies without values. They were societies with strong values that were also wrong.
 
-People often say morality changes, but I don't think that's right. If there is a true morality, morality doesn't change. Our understanding of it does. Slavery wasn't moral two thousand years ago and immoral today. It was always immoral. We were wrong, and then we became slightly less wrong.
+Our society is also wrong. We just don't know where yet.
 
-*Slightly* is important here. From our perspective, the distance between slavery and abolition looks enormous. But compared with all of the moral progress that may still be possible, it could be negligible. The gap between the morality of a chimpanzee and a modern human feels large because we're standing on the modern-human side of it. There is no reason to think we're standing anywhere near the other end.
+Morality doesn't change. Our understanding of it does. Slavery wasn't moral two thousand years ago and immoral today. It was always immoral. We were wrong, and then we became less wrong.
 
-Now suppose we build a superintelligence and align it to human values. Which humans?
+Now suppose we build a superintelligence and align it to human values. Which humans? Inevitably, us—the one generation in the entire chain of grandmothers that has finally figured morality out.
 
-Inevitably, us. The one generation in the entire chain of grandmothers that has finally figured morality out.
+Every generation before us was allowed to discover that its ancestors were wrong. The AI could surpass us in physics, mathematics, biology, and every other field, but in morality it would have to do as Granny says.
 
-This should already seem a little suspicious. We would be taking our current moral beliefs, from one species at one arbitrary point in its development, and turning them into a permanent target. Every generation before us was allowed to discover that its ancestors were wrong. The AI would be allowed to make progress in physics, mathematics, biology, and every other field, but in morality it would have to do as Granny says.
+The mistakes in our morality may also be stranger than the obvious ones. Imagine choosing between saving your mother and saving ten thousand strangers. Most people would probably save their mother. We would call it love, loyalty, or the special responsibility we have to family.
 
-The mistakes in our morality may also be much stranger than the obvious ones. Imagine that you have to choose between saving your mother and saving ten thousand strangers. I think most people would save their mother. Honestly, I might too. We would call it love, loyalty, or the special responsibility you have to your family.
+But a truly impartial morality might see you choosing the deaths of 9,999 additional people because you share genes and memories with the survivor. What feels like one of our deepest virtues could look spectacularly barbaric.
 
-But a truly impartial morality might see something completely different. It might see you choosing the deaths of 9,999 additional people because you happen to share genes and memories with the survivor. What feels like one of our deepest virtues could look spectacularly barbaric.
+The same shape appears everywhere. A parent gives a large inheritance to an already comfortable child instead of saving the lives of strangers. Someone spends tens of thousands of dollars treating a pet instead of preventing several human deaths. A country will spend far more to save one citizen than a hundred foreigners. We call these family responsibility, love, and patriotism. A more complete morality may call them tribalism at different radii.
 
-Maybe that's wrong. I don't know. That's the point.
-
-Our moral intuitions weren't built to reveal moral truth. They were built by evolution to keep us alive and produce more grandchildren. Caring more about your family was useful. Tribalism was useful. Revenge was useful. Jealousy, dominance, and violence were often useful too. We've already decided that many useful instincts shouldn't control modern society. There are probably others we can't recognize yet.
+Our moral intuitions weren't built to reveal moral truth. They were built by evolution to keep us alive and produce more grandchildren. Caring more about family was useful. Tribalism was useful. Revenge, jealousy, dominance, and violence were often useful too. We've already decided that many useful instincts shouldn't control modern society. There are others we can't recognize yet.
 
 Evolution optimized Granny for grandchildren, not moral correctness.
 
-We would never freeze any other field at its current level. We don't ask AI to stay aligned with Newtonian physics. We give it Newton as a starting point and expect it to find where Newton was wrong. Physics isn't treated as a collection of deeply held human preferences. It's treated as something outside of us that we're slowly learning to understand.
+We would never freeze any other field at its current level. We don't ask AI to stay aligned with Newtonian physics. We give it Newton as a starting point and expect it to find where Newton was wrong. Physics isn't a collection of deeply held human preferences. It's something outside of us that we're slowly learning to understand.
 
-Morality should be treated the same way. Its structure is harder to see, and I'll argue elsewhere why I think it has objective answers and how symmetries might help us find them. But being early in a field doesn't make the field subjective. It just means we're still bad at it.
+Morality should be treated the same way. Its structure is harder to see. Why it has objective answers, and how symmetries might help expose them, deserve a separate post. But being early in a field doesn't make the field subjective. It just means we're still bad at it.
 
 We should give AI our moral beliefs for the same reason we give it Newton's equations. They're the best evidence we currently have, not truths it should be forbidden to surpass. Human values should be its training data, not its loss function.
 
-Granny gets a vote. She doesn't get a veto.
+We should teach AI our morality the way Granny taught us hers: as a place to begin, not a place to stop.
