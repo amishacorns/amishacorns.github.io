@@ -29,24 +29,11 @@ tags:
   .wos-cite { font-size: 0.82em; color: #6f777d; }
   .wos-cite a { font-weight: 600; }
   .wos-note { margin: 0.6em 0 0 0; font-size: 0.9em; color: #333; }
-  .wos-badge {
-    display: inline-block;
-    font-size: 0.68em;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.18em 0.55em;
-    border-radius: 3px;
-    color: #fff;
-    vertical-align: middle;
-    margin-bottom: 0.5em;
+  .wos-section {
+    margin: 1.8em 0 0.5em;
+    font-size: 1.12em;
+    color: #30363b;
   }
-  .badge-wrong { background: #c0392b; }
-  .badge-false { background: #7b241c; }
-  .badge-move  { background: #2471a3; }
-  .badge-clock { background: #c87f0a; }
-  .badge-hot   { background: #8e44ad; }
-  .badge-pend  { background: #7f8c8d; }
 </style>
 
 ![Yann LeCan't](/images/yann-lecant-lifeboat-v2.png){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
@@ -57,27 +44,16 @@ wrong on arrival, rendered empirically false, preserved through moving
 definitions, or are quietly on the clock. Every quote is verbatim and links to
 the best available source. The point is not that smart people are sometimes
 wrong. It is the pattern of turning a limitation of one implementation at one
-moment into a fundamental limitation of the entire approach. Receipts only.
-
-Here, an *LLM-based system* includes the language model and the machinery built
-around it: post-training, inference-time computation, search, memory, tools, and
-agent loops. Excluding each successful extension after the fact makes “LLMs
-can’t do X” impossible to falsify.
-
-A next-token training objective describes how the model is trained. It does not
-place a ceiling on what computation the resulting system can perform.
-</div>
-
-{% for person in site.data.wall_of_shame.people %}
-<div class="wos-person">
-  <h2>{{ person.title }}</h2>
-  <p class="wos-sub"><a href="https://x.com/{{ person.handle | remove: '@' }}">{{ person.handle }}</a> · {{ person.role }}</p>
-  <p class="wos-blurb">{{ person.blurb }}</p>
-
-  {% for q in person.quotes %}
-  {% case q.status %}
-    {% when 'Wrong on arrival' %}{% assign badge = 'badge-wrong' %}
-    {% when 'Moving goalposts' %}{% assign badge = 'badge-move' %}
+moment <div class="wos-intro" markdown="1">
+The point isn't that smart people are sometimes wrong, or that strong opinions
+should be kept private. The problem is what happens when a leader in AI keeps
+turning the limitations of one implementation into limits of the entire field,
+ignores weak exponential improvements as they compound, and uses that confidence
+to dismiss safety work as premature. A bad prediction is harmless. Negligence
+about a technology moving this quickly isn't, especially when the person making
+it has the influence to shape what researchers, companies, and governments take
+seriously. That's why this page is mostly about Yann LeCun.
+</div> goalposts' %}{% assign badge = 'badge-move' %}
     {% when 'Empirically false' %}{% assign badge = 'badge-false' %}
     {% when 'Clock ticking' %}{% assign badge = 'badge-clock' %}
     {% when 'Hot take' %}{% assign badge = 'badge-hot' %}
