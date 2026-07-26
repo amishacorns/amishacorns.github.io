@@ -63,7 +63,7 @@ seriously. That's why this page is mostly about Yann LeCun.
     <span class="wos-badge {{ badge }}">{{ q.status }}</span>
     {% if q.context and q.context != "" %}<p class="wos-context">{{ q.context }}</p>{% endif %}
     <p class="q">&ldquo;{{ q.text | strip_newlines }}&rdquo;</p>
-    <p class="wos-cite">&mdash; {{ person.name }}, {% if q.url and q.url != "" %}<a href="{{ q.url }}">{{ q.source }}</a>{% else %}{{ q.source }}{% endif %}, {{ q.date }}</p>
+    <p class="wos-cite">- {{ person.name }}, {% if q.url and q.url != "" %}<a href="{{ q.url }}">{{ q.source }}</a>{% else %}{{ q.source }}{% endif %}, {{ q.date }}</p>
     {% if q.note and q.note != "" %}<p class="wos-note">{{ q.note }}</p>{% endif %}
   </div>
   {% endfor %}
