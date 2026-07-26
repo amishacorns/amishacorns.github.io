@@ -1,6 +1,6 @@
 # Wall of Shame — sourced quotes from leaders in the field that aged poorly,
 # or are on the clock. Every quote must be VERBATIM with a primary source URL
-# and date. Status options: "Aged poorly", "Falsified", "Clock ticking", "Hot take", "Pending".
+# and date. Status options: "Wrong on arrival", "Moving goalposts", "Empirically false", "Clock ticking", "Hot take", "Pending".
 # Add a `note` to any quote for a one-line rebuttal in your own voice.
 
 people:
@@ -9,16 +9,19 @@ people:
     handle: "@ylecun"
     role: "Chief AI Scientist, Meta (2013–2025) · Turing Award, 2018"
     blurb: >-
-      The patron saint of "deep learning can't do that" — a man who has
-      narrated, in real time and with great confidence, a list of things
-      neural networks would never do, right up until they did them.
+      Yann LeCun repeatedly turns limitations of current base models into
+      categorical limitations of LLM-based systems. Reasoning, planning,
+      search, memory, and tool use were not unforeseeable capabilities that
+      appeared from nowhere. The mistake was declaring them impossible in the
+      first place. When they arrive, the boundary of "LLM" quietly moves until
+      the system doing the thing no longer counts.
     quotes:
       - text: |-
           Auto-Regressive LLMs can't plan (and can't really reason).
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1702027572077326505"
         date: "Sept 2023"
-        status: "Aged poorly"
+        status: "Moving goalposts"
         note: ""
 
       - text: |-
@@ -49,7 +52,7 @@ people:
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1796982509567180927"
         date: "June 2024"
-        status: "Aged poorly"
+        status: "Wrong on arrival"
         note: ""
 
       - text: |-
@@ -67,7 +70,7 @@ people:
         source: "Lex Fridman Podcast #416"
         url: "https://lexfridman.com/yann-lecun-3-transcript"
         date: "Mar 2024"
-        status: "Aged poorly"
+        status: "Moving goalposts"
         note: ""
 
       - text: |-
@@ -147,7 +150,7 @@ people:
         source: "Lex Fridman Podcast #416"
         url: "https://lexfridman.com/yann-lecun-3-transcript/"
         date: "Mar 2024"
-        status: "Aged poorly"
+        status: "Wrong on arrival"
         note: "Retrieval is not an adequate description of systems that construct proofs, plans, programs, and novel tool trajectories at inference time."
 
       - text: |-
@@ -181,7 +184,7 @@ people:
         source: "TIME interview"
         url: "https://time.com/6694432/yann-lecun-meta-ai-interview/"
         date: "Feb 2024"
-        status: "Aged poorly"
+        status: "Empirically false"
         note: "By 2026, systems routinely generate novel software, proofs, designs, strategies, and scientific hypotheses. The interesting argument is now about degree."
 
   - name: "Gary Marcus"
@@ -197,7 +200,7 @@ people:
         source: "Nautilus"
         url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
         date: "Mar 2022"
-        status: "Aged poorly"
+        status: "Wrong on arrival"
         note: "Published eight months before ChatGPT."
 
       - text: |-
@@ -205,7 +208,7 @@ people:
         source: "Nautilus"
         url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
         date: "Mar 2022"
-        status: "Aged poorly"
+        status: "Wrong on arrival"
         note: "The following four years produced the largest capability jump in the history of the field."
 
       - text: |-
@@ -240,7 +243,7 @@ people:
         source: "ARC Prize"
         url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
         date: "Oct 2024"
-        status: "Aged poorly"
+        status: "Empirically false"
         note: "The word slightest is doing heroic work here."
 
       - text: |-
@@ -315,7 +318,7 @@ people:
         source: "Deloitte AI Ignition interview"
         url: "https://www2.deloitte.com/content/dam/Deloitte/us/Documents/technology/us-ai-ignition-podcast-oren-etzioni-transcript.pdf"
         date: "2021"
-        status: "Aged poorly"
+        status: "Empirically false"
         note: "No progress whatsoever left almost no room for the agentic systems that followed."
 
       - text: |-
@@ -323,7 +326,7 @@ people:
         source: "Deloitte AI Ignition interview"
         url: "https://www2.deloitte.com/content/dam/Deloitte/us/Documents/technology/us-ai-ignition-podcast-oren-etzioni-transcript.pdf"
         date: "2021"
-        status: "Aged poorly"
+        status: "Empirically false"
         note: "Within five years, agents were navigating computers, writing software, and completing multi-step work with limited supervision."
 
       - text: |-
