@@ -29,6 +29,7 @@ tags:
   .wos-cite { font-size: 0.82em; color: #6f777d; }
   .wos-cite a { font-weight: 600; }
   .wos-note { margin: 0.6em 0 0 0; font-size: 0.9em; color: #333; }
+  .wos-section-response { margin: 0.7em 0 1.8em; padding: 0.8em 1em; background: #f5f5f3; border-radius: 4px; color: #333; }
   .wos-section {
     margin: 1.8em 0 0.5em;
     font-size: 1.12em;
@@ -63,9 +64,12 @@ seriously.
     {% if q.context and q.context != "" %}<p class="wos-context">{{ q.context }}</p>{% endif %}
     <p class="q">&ldquo;{{ q.text | normalize_whitespace }}&rdquo;</p>
     <p class="wos-cite">- {{ person.name }}, {% if q.url and q.url != "" %}<a href="{{ q.url }}">{{ q.source }}</a>{% else %}{{ q.source }}{% endif %}, {{ q.date }}</p>
-    {% if q.note and q.note != "" %}<p class="wos-note">{{ q.note }}</p>{% endif %}
   </div>
   {% endfor %}
+  {% assign section_response = person.section_responses | where: "section", section.name | first %}
+  {% if section_response and section_response.text != "" %}
+  <div class="wos-section-response"><strong>Response:</strong> {{ section_response.text }}</div>
+  {% endif %}
   {% endfor %}
 </div>
 {% endfor %}
