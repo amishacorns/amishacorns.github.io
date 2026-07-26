@@ -17,7 +17,7 @@ QWERTY was fixed in the 1870s for the first commercially successful typewriter. 
 
 This is the boomer board.
 
-This is not an argument that keyboards are useless. A scalpel is useful too; no one digs a subway tunnel with one. Keyboards are excellent for precision and discretion: editing a variable name, entering a password, moving a cursor three characters to the left, or working where speech would be disruptive. They are a terrible default for expressing intent to an intelligent system.
+This is not an argument that keyboards are useless. A teaspoon is useful too; no one excavates a foundation with one. Keyboards are excellent for precision and discretion: editing a variable name, entering a password, moving a cursor three characters to the left, or working where speech would be disruptive. They are a terrible default for expressing intent to an intelligent system.
 
 A [2018 study of more than 168,000 volunteers](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf) measured an average typing speed of 52 words per minute. That was a broad internet sample, not an estimate of software engineers or other employees at a large technology company. The fastest decile cleared roughly 78 words per minute, so let us use 78 as a deliberately generous proxy for a fast office typist. The actual distribution inside technology companies is unknown.
 
