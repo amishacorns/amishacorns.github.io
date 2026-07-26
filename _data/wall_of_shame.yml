@@ -191,9 +191,6 @@ people:
       - section: "The Scaling Wall"
         text: >-
           A benchmark failure can demonstrate a limitation in a current system. It cannot establish that scaling, tooling, or systems built by those models cannot cross it. Repeatedly announcing a wall from the current snapshot confuses an obstacle with a boundary.
-      - section: "Benchmarks As Boundaries"
-        text: >-
-          A failed puzzle is a useful diagnostic, not a universal theorem about the architecture. The interesting question is whether the capability moves as training, inference, and scaffolding change.
 
     quotes:
       - text: |-
@@ -239,7 +236,7 @@ people:
         source: "The Guardian"
         url: "https://www.theguardian.com/commentisfree/2025/jun/10/billion-dollar-ai-puzzle-break-down"
         date: "Jun 2025"
-        section: "Benchmarks As Boundaries"
+        section: "The Scaling Wall"
         status: "Moving goalposts"
         note: "A model failing one formulation of one puzzle is a useful diagnostic. Treating that diagnostic as a boundary on the architecture is the recurring leap."
 
@@ -396,15 +393,6 @@ people:
         note: "“Never” turns a critique of current representations into a universal boundary. Systems already search, test, and discover outside the examples they were given; the remaining argument is about degree and autonomy."
 
       - text: |-
-          Current AI is only meaningfully creative under human supervision.
-        source: "Machine Learning Street Talk"
-        url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
-        date: "Feb 2026"
-        section: "Creativity and Understanding"
-        status: "Clock ticking"
-        note: "This is at least falsifiable. AlphaEvolve-style systems and increasingly autonomous research agents make the supervision boundary the thing to watch."
-
-      - text: |-
           System 1 is what current AI systems do well: rapid pattern matching
           within their training distribution. But pattern matching fails when
           the territory is genuinely new.
@@ -414,45 +402,6 @@ people:
         section: "Creativity and Understanding"
         status: "Clock ticking"
         note: "The description assumes the conclusion. Test-time search, tool use, generated experiments, and learned verifiers are mechanisms for entering new territory, not merely replaying a stored answer."
-
-  - name: "Melanie Mitchell"
-    title: "Melanie Mitchell"
-    handle: "@MelMitchell1"
-    role: "Professor, Santa Fe Institute · MLST guest"
-    blurb: >-
-      This is probably the Mitchell you remembered from MLST: Melanie Mitchell,
-      who appeared twice, including the 2023 episode “AI Benchmarks Are
-      Broken.” Her benchmark criticism is careful; her stronger horizon claims
-      are the better receipts.
-    section_responses:
-      - section: "Timelines"
-        text: >-
-          This was written before the modern LLM era, so the issue is not that the exact systems should have been predicted. The receipt is the confidence of saying superintelligence was nowhere on the horizon.
-      - section: "Benchmarks As Boundaries"
-        text: >-
-          The benchmark criticism is mostly right. Benchmarks can overstate general capability. But skepticism should be symmetric: real-world systems can also improve faster than benchmark design. This belongs here as a caution, not a gotcha.
-
-    quotes:
-      - text: |-
-          Today's AI is far from general intelligence, and I don't believe that
-          machine “superintelligence” is anywhere on the horizon.
-        source: "Artificial Intelligence: A Guide for Thinking Humans"
-        url: "https://books.google.com/books/about/Artificial_Intelligence.html?id=65iEDwAAQBAJ"
-        date: "Oct 2019"
-        section: "Timelines"
-        status: "Clock ticking"
-        note: "Written before the modern LLM era. The phrase “anywhere on the horizon” is the receipt; the capability trend since publication is the experiment."
-
-      - text: |-
-          While LLM-based models excel on many widely used benchmarks, it is
-          rarely the case that a model's benchmark performance predicts its
-          actual capabilities in the real world.
-        source: "AI: A Guide for Thinking Humans"
-        url: "https://aiguide.substack.com/p/on-evaluating-cognitive-capabilities"
-        date: "Jan 2026"
-        section: "Benchmarks As Boundaries"
-        status: "Worth debating"
-        note: "The warning about benchmark validity is good. The open question is whether skepticism is applied symmetrically when real-world performance improves faster than the benchmarks can measure it."
 
   - name: "Jensen Huang"
     title: "Jensen Huang"
@@ -502,31 +451,13 @@ people:
         note: "Higher demand for software today does not settle what happens when the software begins performing an increasing share of the work, including the work that improves the software."
 
       - text: |-
-          Comparing AI to anything that you just mentioned is lunacy.
-        context: "Responding to Dario Amodei's comparison between selling advanced chips to China and selling nuclear weapons to North Korea."
+          Comparing AI to anything that you just mentioned is lunacy. ... It's
+          a lousy analogy. It's an illogical analogy. ... We're not enriched
+          uranium. It's a chip, and it's a chip that they can make themselves.
+        context: "On comparisons between exporting advanced AI compute, selling nuclear weapons, and sending enriched uranium abroad."
         source: "Dwarkesh Podcast"
         url: "https://www.dwarkesh.com/p/jensen-huang"
         date: "Apr 2026"
         section: "Safety Dismissal"
         status: "Hot take"
-        note: "The comparison is about dual use and access to a dangerous capability, not about chips literally exploding. Calling it lunacy avoids the argument."
-
-      - text: |-
-          It's a lousy analogy. It's an illogical analogy.
-        context: "Responding to the analogy between AI compute and enriched uranium."
-        source: "Dwarkesh Podcast"
-        url: "https://www.dwarkesh.com/p/jensen-huang"
-        date: "Apr 2026"
-        section: "Safety Dismissal"
-        status: "Hot take"
-        note: "Compute is a general-purpose input, but it is also a scarce input to cyber capability and frontier-model training. Dual-use export controls exist precisely because both facts can be true."
-
-      - text: |-
-          We're not enriched uranium. It's a chip, and it's a chip that they can
-          make themselves.
-        source: "Dwarkesh Podcast"
-        url: "https://www.dwarkesh.com/p/jensen-huang"
-        date: "Apr 2026"
-        section: "Safety Dismissal"
-        status: "Hot take"
-        note: "That China can eventually make a substitute does not show that exporting the better input now has no marginal effect. A customer being bottlenecked on your product is evidence that the product changes the timeline."
+        note: "The analogy is about dual use and access to dangerous capability, not about chips literally exploding. That China can eventually make a substitute does not show that exporting the better input now has no marginal effect."
