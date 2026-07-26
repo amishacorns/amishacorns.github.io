@@ -2,6 +2,7 @@
 title: 'Is Sometime Now?'
 date: 2026-02-21
 permalink: /posts/is-sometime-now/
+excerpt: "Every scientific field eventually produces knowledge too dangerous to distribute freely, and artificial intelligence may bring many of those limits at once."
 tags:
   - artificial intelligence
   - philosophy
