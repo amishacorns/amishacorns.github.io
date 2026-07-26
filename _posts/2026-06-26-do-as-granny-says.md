@@ -7,9 +7,7 @@ tags:
   - philosophy
 ---
 
-<p align="center">
-  <img src="/images/granny-family.jpg" alt="Should We Do as Granny Says?" width="700">
-</p>
+![Should We Do as Granny Says?](/images/granny-family.jpg){: style="display: block; margin: 0 auto; width: 500px;"}
 
 Your grandmother had a grandmother. And that grandmother had a grandmother ... who was a fish.
 
