@@ -16,13 +16,13 @@ people:
     section_responses:
       - section: "What LLMs Cannot Do"
         text: >-
-          These claims share the same mistake: they turn the limitations of the model available that day into limitations of the entire LLM trajectory. The architecture does not have to be final. It only has to become capable enough to help build whatever comes next.
+          These claims share the same mistake: they turn the limitations of the model available that day into limitations of the entire trajectory. LLMs do not have to remain a distinct or final architecture. They only have to become capable enough to build whatever comes next.
       - section: "Safety Can Wait"
         text: >-
-          The argument is not that current systems are already superintelligent. It is that safety research has lead times. When capability compounds, waiting for the dangerous system before learning how to control it is not caution. It is the absence of planning.
+          The argument is not that current systems are already superintelligent. It is that safety research has lead times. We build vaccine platforms, surveillance systems, and manufacturing capacity before the next pandemic, not after it arrives. When capability compounds, waiting for the dangerous system before learning how to control it is not caution. It is the absence of planning.
       - section: "Economic Denial"
         text: >-
-          None of these claims requires every coder or researcher to disappear overnight. Replacing a growing share of junior intellectual labor is already economically important, and it can accelerate the technology doing the replacing.
+          The claim is not that every researcher disappears overnight. The more plausible future is data centers full of AI researchers, initially directed by a much smaller number of humans. Research can keep growing while requiring 100 or 1,000 times fewer people. Counting jobs rather than the amount of cognitive labor being automated misses the transition.
 
     quotes:
       - text: |-
@@ -98,6 +98,21 @@ people:
         section: "Economic Denial"
         status: "Clock ticking"
         note: "The categorical no is the claim. Software agents do not need to replace every researcher before they replace large parts of what junior researchers are paid to do."
+
+      - text: |-
+          The overall cost saving is limited by the proportion of tasks that
+          can be automated.
+        context: >-
+          Arguing that most jobs contain many tasks and only some will be
+          enhanced, accelerated, or automated by AI.
+        source: "LinkedIn"
+        url: "https://www.linkedin.com/posts/yann-lecun_most-jobs-involve-performing-many-tasks-activity-7342572373931356160-0N9u"
+        date: "Jun 2025"
+        section: "Economic Denial"
+        status: "Clock Ticking"
+        note: >-
+          Task-level limits do not imply job-level stability when the automated
+          share expands and the same systems accelerate further automation.
 
       - text: |-
           LLMs have changed the world (I never said otherwise). But they are
@@ -185,41 +200,43 @@ people:
     handle: "@GaryMarcus"
     role: "Scientist, author, and longtime deep-learning critic"
     blurb: >-
-      The wall keeps moving. The criticism is often worth reading; the
-      confidence that scaling has reached its limit is what belongs here.
+      Gary Marcus often identifies real failures in current systems. The
+      recurring mistake is the jump from "this model fails here" to "deep
+      learning has reached a wall." The evidence establishes an obstacle, not
+      a boundary.
     section_responses:
       - section: "The Scaling Wall"
         text: >-
-          A benchmark failure can demonstrate a limitation in a current system. It cannot establish that scaling, tooling, or systems built by those models cannot cross it. Repeatedly announcing a wall from the current snapshot confuses an obstacle with a boundary.
+          Each failure is evidence about the system tested, not proof that the underlying trajectory has ended. The March 2022 wall arrived after GPT-3 and AlphaCode, eight months before ChatGPT. The February 2025 wall arrived after o1 demonstrated that additional test-time compute could produce smooth capability gains. A moving obstacle is not a scaling limit.
 
     quotes:
       - text: |-
-          Deep Learning Is Hitting a Wall
+          Deep Learning Is Hitting a Wall. ... We may already be running into
+          scaling limits in deep learning.
+        context: >-
+          Published after GPT-3 and AlphaCode, eight months before ChatGPT.
         source: "Nautilus"
         url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
         date: "Mar 2022"
         section: "The Scaling Wall"
-        status: "Wrong on arrival"
-        note: "Published eight months before ChatGPT."
-
-      - text: |-
-          We may already be running into scaling limits in deep learning.
-        source: "Nautilus"
-        url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
-        date: "Mar 2022"
-        section: "The Scaling Wall"
-        status: "Wrong on arrival"
-        note: "The following four years produced the largest capability jump in the history of the field."
+        status: "Wrong On Arrival"
+        note: >-
+          The claim arrived in the middle of a visible capability trajectory,
+          not before one.
 
       - text: |-
           Deep learning is hitting a stubbornly resilient wall.
-        context: "From the abstract of a coauthored paper on o3 and compositional reasoning."
+        context: >-
+          Published after o1 introduced test-time compute scaling and after
+          OpenAI announced o3.
         source: "Murphy et al., arXiv:2502.10934"
         url: "https://arxiv.org/abs/2502.10934"
         date: "Feb 2025"
         section: "The Scaling Wall"
-        status: "Clock ticking"
-        note: "A wall is a strong claim. A benchmark miss is evidence of a limitation, not evidence that the limitation cannot be scaled or engineered away."
+        status: "Clock Ticking"
+        note: >-
+          A benchmark miss identifies a limitation. It does not establish that
+          the limitation cannot be scaled or engineered away.
 
       - text: |-
           Game over. AGI is not imminent, and LLMs are not the royal road to
@@ -228,107 +245,56 @@ people:
         url: "https://www.linkedin.com/posts/gary-marcus-b6384b4_game-over-agi-is-not-imminent-and-llms-activity-7385292946289582081-0Ent"
         date: "Oct 2025"
         section: "The Scaling Wall"
-        status: "Clock ticking"
-        note: "The evidence offered is a collection of current benchmark failures and delayed products. That can establish limitations in present systems. It cannot establish that the approach is not part of the path to its successor."
+        status: "Clock Ticking"
+        note: >-
+          Current benchmark failures can establish limitations in present
+          systems. They cannot establish that those systems are not on the path
+          to their successor.
 
       - text: |-
-          It is truly embarrassing that LLMs cannot reliably solve Hanoi.
+          It is truly embarrassing that LLMs cannot reliably solve Hanoi. ...
+          Anybody who thinks LLMs are a direct route ... is kidding themselves.
+        context: >-
+          Using Tower of Hanoi failures to argue that LLMs are not a route to
+          AGI.
         source: "The Guardian"
         url: "https://www.theguardian.com/commentisfree/2025/jun/10/billion-dollar-ai-puzzle-break-down"
         date: "Jun 2025"
         section: "The Scaling Wall"
-        status: "Moving goalposts"
-        note: "A model failing one formulation of one puzzle is a useful diagnostic. Treating that diagnostic as a boundary on the architecture is the recurring leap."
-
-      - text: |-
-          But anybody who thinks LLMs are a direct route to the sort of AGI
-          that could fundamentally transform society for the good is kidding
-          themselves.
-        source: "The Guardian"
-        url: "https://www.theguardian.com/commentisfree/2025/jun/10/billion-dollar-ai-puzzle-break-down"
-        date: "Jun 2025"
-        section: "The Scaling Wall"
-        status: "Clock ticking"
-        note: "A direct route does not require an unchanged architecture. It only requires the systems on the route to become capable enough to perform the research that extends it."
-
-  - name: "François Chollet"
-    title: "François Chollet"
-    handle: "@fchollet"
-    role: "Creator of Keras and ARC-AGI"
-    blurb: >-
-      He built one of the field's best tests of adaptation. The leap from a
-      model failing that test to a universal theory of deep learning is the
-      part under examination.
-    section_responses:
-      - section: "Memorization and Novelty"
-        text: >-
-          ARC is a valuable test of adaptation. The leap comes when failure on ARC becomes a theory that the slightest novelty defeats all deep learning. Current systems plainly adapt to novel tasks. The unresolved question is how reliably and how far.
-
-    quotes:
-      - text: |-
-          LLMs are fetching memorized programs that map to the current prompt.
-        source: "ARC Prize"
-        url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
-        date: "Oct 2024"
-        section: "Memorization and Novelty"
-        status: "Hot take"
-        note: "A crisp claim, and increasingly difficult to reconcile with long-horizon agentic behavior on novel tasks."
-
-      - text: |-
-          It cannot adapt to the slightest amount of novelty.
-        context: "His stated hypothesis about LLMs."
-        source: "ARC Prize"
-        url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
-        date: "Oct 2024"
-        section: "Memorization and Novelty"
-        status: "Empirically false"
-        note: "The word slightest is doing heroic work here."
-
-      - text: |-
-          This is an intrinsic limitation of the curve-fitting paradigm. Of all deep learning.
-        source: "ARC Prize"
-        url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
-        date: "Oct 2024"
-        section: "Memorization and Novelty"
-        status: "Clock ticking"
-        note: "This turns an empirical observation about current systems into a claim about an entire paradigm."
+        status: "Moving Goalposts"
+        note: >-
+          A direct route does not require an unchanged architecture. It only
+          requires systems on the route to become capable enough to extend it.
 
   - name: "Andrew Ng"
     title: "Andrew Ng"
     handle: "@AndrewYNg"
     role: "Founder, DeepLearning.AI · Founding lead, Google Brain"
     blurb: >-
-      The sunny case for acceleration: progress will be gradual, alignment
+      The sunny case for acceleration: progress will remain gradual, alignment
       tools are stronger than the public realizes, and the safest speed is
       faster. Each clause is now an experiment.
     section_responses:
       - section: "Timelines"
         text: >-
-          A fifty-year estimate assumes progress remains roughly additive. Automating parts of AI research is exactly the mechanism that could make the ordinary clock fail.
+          The exact numbers are metaphorical, but the conclusion is consistent: many decades. That estimate assumes progress remains roughly additive. Automating parts of AI research is exactly the mechanism that could make the ordinary clock fail.
       - section: "Safety and Acceleration"
         text: >-
-          Acceleration is not a safety argument, and getting a chatbot to refuse a request is not the same as controlling a more capable agent pursuing a long-horizon objective.
+          Not understanding an existential-risk argument is not an answer to it. A leader in the field has a responsibility to understand the implications of the technology he is accelerating. "Go as fast as possible" is not a safety argument, and telling a chatbot what we want is not the same as controlling a more capable agent pursuing a long-horizon objective.
 
     quotes:
       - text: |-
-          Maybe 50. I think it's decades out.
-        context: "Asked whether AGI was 30 or 40 years away."
+          Maybe 50. I think it's decades out. ... Technology doesn't work like
+          that; it advances slowly.
+        context: "On AGI timelines and rejecting a hard-takeoff scenario."
         source: "Strange Loop podcast"
         url: "https://sanalabs.com/strange-loop/andrew-ng"
         date: "2023"
         section: "Timelines"
-        status: "Clock ticking"
-        note: "The useful receipt is the horizon, not a semantic fight over the definition of AGI."
-
-      - text: |-
-          Technology doesn't work like that; it advances slowly.
-        context: "Rejecting a hard-takeoff scenario."
-        source: "Strange Loop podcast"
-        url: "https://sanalabs.com/strange-loop/andrew-ng"
-        date: "2023"
-        section: "Timelines"
-        status: "Clock ticking"
-        note: "Software that automates AI research is exactly where ordinary intuitions about technological speed may fail."
+        status: "Clock Ticking"
+        note: >-
+          Software that automates AI research is exactly where ordinary
+          intuitions about technological speed may fail.
 
       - text: |-
           Let's make AI go as fast as possible.
@@ -336,36 +302,51 @@ people:
         url: "https://sanalabs.com/strange-loop/andrew-ng"
         date: "2023"
         section: "Safety and Acceleration"
-        status: "Hot take"
+        status: "Hot Take"
         note: "Speed is not a safety argument."
 
       - text: |-
-          I actually spoke with quite a few people about the existential risk, and candidly, I don't get it.
+          Candidly, I don't get it.
+        context: >-
+          After saying he had spoken with several people about existential
+          risk.
         source: "World Economic Forum AI Governance Summit"
         url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
         date: "Nov 2023"
         section: "Safety and Acceleration"
-        status: "Hot take"
-        note: "Not understanding a risk argument does not lower the probability of the risk."
+        status: "Hot Take"
+        note: >-
+          Not understanding a risk argument does not lower the probability of
+          the risk.
 
       - text: |-
-          We have better tools, more powerful, than the public probably appreciates for just telling the AI to do what we want.
+          Just telling the AI to do what we want.
+        context: >-
+          Describing the alignment tools available to developers.
         source: "World Economic Forum AI Governance Summit"
         url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
         date: "Nov 2023"
         section: "Safety and Acceleration"
-        status: "Clock ticking"
-        note: "Getting a chatbot to refuse a request is not the same problem as controlling a more capable agent pursuing a long-horizon objective."
+        status: "Clock Ticking"
+        note: >-
+          Instruction following is not the same problem as controlling a more
+          capable agent pursuing a long-horizon objective.
 
       - text: |-
-          Maybe a year ago, AGI felt 50 years away. Over the past year, perhaps
-          we've made a solid 2% of progress, with another 49 years to go.
+          Maybe a year ago, AGI felt 50 years away. ... another 49 years to go.
+          These numbers are metaphorical, so don't take them too seriously.
+        context: >-
+          He immediately qualified the arithmetic while still arguing that AGI
+          remains many decades away.
         source: "Fast Company interview"
         url: "https://www.fastcompany.com/91499247/andrew-ng-agi-decades-away-interview"
         date: "Feb 2026"
         section: "Timelines"
-        status: "Clock ticking"
-        note: "He calls the numbers metaphorical, but the conclusion is not: many decades. The wager is that progress remains roughly additive even as AI begins automating pieces of AI research itself."
+        status: "Clock Ticking"
+        note: >-
+          The caveat matters, so it belongs in the excerpt. The substantive
+          wager remains that progress will be gradual even as AI begins
+          automating pieces of AI research.
 
   - name: "Tim Scarfe and Jeremy Budd"
     title: "Machine Learning Street Talk"
@@ -375,33 +356,55 @@ people:
       Machine Learning Street Talk is often excellent precisely because it
       takes unfashionable technical objections seriously. Its 2026 essay on
       creativity also makes several unusually categorical claims about what
-      current systems can and cannot originate.
+      current systems can originate and what AI can economically replace.
     section_responses:
       - section: "Creativity and Understanding"
         text: >-
-          These claims define genuine creativity so that human understanding remains essential, then infer that current AI cannot cross the boundary. Autonomous search, tool use, generated experiments, and scientific discovery are already turning that boundary into an empirical question.
+          These claims turn a description of the training process into a boundary on what the resulting system can produce. Novel outputs do not become accidental plagiarism because the loss function rewards prediction. Scaling can change the representations, tools, search, and verification available to the trained system, even if gradient descent itself remains a greedy optimizer.
+      - section: "Economic Denial"
+        text: >-
+          The need to train senior humans does not imply that junior jobs cannot disappear. A future research organization can be a data center full of AI researchers supervised by a small human team. Human skill formation and the amount of human labor demanded are different questions.
 
     quotes:
       - text: |-
-          AI on its own is missing the fire of creative power. And without this
-          fire, AI will never venture beyond the territory it was trained on.
+          AI on its own is missing the fire of creative power.
+        context: >-
+          The essay argues that without this quality, AI will not venture
+          beyond its training territory.
         source: "Machine Learning Street Talk"
         url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
         date: "Feb 2026"
         section: "Creativity and Understanding"
-        status: "Clock ticking"
-        note: "“Never” turns a critique of current representations into a universal boundary. Systems already search, test, and discover outside the examples they were given; the remaining argument is about degree and autonomy."
+        status: "Clock Ticking"
+        note: >-
+          Autonomous search, tool use, generated experiments, and scientific
+          discovery turn that claimed boundary into an empirical question.
 
       - text: |-
-          System 1 is what current AI systems do well: rapid pattern matching
-          within their training distribution. But pattern matching fails when
-          the territory is genuinely new.
+          Scaling it does not change its nature.
+        context: "On gradient descent as a greedy hill-climber."
         source: "Machine Learning Street Talk"
         url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
         date: "Feb 2026"
         section: "Creativity and Understanding"
-        status: "Clock ticking"
-        note: "The description assumes the conclusion. Test-time search, tool use, generated experiments, and learned verifiers are mechanisms for entering new territory, not merely replaying a stored answer."
+        status: "Clock Ticking"
+        note: >-
+          The optimizer can remain greedy while the system it produces gains
+          new representations, tools, and search procedures.
+
+      - text: |-
+          You cannot displace the junior engineers.
+        context: >-
+          The argument is that producing senior engineers depends on the
+          struggle that AI removes.
+        source: "Machine Learning Street Talk"
+        url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
+        date: "Feb 2026"
+        section: "Economic Denial"
+        status: "Clock Ticking"
+        note: >-
+          A labor market can demand fewer juniors even if doing so eventually
+          creates a human training problem.
 
   - name: "Jensen Huang"
     title: "Jensen Huang"
