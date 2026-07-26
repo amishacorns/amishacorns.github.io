@@ -7,6 +7,8 @@ tags:
   - philosophy
 ---
 
+![Should We Do as Granny Says?](/images/granny-family.jpg){: style="display: block; margin: 0 auto; width: 700px; max-width: 100%;" }
+
 Your grandmother had a grandmother. And that grandmother had a grandmother ... who was a fish.
 
 This took a while, of course. Your thousandth grandmother was still a human. She lived twenty or thirty thousand years ago, before agriculture and almost everything that now organizes your life. We don't know exactly what she believed, but she probably shouldn't write the moral constitution for a superintelligence.
