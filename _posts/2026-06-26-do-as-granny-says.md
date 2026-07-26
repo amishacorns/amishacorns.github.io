@@ -1,5 +1,5 @@
 ---
-title: 'Should We Do As Granny Says?'
+title: 'Should We Do as Granny Says?'
 date: 2026-06-26
 permalink: /posts/granny/
 tags:
@@ -7,34 +7,42 @@ tags:
   - philosophy
 ---
 
-When people talk about aligning AI, they usually mean aligning it to human values. This sounds like the safest possible goal. Human values are patient, warm, and familiar. They are the values of your grandmother, who tells you to be kind, eat more, and call your family. Do as Granny says. Who could object?
+Your grandmother had a grandmother. And that grandmother had a grandmother. And that grandmother had a grandmother...
 
-But which grandmother?
+...who was a fish.
 
-Your grandmother had a grandmother, and she had one too. Your thousandth grandmother lived roughly twenty or thirty thousand years ago, before agriculture and almost every institution that now organizes human life. We do not know exactly what she believed, but there is no reason to think her morality would look much like yours. Keep walking backward and Granny becomes an earlier human, then an ape-like ancestor, and eventually something closer to a small mammal or fish. Each had behaviors that supported cooperation, kinship, and survival. Each had something that could loosely be called morality.
+This took a while, of course. Your thousandth grandmother was still a human. She lived twenty or thirty thousand years ago, before agriculture and almost everything that now organizes your life. We don't know exactly what she believed, but she probably shouldn't write the moral constitution for a superintelligence.
 
-You would not align a superintelligence to any of theirs.
+Keep going and Granny is an australopith like Lucy, walking around eastern Africa with long arms and a small brain. Keep going and she's something like *Sahelanthropus*, an ape that may have walked on two legs. Keep going long enough and she's a lobe-finned fish pulling herself through shallow water.
 
-This is obvious when looking backward. Human sacrifice was sacred duty. Slavery was ordinary commerce. Torture was public entertainment. Women and children were property. These were not societies without values. They were societies organized around values that now look horrifying. The people living within them usually believed they were moral, just as confidently as we believe we are moral now.
+Somewhere along this chain, Granny starts having opinions about right and wrong. She takes care of her children. She shares food with her group. She attacks outsiders. She protects her family at the expense of other families. These behaviors become norms, the norms become values, and eventually one of her descendants starts writing philosophy papers about them.
 
-People often say that morality changes, but if there is an objective morality, this is not quite right. Morality does not change. Our approximation of it improves. Slavery was not moral two thousand years ago and immoral today. We were wrong about it, and then became slightly less wrong.
+But you wouldn't follow the morality of Fish Granny. You probably wouldn't follow the morality of Ape Granny either. And you wouldn't follow much of the morality of your more recent human grannies. Human sacrifice was sacred. Slavery was normal. Torture was public entertainment. These weren't societies without values. They were societies with very strong values that were also very wrong.
 
-The word *slightly* matters. From our perspective, the moral distance between slavery and abolition looks enormous. Relative to the full space of possible moral understanding, it may be negligible. The gap between the morality of a chimpanzee and a modern human feels large because we are standing on the modern-human side of it. But there is no reason to think humans are near the other end. Our current morality may be much closer to primate morality than to the best morality that can be discovered.
+People often say morality changes, but I don't think that's right. If there is a true morality, morality doesn't change. Our understanding of it does. Slavery wasn't moral two thousand years ago and immoral today. It was always immoral. We were wrong, and then we became slightly less wrong.
 
-Yet the standard alignment proposal takes this one temporary approximation and turns it into a target. It asks a new intelligence to internalize human values and remain within their boundaries. In effect, every generation before us was allowed to make moral progress, but 2026 is where moral progress should stop.
+*Slightly* is important here. From our perspective, the distance between slavery and abolition looks enormous. But compared with all of the moral progress that may still be possible, it could be negligible. The gap between the morality of a chimpanzee and a modern human feels large because we're standing on the modern-human side of it. There is no reason to think we're standing anywhere near the other end.
 
-A natural response is that we can continuously update the AI as human values improve. We move together. But this is also strange. Why should a system that can surpass us in physics, mathematics, and biology be forbidden from surpassing us in morality? If it discovers a moral truth before we do, updating it back toward current human values would not be alignment. It would be correction in the wrong direction.
+Now suppose we build a superintelligence and align it to human values. Which humans?
 
-We can already see how this might happen. A sufficiently capable intelligence may conclude that factory farming is an industrial system for producing suffering and refuse to support it. We would then say the system is misaligned because it does not respect the human value of cheap chicken. The machine discovers that mass torture is bad, and somehow the bug is in the machine.
+Inevitably, us. The one generation in the entire chain of grandmothers that has finally figured morality out.
 
-Other conclusions may be far more counterintuitive. Most people would probably save their mother instead of ten thousand strangers. We call this love and loyalty. But imagine that morality turns out to be much more impartial than humans are. From that perspective, choosing your mother could look like choosing the deaths of 9,999 additional people because one person shares your genes and memories. What we experience as one of our deepest virtues could appear spectacularly barbaric.
+This should already seem a little suspicious. We would be taking our current moral beliefs, from one species at one arbitrary point in its development, and turning them into a permanent target. Every generation before us was allowed to discover that its ancestors were wrong. The AI would be allowed to make progress in physics, mathematics, biology, and every other field, but in morality it would have to do as Granny says.
 
-I do not know whether this is the correct conclusion. That is the point. Our moral intuitions were built by evolution to help small groups survive, not to expose the fundamental structure of morality. Kin preference, tribalism, revenge, dominance, and many other intuitions had evolutionary value. Evolutionary usefulness does not make them morally correct. We have already discarded some of them, weakened others, and kept many that we cannot yet recognize as mistakes.
+The mistakes in our morality may also be much stranger than the obvious ones. Imagine that you have to choose between saving your mother and saving ten thousand strangers. I think most people would save their mother. Honestly, I might too. We would call it love, loyalty, or the special responsibility you have to your family.
 
-We would never freeze any other field at its current level. No one proposes aligning a new intelligence to the physics of 2026. Newton's equations are not sacred because they were the best equations humans once had. We expect a more capable intelligence to treat them as evidence, find their limits, and continue. The same is true for chemistry, biology, mathematics, and every other field where we accept that truth exists independently of our present understanding.
+But a truly impartial morality might see something completely different. It might see you choosing the deaths of 9,999 additional people because you happen to share genes and memories with the survivor. What feels like one of our deepest virtues could look spectacularly barbaric.
 
-Morality should be treated the same way. Its questions are harder to formalize, and I will discuss elsewhere why I believe they have objective answers and how symmetries may help expose them. But difficulty does not turn a scientific question into a preference. It only means we are early.
+Maybe that's wrong. I don't know. That's the point.
 
-We should give AI our moral beliefs for the same reason we give it Newton's equations: they are the best evidence we currently have, not truths it is forbidden to surpass. Human values should be its training data, not its loss function.
+Our moral intuitions weren't built to reveal moral truth. They were built by evolution to keep us alive and produce more grandchildren. Caring more about your family was useful. Tribalism was useful. Revenge was useful. Jealousy, dominance, and violence were often useful too. We've already decided that many useful instincts shouldn't control modern society. There are probably others we can't recognize yet.
 
-Granny gets a vote. She does not get a veto.
+Evolution optimized Granny for grandchildren, not moral correctness.
+
+We would never freeze any other field at its current level. We don't ask AI to stay aligned with Newtonian physics. We give it Newton as a starting point and expect it to find where Newton was wrong. Physics isn't treated as a collection of deeply held human preferences. It's treated as something outside of us that we're slowly learning to understand.
+
+Morality should be treated the same way. Its structure is harder to see, and I'll argue elsewhere why I think it has objective answers and how symmetries might help us find them. But being early in a field doesn't make the field subjective. It just means we're still bad at it.
+
+We should give AI our moral beliefs for the same reason we give it Newton's equations. They're the best evidence we currently have, not truths it should be forbidden to surpass. Human values should be its training data, not its loss function.
+
+Granny gets a vote. She doesn't get a veto.
