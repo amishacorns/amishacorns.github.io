@@ -2,6 +2,7 @@
 title: 'All Paths Lead to AGI'
 date: 2025-02-12
 permalink: /posts/paths/
+excerpt: "As superintelligence approaches, the fastest path to progress in every field begins to run through artificial intelligence."
 tags:
   - artificial intelligence
   - research
