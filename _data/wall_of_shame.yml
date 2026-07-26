@@ -1,11 +1,11 @@
-# Wall of Shame — sourced quotes from leaders in the field that aged poorly,
+# Yann LeCan't — sourced quotes from leaders in the field that were wrong,
 # or are on the clock. Every quote must be VERBATIM with a primary source URL
 # and date. Status options: "Wrong on arrival", "Moving goalposts", "Empirically false", "Clock ticking", "Hot take", "Pending".
 # Add a `note` to any quote for a one-line rebuttal in your own voice.
 
 people:
   - name: "Yann LeCun"
-    title: "Yann LeCant"
+    title: "Yann LeCan't"
     handle: "@ylecun"
     role: "Chief AI Scientist, Meta (2013–2025) · Turing Award, 2018"
     blurb: >-
