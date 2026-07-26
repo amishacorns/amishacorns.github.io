@@ -2,6 +2,7 @@
 title: 'Should We Do as Granny Says?'
 date: 2026-06-26
 permalink: /posts/granny/
+excerpt: "Human values should be a place for superintelligence to begin, not a place for moral discovery to stop."
 tags:
   - artificial intelligence
   - philosophy
