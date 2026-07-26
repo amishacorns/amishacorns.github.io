@@ -35,6 +35,12 @@ tags:
     font-size: 1.12em;
     color: #30363b;
   }
+  .wos-footnote {
+    margin-top: 3em;
+    color: #6f777d;
+    font-size: 0.82em;
+    font-style: italic;
+  }
 </style>
 
 ![Yann LeCan't](/images/yann-lecant-lifeboat-v2.png){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
@@ -47,7 +53,7 @@ ignores weak exponential improvements as they compound, and uses that confidence
 to dismiss safety work as premature. A bad prediction is harmless. Negligence
 about a technology moving this quickly isn't, especially when the person making
 it has the influence to shape what researchers, companies, and governments take
-seriously.
+seriously. Every quote below links to the best source I could find.*
 </div>
 
 {% for person in site.data.wall_of_shame.people %}
@@ -73,3 +79,5 @@ seriously.
   {% endfor %}
 </div>
 {% endfor %}
+
+<p class="wos-footnote">* This page was assembled with help from an LLM. Due to the major limitations of LLMs, it can hallucinate. If one of these quotes is fake, the LLM has accidentally made Yann LeCun's point for him.</p>

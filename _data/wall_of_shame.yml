@@ -16,10 +16,23 @@ people:
     section_responses:
       - section: "What LLMs Cannot Do"
         text: >-
-          These claims share the same mistake: they turn the limitations of the model available that day into limitations of the entire trajectory. LLMs do not have to remain a distinct or final architecture. They only have to become capable enough to build whatever comes next.
+          There is a difference between saying that the models available in
+          2023 could not reliably plan and saying that LLMs, as a technology,
+          cannot plan. These claims repeatedly turn the limitations of the
+          model available that day into limitations of the entire trajectory.
+          LLMs do not have to remain a distinct or final architecture. They
+          only have to become capable enough to build whatever comes next.
       - section: "Safety Can Wait"
         text: >-
-          The argument is not that current systems are already superintelligent. It is that safety research has lead times. We build vaccine platforms, surveillance systems, and manufacturing capacity before the next pandemic, not after it arrives. When capability compounds, waiting for the dangerous system before learning how to control it is not caution. It is the absence of planning.
+          The gradualist analogy misses the mechanism that makes AI unusual.
+          Jet engines do not redesign the next generation of jet engines. AI
+          systems may automate the research that produces more capable AI
+          systems, so a gradual curve can become a recursive one. Safety
+          research also has lead times. We build vaccine platforms,
+          surveillance systems, and manufacturing capacity before the next
+          pandemic, not after it arrives. Waiting for the dangerous system
+          before learning how to control it is not caution. It is the absence
+          of planning.
       - section: "Economic Denial"
         text: >-
           The claim is not that every researcher disappears overnight. The more plausible future is data centers full of AI researchers, initially directed by a much smaller number of humans. Research can keep growing while requiring 100 or 1,000 times fewer people. Counting jobs rather than the amount of cognitive labor being automated misses the transition.
@@ -27,6 +40,9 @@ people:
     quotes:
       - text: |-
           Auto-Regressive LLMs can't plan (and can't really reason).
+        context: >-
+          Endorsing an argument that fine-tuning improved planning benchmarks
+          by turning the task into approximate memory-based retrieval.
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1702027572077326505"
         date: "Sept 2023"
@@ -47,7 +63,8 @@ people:
 
       - text: |-
           LLMs are useful, but they are an off ramp on the road to human-level
-          AI. If you are a PhD student, don't work on LLMs.
+          AI. If you are a PhD student, don't work on LLMs. Try to discover
+          methods that would lift the limitations of LLMs.
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1796982509567180927"
         date: "June 2024"
@@ -66,40 +83,6 @@ people:
         note: ""
 
       - text: |-
-          The shelf life of the current [LLM] paradigm is fairly short,
-          probably three to five years.
-        source: "Reported from Davos, via TechCrunch"
-        url: "https://techcrunch.com/2025/01/23/metas-yann-lecun-predicts-a-new-ai-architectures-paradigm-within-5-years-and-decade-of-robotics/"
-        date: "Jan 2025"
-        section: "What LLMs Cannot Do"
-        status: "Clock ticking"
-        note: "This may be right and still miss the point. A paradigm only has to last long enough to build its successor. LLMs may be the final architecture humans have to invent alone."
-
-      # --- Below 3 from the Jun 2026 thread. PERMALINKS NEEDED to make them
-      # --- bulletproof (currently attributed but un-linked).
-      - text: |-
-          Economists say there won't be mass unemployment due to AI. Don't
-          listen to Dario, he is not an economist.
-        source: "X (@ylecun), Jun 2026 thread"
-        url: ""
-        date: "Jun 2026"
-        section: "Economic Denial"
-        status: "Clock ticking"
-        note: "An appeal to credentials is not an argument. The live question is whether economists are extrapolating from ordinary technological change while AI automates the work that produces the next technological change."
-
-      - context: >-
-          Replying to a claim that "AI is going to replace grad students just
-          as it has replaced private sector coders and researchers."
-        text: |-
-          No it won't. And no, it hasn't.
-        source: "X (@ylecun)"
-        url: ""
-        date: "Jun 2026"
-        section: "Economic Denial"
-        status: "Clock ticking"
-        note: "The categorical no is the claim. Software agents do not need to replace every researcher before they replace large parts of what junior researchers are paid to do."
-
-      - text: |-
           The overall cost saving is limited by the proportion of tasks that
           can be automated.
         context: >-
@@ -114,23 +97,13 @@ people:
           Task-level limits do not imply job-level stability when the automated
           share expands and the same systems accelerate further automation.
 
-      - text: |-
-          LLMs have changed the world (I never said otherwise). But they are
-          not a means to achieve human-level intelligence or even animal-level.
-        source: "X (@ylecun), Jun 2026 thread"
-        url: ""
-        date: "Jun 2026"
-        section: "What LLMs Cannot Do"
-        status: "Pending"
-        note: >-
-          What he can't seem to grasp: the LLMs will build the next
-          architecture. That makes this the last architecture we design by
-          hand — the opposite of a dead end.
-
-
       # --- Deep-dive candidates, Jul 2026 ---
       - text: |-
           AI systems are not weapons any more than a car or a computer is a weapon.
+        context: >-
+          In a longer comment supporting regulation of AI products while
+          arguing that future systems should be made safe through careful,
+          iterative engineering.
         source: "Facebook"
         url: "https://www.facebook.com/yann.lecun/posts/pfbid0SjyAxQpYmJrF9dL6uBkwRA25vn9bUNnCYPYaym5oDgzg54RQpNCEK4nY4tLiNx1tl/?comment_id=330366236204472"
         date: "Oct 2023"
@@ -140,6 +113,9 @@ people:
 
       - text: |-
           Until we have a design, it's premature to speculate about ways to make them safe.
+        context: >-
+          In the same comment, comparing advance safety work to designing a
+          containment system for a turbojet in 1925.
         source: "Facebook"
         url: "https://www.facebook.com/yann.lecun/posts/pfbid0SjyAxQpYmJrF9dL6uBkwRA25vn9bUNnCYPYaym5oDgzg54RQpNCEK4nY4tLiNx1tl/?comment_id=330366236204472"
         date: "Oct 2023"
@@ -158,16 +134,6 @@ people:
         note: "Retrieval is not an adequate description of systems that construct proofs, plans, programs, and novel tool trajectories at inference time."
 
       - text: |-
-          You're not going to be able to do this with generative models.
-        context: "On building useful predictive world models."
-        source: "Lex Fridman Podcast #416"
-        url: "https://lexfridman.com/yann-lecun-3-transcript/"
-        date: "Mar 2024"
-        section: "What LLMs Cannot Do"
-        status: "Clock ticking"
-        note: "A clean, falsifiable architecture claim. Generative video and action models now get to run the experiment."
-
-      - text: |-
           My benevolent defensive AI will be better at destroying your evil AI than your evil AI will be at hurting humans.
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1637849935252172801"
@@ -178,22 +144,15 @@ people:
 
       - text: |-
           AI systems, as smart as they might be, will be subservient to us.
+        context: >-
+          Arguing that AI has no intrinsic drive to dominate, that humans set
+          its goals, and that good AI systems could stop bad ones.
         source: "TIME interview"
         url: "https://time.com/6694432/yann-lecun-meta-ai-interview/"
         date: "Feb 2024"
         section: "Safety Can Wait"
         status: "Pending"
         note: "This is a conclusion presented as an architectural default."
-
-      - text: |-
-          So basically, they can't invent new things.
-        context: "On the limits of current AI systems."
-        source: "TIME interview"
-        url: "https://time.com/6694432/yann-lecun-meta-ai-interview/"
-        date: "Feb 2024"
-        section: "What LLMs Cannot Do"
-        status: "Empirically false"
-        note: "By 2026, systems routinely generate novel software, proofs, designs, strategies, and scientific hypotheses. The interesting argument is now about degree."
 
   - name: "Gary Marcus"
     title: "Gary Marcus"
@@ -225,10 +184,12 @@ people:
           not before one.
 
       - text: |-
-          Deep learning is hitting a stubbornly resilient wall.
+          Deep learning is hitting a wall with respect to compositionality ...
+          a stubbornly resilient wall that cannot readily be surmounted to
+          reach human-like compositional reasoning simply through more compute.
         context: >-
-          Published after o1 introduced test-time compute scaling and after
-          OpenAI announced o3.
+          The paper tested o3-mini-high on linguistic compositionality after o1
+          introduced test-time compute scaling and OpenAI announced o3.
         source: "Murphy et al., arXiv:2502.10934"
         url: "https://arxiv.org/abs/2502.10934"
         date: "Feb 2025"
@@ -271,16 +232,20 @@ people:
     handle: "@AndrewYNg"
     role: "Founder, DeepLearning.AI · Founding lead, Google Brain"
     blurb: >-
-      The sunny case for acceleration: progress will remain gradual, alignment
-      tools are stronger than the public realizes, and the safest speed is
-      faster. Each clause is now an experiment.
+      The sunny case: progress will remain gradual and alignment tools are
+      stronger than the public realizes. Each clause is now an experiment.
     section_responses:
       - section: "Timelines"
         text: >-
           The exact numbers are metaphorical, but the conclusion is consistent: many decades. That estimate assumes progress remains roughly additive. Automating parts of AI research is exactly the mechanism that could make the ordinary clock fail.
-      - section: "Safety and Acceleration"
+      - section: "Safety"
         text: >-
-          Not understanding an existential-risk argument is not an answer to it. A leader in the field has a responsibility to understand the implications of the technology he is accelerating. "Go as fast as possible" is not a safety argument, and telling a chatbot what we want is not the same as controlling a more capable agent pursuing a long-horizon objective.
+          Calling existential-risk arguments vague is a criticism, but it does
+          not answer their strongest forms. A leader in the field has a
+          responsibility to understand the implications of the technology he
+          is accelerating. Getting a chatbot to refuse a harmful request is
+          not the same as controlling a more capable agent pursuing a
+          long-horizon objective.
 
     quotes:
       - text: |-
@@ -297,36 +262,33 @@ people:
           intuitions about technological speed may fail.
 
       - text: |-
-          Let's make AI go as fast as possible.
-        source: "Strange Loop podcast"
-        url: "https://sanalabs.com/strange-loop/andrew-ng"
-        date: "2023"
-        section: "Safety and Acceleration"
-        status: "Hot Take"
-        note: "Speed is not a safety argument."
-
-      - text: |-
-          Candidly, I don't get it.
+          I actually spoke with quite a few people about the existential risk,
+          and candidly, I don't get it. Many of them are very vague.
         context: >-
-          After saying he had spoken with several people about existential
-          risk.
+          He compared the arguments he had heard to an unfalsifiable claim
+          about radio waves attracting hostile aliens and called them a
+          distraction from present harms.
         source: "World Economic Forum AI Governance Summit"
         url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
         date: "Nov 2023"
-        section: "Safety and Acceleration"
+        section: "Safety"
         status: "Hot Take"
         note: >-
           Not understanding a risk argument does not lower the probability of
           the risk.
 
       - text: |-
-          Just telling the AI to do what we want.
+          The tools for aligning AI with human values, they are better than
+          most people think. They're not perfect. ... We have better tools,
+          more powerful, than the public probably appreciates for just telling
+          the AI to do what we want.
         context: >-
-          Describing the alignment tools available to developers.
+          Pointing to the difficulty of eliciting harmful instructions from
+          ChatGPT or Bard while also supporting continued safety investment.
         source: "World Economic Forum AI Governance Summit"
         url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
         date: "Nov 2023"
-        section: "Safety and Acceleration"
+        section: "Safety"
         status: "Clock Ticking"
         note: >-
           Instruction following is not the same problem as controlling a more
@@ -381,7 +343,9 @@ people:
           discovery turn that claimed boundary into an empirical question.
 
       - text: |-
-          Scaling it does not change its nature.
+          This hypothesis is preliminary, and whether it persists at scale
+          remains open ... gradient descent is a greedy hill-climber, and
+          scaling it does not change its nature.
         context: "On gradient descent as a greedy hill-climber."
         source: "Machine Learning Street Talk"
         url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
