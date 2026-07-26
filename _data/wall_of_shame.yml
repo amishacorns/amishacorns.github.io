@@ -13,6 +13,17 @@ people:
       into a limit on the whole field. The failure is not merely predictive.
       From a position of unusual influence, the same short horizons become an
       argument for postponing safety work while capabilities keep compounding.
+    section_responses:
+      - section: "What LLMs Cannot Do"
+        text: >-
+          These claims share the same mistake: they turn the limitations of the model available that day into limitations of the entire LLM trajectory. The architecture does not have to be final. It only has to become capable enough to help build whatever comes next.
+      - section: "Safety Can Wait"
+        text: >-
+          The argument is not that current systems are already superintelligent. It is that safety research has lead times. When capability compounds, waiting for the dangerous system before learning how to control it is not caution. It is the absence of planning.
+      - section: "Economic Denial"
+        text: >-
+          None of these claims requires every coder or researcher to disappear overnight. Replacing a growing share of junior intellectual labor is already economically important, and it can accelerate the technology doing the replacing.
+
     quotes:
       - text: |-
           Auto-Regressive LLMs can't plan (and can't really reason).
@@ -176,6 +187,14 @@ people:
     blurb: >-
       The wall keeps moving. The criticism is often worth reading; the
       confidence that scaling has reached its limit is what belongs here.
+    section_responses:
+      - section: "The Scaling Wall"
+        text: >-
+          A benchmark failure can demonstrate a limitation in a current system. It cannot establish that scaling, tooling, or systems built by those models cannot cross it. Repeatedly announcing a wall from the current snapshot confuses an obstacle with a boundary.
+      - section: "Benchmarks As Boundaries"
+        text: >-
+          A failed puzzle is a useful diagnostic, not a universal theorem about the architecture. The interesting question is whether the capability moves as training, inference, and scaffolding change.
+
     quotes:
       - text: |-
           Deep Learning Is Hitting a Wall
@@ -243,6 +262,11 @@ people:
       He built one of the field's best tests of adaptation. The leap from a
       model failing that test to a universal theory of deep learning is the
       part under examination.
+    section_responses:
+      - section: "Memorization and Novelty"
+        text: >-
+          ARC is a valuable test of adaptation. The leap comes when failure on ARC becomes a theory that the slightest novelty defeats all deep learning. Current systems plainly adapt to novel tasks. The unresolved question is how reliably and how far.
+
     quotes:
       - text: |-
           LLMs are fetching memorized programs that map to the current prompt.
@@ -280,6 +304,14 @@ people:
       The sunny case for acceleration: progress will be gradual, alignment
       tools are stronger than the public realizes, and the safest speed is
       faster. Each clause is now an experiment.
+    section_responses:
+      - section: "Timelines"
+        text: >-
+          A fifty-year estimate assumes progress remains roughly additive. Automating parts of AI research is exactly the mechanism that could make the ordinary clock fail.
+      - section: "Safety and Acceleration"
+        text: >-
+          Acceleration is not a safety argument, and getting a chatbot to refuse a request is not the same as controlling a more capable agent pursuing a long-horizon objective.
+
     quotes:
       - text: |-
           Maybe 50. I think it's decades out.
@@ -347,6 +379,11 @@ people:
       takes unfashionable technical objections seriously. Its 2026 essay on
       creativity also makes several unusually categorical claims about what
       current systems can and cannot originate.
+    section_responses:
+      - section: "Creativity and Understanding"
+        text: >-
+          These claims define genuine creativity so that human understanding remains essential, then infer that current AI cannot cross the boundary. Autonomous search, tool use, generated experiments, and scientific discovery are already turning that boundary into an empirical question.
+
     quotes:
       - text: |-
           AI on its own is missing the fire of creative power. And without this
@@ -387,6 +424,14 @@ people:
       who appeared twice, including the 2023 episode “AI Benchmarks Are
       Broken.” Her benchmark criticism is careful; her stronger horizon claims
       are the better receipts.
+    section_responses:
+      - section: "Timelines"
+        text: >-
+          This was written before the modern LLM era, so the issue is not that the exact systems should have been predicted. The receipt is the confidence of saying superintelligence was nowhere on the horizon.
+      - section: "Benchmarks As Boundaries"
+        text: >-
+          The benchmark criticism is mostly right. Benchmarks can overstate general capability. But skepticism should be symmetric: real-world systems can also improve faster than benchmark design. This belongs here as a caution, not a gotcha.
+
     quotes:
       - text: |-
           Today's AI is far from general intelligence, and I don't believe that
@@ -418,6 +463,14 @@ people:
       sells the infrastructure behind the AI buildout. Neither fact makes him
       wrong. Both raise the cost of dismissing existential and employment risks
       as "complete nonsense" without doing the argument.
+    section_responses:
+      - section: "Safety Dismissal"
+        text: >-
+          Huang answers the dual-use argument by denying the analogy. Compute does not have to be literal nuclear material to alter cyber capability or frontier-model timelines. Refusing to acknowledge any marginal cost is the problem.
+      - section: "Economic Denial"
+        text: >-
+          Current job creation does not settle future substitution. The relevant question is what happens when software performs a growing share of the work, including the work that improves software.
+
     quotes:
       - text: |-
           I think we've done a lot of damage with very well-respected people
