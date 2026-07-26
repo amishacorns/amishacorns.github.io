@@ -46,7 +46,7 @@ ignores weak exponential improvements as they compound, and uses that confidence
 to dismiss safety work as premature. A bad prediction is harmless. Negligence
 about a technology moving this quickly isn't, especially when the person making
 it has the influence to shape what researchers, companies, and governments take
-seriously. That's why this page is mostly about Yann LeCun.
+seriously.
 </div>
 
 {% for person in site.data.wall_of_shame.people %}
