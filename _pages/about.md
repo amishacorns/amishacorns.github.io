@@ -40,7 +40,7 @@ Publications
 
 - **Radial Networks: Dynamic Layer Routing for High-Performance Large Language Models <a href="https://arxiv.org/abs/2404.04900"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel, Y. Akhauri, A. AbouElhamayed, C. Jiang, M. Abdelfattah, Z. Zhang  
-  *arxiv, 2024 (under submission)* 
+  *arxiv, 2024 (under submission)*
 
 - **OverQ: Opportunistic Outlier Quantization for Neural Network Accelerators <a href="https://arxiv.org/abs/1910.06909"><img src="https://img.icons8.com/ios-filled/50/000000/pdf.png" alt="PDF" width="16" height="16"></a>**  
   J. Dotzel\*, R. Zhao\*, Z. Hu, P. Ivanov, C. De Sa, Z. Zhang  
@@ -79,7 +79,7 @@ Experience
 ======
 
 - **Gemini+Cloud, Advanced Development Team**  
-  *Neural Architect*  
+  *Agent Architect*  
   *July 2025 - Present*  
 
 - **Google, TPU Performance Team**  
