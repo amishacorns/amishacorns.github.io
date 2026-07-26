@@ -39,12 +39,6 @@ tags:
 ![Yann LeCan't](/images/yann-lecant-lifeboat-v2.png){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
 
 <div class="wos-intro" markdown="1">
-A running record of confident pronouncements from leaders in AI that were
-wrong on arrival, rendered empirically false, preserved through moving
-definitions, or are quietly on the clock. Every quote is verbatim and links to
-the best available source. The point is not that smart people are sometimes
-wrong. It is the pattern of turning a limitation of one implementation at one
-moment <div class="wos-intro" markdown="1">
 The point isn't that smart people are sometimes wrong, or that strong opinions
 should be kept private. The problem is what happens when a leader in AI keeps
 turning the limitations of one implementation into limits of the entire field,
@@ -53,19 +47,25 @@ to dismiss safety work as premature. A bad prediction is harmless. Negligence
 about a technology moving this quickly isn't, especially when the person making
 it has the influence to shape what researchers, companies, and governments take
 seriously. That's why this page is mostly about Yann LeCun.
-</div> goalposts' %}{% assign badge = 'badge-move' %}
-    {% when 'Empirically false' %}{% assign badge = 'badge-false' %}
-    {% when 'Clock ticking' %}{% assign badge = 'badge-clock' %}
-    {% when 'Hot take' %}{% assign badge = 'badge-hot' %}
-    {% else %}{% assign badge = 'badge-pend' %}
-  {% endcase %}
+</div>
+
+{% for person in site.data.wall_of_shame.people %}
+<div class="wos-person">
+  <h2>{{ person.title }}</h2>
+  <p class="wos-sub"><a href="https://x.com/{{ person.handle | remove: '@' }}">{{ person.handle }}</a> · {{ person.role }}</p>
+  <p class="wos-blurb">{{ person.blurb }}</p>
+
+  {% assign sections = person.quotes | group_by: "section" %}
+  {% for section in sections %}
+  <h3 class="wos-section">{{ section.name }}</h3>
+  {% for q in section.items %}
   <div class="wos-quote">
-    <span class="wos-badge {{ badge }}">{{ q.status }}</span>
     {% if q.context and q.context != "" %}<p class="wos-context">{{ q.context }}</p>{% endif %}
-    <p class="q">&ldquo;{{ q.text | strip_newlines }}&rdquo;</p>
+    <p class="q">&ldquo;{{ q.text | normalize_whitespace }}&rdquo;</p>
     <p class="wos-cite">- {{ person.name }}, {% if q.url and q.url != "" %}<a href="{{ q.url }}">{{ q.source }}</a>{% else %}{{ q.source }}{% endif %}, {{ q.date }}</p>
     {% if q.note and q.note != "" %}<p class="wos-note">{{ q.note }}</p>{% endif %}
   </div>
+  {% endfor %}
   {% endfor %}
 </div>
 {% endfor %}
