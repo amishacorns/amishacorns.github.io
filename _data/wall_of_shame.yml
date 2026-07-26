@@ -304,36 +304,3 @@ people:
         date: "Nov 2023"
         status: "Clock ticking"
         note: "Getting a chatbot to refuse a request is not the same problem as controlling a more capable agent pursuing a long-horizon objective."
-
-  - name: "Oren Etzioni"
-    title: "Oren Etzioni"
-    handle: "@etzioni"
-    role: "Founding CEO, Allen Institute for AI"
-    blurb: >-
-      A useful archive of how distant autonomy and general intelligence looked
-      immediately before language models became agents.
-    quotes:
-      - text: |-
-          There has been no progress whatsoever on autonomy.
-        source: "Deloitte AI Ignition interview"
-        url: "https://www2.deloitte.com/content/dam/Deloitte/us/Documents/technology/us-ai-ignition-podcast-oren-etzioni-transcript.pdf"
-        date: "2021"
-        status: "Empirically false"
-        note: "No progress whatsoever left almost no room for the agentic systems that followed."
-
-      - text: |-
-          Autonomy in a broad sense is very far afield.
-        source: "Deloitte AI Ignition interview"
-        url: "https://www2.deloitte.com/content/dam/Deloitte/us/Documents/technology/us-ai-ignition-podcast-oren-etzioni-transcript.pdf"
-        date: "2021"
-        status: "Empirically false"
-        note: "Within five years, agents were navigating computers, writing software, and completing multi-step work with limited supervision."
-
-      - text: |-
-          AGI is coming with two to three years! and “the government knows this.” Nonsense.
-        context: "Criticizing Ezra Klein's 2025 column."
-        source: "LinkedIn"
-        url: "https://www.linkedin.com/posts/orenetzioni_opinion-the-government-knows-agi-is-activity-7303861965557248000--hHA"
-        date: "Feb 2025"
-        status: "Clock ticking"
-        note: "The deadline is unusually clear: roughly 2027–2028."
