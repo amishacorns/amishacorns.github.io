@@ -35,19 +35,29 @@ author_profile: true
     vertical-align: middle;
     margin-bottom: 0.5em;
   }
-  .badge-aged  { background: #c0392b; }
+  .badge-wrong { background: #c0392b; }
   .badge-false { background: #7b241c; }
+  .badge-move  { background: #2471a3; }
   .badge-clock { background: #c87f0a; }
   .badge-hot   { background: #8e44ad; }
   .badge-pend  { background: #7f8c8d; }
 </style>
 
 <div class="wos-intro" markdown="1">
-A standing record of confident pronouncements from leaders in AI that have aged
-poorly, been falsified outright, or are quietly on the clock. Every quote is
-verbatim and links to the best available source. The point is not that smart
-people are sometimes wrong. It is the *pattern* of betting against capabilities
-that arrive a year later. Receipts only.
+A standing record of confident pronouncements from leaders in AI that were
+wrong on arrival, rendered empirically false, preserved through moving
+definitions, or are quietly on the clock. Every quote is verbatim and links to
+the best available source. The point is not that smart people are sometimes
+wrong. It is the pattern of turning a limitation of one implementation at one
+moment into a fundamental limitation of the entire approach. Receipts only.
+
+Here, an *LLM-based system* includes the language model and the machinery built
+around it: post-training, inference-time computation, search, memory, tools, and
+agent loops. Excluding each successful extension after the fact makes “LLMs
+can’t do X” impossible to falsify.
+
+A next-token training objective describes how the model is trained. It does not
+place a ceiling on what computation the resulting system can perform.
 </div>
 
 {% for person in site.data.wall_of_shame.people %}
@@ -58,8 +68,9 @@ that arrive a year later. Receipts only.
 
   {% for q in person.quotes %}
   {% case q.status %}
-    {% when 'Aged poorly' %}{% assign badge = 'badge-aged' %}
-    {% when 'Falsified' %}{% assign badge = 'badge-false' %}
+    {% when 'Wrong on arrival' %}{% assign badge = 'badge-wrong' %}
+    {% when 'Moving goalposts' %}{% assign badge = 'badge-move' %}
+    {% when 'Empirically false' %}{% assign badge = 'badge-false' %}
     {% when 'Clock ticking' %}{% assign badge = 'badge-clock' %}
     {% when 'Hot take' %}{% assign badge = 'badge-hot' %}
     {% else %}{% assign badge = 'badge-pend' %}
