@@ -25,4 +25,4 @@ We don't freeze any other field at its current level. We don't force AI to stop 
 
 Morality isn't fundamentally different. Consciousness is a physical process, and conscious experiences are physical states with real values, some better and some worse. Together they form the moral landscape. We haven't mapped that landscape perfectly, but that doesn't make it a matter of preference. Morality is a scientific field we have barely begun to investigate.
 
-The same ape brain that didn't evolve to understand relativity didn't evolve to understand the entire moral landscape. What a superintelligence discovers there may feel just as counterintuitive as curved spacetime or quantum mechanics. That doesn't mean it's wrong. It may mean Granny has reached the edge of her map. Human values are a place to begin, not a place to stop.
+The same ape brain that didn't evolve to understand relativity didn't evolve to understand the entire moral landscape. What a superintelligence discovers there may feel just as counterintuitive as curved spacetime or quantum mechanics. Human values are a place to begin, not a place to stop.
