@@ -45,9 +45,9 @@ author_profile: true
 <div class="wos-intro" markdown="1">
 A standing record of confident pronouncements from leaders in AI that have aged
 poorly, been falsified outright, or are quietly on the clock. Every quote is
-verbatim and links to its primary source. The point is not that smart people are
-sometimes wrong — it is the *pattern* of betting against capabilities that arrive
-a year later. Receipts only.
+verbatim and links to the best available source. The point is not that smart
+people are sometimes wrong. It is the *pattern* of betting against capabilities
+that arrive a year later. Receipts only.
 </div>
 
 {% for person in site.data.wall_of_shame.people %}
@@ -61,6 +61,7 @@ a year later. Receipts only.
     {% when 'Aged poorly' %}{% assign badge = 'badge-aged' %}
     {% when 'Falsified' %}{% assign badge = 'badge-false' %}
     {% when 'Clock ticking' %}{% assign badge = 'badge-clock' %}
+    {% when 'Hot take' %}{% assign badge = 'badge-hot' %}
     {% else %}{% assign badge = 'badge-pend' %}
   {% endcase %}
   <div class="wos-quote">
