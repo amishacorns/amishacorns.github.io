@@ -15,7 +15,7 @@ This took a while, of course. Your thousandth grandmother was still a human, and
 
 Keep going and Granny is an australopith like Lucy, walking around eastern Africa with long arms and a small brain. Keep going and she's something like *Sahelanthropus*, an ape that may have walked on two legs. Keep going long enough and she's a lobe-finned fish pulling herself through shallow water.
 
-Fish Granny's world was mostly food, danger, and survival. Ape Granny lived in a larger social world of family, friends, alliances, debts, and betrayals. Human Granny made that world larger again, then invented agriculture, cities, laws, civilization, philosophy, and eventually the word *morality*.
+Fish Granny barely had a morality at all. Ape Granny had something more familiar: loyalty, sharing, punishment, and obligations to her group. Human Granny turned those instincts into customs, laws, philosophy, and eventually the word *morality*. Each Granny could represent a little more of the moral landscape than the one before her, and each mistook the part she could see for the whole thing.
 
 You wouldn't follow the morality of Fish Granny, Ape Granny, or most of your more recent human grannies. Those grannies didn't live without values. They lived with strong values that were also wrong, and ours is no exception even if we don't agree where. Morality doesn't change as our beliefs move; our understanding of it does. Causing suffering for no benefit to anyone wasn't moral then and immoral now. It was always wrong; we merely became slightly less wrong about it.
 
