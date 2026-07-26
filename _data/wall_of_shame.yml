@@ -1,7 +1,7 @@
-# Yann LeCan't — sourced quotes from leaders in the field that were wrong,
-# or are on the clock. Every quote must be VERBATIM with a primary source URL
-# and date. Status options: "Wrong on arrival", "Moving goalposts", "Empirically false", "Clock ticking", "Hot take", "Pending".
-# Add a `note` to any quote for a one-line rebuttal in your own voice.
+# Yann LeCan't — sourced quotes and short rebuttals, grouped by the actual
+# criticism rather than verdict badges. Keep quotes verbatim, dated, and linked
+# to the best available source. The unpublished status field remains for
+# internal curation only.
 
 people:
   - name: "Yann LeCun"
@@ -9,31 +9,18 @@ people:
     handle: "@ylecun"
     role: "Chief AI Scientist, Meta (2013–2025) · Turing Award, 2018"
     blurb: >-
-      Yann LeCun repeatedly turns limitations of current base models into
-      categorical limitations of LLM-based systems. Reasoning, planning,
-      search, memory, and tool use were not unforeseeable capabilities that
-      appeared from nowhere. The mistake was declaring them impossible in the
-      first place. When they arrive, the boundary of "LLM" quietly moves until
-      the system doing the thing no longer counts.
+      Yann LeCun repeatedly turns a limitation of the system in front of him
+      into a limit on the whole field. The failure is not merely predictive.
+      From a position of unusual influence, the same short horizons become an
+      argument for postponing safety work while capabilities keep compounding.
     quotes:
       - text: |-
           Auto-Regressive LLMs can't plan (and can't really reason).
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1702027572077326505"
         date: "Sept 2023"
+        section: "What LLMs cannot do"
         status: "Moving goalposts"
-        note: ""
-
-      - text: |-
-          Before we reach Human-Level AI (HLAI), we will have to reach
-          Cat-Level & Dog-Level AI. We are nowhere near that. We are still
-          missing something big. LLM's linguistic abilities notwithstanding.
-          A house cat has way more common sense and understanding of the
-          world than any LLM.
-        source: "X (@ylecun)"
-        url: "https://x.com/ylecun/status/1622300311573651458"
-        date: "Feb 2023"
-        status: "Pending"
         note: ""
 
       - text: |-
@@ -43,8 +30,9 @@ people:
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1791890883425570823"
         date: "May 2024"
+        section: "Safety can wait"
         status: "Pending"
-        note: ""
+        note: "You build the vaccine platform before the pandemic. With compounding capabilities, waiting for the dangerous system to exist before learning how to control it is not caution. It is the absence of planning."
 
       - text: |-
           LLMs are useful, but they are an off ramp on the road to human-level
@@ -52,17 +40,9 @@ people:
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1796982509567180927"
         date: "June 2024"
+        section: "What LLMs cannot do"
         status: "Wrong on arrival"
-        note: ""
-
-      - text: |-
-          Auto-Regressive LLMs in their current form will not take us to
-          human-level AI.
-        source: "X (@ylecun)"
-        url: "https://x.com/ylecun/status/1829972956518166881"
-        date: "Aug 2024"
-        status: "Pending"
-        note: ""
+        note: "The current architecture can be temporary and still be the last one humans design unaided. If LLMs are sufficient to build the next paradigm, calling them an off-ramp misses the transition that matters."
 
       - text: |-
           [LLMs] can do none of those or they can only do them in a very
@@ -70,6 +50,7 @@ people:
         source: "Lex Fridman Podcast #416"
         url: "https://lexfridman.com/yann-lecun-3-transcript"
         date: "Mar 2024"
+        section: "What LLMs cannot do"
         status: "Moving goalposts"
         note: ""
 
@@ -79,8 +60,9 @@ people:
         source: "Reported from Davos, via TechCrunch"
         url: "https://techcrunch.com/2025/01/23/metas-yann-lecun-predicts-a-new-ai-architectures-paradigm-within-5-years-and-decade-of-robotics/"
         date: "Jan 2025"
+        section: "What LLMs cannot do"
         status: "Clock ticking"
-        note: ""
+        note: "This may be right and still miss the point. A paradigm only has to last long enough to build its successor. LLMs may be the final architecture humans have to invent alone."
 
       # --- Below 3 from the Jun 2026 thread. PERMALINKS NEEDED to make them
       # --- bulletproof (currently attributed but un-linked).
@@ -90,18 +72,9 @@ people:
         source: "X (@ylecun), Jun 2026 thread"
         url: ""
         date: "Jun 2026"
+        section: "Economic denial"
         status: "Clock ticking"
-        note: ""
-
-      - text: |-
-          Right now, the deployment of AI in drones is protecting liberal
-          democracy in Europe against an authoritarian invader. Abandon at
-          your own risk. I sure won't.
-        source: "X (@ylecun), Jun 2026 thread"
-        url: ""
-        date: "Jun 2026"
-        status: "Hot take"
-        note: ""
+        note: "An appeal to credentials is not an argument. The live question is whether economists are extrapolating from ordinary technological change while AI automates the work that produces the next technological change."
 
       - context: >-
           Replying to a claim that "AI is going to replace grad students just
@@ -111,8 +84,9 @@ people:
         source: "X (@ylecun)"
         url: ""
         date: "Jun 2026"
+        section: "Economic denial"
         status: "Clock ticking"
-        note: ""
+        note: "The categorical no is the claim. Software agents do not need to replace every researcher before they replace large parts of what junior researchers are paid to do."
 
       - text: |-
           LLMs have changed the world (I never said otherwise). But they are
@@ -120,6 +94,7 @@ people:
         source: "X (@ylecun), Jun 2026 thread"
         url: ""
         date: "Jun 2026"
+        section: "What LLMs cannot do"
         status: "Pending"
         note: >-
           What he can't seem to grasp: the LLMs will build the next
@@ -133,16 +108,18 @@ people:
         source: "Facebook"
         url: "https://www.facebook.com/yann.lecun/posts/pfbid0SjyAxQpYmJrF9dL6uBkwRA25vn9bUNnCYPYaym5oDgzg54RQpNCEK4nY4tLiNx1tl/?comment_id=330366236204472"
         date: "Oct 2023"
+        section: "Safety can wait"
         status: "Hot take"
-        note: "A category error in the other direction: a general-purpose technology can still be engineered, deployed, or governed as a weapon."
+        note: "This is the guns-don’t-kill-people argument applied to a general-purpose system that can write code, discover vulnerabilities, operate machines, persuade people, and eventually improve itself. “General purpose” does not mean “incapable of becoming a weapon.”"
 
       - text: |-
           Until we have a design, it's premature to speculate about ways to make them safe.
         source: "Facebook"
         url: "https://www.facebook.com/yann.lecun/posts/pfbid0SjyAxQpYmJrF9dL6uBkwRA25vn9bUNnCYPYaym5oDgzg54RQpNCEK4nY4tLiNx1tl/?comment_id=330366236204472"
         date: "Oct 2023"
+        section: "Safety can wait"
         status: "Hot take"
-        note: "Safety work shapes designs before they exist. That is what engineering disciplines do when failure modes matter."
+        note: "You do not wait for a pandemic to discover how vaccines work. Safety research shapes the architecture before the failure mode exists, especially when the underlying capability is compounding."
 
       - text: |-
           It retrieves it because it's accumulated a lot of knowledge.
@@ -150,6 +127,7 @@ people:
         source: "Lex Fridman Podcast #416"
         url: "https://lexfridman.com/yann-lecun-3-transcript/"
         date: "Mar 2024"
+        section: "What LLMs cannot do"
         status: "Wrong on arrival"
         note: "Retrieval is not an adequate description of systems that construct proofs, plans, programs, and novel tool trajectories at inference time."
 
@@ -159,6 +137,7 @@ people:
         source: "Lex Fridman Podcast #416"
         url: "https://lexfridman.com/yann-lecun-3-transcript/"
         date: "Mar 2024"
+        section: "What LLMs cannot do"
         status: "Clock ticking"
         note: "A clean, falsifiable architecture claim. Generative video and action models now get to run the experiment."
 
@@ -167,6 +146,7 @@ people:
         source: "X (@ylecun)"
         url: "https://x.com/ylecun/status/1637849935252172801"
         date: "Mar 2023"
+        section: "Safety can wait"
         status: "Hot take"
         note: "The AI-police answer assumes the defensive system wins, stays defensive, recognizes the threat, and arrives on time."
 
@@ -175,6 +155,7 @@ people:
         source: "TIME interview"
         url: "https://time.com/6694432/yann-lecun-meta-ai-interview/"
         date: "Feb 2024"
+        section: "Safety can wait"
         status: "Pending"
         note: "This is a conclusion presented as an architectural default."
 
@@ -184,6 +165,7 @@ people:
         source: "TIME interview"
         url: "https://time.com/6694432/yann-lecun-meta-ai-interview/"
         date: "Feb 2024"
+        section: "What LLMs cannot do"
         status: "Empirically false"
         note: "By 2026, systems routinely generate novel software, proofs, designs, strategies, and scientific hypotheses. The interesting argument is now about degree."
 
@@ -200,6 +182,7 @@ people:
         source: "Nautilus"
         url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
         date: "Mar 2022"
+        section: "The scaling wall"
         status: "Wrong on arrival"
         note: "Published eight months before ChatGPT."
 
@@ -208,6 +191,7 @@ people:
         source: "Nautilus"
         url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
         date: "Mar 2022"
+        section: "The scaling wall"
         status: "Wrong on arrival"
         note: "The following four years produced the largest capability jump in the history of the field."
 
@@ -217,6 +201,7 @@ people:
         source: "Murphy et al., arXiv:2502.10934"
         url: "https://arxiv.org/abs/2502.10934"
         date: "Feb 2025"
+        section: "The scaling wall"
         status: "Clock ticking"
         note: "A wall is a strong claim. A benchmark miss is evidence of a limitation, not evidence that the limitation cannot be scaled or engineered away."
 
@@ -234,6 +219,7 @@ people:
         source: "ARC Prize"
         url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
         date: "Oct 2024"
+        section: "Memorization and novelty"
         status: "Hot take"
         note: "A crisp claim, and increasingly difficult to reconcile with long-horizon agentic behavior on novel tasks."
 
@@ -243,6 +229,7 @@ people:
         source: "ARC Prize"
         url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
         date: "Oct 2024"
+        section: "Memorization and novelty"
         status: "Empirically false"
         note: "The word slightest is doing heroic work here."
 
@@ -251,6 +238,7 @@ people:
         source: "ARC Prize"
         url: "https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis"
         date: "Oct 2024"
+        section: "Memorization and novelty"
         status: "Clock ticking"
         note: "This turns an empirical observation about current systems into a claim about an entire paradigm."
 
@@ -269,6 +257,7 @@ people:
         source: "Strange Loop podcast"
         url: "https://sanalabs.com/strange-loop/andrew-ng"
         date: "2023"
+        section: "Timelines"
         status: "Clock ticking"
         note: "The useful receipt is the horizon, not a semantic fight over the definition of AGI."
 
@@ -278,6 +267,7 @@ people:
         source: "Strange Loop podcast"
         url: "https://sanalabs.com/strange-loop/andrew-ng"
         date: "2023"
+        section: "Timelines"
         status: "Clock ticking"
         note: "Software that automates AI research is exactly where ordinary intuitions about technological speed may fail."
 
@@ -286,6 +276,7 @@ people:
         source: "Strange Loop podcast"
         url: "https://sanalabs.com/strange-loop/andrew-ng"
         date: "2023"
+        section: "Safety and acceleration"
         status: "Hot take"
         note: "Speed is not a safety argument."
 
@@ -294,6 +285,7 @@ people:
         source: "World Economic Forum AI Governance Summit"
         url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
         date: "Nov 2023"
+        section: "Safety and acceleration"
         status: "Hot take"
         note: "Not understanding a risk argument does not lower the probability of the risk."
 
@@ -302,5 +294,45 @@ people:
         source: "World Economic Forum AI Governance Summit"
         url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
         date: "Nov 2023"
+        section: "Safety and acceleration"
         status: "Clock ticking"
         note: "Getting a chatbot to refuse a request is not the same problem as controlling a more capable agent pursuing a long-horizon objective."
+
+  - name: "Jensen Huang"
+    title: "Jensen Huang"
+    handle: "@nvidia"
+    role: "Founder and CEO, NVIDIA"
+    blurb: >-
+      Jensen Huang's position matters twice: he influences policy, and NVIDIA
+      sells the infrastructure behind the AI buildout. Neither fact makes him
+      wrong. Both raise the cost of dismissing existential and employment risks
+      as "complete nonsense" without doing the argument.
+    quotes:
+      - text: |-
+          I think we've done a lot of damage with very well-respected people
+          who have painted a doomer narrative.
+        source: "No Priors podcast"
+        url: "https://podcasts.apple.com/us/podcast/nvidias-jensen-huang-on-reasoning-models-robotics-and/id1668002688?i=1000744277967"
+        date: "Jan 2026"
+        section: "Safety dismissal"
+        status: "Hot take"
+        note: "Warnings can be wrong, self-interested, or badly communicated. None of that answers the underlying risk argument. Treating the warning itself as the harm reverses the burden of proof."
+
+      - text: |-
+          The fact that this is going to be the end of humanity, it's
+          complete nonsense.
+        source: "Axios, Behind the Curtain"
+        url: "https://www.axios.com/2026/07/23/axios-interview-jensen-huang-is-ais-anti-doom-evangelist"
+        date: "Jul 2026"
+        section: "Safety dismissal"
+        status: "Hot take"
+        note: "A probability is not refuted by incredulity. From one of the people most able to shape AI policy, “complete nonsense” is not analysis."
+
+      - text: |-
+          People talk about AI reducing jobs, complete nonsense.
+        source: "NVIDIA GTC Taipei keynote"
+        url: "https://www.nvidia.com/en-us/on-demand/session/gtctaipei26-stw61044/"
+        date: "Jun 2026"
+        section: "Economic denial"
+        status: "Clock ticking"
+        note: "Higher demand for software today does not settle what happens when the software begins performing an increasing share of the work, including the work that improves the software."
