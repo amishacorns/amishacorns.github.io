@@ -20,7 +20,7 @@ Walk through almost any company and you will see thousands of highly paid people
 
 Keyboards are excellent for precision and discretion: editing a variable name, entering a password, moving a cursor three characters to the left, or working where speech would be disruptive. They are terrible as the default interface for expressing intent to an intelligent system.
 
-| Interface | Words per minute |
+| Interface | Words per Minute |
 |---|---:|
 | Average typing[^1] | 52 |
 | Fast typing[^1] | 78 |
