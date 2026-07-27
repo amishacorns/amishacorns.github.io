@@ -1,22 +1,47 @@
 ---
-title: "About"
-permalink: /about/
+title: "Summary"
+permalink: /
 author_profile: true
-description: "About Jordan Dotzel, an AI researcher and agent architect working on efficient neural systems, agents, and the path to AGI."
+description: "Jordan Dotzel is an AI researcher and agent architect working on efficient neural systems, agents, AGI safety, and the path to AGI."
 redirect_from:
+  - /about/
   - /about.html
 ---
 
-I'm an AI researcher and Agent Architect at Google. I completed my PhD at Cornell, where I worked on efficient neural architectures, quantization, and dynamic sparsity. This site is where I write down the stranger implications of increasingly capable AI systems before they become ordinary.
+We are currently within the most dynamic and exciting era of human discovery, where the number of unanswered questions remains high and the tools required to probe them are finally being built. Among these questions, general artificial intelligence now has most of its necessary ingredients and can plausibly be developed within the next decade. It will bring opportunities for the most incredible benefits across society, yet it will likely also be the most destabilizing and dangerous technology ever created.
 
-## What I'm Thinking About
+Within a short period of time, the majority of science needs to shift toward designing and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation, and targeted international regulation. The research decisions we make now will lead to a society that eventually either flourishes, decays, or even disappears.
 
-General artificial intelligence now has most of its necessary ingredients and can plausibly be developed within the next decade. It could produce extraordinary benefits, but it will likely also be the most destabilizing and dangerous technology ever created.
-
-The research decisions made now will help determine whether the society built around superintelligence flourishes, decays, or disappears. I am especially interested in scalable agents, interpretability, thought tracing, AI safety, and the institutions needed to govern systems more capable than their creators.
-
-Academics
-======
+<section class="start-here-section">
+  <h2>Start Here</h2>
+  <div class="start-here-grid">
+    <article class="start-here-card">
+      <a class="start-here-card__image" href="/posts/paths/"><img src="/images/critical.png" alt="" loading="lazy"></a>
+      <div class="start-here-card__body">
+        <p class="start-here-card__eyebrow">The path</p>
+        <h3><a href="/posts/paths/">All Paths Lead to AGI</a></h3>
+        <p>Why the fastest route to progress in every field increasingly runs through artificial intelligence.</p>
+      </div>
+    </article>
+    <article class="start-here-card">
+      <a class="start-here-card__image" href="/posts/is-sometime-now/"><img src="/images/is-sometime-now.jpg" alt="" loading="lazy"></a>
+      <div class="start-here-card__body">
+        <p class="start-here-card__eyebrow">The danger</p>
+        <h3><a href="/posts/is-sometime-now/">Is Sometime Now?</a></h3>
+        <p>Every scientific field eventually produces knowledge too dangerous to distribute freely.</p>
+      </div>
+    </article>
+    <article class="start-here-card">
+      <a class="start-here-card__image" href="/posts/granny/"><img src="/images/granny-family.jpg" alt="" loading="lazy"></a>
+      <div class="start-here-card__body">
+        <p class="start-here-card__eyebrow">The destination</p>
+        <h3><a href="/posts/granny/">Should We Do as Granny Says?</a></h3>
+        <p>Human values should be a place for superintelligence to begin, not a place for moral discovery to stop.</p>
+      </div>
+    </article>
+  </div>
+</section>
+<h1>Academics</h1>
 I received my PhD from the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research focused on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
 
 
@@ -85,6 +110,7 @@ Experience
 - **Gemini+Cloud, Advanced Development Team**<br>
   *Agent Architect*<br>
   *July 2025 - Present*
+
 - **Google, TPU Performance Team**  
   *Student Researcher*  
   *June 2024 - June 2025*  
