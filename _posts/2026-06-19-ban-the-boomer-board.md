@@ -35,13 +35,11 @@ Alphabet is only a convenient yardstick. Its $67.2 billion employee-compensation
 
 The opportunity is not merely dictating the same email faster. It appears when voice is paired with systems capable of executing intent: research the customer, draft the email, update the CRM, propose three follow-ups, and return only for approval. The keyboard accelerates characters. The agent accelerates outcomes.
 
-Here is the contradiction. Companies treat office attendance as a prerequisite for collaboration, then bring everyone into the same building to silently face private rectangles. The post-agentic office should maximize human-to-agent communication and minimize human-to-human synchronization. People should constantly meet with their agents and regroup with humans only when judgment, taste, conflict, trust, or accountability requires it.
+The post-agentic office should resemble high-level management: people are in meetings all day, but the meetings are with agents instead of humans. Maximize human-to-agent communication and minimize human-to-human synchronization. Regroup with humans only when judgment, taste, conflict, trust, or accountability requires it.
 
-Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Call the role **Agent Manager**. Give every Agent Manager a good microphone and a voice-friendly workspace. Teach them to delegate objectives, context, constraints, and success criteria aloud, then evaluate completed work, cycle time, errors, and rework. Leadership should model the behavior.
+Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives, context, constraints, and success criteria aloud, then evaluate completed work, cycle time, errors, and rework. Leadership should model the behavior.
 
-Embrace the em dash—it signals that someone used the resources and time available to them.
-
-By the end of 2026, "I typed it all myself" should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
+Embrace the em dash—it signals that someone used the resources and time available to them. By the end of 2026, "I typed it all myself" should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
 
 Make voice the default interface for high-level creation and delegation. Make agents the default interface for multi-step execution. Keep keyboards for precision, correction, code review, privacy, and anything else where they are genuinely the better instrument.
 
