@@ -20,36 +20,26 @@ Walk through almost any company and you will see thousands of highly paid people
 
 Keyboards are excellent for precision and discretion: editing a variable name, entering a password, moving a cursor three characters to the left, or working where speech would be disruptive. They are terrible as the default interface for expressing intent to an intelligent system.
 
-The average typing speed is 52 words per minute, while fast typists reach roughly 78.[^1] Normal speech runs around 150 words per minute,[^2] and speech can reach 200.[^3]
+| Interface | Words per minute |
+|---|---:|
+| Average typing[^1] | 52 |
+| Fast typing[^1] | 78 |
+| Normal speech[^2] | 150 |
+| Fast AI speech[^3] | 200 |
 
-| Interface | Words per minute | Words per second | Versus fast typing |
-|---|---:|---:|---:|
-| Average typing | 52 | 0.87 | 0.7x |
-| Fast typing | 78 | 1.30 | 1.0x |
-| Normal speech | 150 | 2.50 | 1.9x |
-| Fast AI speech | 200 | 3.33 | 2.6x |
+A twenty-minute conversation with an agent at 200 words per minute contains about 4,000 words. Even a fast typist needs more than 51 minutes to enter the same amount. That extra bandwidth becomes context: objectives, constraints, examples, and a definition of done. Many prompts are not too difficult; they are too small. People conclude that the agent is limited when the real failure is context starvation. We built machines that can reason over millions of tokens and installed a tollbooth in front of them staffed by ten fingers.
 
-A twenty-minute conversation with an agent at 200 words per minute contains about 4,000 words. Even a fast typist needs more than 51 minutes to enter the same amount. That extra bandwidth becomes context: the objective, history, constraints, examples, edge cases, taste, and definition of done. Many prompts are not too difficult; they are too small. People conclude that the agent is limited when the real failure is context starvation. We built machines that can reason over millions of tokens and installed a tollbooth in front of them staffed by ten fingers.
+Moving millions of annual inputs from fingers to voice may finally force carpal tunnel to find another line of work.
 
-The mechanical comparison is almost as silly. Two hours of typing per workday at 78 words per minute produces about 11.7 million character-level keypresses per year. Matching 200-word-per-minute speech would require 30 million. That is not a carpal tunnel diagnosis; the evidence that computer work causes it remains insufficient.[^4] But moving millions of repetitive actions from hands to voice still removes a physical bottleneck.
-
-Now for the fun number: what is a giant company losing by leaving its people on BoomerBoards?
-
-Alphabet reported 190,820 employees, $402.8 billion in revenue, and $67.2 billion in combined employee compensation for Google Services and Google Cloud.[^5] Applying measured productivity gains of 14 to 40 percent[^6][^7] gives a gross labor-value range of roughly $9.4 billion to $26.9 billion per year.
-
-These are not forecasts. Not every employee is a knowledge worker, not every hour is text entry, and productivity does not convert dollar-for-dollar into profit. Google is probably not losing tens of billions per week either: Alphabet's entire 2025 revenue was about $7.7 billion per week. The spreadsheets have spoken. But billions per year in foregone productivity is entirely plausible.
+Alphabet is only a convenient yardstick. Its $67.2 billion employee-compensation base, multiplied by measured productivity gains of 14 to 40 percent, implies a gross labor-value range of roughly $9.4 billion to $26.9 billion per year.[^4][^5][^6] That is not a forecast, a claim about profit, or tens of billions per week. It is an order-of-magnitude demonstration that a large organization can plausibly leave billions of dollars per year on the table by adopting better interfaces and agents too slowly.
 
 The opportunity is not merely dictating the same email faster. It appears when voice is paired with systems capable of executing intent: research the customer, draft the email, update the CRM, propose three follow-ups, and return only for approval. The keyboard accelerates characters. The agent accelerates outcomes.
 
-Here is the contradiction. Companies treat office attendance as a prerequisite for collaboration and productivity. Then they bring everyone into the same building and preserve a culture in which the visible sign of serious work is silence: each person facing a private rectangle, conducting a ten-finger correspondence with a machine. The commute creates the possibility of a high-bandwidth workplace; the BoomerBoard immediately throttles it.
+Here is the contradiction. Companies treat office attendance as a prerequisite for collaboration, then bring everyone into the same building to silently face private rectangles. The post-agentic office should maximize human-to-agent communication and minimize human-to-human synchronization. People should constantly meet with their agents and regroup with humans only when judgment, taste, conflict, trust, or accountability requires it.
 
-The post-agentic office is not an endless meeting among humans. It is people constantly meeting with their agents and synchronizing with other humans as infrequently as possible. Maximize human-to-agent communication. Reserve human-to-human communication for judgment, taste, conflict, trust, and accountability.
+Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Call the role **Agent Manager**. Give every Agent Manager a good microphone and a voice-friendly workspace. Teach them to delegate objectives, context, constraints, and success criteria aloud, then evaluate completed work, cycle time, errors, and rework. Leadership should model the behavior.
 
-Everyone becomes a manager. Nobody is an engineer anymore. More precisely, "engineer" stops describing the unit of work. The engineer no longer personally moves every character into place; the engineer sets direction, supplies context, delegates execution, reviews results, and assumes responsibility. Make the transition explicit: call the role **Agent Manager**.
-
-Build fewer conference rooms for status meetings and more voice-friendly spaces for agent work. Give everyone a good microphone. Teach people to delegate outcomes aloud: objective, context, constraints, success criteria, and when the agent must ask for help. Measure completed work, cycle time, errors, and rework—not prompts sent or minutes spent talking. Leadership should model the behavior.
-
-And embrace the em dash. People are contorting perfectly good prose to hide their AI usage. That norm is backward. An em dash should not signal cheating—it should signal that someone used the resources and time available to them.
+Embrace the em dash—it signals that someone used the resources and time available to them.
 
 By the end of 2026, "I typed it all myself" should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
 
@@ -60,7 +50,6 @@ The BoomerBoard can remain on every desk—but only next to a microphone.
 [^1]: Vivek Dhakal et al., [*Observations on Typing from 136 Million Keystrokes*](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf), CHI 2018.
 [^2]: National Institutes of Health, [“Scientists Create Speech Using Brain Signals”](https://www.nih.gov/news-events/nih-research-matters/scientists-create-speech-using-brain-signals), 2019.
 [^3]: Sherry Ruan et al., [*Speech Is 3x Faster than Typing for English and Mandarin Text Entry on Mobile Devices*](https://hci.stanford.edu/research/speech/paper/speech_paper.pdf), 2016.
-[^4]: Peter M. Andersen et al., [“Carpal Tunnel Syndrome and Its Relationship to Occupation”](https://pmc.ncbi.nlm.nih.gov/articles/PMC2569035/), 2008.
-[^5]: Alphabet, [2025 Annual Report](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm).
-[^6]: Erik Brynjolfsson, Danielle Li, and Lindsey R. Raymond, [*Generative AI at Work*](https://www.nber.org/papers/w31161), 2023.
-[^7]: Shakked Noy and Whitney Zhang, [“Experimental Evidence on the Productivity Effects of Generative Artificial Intelligence”](https://doi.org/10.1126/science.adh2586), 2023.
+[^4]: Alphabet, [2025 Annual Report](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm).
+[^5]: Erik Brynjolfsson, Danielle Li, and Lindsey R. Raymond, [*Generative AI at Work*](https://www.nber.org/papers/w31161), 2023.
+[^6]: Shakked Noy and Whitney Zhang, [“Experimental Evidence on the Productivity Effects of Generative Artificial Intelligence”](https://doi.org/10.1126/science.adh2586), 2023.
