@@ -13,7 +13,7 @@ We are currently within the most dynamic and exciting era of human discovery, wh
 Within a short period of time, the majority of science needs to shift toward designing and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation, and targeted international regulation. The research decisions we make now will lead to a society that eventually either flourishes, decays, or even disappears.
 
 <section class="start-here-section">
-  <h2>Start Here</h2>
+  <h2>Selected Musings</h2>
   <div class="start-here-grid">
     <article class="start-here-card">
       <a class="start-here-card__image" href="/posts/paths/"><img src="/images/critical.png" alt="" loading="lazy"></a>
