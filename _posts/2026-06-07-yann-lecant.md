@@ -3,7 +3,7 @@ title: "Yann LeCan't"
 date: 2026-06-07
 permalink: /posts/yann-lecant/
 excerpt: |
-  ![Yann LeCan't](/images/yann-lecant-lifeboat-v2.png){: style="display: block; margin: 0 auto; width: 500px;"}
+  ![Yann LeCan't](/images/yann-lecant-lifeboat-v3.png){: style="display: block; margin: 0 auto; width: 500px;"}
 
   A running collection of confident claims about what LLMs can't do, plus a few guest appearances.
 tags:
@@ -43,7 +43,7 @@ tags:
   }
 </style>
 
-![Yann LeCan't](/images/yann-lecant-lifeboat-v2.png){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
+![Yann LeCan't](/images/yann-lecant-lifeboat-v3.png){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
 
 <div class="wos-intro" markdown="1">
 The point isn't that smart people are sometimes wrong, or that strong opinions
