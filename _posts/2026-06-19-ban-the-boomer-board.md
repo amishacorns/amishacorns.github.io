@@ -1,13 +1,18 @@
 ---
 title: 'Ban the Boomer Board'
-date: 2026-07-03
+date: 2026-06-19
 permalink: /posts/ban-the-boomer-board/
 excerpt: |
   The keyboard was a good interface for 1874. It should not be the default interface for intelligence in 2026.
 tags:
   - artificial intelligence
   - productivity
+description: "Why the keyboard is throttling communication with intelligent systems—and what offices should do about it."
+header:
+  teaser: "ban-the-boomer-board.png"
 ---
+
+![Ban the Boomer Board](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
 
 The most expensive sound in the office is silence.
 
