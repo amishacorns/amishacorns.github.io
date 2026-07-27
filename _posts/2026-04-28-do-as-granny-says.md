@@ -9,6 +9,9 @@ excerpt: |
 tags:
   - artificial intelligence
   - philosophy
+description: "Human values should be a place for superintelligence to begin, not a place for moral discovery to stop."
+header:
+  teaser: "granny-family.jpg"
 ---
 
 ![Should We Do as Granny Says?](/images/granny-family.jpg){: style="display: block; margin: 0 auto; width: 500px;"}

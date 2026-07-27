@@ -2,13 +2,12 @@
 title: 'The Algorithm'
 date: 2026-02-15
 permalink: /posts/the-algorithm/
-excerpt: |
-  ![The Algorithm](/images/ai-algorithm.jpg){: style="display: block; margin: 0 auto; width: 500px;"}
-
-  The universe is a search process that builds increasingly capable forms of intelligence until evolution gives way to direct optimization.
 tags:
   - artificial intelligence
   - philosophy
+description: "The universe is a search process that builds increasingly capable forms of intelligence until evolution gives way to direct optimization."
+header:
+  teaser: "ai-algorithm.jpg"
 ---
 
 ![The Algorithm](/images/ai-algorithm.jpg){: style="display: block; margin: 0 auto; width: 500px;"}

@@ -3,6 +3,7 @@ permalink: /musings/
 layout: archive
 title: "Musings"
 author_profile: true
+description: "Short essays by Jordan Dotzel about AI systems, agents, AGI safety, philosophy, and technological progress."
 ---
 
 {% include base_path %}

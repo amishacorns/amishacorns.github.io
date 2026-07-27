@@ -2,7 +2,8 @@
 title: "Summary"
 permalink: /
 author_profile: true
-redirect_from: 
+description: "Jordan Dotzel is an AI researcher and agent architect working on efficient neural systems, agents, AGI safety, and the path to AGI."
+redirect_from:
   - /about/
   - /about.html
 ---
@@ -11,8 +12,36 @@ We are currently within the most dynamic and exciting era of human discovery, wh
 
 Within a short period of time, the majority of science needs to shift toward designing and deploying effective and safe super intelligence. This requires new neural architectures that efficiently scale while maintaining interpretability and thought-tracing, global cooperation, and targeted international regulation. The research decisions we make now will lead to a society that eventually either flourishes, decays, or even disappears.
 
-Academics
-======
+<section class="start-here-section">
+  <h2>Selected Musings</h2>
+  <div class="start-here-grid">
+    <article class="start-here-card">
+      <a class="start-here-card__image" href="/posts/paths/"><img src="/images/critical.png" alt="" loading="lazy"></a>
+      <div class="start-here-card__body">
+        <p class="start-here-card__eyebrow">The path</p>
+        <h3><a href="/posts/paths/">All Paths Lead to AGI</a></h3>
+        <p>Why the fastest route to progress in every field increasingly runs through artificial intelligence.</p>
+      </div>
+    </article>
+    <article class="start-here-card">
+      <a class="start-here-card__image" href="/posts/is-sometime-now/"><img src="/images/is-sometime-now.jpg" alt="" loading="lazy"></a>
+      <div class="start-here-card__body">
+        <p class="start-here-card__eyebrow">The danger</p>
+        <h3><a href="/posts/is-sometime-now/">Is Sometime Now?</a></h3>
+        <p>Every scientific field eventually produces knowledge too dangerous to distribute freely.</p>
+      </div>
+    </article>
+    <article class="start-here-card">
+      <a class="start-here-card__image" href="/posts/granny/"><img src="/images/granny-family.jpg" alt="" loading="lazy"></a>
+      <div class="start-here-card__body">
+        <p class="start-here-card__eyebrow">The destination</p>
+        <h3><a href="/posts/granny/">Should We Do as Granny Says?</a></h3>
+        <p>Human values should be a place for superintelligence to begin, not a place for moral discovery to stop.</p>
+      </div>
+    </article>
+  </div>
+</section>
+<h1>Academics</h1>
 I received my PhD from the [Computer Systems Laboratory](https://www.csl.cornell.edu/) at Cornell University, under the supervision of [Prof. Zhiru Zhang](https://www.csl.cornell.edu/~zhiruz/index.html) and co-advised by [Mohamed Abdelfattah](https://www.mohsaied.com/). I previously studied a combination of Physics and Computer Science in the College of Arts and Sciences at Cornell University. My academic research focused on building more efficient deep learning systems through efficient neural architectures, low-precision quantization, and dynamic sparsity.
 
 
@@ -78,9 +107,9 @@ Publications
 Experience
 ======
 
-- **Gemini+Cloud, Advanced Development Team**  
-  *Agent Architect*  
-  *July 2025 - Present*  
+- **Gemini+Cloud, Advanced Development Team**<br>
+  *Agent Architect*<br>
+  *July 2025 - Present*
 
 - **Google, TPU Performance Team**  
   *Student Researcher*  
@@ -96,4 +125,4 @@ Experience
 
 - **Datto**  
 *Software Engineer*  
-*June 2017 - Jun 2018*  
+*June 2017 - Jun 2018*

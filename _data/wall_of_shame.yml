@@ -1,0 +1,440 @@
+# Yann LeCan't — sourced quotes and short rebuttals, grouped by the actual
+# criticism rather than verdict badges. Keep quotes verbatim, dated, and linked
+# to the best available source. The unpublished status field remains for
+# internal curation only.
+
+people:
+  - name: "Yann LeCun"
+    title: "Yann LeCan't"
+    handle: "@ylecun"
+    role: "Chief AI Scientist, Meta (2013–2025) · Turing Award, 2018"
+    blurb: >-
+      Yann LeCun repeatedly turns a limitation of the system in front of him
+      into a limit on the whole field. The failure is not merely predictive.
+      From a position of unusual influence, the same short horizons become an
+      argument for postponing safety work while capabilities keep compounding.
+    section_responses:
+      - section: "What LLMs Cannot Do"
+        text: >-
+          There is a difference between saying that the models available in
+          2023 could not reliably plan and saying that LLMs, as a technology,
+          cannot plan. These claims turn the limitations of the model available
+          that day into limitations of the entire trajectory. The escape hatch
+          was visible from the beginning: LLMs can be supervised on thought
+          traces themselves, learn progressively longer and more complex
+          sequences of reasoning, and then iterate. They do not have to remain
+          a distinct or final architecture. They only have to become capable
+          enough to build whatever comes next. Once LLMs can do the research
+          that designs their successors, what comes after LLMs does not need to
+          be known in advance.
+      - section: "Safety Can Wait"
+        text: >-
+          The gradualist analogy misses the mechanism that makes AI unusual.
+          Jet engines do not redesign the next generation of jet engines. AI
+          systems may automate the research that produces more capable AI
+          systems, so a gradual curve can become a recursive one. Safety
+          research also has lead times. We build vaccine platforms,
+          surveillance systems, and manufacturing capacity before the next
+          pandemic, not after it arrives. Waiting for the dangerous system
+          before learning how to control it is not caution. It is the absence
+          of planning.
+      - section: "Economic Denial"
+        text: >-
+          The claim is not that every researcher disappears overnight. The more plausible future is data centers full of AI researchers, initially directed by a much smaller number of humans. Research can keep growing while requiring 100 or 1,000 times fewer people. Counting jobs rather than the amount of cognitive labor being automated misses the transition.
+
+    quotes:
+      - text: |-
+          Auto-Regressive LLMs can't plan (and can't really reason).
+        context: >-
+          Endorsing an argument that fine-tuning improved planning benchmarks
+          by turning the task into approximate memory-based retrieval.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1702027572077326505"
+        date: "Sept 2023"
+        section: "What LLMs Cannot Do"
+        status: "Moving goalposts"
+        note: ""
+
+      - text: |-
+          It seems to me that before "urgently figuring out how to control AI
+          systems much smarter than us" we need to have the beginning of a
+          hint of a design for a system smarter than a house cat.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1791890883425570823"
+        date: "May 2024"
+        section: "Safety Can Wait"
+        status: "Pending"
+        note: "You build the vaccine platform before the pandemic. With compounding capabilities, waiting for the dangerous system to exist before learning how to control it is not caution. It is the absence of planning."
+
+      - text: |-
+          LLMs are useful, but they are an off ramp on the road to human-level
+          AI. If you are a PhD student, don't work on LLMs. Try to discover
+          methods that would lift the limitations of LLMs.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1796982509567180927"
+        date: "June 2024"
+        section: "What LLMs Cannot Do"
+        status: "Wrong on arrival"
+        note: "The current architecture can be temporary and still be the last one humans design unaided. If LLMs are sufficient to build the next paradigm, calling them an off-ramp misses the transition that matters."
+
+      - text: |-
+          [LLMs] can do none of those or they can only do them in a very
+          primitive way, and they don't really understand the physical world.
+        source: "Lex Fridman Podcast #416"
+        url: "https://lexfridman.com/yann-lecun-3-transcript"
+        date: "Mar 2024"
+        section: "What LLMs Cannot Do"
+        status: "Moving goalposts"
+        note: ""
+
+      - text: |-
+          The overall cost saving is limited by the proportion of tasks that
+          can be automated.
+        context: >-
+          Arguing that most jobs contain many tasks and only some will be
+          enhanced, accelerated, or automated by AI.
+        source: "LinkedIn"
+        url: "https://www.linkedin.com/posts/yann-lecun_most-jobs-involve-performing-many-tasks-activity-7342572373931356160-0N9u"
+        date: "Jun 2025"
+        section: "Economic Denial"
+        status: "Clock Ticking"
+        note: >-
+          Task-level limits do not imply job-level stability when the automated
+          share expands and the same systems accelerate further automation.
+
+      # --- Deep-dive candidates, Jul 2026 ---
+      - text: |-
+          AI systems are not weapons any more than a car or a computer is a weapon.
+        context: >-
+          In a longer comment supporting regulation of AI products while
+          arguing that future systems should be made safe through careful,
+          iterative engineering.
+        source: "Facebook"
+        url: "https://www.facebook.com/yann.lecun/posts/pfbid0SjyAxQpYmJrF9dL6uBkwRA25vn9bUNnCYPYaym5oDgzg54RQpNCEK4nY4tLiNx1tl/?comment_id=330366236204472"
+        date: "Oct 2023"
+        section: "Safety Can Wait"
+        status: "Hot take"
+        note: "This is the guns-don’t-kill-people argument applied to a general-purpose system that can write code, discover vulnerabilities, operate machines, persuade people, and eventually improve itself. “General purpose” does not mean “incapable of becoming a weapon.”"
+
+      - text: |-
+          Until we have a design, it's premature to speculate about ways to make them safe.
+        context: >-
+          In the same comment, comparing advance safety work to designing a
+          containment system for a turbojet in 1925.
+        source: "Facebook"
+        url: "https://www.facebook.com/yann.lecun/posts/pfbid0SjyAxQpYmJrF9dL6uBkwRA25vn9bUNnCYPYaym5oDgzg54RQpNCEK4nY4tLiNx1tl/?comment_id=330366236204472"
+        date: "Oct 2023"
+        section: "Safety Can Wait"
+        status: "Hot take"
+        note: "You do not wait for a pandemic to discover how vaccines work. Safety research shapes the architecture before the failure mode exists, especially when the underlying capability is compounding."
+
+      - text: |-
+          It retrieves it because it's accumulated a lot of knowledge.
+        context: "Describing how an LLM produces an answer."
+        source: "Lex Fridman Podcast #416"
+        url: "https://lexfridman.com/yann-lecun-3-transcript/"
+        date: "Mar 2024"
+        section: "What LLMs Cannot Do"
+        status: "Wrong on arrival"
+        note: "Retrieval is not an adequate description of systems that construct proofs, plans, programs, and novel tool trajectories at inference time."
+
+      - text: |-
+          My benevolent defensive AI will be better at destroying your evil AI than your evil AI will be at hurting humans.
+        source: "X (@ylecun)"
+        url: "https://x.com/ylecun/status/1637849935252172801"
+        date: "Mar 2023"
+        section: "Safety Can Wait"
+        status: "Hot take"
+        note: "The AI-police answer assumes the defensive system wins, stays defensive, recognizes the threat, and arrives on time."
+
+      - text: |-
+          AI systems, as smart as they might be, will be subservient to us.
+        context: >-
+          Arguing that AI has no intrinsic drive to dominate, that humans set
+          its goals, and that good AI systems could stop bad ones.
+        source: "TIME interview"
+        url: "https://time.com/6694432/yann-lecun-meta-ai-interview/"
+        date: "Feb 2024"
+        section: "Safety Can Wait"
+        status: "Pending"
+        note: "This is a conclusion presented as an architectural default."
+
+  - name: "Gary Marcus"
+    title: "Gary Marcus"
+    handle: "@GaryMarcus"
+    role: "Scientist, author, and longtime deep-learning critic"
+    blurb: >-
+      Gary Marcus often identifies real failures in current systems. The
+      recurring mistake is the jump from "this model fails here" to "deep
+      learning has reached a wall." The evidence establishes an obstacle, not
+      a boundary.
+    section_responses:
+      - section: "The Scaling Wall"
+        text: >-
+          Each failure is evidence about the system tested, not proof that the underlying trajectory has ended. The March 2022 wall arrived after GPT-3 and AlphaCode, eight months before ChatGPT. The February 2025 wall arrived after o1 demonstrated that additional test-time compute could produce smooth capability gains. A moving obstacle is not a scaling limit.
+
+    quotes:
+      - text: |-
+          Deep Learning Is Hitting a Wall. ... We may already be running into
+          scaling limits in deep learning.
+        context: >-
+          Published after GPT-3 and AlphaCode, eight months before ChatGPT.
+        source: "Nautilus"
+        url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440"
+        date: "Mar 2022"
+        section: "The Scaling Wall"
+        status: "Wrong On Arrival"
+        note: >-
+          The claim arrived in the middle of a visible capability trajectory,
+          not before one.
+
+      - text: |-
+          Deep learning is hitting a wall with respect to compositionality ...
+          a stubbornly resilient wall that cannot readily be surmounted to
+          reach human-like compositional reasoning simply through more compute.
+        context: >-
+          The paper tested o3-mini-high on linguistic compositionality after o1
+          introduced test-time compute scaling and OpenAI announced o3.
+        source: "Murphy et al., arXiv:2502.10934"
+        url: "https://arxiv.org/abs/2502.10934"
+        date: "Feb 2025"
+        section: "The Scaling Wall"
+        status: "Clock Ticking"
+        note: >-
+          A benchmark miss identifies a limitation. It does not establish that
+          the limitation cannot be scaled or engineered away.
+
+      - text: |-
+          Game over. AGI is not imminent, and LLMs are not the royal road to
+          getting there.
+        source: "LinkedIn"
+        url: "https://www.linkedin.com/posts/gary-marcus-b6384b4_game-over-agi-is-not-imminent-and-llms-activity-7385292946289582081-0Ent"
+        date: "Oct 2025"
+        section: "The Scaling Wall"
+        status: "Clock Ticking"
+        note: >-
+          Current benchmark failures can establish limitations in present
+          systems. They cannot establish that those systems are not on the path
+          to their successor.
+
+      - text: |-
+          It is truly embarrassing that LLMs cannot reliably solve Hanoi. ...
+          Anybody who thinks LLMs are a direct route ... is kidding themselves.
+        context: >-
+          Using Tower of Hanoi failures to argue that LLMs are not a route to
+          AGI.
+        source: "The Guardian"
+        url: "https://www.theguardian.com/commentisfree/2025/jun/10/billion-dollar-ai-puzzle-break-down"
+        date: "Jun 2025"
+        section: "The Scaling Wall"
+        status: "Moving Goalposts"
+        note: >-
+          A direct route does not require an unchanged architecture. It only
+          requires systems on the route to become capable enough to extend it.
+
+  - name: "Andrew Ng"
+    title: "Andrew Ng"
+    handle: "@AndrewYNg"
+    role: "Founder, DeepLearning.AI · Founding lead, Google Brain"
+    blurb: >-
+      The sunny case: progress will remain gradual and alignment tools are
+      stronger than the public realizes. Each clause is now an experiment.
+    section_responses:
+      - section: "Timelines"
+        text: >-
+          The exact numbers are metaphorical, but the conclusion is consistent: many decades. That estimate assumes progress remains roughly additive. Automating parts of AI research is exactly the mechanism that could make the ordinary clock fail.
+      - section: "Safety"
+        text: >-
+          Calling existential-risk arguments vague is a criticism, but it does
+          not answer their strongest forms. A leader in the field has a
+          responsibility to understand the implications of the technology he
+          is accelerating. Getting a chatbot to refuse a harmful request is
+          not the same as controlling a more capable agent pursuing a
+          long-horizon objective.
+
+    quotes:
+      - text: |-
+          Maybe 50. I think it's decades out. ... Technology doesn't work like
+          that; it advances slowly.
+        context: "On AGI timelines and rejecting a hard-takeoff scenario."
+        source: "Strange Loop podcast"
+        url: "https://sanalabs.com/strange-loop/andrew-ng"
+        date: "2023"
+        section: "Timelines"
+        status: "Clock Ticking"
+        note: >-
+          Software that automates AI research is exactly where ordinary
+          intuitions about technological speed may fail.
+
+      - text: |-
+          I actually spoke with quite a few people about the existential risk,
+          and candidly, I don't get it. Many of them are very vague.
+        context: >-
+          He compared the arguments he had heard to an unfalsifiable claim
+          about radio waves attracting hostile aliens and called them a
+          distraction from present harms.
+        source: "World Economic Forum AI Governance Summit"
+        url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
+        date: "Nov 2023"
+        section: "Safety"
+        status: "Hot Take"
+        note: >-
+          Not understanding a risk argument does not lower the probability of
+          the risk.
+
+      - text: |-
+          The tools for aligning AI with human values, they are better than
+          most people think. They're not perfect. ... We have better tools,
+          more powerful, than the public probably appreciates for just telling
+          the AI to do what we want.
+        context: >-
+          Pointing to the difficulty of eliciting harmful instructions from
+          ChatGPT or Bard while also supporting continued safety investment.
+        source: "World Economic Forum AI Governance Summit"
+        url: "https://www.weforum.org/podcasts/agenda-dialogues/episodes/ai-governance-summit-2023-state-of-gen-ai-views-from-the-frontier/"
+        date: "Nov 2023"
+        section: "Safety"
+        status: "Clock Ticking"
+        note: >-
+          Instruction following is not the same problem as controlling a more
+          capable agent pursuing a long-horizon objective.
+
+      - text: |-
+          Maybe a year ago, AGI felt 50 years away. ... another 49 years to go.
+          These numbers are metaphorical, so don't take them too seriously.
+        context: >-
+          He immediately qualified the arithmetic while still arguing that AGI
+          remains many decades away.
+        source: "Fast Company interview"
+        url: "https://www.fastcompany.com/91499247/andrew-ng-agi-decades-away-interview"
+        date: "Feb 2026"
+        section: "Timelines"
+        status: "Clock Ticking"
+        note: >-
+          The caveat matters, so it belongs in the excerpt. The substantive
+          wager remains that progress will be gradual even as AI begins
+          automating pieces of AI research.
+
+  - name: "Tim Scarfe and Jeremy Budd"
+    title: "Tim Scarfe and Jeremy Budd"
+    handle: "@MLStreetTalk"
+    role: "Tim Scarfe, MLST host · Jeremy Budd, University of Birmingham mathematician"
+    blurb: >-
+      Scarfe and Budd make a careful technical case, then harden properties of
+      current training into boundaries on what the systems it produces can
+      originate and what the labor market can replace.
+    section_responses:
+      - section: "Creativity and Understanding"
+        text: >-
+          "Never venture beyond the territory it was trained on" mistakes the
+          source of a model's representations for the boundary of what the
+          trained system can do. Training can produce a system that searches,
+          writes code, runs experiments, checks results, and changes its own
+          environment. The optimizer can be greedy without reducing the system
+          it produces to interpolation. To their credit, Scarfe and Budd
+          explicitly leave the door open for better architectures.
+      - section: "Economic Denial"
+        text: >-
+          A training pipeline for future senior engineers is not a guarantee of
+          present junior employment. Firms can replace junior workers even if
+          doing so eventually damages the supply of senior humans. That would
+          be a social cost of automation, not an economic barrier to it.
+
+    quotes:
+      - text: |-
+          And without this fire, AI will never venture beyond the territory it
+          was trained on.
+        context: >-
+          The essay argues that current systems lack genuine creativity while
+          explicitly leaving the door open for better architectures.
+        source: "Why Creativity Cannot Be Interpolated"
+        url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
+        date: "Feb 2026"
+        section: "Creativity and Understanding"
+        status: "Clock Ticking"
+        note: >-
+          A trained system can search, test, and build outside artifacts
+          without its architecture being the final form of intelligence.
+
+      - text: |-
+          You cannot displace the junior engineers.
+        context: >-
+          The argument is that producing senior engineers depends on the
+          struggle that AI removes.
+        source: "Why Creativity Cannot Be Interpolated"
+        url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
+        date: "Feb 2026"
+        section: "Economic Denial"
+        status: "Clock Ticking"
+        note: >-
+          An industry can reduce junior hiring even if doing so creates a
+          long-term human training problem.
+
+  - name: "Jensen Huang"
+    title: "Jensen Huang"
+    handle: "@nvidia"
+    role: "Founder and CEO, NVIDIA"
+    blurb: >-
+      Jensen Huang's position matters twice: he influences policy, and NVIDIA
+      sells the infrastructure behind the AI buildout. Neither fact makes him
+      wrong. Both raise the cost of dismissing existential and employment risks
+      as "complete nonsense" without doing the argument.
+    section_responses:
+      - section: "Safety Dismissal"
+        text: >-
+          The uranium analogy is not about chips literally exploding. It is
+          about dual use and access to dangerous capability. Even that only
+          addresses misuse by people. The existential concern is absolute loss
+          of control to the systems themselves, which is not captured by a
+          wartime or cyber framing. Calling the analogy lunacy answers neither
+          argument.
+      - section: "Economic Denial"
+        text: >-
+          The demand for intelligence does not have to disappear. The labor
+          supplying it can stop being human. If AI performs knowledge work
+          better than knowledge workers, more demand can mean more data centers,
+          not more people. Pointing to job creation today while ignoring
+          substitution at higher capability levels is a failure to extrapolate
+          the system being sold.
+
+    quotes:
+      - text: |-
+          I think we've done a lot of damage with very well-respected people
+          who have painted a doomer narrative.
+        source: "No Priors podcast"
+        url: "https://podcasts.apple.com/us/podcast/nvidias-jensen-huang-on-reasoning-models-robotics-and/id1668002688?i=1000744277967"
+        date: "Jan 2026"
+        section: "Safety Dismissal"
+        status: "Hot take"
+        note: "The same interview describes AI compute gains as compounding five to ten times per year, then assumes cheaper monitoring AIs will reverse the danger. He sees the exponential. He simply assumes the defense scales better."
+
+      - text: |-
+          The fact that this is going to be the end of humanity, it's
+          complete nonsense.
+        source: "Axios, Behind the Curtain"
+        url: "https://www.axios.com/2026/07/23/axios-interview-jensen-huang-is-ais-anti-doom-evangelist"
+        date: "Jul 2026"
+        section: "Safety Dismissal"
+        status: "Hot take"
+        note: "A probability is not refuted by incredulity. From one of the people most able to shape AI policy, “complete nonsense” is not analysis."
+
+      - text: |-
+          People talk about AI reducing jobs, complete nonsense.
+        source: "NVIDIA GTC Taipei keynote"
+        url: "https://www.nvidia.com/en-us/on-demand/session/gtctaipei26-stw61044/"
+        date: "Jun 2026"
+        section: "Economic Denial"
+        status: "Clock ticking"
+        note: "Higher demand for software today does not settle what happens when the software begins performing an increasing share of the work, including the work that improves the software."
+
+      - text: |-
+          Comparing AI to anything that you just mentioned is lunacy. ... It's
+          a lousy analogy. It's an illogical analogy. ... We're not enriched
+          uranium. It's a chip, and it's a chip that they can make themselves.
+        context: "On comparisons between exporting advanced AI compute, selling nuclear weapons, and sending enriched uranium abroad."
+        source: "Dwarkesh Podcast"
+        url: "https://www.dwarkesh.com/p/jensen-huang"
+        date: "Apr 2026"
+        section: "Safety Dismissal"
+        status: "Hot take"
+        note: "The analogy is about dual use and access to dangerous capability, not about chips literally exploding. That China can eventually make a substitute does not show that exporting the better input now has no marginal effect."
