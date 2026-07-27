@@ -18,10 +18,15 @@ people:
         text: >-
           There is a difference between saying that the models available in
           2023 could not reliably plan and saying that LLMs, as a technology,
-          cannot plan. These claims repeatedly turn the limitations of the
-          model available that day into limitations of the entire trajectory.
-          LLMs do not have to remain a distinct or final architecture. They
-          only have to become capable enough to build whatever comes next.
+          cannot plan. These claims turn the limitations of the model available
+          that day into limitations of the entire trajectory. The escape hatch
+          was visible from the beginning: LLMs can be supervised on thought
+          traces themselves, learn progressively longer and more complex
+          sequences of reasoning, and then iterate. They do not have to remain
+          a distinct or final architecture. They only have to become capable
+          enough to build whatever comes next. Once LLMs can do the research
+          that designs their successors, what comes after LLMs does not need to
+          be known in advance.
       - section: "Safety Can Wait"
         text: >-
           The gradualist analogy misses the mechanism that makes AI unusual.
@@ -311,64 +316,59 @@ people:
           automating pieces of AI research.
 
   - name: "Tim Scarfe and Jeremy Budd"
-    title: "Machine Learning Street Talk"
+    title: "Tim Scarfe and Jeremy Budd"
     handle: "@MLStreetTalk"
-    role: "MLST host and University of Birmingham mathematician"
+    role: "Tim Scarfe, MLST host · Jeremy Budd, University of Birmingham mathematician"
     blurb: >-
-      Machine Learning Street Talk is often excellent precisely because it
-      takes unfashionable technical objections seriously. Its 2026 essay on
-      creativity also makes several unusually categorical claims about what
-      current systems can originate and what AI can economically replace.
+      Scarfe and Budd make a careful technical case, then harden properties of
+      current training into boundaries on what the systems it produces can
+      originate and what the labor market can replace.
     section_responses:
       - section: "Creativity and Understanding"
         text: >-
-          These claims turn a description of the training process into a boundary on what the resulting system can produce. Novel outputs do not become accidental plagiarism because the loss function rewards prediction. Scaling can change the representations, tools, search, and verification available to the trained system, even if gradient descent itself remains a greedy optimizer.
+          "Never venture beyond the territory it was trained on" mistakes the
+          source of a model's representations for the boundary of what the
+          trained system can do. Training can produce a system that searches,
+          writes code, runs experiments, checks results, and changes its own
+          environment. The optimizer can be greedy without reducing the system
+          it produces to interpolation. To their credit, Scarfe and Budd
+          explicitly leave the door open for better architectures.
       - section: "Economic Denial"
         text: >-
-          The need to train senior humans does not imply that junior jobs cannot disappear. A future research organization can be a data center full of AI researchers supervised by a small human team. Human skill formation and the amount of human labor demanded are different questions.
+          A training pipeline for future senior engineers is not a guarantee of
+          present junior employment. Firms can replace junior workers even if
+          doing so eventually damages the supply of senior humans. That would
+          be a social cost of automation, not an economic barrier to it.
 
     quotes:
       - text: |-
-          AI on its own is missing the fire of creative power.
+          And without this fire, AI will never venture beyond the territory it
+          was trained on.
         context: >-
-          The essay argues that without this quality, AI will not venture
-          beyond its training territory.
-        source: "Machine Learning Street Talk"
+          The essay argues that current systems lack genuine creativity while
+          explicitly leaving the door open for better architectures.
+        source: "Why Creativity Cannot Be Interpolated"
         url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
         date: "Feb 2026"
         section: "Creativity and Understanding"
         status: "Clock Ticking"
         note: >-
-          Autonomous search, tool use, generated experiments, and scientific
-          discovery turn that claimed boundary into an empirical question.
-
-      - text: |-
-          This hypothesis is preliminary, and whether it persists at scale
-          remains open ... gradient descent is a greedy hill-climber, and
-          scaling it does not change its nature.
-        context: "On gradient descent as a greedy hill-climber."
-        source: "Machine Learning Street Talk"
-        url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
-        date: "Feb 2026"
-        section: "Creativity and Understanding"
-        status: "Clock Ticking"
-        note: >-
-          The optimizer can remain greedy while the system it produces gains
-          new representations, tools, and search procedures.
+          A trained system can search, test, and build outside artifacts
+          without its architecture being the final form of intelligence.
 
       - text: |-
           You cannot displace the junior engineers.
         context: >-
           The argument is that producing senior engineers depends on the
           struggle that AI removes.
-        source: "Machine Learning Street Talk"
+        source: "Why Creativity Cannot Be Interpolated"
         url: "https://www.mlst.ai/p/why-creativity-cannot-be-interpolated"
         date: "Feb 2026"
         section: "Economic Denial"
         status: "Clock Ticking"
         note: >-
-          A labor market can demand fewer juniors even if doing so eventually
-          creates a human training problem.
+          An industry can reduce junior hiring even if doing so creates a
+          long-term human training problem.
 
   - name: "Jensen Huang"
     title: "Jensen Huang"
@@ -382,10 +382,20 @@ people:
     section_responses:
       - section: "Safety Dismissal"
         text: >-
-          Huang answers the dual-use argument by denying the analogy. Compute does not have to be literal nuclear material to alter cyber capability or frontier-model timelines. Refusing to acknowledge any marginal cost is the problem.
+          The uranium analogy is not about chips literally exploding. It is
+          about dual use and access to dangerous capability. Even that only
+          addresses misuse by people. The existential concern is absolute loss
+          of control to the systems themselves, which is not captured by a
+          wartime or cyber framing. Calling the analogy lunacy answers neither
+          argument.
       - section: "Economic Denial"
         text: >-
-          Current job creation does not settle future substitution. The relevant question is what happens when software performs a growing share of the work, including the work that improves software.
+          The demand for intelligence does not have to disappear. The labor
+          supplying it can stop being human. If AI performs knowledge work
+          better than knowledge workers, more demand can mean more data centers,
+          not more people. Pointing to job creation today while ignoring
+          substitution at higher capability levels is a failure to extrapolate
+          the system being sold.
 
     quotes:
       - text: |-
