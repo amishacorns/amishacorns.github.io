@@ -1,5 +1,5 @@
 ---
-title: "Yann LeCan't"
+title: "Yawn, LeCant to Make a Correct Prediction"
 date: 2026-06-07
 permalink: /posts/yann-lecant/
 excerpt: |
