@@ -1,5 +1,5 @@
 ---
-title: 'Ban the BoomerBoard'
+title: 'Ban the Boomerboard'
 date: 2026-06-19
 permalink: /posts/ban-the-boomer-board/
 excerpt: |
@@ -12,11 +12,11 @@ header:
   teaser: "ban-the-boomer-board.png"
 ---
 
-![Ban the BoomerBoard](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
+![Ban the Boomerboard](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
 
 The most expensive sound in the office is silence.
 
-Walk through almost any company and you will see thousands of highly paid people staring into rectangles, moving their fingers in tiny bursts, and calling this knowledge work. The dominant interface between the human mind and the machine is still a grid of plastic buttons descended from the typewriter: the BoomerBoard.
+Walk through almost any company and you will see thousands of highly paid people staring into rectangles, moving their fingers in tiny bursts, and calling this knowledge work. The dominant interface between the human mind and the machine is still a grid of plastic buttons descended from the typewriter: the Boomerboard.
 
 Keyboards are excellent for precision and discretion: editing a variable name, entering a password, moving a cursor three characters to the left, or working where speech would be disruptive. They are terrible as the default interface for expressing intent to an intelligent system.
 
@@ -43,7 +43,7 @@ Embrace the em dash—it signals that someone used the resources and time availa
 
 Make voice the default interface for high-level creation and delegation. Make agents the default interface for multi-step execution. Keep keyboards for precision, correction, code review, privacy, and anything else where they are genuinely the better instrument.
 
-The BoomerBoard can remain on every desk—but only next to a microphone.
+The Boomerboard can remain on every desk—but only next to a microphone.
 
 [^1]: Vivek Dhakal et al., [*Observations on Typing from 136 Million Keystrokes*](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf), CHI 2018.
 [^2]: National Institutes of Health, [“Scientists Create Speech Using Brain Signals”](https://www.nih.gov/news-events/nih-research-matters/scientists-create-speech-using-brain-signals), 2019.
