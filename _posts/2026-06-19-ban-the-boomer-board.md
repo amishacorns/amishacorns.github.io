@@ -39,11 +39,11 @@ The post-agentic office should resemble high-level management: people are in mee
 
 Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives, context, constraints, and success criteria aloud, then evaluate completed work, cycle time, errors, and rework. Leadership should model the behavior.
 
-Embrace the em dash—and stop treating competent use of AI as something to hide. By the end of 2026, "I typed it all myself" should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
+Embrace the em dash—and stop treating competent use of AI as something to hide—because subtlety has already left the building. By the end of 2026, "I typed it all myself"—however proudly delivered—should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
 
-Make voice the default interface for high-level creation and delegation. Make agents the default interface for multi-step execution. Keep keyboards for precision, correction, code review, privacy, and anything else where they are genuinely the better instrument.
+Make voice—the interface we were born with—the default for high-level creation and delegation. Make agents—the tireless little creatures—the default for multi-step execution. Keep keyboards—for precision, correction, code review, privacy, and nostalgia—whenever they are genuinely the better instrument.
 
-The Boomerboard can remain on every desk—but only next to a microphone.
+The Boomerboard can remain on every desk—beautiful, familiar, and demoted—but only next to a microphone.
 
 [^1]: Vivek Dhakal et al., [*Observations on Typing from 136 Million Keystrokes*](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf), CHI 2018.
 [^2]: National Institutes of Health, [“Scientists Create Speech Using Brain Signals”](https://www.nih.gov/news-events/nih-research-matters/scientists-create-speech-using-brain-signals), 2019.
