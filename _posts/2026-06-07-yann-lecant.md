@@ -8,6 +8,9 @@ excerpt: |
   A running collection of confident claims about what LLMs can't do, plus a few guest appearances.
 tags:
   - artificial intelligence
+description: "A sourced collection of confident claims about what LLMs cannot do, why safety can wait, and why the economic transition will remain gradual."
+header:
+  teaser: "yann-lecant-lifeboat-v3.png"
 ---
 
 <style>

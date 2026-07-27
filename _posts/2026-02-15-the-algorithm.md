@@ -5,6 +5,9 @@ permalink: /posts/the-algorithm/
 tags:
   - artificial intelligence
   - philosophy
+description: "The universe is a search process that builds increasingly capable forms of intelligence until evolution gives way to direct optimization."
+header:
+  teaser: "ai-algorithm.jpg"
 ---
 
 ![The Algorithm](/images/ai-algorithm.jpg){: style="display: block; margin: 0 auto; width: 500px;"}

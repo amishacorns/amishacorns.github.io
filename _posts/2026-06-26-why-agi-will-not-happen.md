@@ -5,13 +5,15 @@ permalink: /posts/why-agi-will-not-happen/
 tags:
   - artificial intelligence
   - philosophy
+description: "Human-level intelligence is not a stable destination. It is the brief instant before machines pass us."
+header:
+  teaser: "jordan-dotzel-social.jpg"
 ---
 
-![Why AGI Will Not Happen](/images/why-agi-will-not-happen.jpg){: style="display: block; margin: 0 auto; width: 500px;"}
 
 > AGI will never happen, and superintelligence is a fantasy.
 >
-> — Tim Dettmers, *Why AGI Will Not Happen* (2025)
+> â€” Tim Dettmers, *Why AGI Will Not Happen* (2025)
 
 I agree with the title. AGI will not happen. It just won't fail to happen for any of the reasons Dettmers gives. It won't happen because the category is too small to hold the transition. The moment a machine crosses the human line on the one dimension it still lags, reasoning, it does not arrive at human level and politely wait there. It applies that reasoning across a trillion parameters at the speed of light, and it is already superintelligent. AGI is not a destination. It is the blur of ASI passing us by, and by the time you can prove it is here, it is already gone.
 

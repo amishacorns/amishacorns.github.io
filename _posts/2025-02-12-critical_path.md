@@ -5,6 +5,9 @@ permalink: /posts/paths/
 tags:
   - artificial intelligence
   - research
+description: "As superintelligence approaches, the fastest path to progress in every field begins to run through artificial intelligence."
+header:
+  teaser: "critical.png"
 ---
 
 
