@@ -29,21 +29,19 @@ Keyboards are excellent for precision and discretion: editing a variable name, e
 
 Words per minute is only a proxy for information throughput, but it is a useful one here. A twenty-minute conversation with an agent at 250 words per minute contains about 5,000 words. Even a fast typist needs more than 64 minutes to enter the same amount. That extra bandwidth can become objectives, constraints, examples, and a definition of done.
 
-Current agents rarely work independently for long. They need context, checkpoints, corrections, and another assignment when the first one ends. At keyboard speed, a manager can get trapped steering one agent serially. At speech speed, the manager can rotate among several coordinator agents, each directing five more agents beneath it. Speech does not make the agents smarter. It gives one human enough bandwidth to keep more of them useful.
+Most agents still require frequent steering: more context, another correction, or the next assignment. That makes the bottleneck managerial. The worker is fast, but the manager is still typing. Voice lets one person rotate among several coordinator agents, each directing a small fleet beneath it.
 
-Speech is also the more natural managerial interface. Nobody types 250 words per minute for fourteen hours. People routinely spend entire days talking across meetings, calls, meals, and arguments. Management is linguistic work, and the microphone maps naturally to the job people are becoming.
+Managers already work by talking. They set goals, ask questions, review drafts, and redirect work. The microphone is not a novel behavior; it is management made legible to software.
 
-The opportunity is not merely generating the same code faster. It appears when voice is paired with systems capable of executing intent: inspect the codebase, reproduce the bug, implement the fix, run the tests, open the pull request, and return only for review. The keyboard accelerates characters. The agent accelerates outcomes.
+The opportunity is not faster code generation. It is running more work in parallel: one agent inspects the codebase, another reproduces the bug, a third tests candidate fixes, and a coordinator returns the results for review.
 
-The post-agentic office should resemble high-level management: people are in meetings all day, but the meetings are with agents instead of humans. Headcount expands virtually rather than physically. Work becomes a continuous cycle of delegation, review, correction, and approval.
+The post-agentic office looks like senior management scaled to every desk. People remain in meetings all day, but most meetings are with agents. The org chart expands in software instead of payroll. Everyone becomes a manager. Nobody is an engineer anymore. Engineering is what the fleet does.
 
-Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives and success criteria aloud, then evaluate completed work, errors, and rework.
+**Embrace the em dash**—the scarlet letter of competent AI use—and stop pretending the machine did not help. By the end of 2026, "I typed it all myself"—however proudly delivered—should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
 
-**Embrace the em dash**—and stop treating competent use of AI as something to hide—because subtlety has already left the building. By the end of 2026, "I typed it all myself"—however proudly delivered—should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
+Make voice—the interface management already runs on—the default for delegation. Make agents—the new digital staff—the default for execution. Keep keyboards—for precision, privacy, and correction—where they still win.
 
-Make voice—the interface we were born with—the default for high-level creation and delegation. Make agents—the tireless little creatures—the default for multi-step execution. Keep keyboards—for precision, correction, code review, privacy, and nostalgia—whenever they are genuinely the better instrument.
-
-The keyboard can stay—precision still matters—but the microphone should become the main tool.
+The keyboard had a good century—precision still matters—but the microphone gets the promotion.
 
 [^1]: Vivek Dhakal et al., [*Observations on Typing from 136 Million Keystrokes*](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf), CHI 2018.
 [^2]: National Institutes of Health, [“Scientists Create Speech Using Brain Signals”](https://www.nih.gov/news-events/nih-research-matters/scientists-create-speech-using-brain-signals), 2019.
