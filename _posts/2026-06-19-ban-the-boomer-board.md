@@ -3,6 +3,8 @@ title: 'Ban the Boomerboard'
 date: 2026-06-19
 permalink: /posts/ban-the-boomer-board/
 excerpt: |
+  ![Ban the Boomerboard](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
+
   The keyboard was a good interface for the typewriter. It should not be the default interface for intelligence.
 tags:
   - artificial intelligence
