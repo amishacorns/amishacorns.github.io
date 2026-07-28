@@ -20,8 +20,6 @@ Walk through almost any company and you will see thousands of highly paid people
 
 Keyboards are excellent for precision and discretion: editing a variable name, entering a password, moving a cursor three characters to the left, or working where speech would be disruptive. They are terrible as the default interface for expressing intent to an intelligent system.
 
-*An illustrative throughput model—not a forecast:*
-
 | Interface | Words per Minute | Information Throughput | Coordinator Agents Under Management | Total Agents Under Management[^4] |
 |---|---:|---:|---:|---:|
 | Average typing[^1] | 52 | 1.0x | 3.1 | 15.5 |
@@ -33,19 +31,15 @@ Words per minute is only a proxy for information throughput, but it is a useful 
 
 Current agents rarely work independently for long. They need context, checkpoints, corrections, and another assignment when the first one ends. At keyboard speed, a manager can get trapped steering one agent serially. At speech speed, the manager can rotate among several coordinator agents, each directing five more agents beneath it. Speech does not make the agents smarter. It gives one human enough bandwidth to keep more of them useful.
 
-Moving millions of annual inputs from fingers to voice may finally force carpal tunnel to find another line of work.
-
 The opportunity is not merely dictating the same email faster. It appears when voice is paired with systems capable of executing intent: research the customer, draft the email, update the CRM, propose three follow-ups, and return only for approval. The keyboard accelerates characters. The agent accelerates outcomes.
 
-The post-agentic office should resemble high-level management: people are in meetings all day, but the meetings are with agents instead of humans. Work becomes a continuous cycle of delegation, review, correction, and approval.
+The post-agentic office should resemble high-level management: people are in meetings all day, but the meetings are with agents instead of humans. Headcount expands virtually rather than physically. Work becomes a continuous cycle of delegation, review, correction, and approval.
 
-Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives, context, constraints, and success criteria aloud, then evaluate completed work, cycle time, errors, and rework. Leadership should model the behavior.
+Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives and success criteria aloud, then evaluate completed work, errors, and rework. Leadership should model the behavior.
 
 **Embrace the em dash**—and stop treating competent use of AI as something to hide—because subtlety has already left the building. By the end of 2026, "I typed it all myself"—however proudly delivered—should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
 
 Make voice—the interface we were born with—the default for high-level creation and delegation. Make agents—the tireless little creatures—the default for multi-step execution. Keep keyboards—for precision, correction, code review, privacy, and nostalgia—whenever they are genuinely the better instrument.
-
-The Boomerboard can remain on every desk—beautiful, familiar, and demoted—but only next to a microphone.
 
 [^1]: Vivek Dhakal et al., [*Observations on Typing from 136 Million Keystrokes*](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf), CHI 2018.
 [^2]: National Institutes of Health, [“Scientists Create Speech Using Brain Signals”](https://www.nih.gov/news-events/nih-research-matters/scientists-create-speech-using-brain-signals), 2019.
