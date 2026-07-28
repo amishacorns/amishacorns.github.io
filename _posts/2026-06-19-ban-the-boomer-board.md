@@ -14,7 +14,7 @@ header:
 
 ![Ban the Boomerboard](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
 
-The most expensive sound in the office is silence.
+The modern office is suspiciously quiet.
 
 Walk through almost any company and you will see thousands of highly paid people staring into rectangles, moving their fingers in tiny bursts, and calling this knowledge work. The dominant interface between the human mind and the machine is still a grid of plastic buttons descended from the typewriter: the Boomerboard.
 
@@ -31,15 +31,19 @@ Words per minute is only a proxy for information throughput, but it is a useful 
 
 Current agents rarely work independently for long. They need context, checkpoints, corrections, and another assignment when the first one ends. At keyboard speed, a manager can get trapped steering one agent serially. At speech speed, the manager can rotate among several coordinator agents, each directing five more agents beneath it. Speech does not make the agents smarter. It gives one human enough bandwidth to keep more of them useful.
 
-The opportunity is not merely dictating the same email faster. It appears when voice is paired with systems capable of executing intent: research the customer, draft the email, update the CRM, propose three follow-ups, and return only for approval. The keyboard accelerates characters. The agent accelerates outcomes.
+Speech is also the more natural managerial interface. Nobody types 250 words per minute for fourteen hours. People routinely spend entire days talking across meetings, calls, meals, and arguments. Management is linguistic work, and the microphone maps naturally to the job people are becoming.
+
+The opportunity is not merely generating the same code faster. It appears when voice is paired with systems capable of executing intent: inspect the codebase, reproduce the bug, implement the fix, run the tests, open the pull request, and return only for review. The keyboard accelerates characters. The agent accelerates outcomes.
 
 The post-agentic office should resemble high-level management: people are in meetings all day, but the meetings are with agents instead of humans. Headcount expands virtually rather than physically. Work becomes a continuous cycle of delegation, review, correction, and approval.
 
-Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives and success criteria aloud, then evaluate completed work, errors, and rework. Leadership should model the behavior.
+Everyone becomes a manager. Nobody is an engineer anymore—or, more precisely, "engineer" stops describing the unit of work. Teach people to delegate objectives and success criteria aloud, then evaluate completed work, errors, and rework.
 
 **Embrace the em dash**—and stop treating competent use of AI as something to hide—because subtlety has already left the building. By the end of 2026, "I typed it all myself"—however proudly delivered—should sound less like craftsmanship and more like "I did the arithmetic without a calculator."
 
 Make voice—the interface we were born with—the default for high-level creation and delegation. Make agents—the tireless little creatures—the default for multi-step execution. Keep keyboards—for precision, correction, code review, privacy, and nostalgia—whenever they are genuinely the better instrument.
+
+The keyboard can stay—precision still matters—but the microphone should become the main tool.
 
 [^1]: Vivek Dhakal et al., [*Observations on Typing from 136 Million Keystrokes*](https://userinterfaces.aalto.fi/136Mkeystrokes/resources/chi-18-analysis.pdf), CHI 2018.
 [^2]: National Institutes of Health, [“Scientists Create Speech Using Brain Signals”](https://www.nih.gov/news-events/nih-research-matters/scientists-create-speech-using-brain-signals), 2019.
