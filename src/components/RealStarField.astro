@@ -21,6 +21,8 @@
       const centerRa = 292.5 * degrees
       const centerDec = 30 * degrees
       const projectionRadius = 2 * Math.tan((120 * degrees) / 4)
+      const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8
+      const constrainedDevice = window.matchMedia("(max-width: 700px)").matches || deviceMemory <= 4
       let stars: Star[] = []
 
       const colorForIndex = (index: number) => {
@@ -31,7 +33,7 @@
       }
 
       const draw = () => {
-        const ratio = Math.min(window.devicePixelRatio || 1, 2)
+        const ratio = Math.min(window.devicePixelRatio || 1, constrainedDevice ? 1.25 : 2)
         const width = window.innerWidth
         const height = Math.max(window.innerHeight, 680)
         canvas.width = Math.round(width * ratio)
@@ -45,6 +47,7 @@
         const projected: Array<[number, number, number, number, number, number]> = []
 
         for (const [raDegrees, decDegrees, magnitude, colorIndex] of stars) {
+          if (constrainedDevice && magnitude > 6) continue
           const ra = raDegrees * degrees
           const dec = decDegrees * degrees
           let deltaRa = ra - centerRa

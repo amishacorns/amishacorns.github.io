@@ -15,8 +15,8 @@ export const WORK: Page = {
 
 // Blog Page
 export const BLOG: Page = {
-  TITLE: "Musings",
-  DESCRIPTION: "Short essays on artificial intelligence, philosophy, safety, and technological progress.",
+  TITLE: "Transmissions",
+  DESCRIPTION: "Writing on machine intelligence, agents, scientific progress, and the transition to AGI.",
 }
 
 // Projects Page 
@@ -28,7 +28,7 @@ export const PROJECTS: Page = {
 // Search Page
 export const SEARCH: Page = {
   TITLE: "Search",
-  DESCRIPTION: "Search all musings by keyword.",
+  DESCRIPTION: "Search all transmissions by keyword.",
 }
 
 // Links
@@ -42,8 +42,8 @@ export const LINKS: Links = [
     HREF: "/research", 
   },
   { 
-    TEXT: "Musings", 
-    HREF: "/musings", 
+    TEXT: "Transmissions",
+    HREF: "/transmissions",
   },
 ]
 
@@ -60,6 +60,12 @@ export const SOCIALS: Socials = [
     ICON: "github",
     TEXT: "amishacorns",
     HREF: "https://github.com/amishacorns"
+  },
+  {
+    NAME: "Google Scholar",
+    ICON: "google-scholar",
+    TEXT: "Jordan Dotzel",
+    HREF: "https://scholar.google.com/citations?user=5H-MYAoAAAAJ",
   },
   { 
     NAME: "LinkedIn",

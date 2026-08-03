@@ -2,11 +2,13 @@
 import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 import ArrowCard from "@components/ArrowCard"
-import RealStarField from "@components/RealStarField.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import IdentityComets from "@components/IdentityComets.astro"
 import EarthGlobe from "@components/EarthGlobe.astro"
-import { SITE, SOCIALS } from "@consts"
+import CosmicCountdowns from "@components/CosmicCountdowns.astro"
+import SingularityBlackHole from "@components/SingularityBlackHole.astro"
+import AGIImpactAsteroid from "@components/AGIImpactAsteroid.astro"
+import { SITE } from "@consts"
 import locations from "../data/locations.json"
 
 const posts = (await getCollection("blog"))
@@ -24,7 +26,73 @@ const featured = [
   { label: "The destination", path: "/posts/granny/", image: "/images/granny-family.jpg" },
 ]
 
-const countryCount = new Set(locations.map((location) => location.title.split(",").at(-1)?.trim())).size
+const continentOrder = ["North America", "South America", "Europe", "Africa", "Asia"]
+const continentByCountry: Record<string, string> = {
+  Argentina: "South America",
+  Austria: "Europe",
+  Belgium: "Europe",
+  Cambodia: "Asia",
+  Canada: "North America",
+  China: "Asia",
+  Colombia: "South America",
+  "Costa Rica": "North America",
+  "Dominican Republic": "North America",
+  Egypt: "Africa",
+  "El Salvador": "North America",
+  France: "Europe",
+  Germany: "Europe",
+  Guatemala: "North America",
+  Hungary: "Europe",
+  Italy: "Europe",
+  Jamaica: "North America",
+  Japan: "Asia",
+  Mexico: "North America",
+  Norway: "Europe",
+  Panama: "North America",
+  Philippines: "Asia",
+  Poland: "Europe",
+  Portugal: "Europe",
+  "Puerto Rico": "North America",
+  Singapore: "Asia",
+  "South Korea": "Asia",
+  Spain: "Europe",
+  Switzerland: "Europe",
+  Taiwan: "Asia",
+  Thailand: "Asia",
+  Turkey: "Asia",
+  UAE: "Asia",
+  UK: "Europe",
+  USA: "North America",
+  Uruguay: "South America",
+  "Virgin Islands": "North America",
+}
+const countryNames: Record<string, string> = {
+  UAE: "United Arab Emirates",
+  UK: "United Kingdom",
+  USA: "America",
+}
+const countryLocations = new Map<string, { lat: number; lng: number; count: number }>()
+locations.forEach((location) => {
+  const country = location.title.split(",").at(-1)?.trim()
+  if (!country) return
+  const current = countryLocations.get(country) ?? { lat: 0, lng: 0, count: 0 }
+  current.lat += location.lat
+  current.lng += location.lng
+  current.count += 1
+  countryLocations.set(country, current)
+})
+const countryGroups = continentOrder.map((continent) => ({
+  continent,
+  countries: [...countryLocations.entries()]
+    .filter(([country]) => continentByCountry[country] === continent)
+    .map(([country, target]) => ({
+      name: countryNames[country] ?? country,
+      lat: target.lat / target.count,
+      lng: target.lng / target.count,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name)),
+}))
+const countryCount = countryLocations.size
 const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 ---
 
@@ -40,17 +108,15 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
   <section id="orbit" class="orbit-section relative w-full">
     <div id="orbit-stage" class="sticky top-0 h-screen min-h-[680px] w-full overflow-hidden">
     <div id="galaxy" class="absolute inset-0 pointer-events-none hidden dark:block">
-      <RealStarField />
       <MeteorShower />
     </div>
+    <SingularityBlackHole />
+    <AGIImpactAsteroid />
+    <CosmicCountdowns />
 
-    <div class="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-      <IdentityComets />
-    </div>
-
-    <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-hidden">
+    <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-visible">
       <div id="crescent" class="absolute top-0 left-1/2 -translate-x-1/2 w-[165vw] min-h-[100vh] aspect-square rounded-full p-px bg-gradient-to-b from-white/70 from-0% to-transparent to-[6%]">
-        <div id="planet" class="relative w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
+        <div id="planet" class="relative z-10 w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
           <div class="earth-rotation" aria-hidden="true">
             <span></span>
             <span></span>
@@ -59,6 +125,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
           <div class="earth-shadow" aria-hidden="true"></div>
           <div id="blur" class="relative z-10 w-full h-20 rounded-full bg-violet-300/20 blur-3xl"></div>
         </div>
+        <IdentityComets />
       </div>
     </div>
 
@@ -67,39 +134,86 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
         <p class="animated hero-kicker">Agent Architect</p>
         <h1 class="animated hero-name">Jordan Dotzel</h1>
         <div id="ctaButtons" class="animated pointer-events-auto flex flex-wrap gap-3 justify-center mt-8">
-          <a href="/musings" class="hero-primary">Read the musings</a>
-          <a href="/research" class="hero-secondary">View the research</a>
+          <a href="/transmissions" class="hero-primary">Read Transmissions</a>
+          <a href="/research" class="hero-secondary">View Research</a>
         </div>
       </div>
     </div>
 
     <div id="orbit-progress" class="orbit-progress" aria-label="Travel progress">
-      <div class="orbit-progress-item">
+      <button type="button" class="orbit-progress-item" data-orbit-panel="countries" aria-haspopup="dialog" aria-expanded="false">
         <div><span>Countries</span><strong>{countryProgress}%</strong></div>
         <div class="orbit-progress-track"><i style={`width:${countryProgress}%`}></i></div>
-      </div>
-      <div class="orbit-progress-item">
-        <div><span>Planetary</span><strong>12.5%</strong></div>
+      </button>
+      <button type="button" class="orbit-progress-item" data-orbit-panel="planetary" aria-haspopup="dialog" aria-expanded="false">
+        <div><span>Planets</span><strong>12.5%</strong></div>
         <div class="orbit-progress-track"><i style="width:12.5%"></i></div>
-      </div>
-      <div class="orbit-progress-item">
-        <div>
-          <span>Galactic</span>
-          <div class="orbit-progress-value">
-            <strong>≈ 0%</strong>
-            <button id="globe-pause-button" type="button" aria-label="Pause Earth rotation" aria-pressed="false">
-              <svg class="pause-icon" viewBox="0 0 12 12" aria-hidden="true">
-                <rect x="2.25" y="1.5" width="2.5" height="9" rx="0.75"></rect>
-                <rect x="7.25" y="1.5" width="2.5" height="9" rx="0.75"></rect>
-              </svg>
-              <svg class="play-icon" viewBox="0 0 12 12" aria-hidden="true">
-                <path d="M3 1.7 10 6 3 10.3V1.7Z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+      </button>
+      <button type="button" class="orbit-progress-item" data-orbit-panel="galactic" aria-haspopup="dialog" aria-expanded="false">
+        <div><span>Galaxies</span><strong>≈ 0%</strong></div>
         <div class="orbit-progress-track"><i style="width:0.15%"></i></div>
+      </button>
+      <button id="globe-pause-button" class="orbit-pause-button" type="button" aria-label="Pause Earth rotation" aria-pressed="false">
+        <svg class="pause-icon" viewBox="0 0 12 12" aria-hidden="true">
+          <rect x="2.25" y="1.5" width="2.5" height="9" rx="0.75"></rect>
+          <rect x="7.25" y="1.5" width="2.5" height="9" rx="0.75"></rect>
+        </svg>
+        <svg class="play-icon" viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M3 1.7 10 6 3 10.3V1.7Z"></path>
+        </svg>
+      </button>
+
+    <div id="orbit-panel" class="orbit-panel" role="dialog" aria-modal="false" aria-labelledby="orbit-panel-title" hidden>
+      <div class="orbit-panel-header">
+        <div>
+          <p class="orbit-panel-kicker">Travel Index</p>
+          <h2 id="orbit-panel-title">Countries</h2>
+        </div>
+        <button id="orbit-panel-close" type="button" aria-label="Close travel index">×</button>
       </div>
+
+      <div class="orbit-panel-body">
+        <section data-orbit-panel-content="countries">
+          <p class="orbit-panel-note">{countryCount} countries. Choose one to rotate the globe.</p>
+          <div class="continent-list">
+            {countryGroups.map((group) => (
+              <details class="continent-group">
+                <summary>
+                  <span>{group.continent}</span>
+                  <small>{group.countries.length}</small>
+                </summary>
+                <div class="country-grid">
+                  {group.countries.map((country) => (
+                    <button
+                      type="button"
+                      class="orbit-destination"
+                      data-globe-lat={country.lat}
+                      data-globe-lng={country.lng}
+                    >
+                      {country.name}
+                    </button>
+                  ))}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section data-orbit-panel-content="planetary" hidden>
+          <p class="orbit-panel-note">Known planetary destinations.</p>
+          <button type="button" class="cosmic-destination orbit-destination" data-globe-lat="20" data-globe-lng="0">
+            <span>Earth</span><small>1 of 8 planets</small>
+          </button>
+        </section>
+
+        <section data-orbit-panel-content="galactic" hidden>
+          <p class="orbit-panel-note">Known galactic destinations.</p>
+          <div class="cosmic-destination cosmic-destination-static">
+            <span>Milky Way</span><small>1 of approximately 2 trillion galaxies</small>
+          </div>
+        </section>
+      </div>
+    </div>
     </div>
 
     <div id="orbit-prompt" class="absolute inset-x-0 bottom-7 z-30 flex justify-center text-xs uppercase tracking-[0.24em] text-white/45">
@@ -108,12 +222,12 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     </div>
   </section>
 
-  <div class="relative bg-black border-t border-white/10">
+  <div class="relative border-t border-white/10 bg-black/80">
     <div class="mx-auto max-w-screen-md px-5 py-24 space-y-28">
       <section class="animate grid gap-8 md:grid-cols-[0.7fr_1.3fr]">
         <div>
           <p class="section-number">01 / Now</p>
-          <h2 class="section-title">The future is arriving unevenly.</h2>
+          <h2 class="section-title">Intelligence Is the Critical Path.</h2>
         </div>
         <div class="space-y-5 text-lg leading-relaxed text-white/70">
           <p>We are currently within the most dynamic and exciting era of human discovery. The number of unanswered questions remains high, and the tools required to probe them are finally being built.</p>
@@ -125,10 +239,10 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       <section class="animate">
         <div class="section-heading-row">
           <div>
-            <p class="section-number">02 / Selected transmissions</p>
-            <h2 class="section-title">Musings</h2>
+            <p class="section-number">02 / Selected Transmissions</p>
+            <h2 class="section-title">Transmissions</h2>
           </div>
-          <a class="section-link" href="/musings">All musings →</a>
+          <a class="section-link" href="/transmissions">All Transmissions →</a>
         </div>
 
         <div class="mt-8 grid gap-5 md:grid-cols-3">
@@ -153,7 +267,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       <section class="animate grid gap-8 md:grid-cols-[0.7fr_1.3fr]">
         <div>
           <p class="section-number">03 / Research</p>
-          <h2 class="section-title">Efficient intelligence.</h2>
+          <h2 class="section-title">Efficient Intelligence.</h2>
         </div>
         <div>
           <p class="text-lg leading-relaxed text-white/70">My academic research focused on building more efficient deep learning systems through neural architecture design, low-precision quantization, and dynamic sparsity. The current work moves further up the stack: agents, thought traces, and the systems that will build whatever comes next.</p>
@@ -168,14 +282,14 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
               <span><b>Radial Networks</b><small>Dynamic routing for large language models</small></span><span>↗</span>
             </a>
           </div>
-          <a class="section-link mt-6 inline-flex" href="/research">Research and experience →</a>
+          <a class="section-link mt-6 inline-flex" href="/research">Research and Experience →</a>
         </div>
       </section>
 
       <section class="animate">
         <div class="section-heading-row">
           <div>
-            <p class="section-number">04 / Recent transmissions</p>
+            <p class="section-number">04 / Recent Transmissions</p>
             <h2 class="section-title">Latest</h2>
           </div>
         </div>
@@ -184,33 +298,29 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
         </ul>
       </section>
 
-      <section class="animate pb-8">
-        <p class="section-number">05 / Signal</p>
-        <h2 class="section-title">Find me in the noise.</h2>
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          {SOCIALS.map((social) => (
-            <a href={social.HREF} target="_blank" class="signal-row">
-              <span><b>{social.NAME}</b><small>{social.TEXT}</small></span><span>↗</span>
-            </a>
-          ))}
-        </div>
-      </section>
     </div>
   </div>
 </PageLayout>
 
 <style>
   .orbit-section {
-    height: 220vh;
-    min-height: 1360px;
+    height: 126vh;
   }
 
   #orbit-stage { isolation: isolate; }
 
+  :global(#orbit-stage[data-orbital-focus="agi"] :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events)),
+  :global(#orbit-stage[data-orbital-focus="singularity"] :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #inbound-agi, #cosmic-events)) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 220ms ease;
+  }
+
   #crescent {
     --orbit-scale: 1;
+    --orbit-x: 0vw;
     --orbit-y: 0vh;
-    transform: translateX(-50%) translateY(var(--orbit-y)) scale(var(--orbit-scale));
+    transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y)) scale(var(--orbit-scale));
     transform-origin: 50% 0%;
     will-change: transform, opacity;
   }
@@ -221,23 +331,77 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     will-change: opacity;
   }
 
-  .hero-kicker { @apply text-xs md:text-sm font-semibold uppercase tracking-[0.24em] text-violet-200/70; }
-  .hero-name { @apply mt-3 text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-[0.04em] text-white; }
+  .hero-kicker { @apply font-semibold uppercase tracking-[0.24em] text-violet-200/70; font-size: 0.819rem; }
+  .hero-name { @apply mt-3 font-bold uppercase tracking-[0.04em] text-white; font-size: 2.458rem; }
+  @media (min-width: 768px) {
+    .hero-kicker { font-size: 0.95rem; }
+    .hero-name { font-size: 4.097rem; }
+  }
+  @media (min-width: 1024px) {
+    .hero-name { font-size: 4.916rem; }
+  }
   .hero-primary { @apply rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black hover:bg-violet-100 transition-colors; }
   .hero-secondary { @apply rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors; }
-  .orbit-progress { @apply pointer-events-none absolute bottom-16 left-1/2 z-30 grid w-[min(760px,calc(100%-2rem))] -translate-x-1/2 grid-cols-3 gap-2; }
-  .orbit-progress-item { @apply rounded-xl border border-white/15 bg-black/35 px-3 py-2.5 backdrop-blur-md; }
+  .orbit-progress { @apply absolute bottom-16 left-1/2 z-30 grid w-[min(820px,calc(100%-2rem))] -translate-x-1/2 grid-cols-[repeat(3,minmax(0,1fr))_auto] gap-2 overflow-visible; }
+  .orbit-progress-item { @apply pointer-events-auto rounded-xl border border-white/15 bg-black/35 px-3 py-2.5 text-left backdrop-blur-md transition hover:border-violet-200/40 hover:bg-white/10; }
+  .orbit-progress-item[aria-expanded="true"] { @apply border-violet-200/55 bg-violet-300/10; }
   .orbit-progress-item > div:first-child { @apply flex items-center justify-between gap-2; }
   .orbit-progress-item span { @apply text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50; }
   .orbit-progress-item strong { @apply text-xs font-semibold text-violet-100/85; }
-  .orbit-progress-value { @apply flex items-center gap-1.5; }
-  #globe-pause-button { @apply pointer-events-auto flex size-6 items-center justify-center rounded-full border border-white/15 text-white/55 transition-colors hover:border-violet-200/45 hover:bg-white/10 hover:text-white; }
+  #globe-pause-button { @apply pointer-events-auto flex h-full min-h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-black/35 text-white/55 backdrop-blur-md transition-colors hover:border-violet-200/45 hover:bg-white/10 hover:text-white; }
   #globe-pause-button svg { @apply size-2.5 fill-current; }
   #globe-pause-button .play-icon { @apply hidden; }
   #globe-pause-button[data-paused="true"] .pause-icon { @apply hidden; }
   #globe-pause-button[data-paused="true"] .play-icon { @apply block; }
   .orbit-progress-track { @apply mt-2 h-px overflow-hidden rounded-full bg-white/15; }
   .orbit-progress-track i { @apply block h-full rounded-full bg-gradient-to-r from-violet-400 to-cyan-300; }
+  .orbit-panel {
+    @apply absolute z-40 overflow-hidden rounded-xl border border-white/20 bg-black/80 shadow-2xl shadow-violet-950/40 backdrop-blur-xl;
+    bottom: calc(100% + 0.45rem);
+    left: var(--orbit-panel-left, 0px);
+    width: var(--orbit-panel-width, 15rem);
+    max-height: var(--orbit-panel-max-height, min(58vh, 620px));
+    clip-path: inset(94% 0 0 round 0.75rem);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.65rem) scaleY(0.08);
+    transform-origin: 50% 100%;
+    transition:
+      clip-path 560ms cubic-bezier(0.2, 0.78, 0.18, 1),
+      transform 560ms cubic-bezier(0.2, 0.78, 0.18, 1),
+      opacity 180ms ease;
+  }
+  .orbit-panel[data-open="true"] {
+    clip-path: inset(0 round 0.75rem);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scaleY(1);
+  }
+  .orbit-panel[hidden] { display: none; }
+  .orbit-panel-header { @apply flex items-center justify-between border-b border-white/10 px-4 py-3; }
+  .orbit-panel-kicker { @apply text-[10px] font-semibold uppercase tracking-[0.2em] text-violet-300/65; }
+  .orbit-panel-header h2 { @apply mt-1 text-xl font-semibold text-white; }
+  #orbit-panel-close { @apply flex size-8 items-center justify-center rounded-full border border-white/15 text-xl leading-none text-white/55 transition hover:border-white/40 hover:bg-white/10 hover:text-white; }
+  .orbit-panel-body { @apply overflow-y-auto p-3; max-height: calc(var(--orbit-panel-max-height, min(58vh, 620px)) - 66px); }
+  .orbit-panel-note { @apply mb-3 text-sm text-white/50; }
+  .continent-list { @apply space-y-2; }
+  .continent-group { @apply overflow-hidden rounded-xl border border-white/10 bg-white/[0.035]; }
+  .continent-group summary { @apply flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/[0.055] hover:text-white; }
+  .continent-group summary::-webkit-details-marker { display: none; }
+  .continent-group summary::before { content: "+"; @apply mr-2 text-violet-300/65; }
+  .continent-group[open] summary::before { content: "−"; }
+  .continent-group summary small { @apply ml-auto text-xs font-normal text-white/35; }
+  .country-grid { @apply grid grid-cols-1 gap-1 border-t border-white/10 p-2; }
+  .continent-group[open] .country-grid {
+    overflow: hidden;
+    transition: height 650ms cubic-bezier(0.4, 0, 0.2, 1), opacity 480ms ease;
+  }
+  .orbit-destination { @apply rounded-lg px-3 py-2 text-left text-sm text-white/65 transition hover:bg-violet-300/10 hover:text-white; }
+  .cosmic-destination { @apply flex w-full items-center justify-between rounded-xl border border-white/10 bg-white/[0.035] px-4 py-4 text-left transition; }
+  button.cosmic-destination:hover { @apply border-violet-200/35 bg-violet-300/10; }
+  .cosmic-destination span { @apply text-base font-semibold text-white; }
+  .cosmic-destination small { @apply text-xs text-white/40; }
+  .cosmic-destination-static { @apply cursor-default; }
   .section-number { @apply text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/65; }
   .section-title { @apply mt-2 text-2xl md:text-3xl font-semibold text-white; }
   .section-heading-row { @apply flex flex-wrap items-end justify-between gap-5; }
@@ -255,7 +419,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     @apply absolute inset-0 flex;
     width: 200%;
     opacity: 0.72;
-    filter: saturate(0.7) brightness(0.7) contrast(1.18);
+    filter: saturate(0.7) brightness(0.77) contrast(1.18);
     animation: earth-rotation 138.462s linear infinite reverse;
     will-change: transform;
     transition: opacity 900ms ease;
@@ -291,13 +455,15 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   @media (max-width: 640px) {
     .orbit-section {
-      height: 200vh;
-      min-height: 1360px;
+      height: 124vh;
     }
     .orbit-progress { @apply gap-1.5; }
     .orbit-progress-item { @apply px-2 py-2; }
     .orbit-progress-item span { @apply text-[8px] tracking-[0.1em]; }
     .orbit-progress-item strong { @apply text-[10px]; }
+    #globe-pause-button { @apply min-h-9 w-9; }
+    .orbit-panel { max-height: var(--orbit-panel-max-height, 64vh); }
+    .orbit-panel-body { max-height: calc(var(--orbit-panel-max-height, 64vh) - 66px); }
   }
 </style>
 
@@ -308,6 +474,9 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     const copy = document.getElementById("orbit-copy")
     const progressDisplay = document.getElementById("orbit-progress")
     const prompt = document.getElementById("orbit-prompt")
+    const singularity = document.getElementById("deep-singularity")
+    const inboundAgi = document.getElementById("inbound-agi")
+    const inboundAgiPaths = Array.from(document.querySelectorAll<SVGPathElement>("[data-agi-inbound-path]"))
     const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
     const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
     if (!section || !crescent || !copy || !progressDisplay || !prompt) return
@@ -326,21 +495,53 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       const progress = clamp((window.scrollY - sectionTop) / travel)
       const eased = progress * progress * (3 - 2 * progress)
       const scale = Math.pow(0.022, eased)
-      const earthOpacity = fadeBetween(progress, 0.78, 0.97)
+      const earthOpacity = fadeBetween(progress, 0.63, 0.78)
       const copyOpacity = fadeBetween(progress, 0.04, 0.31)
-      const hudOpacity = fadeBetween(progress, 0.12, 0.43)
+      const hudOpacity = fadeBetween(progress, 0.82, 0.98)
       const promptOpacity = fadeBetween(progress, 0, 0.13)
+      const singularityReveal = clamp((progress - 0.42) / 0.38)
+      const singularityScale = 0.72 + singularityReveal * 0.3
+      const singularityJourney = clamp((progress - 0.48) / 0.34)
+      const singularityEase = singularityJourney * singularityJourney * (3 - 2 * singularityJourney)
+      const agiJourney = clamp((progress - 0.04) / 0.34)
+      const agiEase = agiJourney * agiJourney * (3 - 2 * agiJourney)
+      const agiReveal = clamp((progress - 0.04) / 0.12)
+      const agiImpactFade = 1 - clamp((progress - 0.38) / 0.07)
+      const agiImpactShrink = 1 - clamp((progress - 0.36) / 0.09) * 0.78
+      const viewportRatio = window.innerWidth / window.innerHeight
+      const earthX = 50 + eased * 7 + singularityEase * 21
+      const earthTopY = 28 + eased * 7 - singularityEase * 9
+      const earthDiameterVh = 165 * viewportRatio * scale
+      const impactX = earthX + 165 * scale * 0.03
+      const impactY = earthTopY + earthDiameterVh * 0.24
+      const agiX = 3 + agiEase * (impactX - 3)
+      const agiY = 6 + agiEase * (impactY - 6)
+      const agiScale = (0.28 + agiEase * 0.42) * agiImpactShrink
 
       crescent.style.setProperty("--orbit-scale", scale.toFixed(4))
-      crescent.style.setProperty("--orbit-y", `${(eased * 14).toFixed(2)}vh`)
+      crescent.style.setProperty("--orbit-x", `${(eased * 7 + singularityEase * 21).toFixed(2)}vw`)
+      crescent.style.setProperty("--orbit-y", `${(eased * 7 - singularityEase * 9).toFixed(2)}vh`)
       crescent.style.opacity = earthOpacity.toFixed(3)
       copy.style.opacity = copyOpacity.toFixed(3)
       progressDisplay.style.opacity = hudOpacity.toFixed(3)
       prompt.style.opacity = promptOpacity.toFixed(3)
+      if (singularity) {
+        singularity.style.setProperty("--singularity-reveal", singularityReveal.toFixed(3))
+        singularity.style.setProperty("--singularity-scale", singularityScale.toFixed(3))
+      }
+      if (inboundAgi) {
+        inboundAgi.style.setProperty("--agi-x", `${agiX.toFixed(2)}vw`)
+        inboundAgi.style.setProperty("--agi-y", `${agiY.toFixed(2)}vh`)
+        inboundAgi.style.setProperty("--agi-scale", agiScale.toFixed(3))
+        inboundAgi.style.setProperty("--agi-opacity", (agiReveal * agiImpactFade).toFixed(3))
+      }
+      const agiPath = `M -4 2 C ${(agiX * 0.18).toFixed(2)} ${(agiY * 0.08).toFixed(2)}, ${(agiX * 0.58).toFixed(2)} ${(agiY * 0.42).toFixed(2)}, ${agiX.toFixed(2)} ${agiY.toFixed(2)}`
+      inboundAgiPaths.forEach((path) => path.setAttribute("d", agiPath))
+      ;(window as Window & { __singularityReveal?: number }).__singularityReveal = singularityReveal
       copy.style.visibility = copyOpacity < 0.015 ? "hidden" : "visible"
       progressDisplay.style.visibility = hudOpacity < 0.015 ? "hidden" : "visible"
       prompt.style.visibility = promptOpacity < 0.015 ? "hidden" : "visible"
-      if (markerCanvas) markerCanvas.style.pointerEvents = progress > 0.12 ? "none" : ""
+      if (markerCanvas) markerCanvas.style.pointerEvents = earthOpacity < 0.15 ? "none" : ""
       if (pauseButton) pauseButton.style.pointerEvents = hudOpacity < 0.15 ? "none" : ""
     }
 
@@ -360,4 +561,221 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   document.addEventListener("astro:after-swap", initializeOrbitSequence)
   initializeOrbitSequence()
+</script>
+
+<script>
+  const initializeOrbitalFocus = () => {
+    const stage = document.getElementById("orbit-stage")
+    if (!stage) return
+    const focusWindow = window as Window & { __orbitalFocusCleanup?: () => void }
+    focusWindow.__orbitalFocusCleanup?.()
+    let activeTarget = ""
+
+    const setFocus = (event: Event) => {
+      const target = (event as CustomEvent<{ target?: string }>).detail?.target ?? ""
+      if (!target) return
+      if (activeTarget && activeTarget !== target) {
+        window.dispatchEvent(new CustomEvent("orbital:clear-focus"))
+      }
+      activeTarget = target
+      stage.dataset.orbitalFocus = target
+    }
+
+    const clearFocus = () => {
+      if (!activeTarget) return
+      activeTarget = ""
+      delete stage.dataset.orbitalFocus
+      window.dispatchEvent(new CustomEvent("orbital:clear-focus"))
+      window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: false } }))
+    }
+
+    const pointerHandler = (event: PointerEvent) => {
+      if (!activeTarget) return
+      const target = event.target
+      if (target instanceof Element && target.closest("[data-focus-agi], [data-focus-singularity], .inbound-agi-object")) return
+      clearFocus()
+    }
+
+    const keyHandler = () => clearFocus()
+    const scrollHandler = () => clearFocus()
+    window.addEventListener("orbital:focus-mode", setFocus)
+    window.addEventListener("wheel", scrollHandler, { passive: true })
+    window.addEventListener("scroll", scrollHandler, { passive: true })
+    window.addEventListener("touchstart", scrollHandler, { passive: true })
+    window.addEventListener("keydown", keyHandler)
+    document.addEventListener("pointerdown", pointerHandler, true)
+
+    focusWindow.__orbitalFocusCleanup = () => {
+      window.removeEventListener("orbital:focus-mode", setFocus)
+      window.removeEventListener("wheel", scrollHandler)
+      window.removeEventListener("scroll", scrollHandler)
+      window.removeEventListener("touchstart", scrollHandler)
+      window.removeEventListener("keydown", keyHandler)
+      document.removeEventListener("pointerdown", pointerHandler, true)
+    }
+  }
+
+  document.addEventListener("astro:after-swap", initializeOrbitalFocus)
+  initializeOrbitalFocus()
+</script>
+
+<script>
+  const initializeTravelIndex = () => {
+    const panel = document.getElementById("orbit-panel")
+    const progress = document.getElementById("orbit-progress")
+    const title = document.getElementById("orbit-panel-title")
+    const closeButton = document.getElementById("orbit-panel-close") as HTMLButtonElement | null
+    const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-orbit-panel]"))
+    const contents = Array.from(document.querySelectorAll<HTMLElement>("[data-orbit-panel-content]"))
+    const destinations = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-globe-lat][data-globe-lng]"))
+    if (!panel || !progress || !title || !closeButton || triggers.length === 0) return
+
+    const travelWindow = window as Window & { __travelIndexCleanup?: () => void }
+    travelWindow.__travelIndexCleanup?.()
+    let activePanel = ""
+    let activeTrigger: HTMLButtonElement | null = null
+    let closeTimer = 0
+    const detailTimers = new WeakMap<HTMLDetailsElement, number>()
+    const continentDetails = Array.from(panel.querySelectorAll<HTMLDetailsElement>(".continent-group"))
+    const continentHandlers = continentDetails.map((details) => {
+      const summary = details.querySelector("summary")
+      const grid = details.querySelector<HTMLElement>(".country-grid")
+      const handler = (event: Event) => {
+        if (!summary || !grid) return
+        event.preventDefault()
+        const previousTimer = detailTimers.get(details)
+        if (previousTimer) window.clearTimeout(previousTimer)
+
+        if (!details.open) {
+          details.open = true
+          grid.style.height = "0px"
+          grid.style.opacity = "0"
+          window.requestAnimationFrame(() => {
+            grid.style.height = `${grid.scrollHeight}px`
+            grid.style.opacity = "1"
+          })
+          const timer = window.setTimeout(() => {
+            if (details.open) grid.style.height = "auto"
+          }, 650)
+          detailTimers.set(details, timer)
+        } else {
+          grid.style.height = `${grid.scrollHeight}px`
+          grid.style.opacity = "1"
+          window.requestAnimationFrame(() => {
+            grid.style.height = "0px"
+            grid.style.opacity = "0"
+          })
+          const timer = window.setTimeout(() => {
+            details.open = false
+            grid.style.removeProperty("height")
+            grid.style.removeProperty("opacity")
+          }, 650)
+          detailTimers.set(details, timer)
+        }
+      }
+      summary?.addEventListener("click", handler)
+      return { summary, handler }
+    })
+
+    const closePanel = (restoreFocus = false) => {
+      if (panel.hidden) return
+      window.clearTimeout(closeTimer)
+      panel.removeAttribute("data-open")
+      panel.inert = true
+      triggers.forEach((trigger) => trigger.setAttribute("aria-expanded", "false"))
+      activePanel = ""
+      if (restoreFocus) activeTrigger?.focus()
+      activeTrigger = null
+      closeTimer = window.setTimeout(() => {
+        if (!activePanel) panel.hidden = true
+      }, 560)
+    }
+
+    const openPanel = (name: string, trigger: HTMLButtonElement) => {
+      const labels: Record<string, string> = {
+        countries: "Countries",
+        planetary: "Planets",
+        galactic: "Galaxies",
+      }
+      activePanel = name
+      activeTrigger = trigger
+      window.clearTimeout(closeTimer)
+      const triggerRect = trigger.getBoundingClientRect()
+      const progressRect = progress.getBoundingClientRect()
+      const pauseRect = document.getElementById("globe-pause-button")?.getBoundingClientRect()
+      let panelLeft = triggerRect.left - progressRect.left
+      let panelWidth = triggerRect.width
+      if (window.innerWidth <= 640) {
+        panelLeft = 0
+        panelWidth = progressRect.width - (pauseRect?.width ?? 0) - 6
+      }
+      panel.style.setProperty("--orbit-panel-left", `${panelLeft}px`)
+      panel.style.setProperty("--orbit-panel-width", `${panelWidth}px`)
+      panel.style.setProperty("--orbit-panel-max-height", `${Math.max(190, triggerRect.top - 16)}px`)
+      title.textContent = labels[name] ?? "Travel Index"
+      contents.forEach((content) => {
+        content.hidden = content.dataset.orbitPanelContent !== name
+      })
+      continentDetails.forEach((details) => {
+        const timer = detailTimers.get(details)
+        if (timer) window.clearTimeout(timer)
+        details.open = false
+        const grid = details.querySelector<HTMLElement>(".country-grid")
+        grid?.style.removeProperty("height")
+        grid?.style.removeProperty("opacity")
+      })
+      triggers.forEach((button) => button.setAttribute("aria-expanded", String(button === trigger)))
+      panel.hidden = false
+      panel.inert = false
+      window.requestAnimationFrame(() => panel.setAttribute("data-open", "true"))
+    }
+
+    const triggerHandlers = triggers.map((trigger) => {
+      const handler = () => {
+        const name = trigger.dataset.orbitPanel ?? ""
+        if (activePanel === name && !panel.hidden) closePanel()
+        else openPanel(name, trigger)
+      }
+      trigger.addEventListener("click", handler)
+      return { trigger, handler }
+    })
+
+    const destinationHandlers = destinations.map((destination) => {
+      const handler = () => {
+        const lat = Number(destination.dataset.globeLat)
+        const lng = Number(destination.dataset.globeLng)
+        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return
+        window.dispatchEvent(new CustomEvent("globe:focus-location", { detail: { lat, lng } }))
+        closePanel()
+      }
+      destination.addEventListener("click", handler)
+      return { destination, handler }
+    })
+
+    const closeHandler = () => closePanel(true)
+    const keyHandler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closePanel(true)
+    }
+    const scrollHandler = () => closePanel()
+    closeButton.addEventListener("click", closeHandler)
+    window.addEventListener("keydown", keyHandler)
+    window.addEventListener("scroll", scrollHandler, { passive: true })
+
+    travelWindow.__travelIndexCleanup = () => {
+      triggerHandlers.forEach(({ trigger, handler }) => trigger.removeEventListener("click", handler))
+      destinationHandlers.forEach(({ destination, handler }) => destination.removeEventListener("click", handler))
+      continentHandlers.forEach(({ summary, handler }) => summary?.removeEventListener("click", handler))
+      continentDetails.forEach((details) => {
+        const timer = detailTimers.get(details)
+        if (timer) window.clearTimeout(timer)
+      })
+      closeButton.removeEventListener("click", closeHandler)
+      window.removeEventListener("keydown", keyHandler)
+      window.removeEventListener("scroll", scrollHandler)
+      window.clearTimeout(closeTimer)
+    }
+  }
+
+  document.addEventListener("astro:after-swap", initializeTravelIndex)
+  initializeTravelIndex()
 </script>

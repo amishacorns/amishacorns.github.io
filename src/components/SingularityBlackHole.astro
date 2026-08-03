@@ -1,0 +1,184 @@
+<div id="deep-singularity" class="deep-singularity" aria-hidden="true">
+  <div class="singularity-radiance"></div>
+  <div class="singularity-system">
+    <div class="accretion-disk accretion-disk-back"></div>
+    <div class="event-horizon">
+      <i></i>
+    </div>
+    <div class="photon-ring"></div>
+    <div class="accretion-disk accretion-disk-front"></div>
+  </div>
+  <div class="singularity-caption">
+    <span>SGR-2050</span>
+    <strong>The Singularity</strong>
+  </div>
+</div>
+
+<style>
+  .deep-singularity {
+    --singularity-reveal: 0;
+    --singularity-scale: 0.72;
+    @apply pointer-events-none absolute right-[-6vw] top-[3vh] z-[3];
+    width: clamp(28rem, 58vw, 62rem);
+    aspect-ratio: 1;
+    opacity: var(--singularity-reveal);
+    transform: translate3d(2vw, -2vh, 0) scale(var(--singularity-scale));
+    transform-origin: 72% 38%;
+    will-change: transform, opacity;
+    filter: saturate(0.88);
+  }
+
+  .singularity-radiance {
+    @apply absolute rounded-full;
+    inset: -20% -12% -18% -60%;
+    background:
+      conic-gradient(from 202deg at 71% 43%, transparent 0 13%, rgb(251 146 60 / 0.1) 17%, rgb(253 186 116 / 0.2) 21%, transparent 28% 100%),
+      radial-gradient(ellipse at 72% 43%, rgb(255 247 237 / 0.25) 0 2%, rgb(251 146 60 / 0.16) 9%, rgb(234 88 12 / 0.07) 25%, transparent 57%);
+    filter: blur(30px);
+    transform: rotate(-7deg);
+    opacity: 0.9;
+  }
+
+  .singularity-system {
+    @apply absolute inset-[14%] rounded-full;
+    perspective: 900px;
+    transform: rotate(-13deg);
+    filter: drop-shadow(0 0 34px rgb(251 146 60 / 0.22));
+  }
+
+  .event-horizon {
+    @apply absolute left-1/2 top-1/2 z-20 rounded-full;
+    width: 35%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background:
+      radial-gradient(circle at 45% 42%, #000 0 47%, rgb(0 0 0 / 0.99) 63%, rgb(3 2 7 / 0.95) 72%, transparent 74%);
+    box-shadow:
+      0 0 5px 2px rgb(255 255 255 / 0.72),
+      0 0 15px 5px rgb(255 237 213 / 0.54),
+      0 0 44px 12px rgb(251 146 60 / 0.34),
+      inset -18px -12px 30px rgb(0 0 0 / 1);
+  }
+
+  .event-horizon i {
+    @apply absolute inset-[17%] rounded-full bg-black;
+    box-shadow: 0 0 30px 12px #000;
+  }
+
+  .photon-ring {
+    @apply absolute left-1/2 top-1/2 z-[19] rounded-full;
+    width: 41%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgb(255 247 237 / 0.82);
+    border-left-color: rgb(253 186 116 / 0.42);
+    border-bottom-color: rgb(251 146 60 / 0.56);
+    box-shadow: 0 0 8px rgb(255 255 255 / 0.68), 0 0 22px rgb(251 146 60 / 0.58);
+  }
+
+  .accretion-disk {
+    @apply absolute left-1/2 top-1/2 rounded-full;
+    transform-origin: center;
+  }
+
+  .accretion-disk {
+    width: 94%;
+    height: 19%;
+    background:
+      repeating-radial-gradient(ellipse at center, transparent 0 4%, rgb(255 255 255 / 0.23) 4.6% 5.2%, transparent 6% 10%),
+      radial-gradient(ellipse at center, transparent 0 24%, rgb(255 251 235 / 0.95) 29%, rgb(253 186 116 / 0.9) 36%, rgb(234 88 12 / 0.62) 53%, rgb(127 29 29 / 0.12) 70%, transparent 76%);
+    filter: blur(0.45px) drop-shadow(0 0 13px rgb(251 146 60 / 0.65));
+  }
+
+  .accretion-disk-back {
+    z-index: 8;
+    transform: translate(-50%, -50%) rotateX(61deg);
+    animation: disk-pulse 8s ease-in-out infinite alternate;
+  }
+
+  .accretion-disk-front {
+    z-index: 24;
+    height: 11%;
+    clip-path: inset(49% 0 0 0);
+    transform: translate(-50%, -50%) rotateX(61deg);
+    filter: blur(0.2px) drop-shadow(0 0 11px rgb(255 237 213 / 0.72));
+  }
+
+  .singularity-caption {
+    @apply absolute left-1/2 top-[65%] flex -translate-x-1/2 flex-col items-center whitespace-nowrap font-mono uppercase;
+    opacity: calc(var(--singularity-reveal) * 0.72);
+    text-shadow: 0 0 12px rgb(251 146 60 / 0.4);
+  }
+
+  .singularity-caption span { @apply text-[8px] tracking-[0.24em] text-orange-200/45; }
+  .singularity-caption strong { @apply mt-1 text-xs tracking-[0.18em] text-orange-50/70; }
+
+  @keyframes disk-pulse {
+    from { filter: blur(0.45px) brightness(0.86) drop-shadow(0 0 11px rgb(251 146 60 / 0.5)); }
+    to { filter: blur(0.3px) brightness(1.12) drop-shadow(0 0 19px rgb(251 146 60 / 0.74)); }
+  }
+
+  .deep-singularity.scene-paused .accretion-disk-back { animation-play-state: paused; }
+
+  .deep-singularity.singularity-focused {
+    right: 50%;
+    top: 50%;
+    z-index: 14;
+    width: min(76vw, 50rem);
+    opacity: 1 !important;
+    transform: translate(50%, -50%) scale(1);
+    transform-origin: center;
+    transition:
+      right 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      width 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 260ms ease;
+  }
+
+  .deep-singularity.singularity-focused .singularity-caption { opacity: 0.85; }
+
+  @media (max-width: 760px) {
+    .deep-singularity {
+      right: -26vw;
+      top: 8vh;
+      width: 42rem;
+    }
+    .singularity-caption { display: none; }
+    .deep-singularity.singularity-focused .singularity-caption { display: flex; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .accretion-disk-back { animation: none; }
+  }
+</style>
+
+<script>
+  const initializeDeepSingularity = () => {
+    const singularity = document.getElementById("deep-singularity")
+    if (!singularity) return
+    const singularityWindow = window as Window & { __deepSingularityCleanup?: () => void }
+    singularityWindow.__deepSingularityCleanup?.()
+    const pauseHandler = (event: Event) => {
+      const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
+      singularity.classList.toggle("scene-paused", paused)
+    }
+    const focus = () => {
+      window.dispatchEvent(new CustomEvent("orbital:focus-mode", { detail: { target: "singularity" } }))
+      singularity.classList.add("singularity-focused")
+      window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
+    }
+    const clearFocus = () => singularity.classList.remove("singularity-focused")
+    window.addEventListener("globe:pause-state", pauseHandler)
+    window.addEventListener("orbital:focus-singularity", focus)
+    window.addEventListener("orbital:clear-focus", clearFocus)
+    singularityWindow.__deepSingularityCleanup = () => {
+      window.removeEventListener("globe:pause-state", pauseHandler)
+      window.removeEventListener("orbital:focus-singularity", focus)
+      window.removeEventListener("orbital:clear-focus", clearFocus)
+    }
+  }
+
+  document.addEventListener("astro:after-swap", initializeDeepSingularity)
+  initializeDeepSingularity()
+</script>

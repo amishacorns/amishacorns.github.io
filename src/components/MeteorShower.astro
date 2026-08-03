@@ -15,20 +15,67 @@
 </div>
 
 <script>
-  function createMeteor () {
-    const meteor = document.createElement("div")
-    meteor.setAttribute("class", "meteor")
-    meteor.style.left = Math.round(Math.random() * window.innerWidth) + "px"
-    meteor.style.top = Math.round(Math.random() * window.innerHeight) + "px"
+  const initializeMeteorShower = () => {
+    const root = document.getElementById("meteors")
+    if (!root) return
+    const meteorWindow = window as Window & { __meteorShowerCleanup?: () => void }
+    meteorWindow.__meteorShowerCleanup?.()
 
-    const showers = document.querySelectorAll(".shower")
-    if (showers.length > 0) {
-      const shower = showers[Math.floor(Math.random() * showers.length)]
-      shower.append(meteor)
+    type MeteorLife = { remaining: number; started: number; timer: number }
+    const active = new Map<HTMLElement, MeteorLife>()
+    let paused = false
+
+    const scheduleRemoval = (meteor: HTMLElement, life: MeteorLife) => {
+      life.started = performance.now()
+      life.timer = window.setTimeout(() => {
+        active.delete(meteor)
+        meteor.remove()
+      }, life.remaining)
     }
 
-    setTimeout(() => meteor.remove(), 3500)
+    const createMeteor = () => {
+      if (paused) return
+      const meteor = document.createElement("div")
+      meteor.className = "meteor"
+      meteor.style.left = `${Math.round(Math.random() * window.innerWidth)}px`
+      meteor.style.top = `${Math.round(Math.random() * window.innerHeight)}px`
+      const showers = root.querySelectorAll<HTMLElement>(".shower")
+      if (showers.length === 0) return
+      showers[Math.floor(Math.random() * showers.length)].append(meteor)
+      const life: MeteorLife = { remaining: 3500, started: performance.now(), timer: 0 }
+      active.set(meteor, life)
+      scheduleRemoval(meteor, life)
+    }
+
+    const pauseHandler = (event: Event) => {
+      const nextPaused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
+      if (nextPaused === paused) return
+      paused = nextPaused
+      root.classList.toggle("meteors-paused", paused)
+      const now = performance.now()
+      active.forEach((life, meteor) => {
+        if (paused) {
+          window.clearTimeout(life.timer)
+          life.remaining = Math.max(0, life.remaining - (now - life.started))
+        } else {
+          scheduleRemoval(meteor, life)
+        }
+      })
+    }
+
+    const interval = window.setInterval(createMeteor, 1500)
+    window.addEventListener("globe:pause-state", pauseHandler)
+    meteorWindow.__meteorShowerCleanup = () => {
+      window.clearInterval(interval)
+      window.removeEventListener("globe:pause-state", pauseHandler)
+      active.forEach((life, meteor) => {
+        window.clearTimeout(life.timer)
+        meteor.remove()
+      })
+      active.clear()
+    }
   }
 
-  setInterval(createMeteor, 1500)
+  document.addEventListener("astro:after-swap", initializeMeteorShower)
+  initializeMeteorShower()
 </script>

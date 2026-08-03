@@ -14,7 +14,12 @@
   tabindex="0"
   aria-label="Drag or use the arrow keys to rotate the travel globe"
 ></canvas>
-<div id="earth-tooltip" class="earth-tooltip" role="status" hidden></div>
+<div id="earth-tooltip" class="earth-tooltip" role="status" hidden>
+  <span>Visited Location</span>
+  <strong data-location-title>Unknown</strong>
+  <div><b>Coordinates</b><i data-location-coordinates>--</i></div>
+  <div><b>Signals</b><i data-location-count>--</i></div>
+</div>
 
 <style>
   .earth-globe,
@@ -24,7 +29,7 @@
 
   .earth-globe {
     opacity: 0;
-    filter: saturate(0.88) brightness(0.96) contrast(1.08);
+    filter: saturate(0.9) brightness(1.16) contrast(1.07);
     transition: opacity 900ms ease;
   }
 
@@ -47,10 +52,15 @@
   .earth-markers:focus-visible { box-shadow: inset 0 0 0 2px rgb(196 181 253 / 0.55); }
 
   .earth-tooltip {
-    @apply absolute z-20 max-w-56 rounded-lg border border-violet-200/25 bg-black/80 px-3 py-2 text-center text-xs leading-snug text-white/85 shadow-xl backdrop-blur-md;
+    @apply absolute z-20 min-w-52 rounded-lg border border-cyan-200/25 bg-black/85 px-3 py-2 text-left font-mono shadow-xl backdrop-blur-md;
     pointer-events: none;
     transform: translate(-50%, calc(-100% - 0.7rem));
   }
+  .earth-tooltip > span { @apply block text-[8px] font-semibold uppercase tracking-[0.2em] text-cyan-200/45; }
+  .earth-tooltip strong { @apply mt-0.5 block max-w-48 text-xs font-semibold text-white/90; }
+  .earth-tooltip div { @apply mt-1 flex items-center justify-between gap-4 text-[9px]; }
+  .earth-tooltip b { @apply font-medium uppercase tracking-[0.12em] text-white/35; }
+  .earth-tooltip i { @apply not-italic text-cyan-100/75; }
 </style>
 
 <script>
@@ -68,8 +78,11 @@
   const canvas = document.getElementById("earth-globe") as HTMLCanvasElement | null
   const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
   const tooltip = document.getElementById("earth-tooltip") as HTMLDivElement | null
+  const tooltipTitle = tooltip?.querySelector<HTMLElement>("[data-location-title]")
+  const tooltipCoordinates = tooltip?.querySelector<HTMLElement>("[data-location-coordinates]")
+  const tooltipCount = tooltip?.querySelector<HTMLElement>("[data-location-count]")
 
-  if (canvas && markerCanvas && tooltip && !canvas.dataset.initialized) {
+  if (canvas && markerCanvas && tooltip && tooltipTitle && tooltipCoordinates && tooltipCount && !canvas.dataset.initialized) {
     canvas.dataset.initialized = "true"
     const gl = canvas.getContext("webgl", { alpha: true, antialias: true })
     const markerContext = markerCanvas.getContext("2d")
@@ -89,6 +102,7 @@
         uniform sampler2D uTexture;
         uniform float uRotation;
         uniform float uTilt;
+        uniform float uSingularityStrength;
         varying vec2 vUv;
         const float PI = 3.141592653589793;
 
@@ -114,6 +128,11 @@
 
           float limb = pow(depth, 0.52);
           color.rgb *= mix(0.28, 1.0, limb);
+          vec3 singularityDirection = normalize(vec3(0.72, 0.44, 0.54));
+          float singularityFacing = pow(max(dot(surface, singularityDirection), 0.0), 1.55);
+          float singularityLight = singularityFacing * (0.05 + uSingularityStrength * 0.56);
+          color.rgb *= 1.04 + singularityLight;
+          color.rgb += vec3(1.0, 0.48, 0.2) * singularityLight * 0.18;
           float edgeAlpha = smoothstep(0.0, 0.018, 1.0 - radiusSquared);
           gl_FragColor = vec4(color.rgb, color.a * edgeAlpha);
         }
@@ -150,6 +169,7 @@
 
           const rotationUniform = gl.getUniformLocation(program, "uRotation")
           const tiltUniform = gl.getUniformLocation(program, "uTilt")
+          const singularityUniform = gl.getUniformLocation(program, "uSingularityStrength")
           const textureUniform = gl.getUniformLocation(program, "uTexture")
           const texture = gl.createTexture()
           gl.activeTexture(gl.TEXTURE0)
@@ -162,6 +182,15 @@
 
           let rotation = 0
           let tilt = 0
+          let targetRotation: number | null = null
+          let targetTilt: number | null = null
+          const globePoseWindow = window as Window & {
+            __earthGlobePose?: { rotation: number; tilt: number }
+          }
+          const publishGlobePose = () => {
+            globePoseWindow.__earthGlobePose = { rotation, tilt }
+          }
+          publishGlobePose()
           let cssSize = 0
           let markerScale = 1
           let lastFrame = performance.now()
@@ -169,11 +198,20 @@
           let lastInteraction = -Infinity
           let manuallyPaused = false
           let dragging = false
+          let globeVisible = true
           let dragDistance = 0
           let previousX = 0
           let previousY = 0
           let clusters: MarkerCluster[] = []
+          let selectedLocation = ""
           const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8
+          const constrainedDevice = window.matchMedia("(max-width: 700px)").matches || deviceMemory <= 4
+          const frameInterval = constrainedDevice ? 66 : 42
+          const visibilityObserver = new IntersectionObserver(([entry]) => {
+            globeVisible = entry?.isIntersecting ?? true
+          }, { threshold: 0.01 })
+          visibilityObserver.observe(canvas)
           const radians = (degrees: number) => degrees * Math.PI / 180
           const preparedLocations = (locations as TravelLocation[]).map((location) => ({
             ...location,
@@ -182,11 +220,11 @@
           }))
 
           const resizeCanvas = () => {
-            const ratio = Math.min(window.devicePixelRatio || 1, 2)
+            const ratio = Math.min(window.devicePixelRatio || 1, constrainedDevice ? 1.25 : 2)
             cssSize = canvas.getBoundingClientRect().width
-            const target = Math.min(4096, Math.max(2048, Math.ceil((cssSize * ratio) / 256) * 256))
-            const markerRatio = Math.min(window.devicePixelRatio || 1, 1.25)
-            const markerTarget = Math.min(2048, Math.max(1024, Math.ceil((cssSize * markerRatio) / 256) * 256))
+            const target = Math.min(constrainedDevice ? 2048 : 4096, Math.max(constrainedDevice ? 1024 : 2048, Math.ceil((cssSize * ratio) / 256) * 256))
+            const markerRatio = Math.min(window.devicePixelRatio || 1, constrainedDevice ? 1 : 1.25)
+            const markerTarget = Math.min(constrainedDevice ? 1536 : 2048, Math.max(constrainedDevice ? 768 : 1024, Math.ceil((cssSize * markerRatio) / 256) * 256))
             markerScale = markerTarget / cssSize
 
             if (canvas.width !== target || canvas.height !== target) {
@@ -257,7 +295,7 @@
             for (const cluster of clusters.slice().reverse()) {
               const depthAlpha = 0.38 + cluster.depth * 0.62
               const countBoost = Math.min(2.1, Math.log2(cluster.points.length + 1) * 0.48)
-              const coreRadius = (1.6 + cluster.depth * 1.15 + countBoost) * 2
+              const coreRadius = (1.6 + cluster.depth * 1.15 + countBoost) * 3
 
               markerContext.globalAlpha = 0.13 * depthAlpha
               markerContext.fillStyle = "#a78bfa"
@@ -282,16 +320,35 @@
               markerContext.shadowBlur = 0
             }
             markerContext.globalAlpha = 1
+            if (selectedLocation) {
+              const selectedCluster = clusters.find((cluster) =>
+                cluster.points.some((point) => point.title === selectedLocation)
+              )
+              if (selectedCluster) {
+                tooltip.style.left = `${selectedCluster.x}px`
+                tooltip.style.top = `${selectedCluster.y}px`
+                tooltip.hidden = false
+              } else {
+                tooltip.hidden = true
+              }
+            }
           }
 
-          const hideTooltip = () => { tooltip.hidden = true }
+          const hideTooltip = (clearSelection = true) => {
+            tooltip.hidden = true
+            if (clearSelection) selectedLocation = ""
+          }
+
+          const coordinateLabel = (value: number, positive: string, negative: string) =>
+            `${Math.abs(value).toFixed(2)}°${value >= 0 ? positive : negative}`
 
           const showTooltip = (clientX: number, clientY: number) => {
             const rect = markerCanvas.getBoundingClientRect()
-            const x = clientX - rect.left
-            const y = clientY - rect.top
+            const localScale = cssSize / Math.max(1, rect.width)
+            const x = (clientX - rect.left) * localScale
+            const y = (clientY - rect.top) * localScale
             let closest: MarkerCluster | undefined
-            let closestDistance = 22
+            let closestDistance = 24 * localScale
 
             for (const cluster of clusters) {
               const distance = Math.hypot(cluster.x - x, cluster.y - y)
@@ -306,20 +363,23 @@
               return
             }
 
+            selectedLocation = closest.points[0].title
             tooltip.style.left = `${closest.x}px`
             tooltip.style.top = `${closest.y}px`
-            if (closest.points.length === 1) {
-              tooltip.textContent = closest.points[0].title
-            } else {
-              const names = closest.points.slice(0, 2).map((point) => point.title).join(" · ")
-              const remaining = closest.points.length - 2
-              tooltip.textContent = remaining > 0 ? `${names} · +${remaining} nearby` : names
-            }
+            tooltipTitle.textContent = closest.points.length === 1
+              ? closest.points[0].title
+              : `${closest.points[0].title} + ${closest.points.length - 1} nearby`
+            const averageLat = closest.points.reduce((sum, point) => sum + point.lat, 0) / closest.points.length
+            const averageLng = closest.points.reduce((sum, point) => sum + point.lng, 0) / closest.points.length
+            tooltipCoordinates.textContent = `${coordinateLabel(averageLat, "N", "S")} · ${coordinateLabel(averageLng, "E", "W")}`
+            tooltipCount.textContent = `${closest.points.length}`
             tooltip.hidden = false
           }
 
           markerCanvas.addEventListener("pointerdown", (event) => {
             if (event.pointerType === "mouse" && event.button !== 0) return
+            targetRotation = null
+            targetTilt = null
             dragging = true
             dragDistance = 0
             previousX = event.clientX
@@ -331,10 +391,7 @@
           })
 
           markerCanvas.addEventListener("pointermove", (event) => {
-            if (!dragging) {
-              if (event.pointerType === "mouse") showTooltip(event.clientX, event.clientY)
-              return
-            }
+            if (!dragging) return
 
             lastInteraction = performance.now()
             const deltaX = event.clientX - previousX
@@ -342,6 +399,7 @@
             dragDistance += Math.abs(deltaX) + Math.abs(deltaY)
             rotation -= deltaX / Math.max(240, cssSize / 2)
             tilt = Math.max(-1.05, Math.min(1.05, tilt + deltaY / Math.max(240, cssSize / 2)))
+            publishGlobePose()
             previousX = event.clientX
             previousY = event.clientY
           })
@@ -351,16 +409,15 @@
             dragging = false
             markerCanvas.classList.remove("dragging")
             if (markerCanvas.hasPointerCapture(event.pointerId)) markerCanvas.releasePointerCapture(event.pointerId)
-            if (dragDistance < 5 && event.pointerType === "mouse") showTooltip(event.clientX, event.clientY)
+            if (dragDistance < 5) showTooltip(event.clientX, event.clientY)
           }
 
           markerCanvas.addEventListener("pointerup", finishDrag)
           markerCanvas.addEventListener("pointercancel", finishDrag)
-          markerCanvas.addEventListener("pointerleave", () => {
-            if (!dragging) hideTooltip()
-          })
           markerCanvas.addEventListener("keydown", (event) => {
             const step = event.shiftKey ? 0.18 : 0.08
+            targetRotation = null
+            targetTilt = null
             if (event.key === "ArrowLeft") rotation += step
             else if (event.key === "ArrowRight") rotation -= step
             else if (event.key === "ArrowUp") tilt = Math.max(-1.05, tilt - step)
@@ -368,19 +425,56 @@
             else return
             event.preventDefault()
             lastInteraction = performance.now()
+            publishGlobePose()
           })
 
           const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
-          pauseButton?.addEventListener("click", () => {
-            manuallyPaused = !manuallyPaused
-            pauseButton.dataset.paused = String(manuallyPaused)
-            pauseButton.setAttribute("aria-pressed", String(manuallyPaused))
-            pauseButton.setAttribute("aria-label", manuallyPaused ? "Resume Earth rotation" : "Pause Earth rotation")
+          const setManualPaused = (paused: boolean) => {
+            manuallyPaused = paused
+            if (pauseButton) {
+              pauseButton.dataset.paused = String(manuallyPaused)
+              pauseButton.setAttribute("aria-pressed", String(manuallyPaused))
+              pauseButton.setAttribute("aria-label", manuallyPaused ? "Resume Earth rotation" : "Pause Earth rotation")
+            }
             if (!manuallyPaused) lastInteraction = -Infinity
-          })
+            window.dispatchEvent(new CustomEvent("globe:pause-state", {
+              detail: { paused: manuallyPaused },
+            }))
+          }
+          pauseButton?.addEventListener("click", () => setManualPaused(!manuallyPaused))
+
+          const controlsWindow = window as Window & { __earthGlobeControlsCleanup?: () => void }
+          controlsWindow.__earthGlobeControlsCleanup?.()
+          const pauseGlobeHandler = (event: Event) => {
+            const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused
+            setManualPaused(paused ?? true)
+          }
+          const focusGlobeHandler = (event: Event) => {
+            const { lat, lng } = (event as CustomEvent<{ lat?: number; lng?: number }>).detail ?? {}
+            if (!Number.isFinite(lat) || !Number.isFinite(lng)) return
+            const twoPi = Math.PI * 2
+            let nextRotation = radians(lng as number)
+            while (nextRotation - rotation > Math.PI) nextRotation -= twoPi
+            while (nextRotation - rotation < -Math.PI) nextRotation += twoPi
+            targetRotation = nextRotation
+            const globeRect = markerCanvas.getBoundingClientRect()
+            const radius = globeRect.width / 2
+            const globeCenterY = globeRect.top + radius
+            const desiredViewportY = Math.min(window.innerHeight * 0.58, globeRect.bottom - radius * 0.2)
+            const desiredScreenY = Math.max(-0.9, Math.min(0.9, (globeCenterY - desiredViewportY) / radius))
+            const framingOffset = Math.asin(desiredScreenY)
+            targetTilt = Math.max(-1.4, Math.min(1.4, radians(lat as number) - framingOffset))
+            lastInteraction = performance.now()
+          }
+          window.addEventListener("globe:set-paused", pauseGlobeHandler)
+          window.addEventListener("globe:focus-location", focusGlobeHandler)
+          controlsWindow.__earthGlobeControlsCleanup = () => {
+            window.removeEventListener("globe:set-paused", pauseGlobeHandler)
+            window.removeEventListener("globe:focus-location", focusGlobeHandler)
+          }
 
           const image = new Image()
-          image.src = "/images/earth-night-nasa-8k.webp"
+          image.src = constrainedDevice ? "/images/earth-night-nasa-2k.webp" : "/images/earth-night-nasa-8k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
             gl.bindTexture(gl.TEXTURE_2D, texture)
@@ -392,13 +486,26 @@
             canvas.closest("#planet")?.classList.add("globe-ready")
 
             const draw = (now: number) => {
-              if (now - lastDraw >= 42) {
+              if (globeVisible && now - lastDraw >= frameInterval) {
                 const delta = Math.min(64, now - lastFrame)
-                if (!reducedMotion && !manuallyPaused && !dragging && now - lastInteraction > 2000) {
+                if (targetRotation !== null && targetTilt !== null) {
+                  const smoothing = 1 - Math.exp(-delta / 170)
+                  rotation += (targetRotation - rotation) * smoothing
+                  tilt += (targetTilt - tilt) * smoothing
+                  if (Math.abs(targetRotation - rotation) < 0.0008 && Math.abs(targetTilt - tilt) < 0.0008) {
+                    rotation = targetRotation
+                    tilt = targetTilt
+                    targetRotation = null
+                    targetTilt = null
+                  }
+                } else if (!reducedMotion && !manuallyPaused && !dragging && now - lastInteraction > 2000) {
                   rotation -= (delta / 138462) * Math.PI * 2
                 }
+                publishGlobePose()
                 gl.uniform1f(rotationUniform, rotation)
                 gl.uniform1f(tiltUniform, tilt)
+                const singularityStrength = (window as Window & { __singularityReveal?: number }).__singularityReveal ?? 0
+                gl.uniform1f(singularityUniform, singularityStrength)
                 gl.drawArrays(gl.TRIANGLES, 0, 6)
                 drawMarkers()
                 lastFrame = now

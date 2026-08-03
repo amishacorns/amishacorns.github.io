@@ -54,7 +54,7 @@ body {
 }
 
 main {
-  @apply flex flex-col flex-1 bg-white dark:bg-black;
+  @apply flex flex-1 flex-col bg-transparent;
 }
 
 header {
@@ -172,6 +172,10 @@ article img {
   /* defined in tailwind.config */
   @apply absolute top-1/2 left-1/2 w-px h-[75vh];
   @apply bg-gradient-to-b from-white to-transparent;
+}
+
+#meteors.meteors-paused .meteor {
+  animation-play-state: paused;
 }
 
 #meteors .shower.ur {
