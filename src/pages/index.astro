@@ -227,12 +227,12 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       <section class="animate grid gap-8 md:grid-cols-[0.7fr_1.3fr]">
         <div>
           <p class="section-number">01 / Now</p>
-          <h2 class="section-title">Intelligence Is the Critical Path.</h2>
+          <h2 class="section-title">The Age of Machine Intelligence.</h2>
         </div>
         <div class="space-y-5 text-lg leading-relaxed text-white/70">
           <p>We are currently within the most dynamic and exciting era of human discovery. The number of unanswered questions remains high, and the tools required to probe them are finally being built.</p>
           <p>General artificial intelligence now has most of its necessary ingredients. It may create the most incredible benefits across society while also becoming the most destabilizing and dangerous technology ever created.</p>
-          <p class="text-white">The research decisions we make now will lead to a society that eventually flourishes, decays, or disappears.</p>
+          <p class="text-white">The decisions we make now will lead to a society that eventually flourishes, decays, or disappears.</p>
         </div>
       </section>
 
@@ -318,6 +318,22 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   :global(#orbit-stage.orbital-returning :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #inbound-agi, #cosmic-events)) {
     transition: opacity 720ms ease !important;
+  }
+
+  :global(#orbit-stage.orbital-returning .inbound-agi-anchor) {
+    transition:
+      left 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 720ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  :global(#orbit-stage.orbital-returning #deep-singularity) {
+    transition:
+      right 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      width 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 620ms ease;
   }
 
   #crescent {

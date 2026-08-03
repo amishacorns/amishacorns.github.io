@@ -48,7 +48,9 @@
     }
 
     const pauseHandler = (event: Event) => {
-      const nextPaused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
+      const focusActive = document.getElementById("orbit-stage")?.hasAttribute("data-orbital-focus") ?? false
+      const requestedPause = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
+      const nextPaused = requestedPause && !focusActive
       if (nextPaused === paused) return
       paused = nextPaused
       root.classList.toggle("meteors-paused", paused)
