@@ -23,3 +23,22 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## HYG Star Database
+
+The homepage star field uses positions, apparent magnitudes, and color indices
+derived from [HYG Database v4.1](https://github.com/astronexus/HYG-Database),
+licensed under the
+[Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+
+## NASA Black Marble
+
+The rotating Earth uses NASA's 2016 Black Marble imagery. Credit: NASA Earth
+Observatory image by Joshua Stevens, using Suomi NPP VIIRS data from Miguel
+Román, NASA Goddard Space Flight Center.
+
+## Cornell Block C
+
+The Cornell Block C is a trademark of Cornell University and is used here for
+personal identification. Cornell University does not sponsor or endorse this
+website.

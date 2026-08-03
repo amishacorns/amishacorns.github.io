@@ -1,11 +1,7 @@
 ---
 title: 'Research Without Researchers'
-date: 2026-07-16 12:00:00 -0700
+date: 2026-07-16
 permalink: /posts/research-without-researchers/
-excerpt: |
-  ![Research Without Researchers](/images/lab-of-one.png){: style="display: block; margin: 0 auto; width: 500px;"}
-
-  Universities will specialize in producing researchers. Compute-rich institutions will specialize in producing research.
 tags:
   - artificial intelligence
   - research
@@ -14,8 +10,6 @@ description: "AI separates the university's two historical products: educated re
 header:
   teaser: "lab-of-one.png"
 ---
-
-![Research Without Researchers](/images/lab-of-one.png){: style="display: block; margin: 0 auto; width: 500px;"}
 
 The university lab has served many purposes, but two have always been tightly linked: producing knowledge and training researchers.
 
