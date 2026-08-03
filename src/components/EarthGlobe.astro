@@ -167,6 +167,7 @@
           let lastFrame = performance.now()
           let lastDraw = -Infinity
           let lastInteraction = -Infinity
+          let manuallyPaused = false
           let dragging = false
           let dragDistance = 0
           let previousX = 0
@@ -369,6 +370,15 @@
             lastInteraction = performance.now()
           })
 
+          const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
+          pauseButton?.addEventListener("click", () => {
+            manuallyPaused = !manuallyPaused
+            pauseButton.dataset.paused = String(manuallyPaused)
+            pauseButton.setAttribute("aria-pressed", String(manuallyPaused))
+            pauseButton.setAttribute("aria-label", manuallyPaused ? "Resume Earth rotation" : "Pause Earth rotation")
+            if (!manuallyPaused) lastInteraction = -Infinity
+          })
+
           const image = new Image()
           image.src = "/images/earth-night-nasa-8k.webp"
           image.onload = () => {
@@ -384,7 +394,7 @@
             const draw = (now: number) => {
               if (now - lastDraw >= 42) {
                 const delta = Math.min(64, now - lastFrame)
-                if (!reducedMotion && !dragging && now - lastInteraction > 3600) {
+                if (!reducedMotion && !manuallyPaused && !dragging && now - lastInteraction > 2000) {
                   rotation -= (delta / 138462) * Math.PI * 2
                 }
                 gl.uniform1f(rotationUniform, rotation)

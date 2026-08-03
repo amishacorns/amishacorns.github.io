@@ -82,7 +82,21 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
         <div class="orbit-progress-track"><i style="width:12.5%"></i></div>
       </div>
       <div class="orbit-progress-item">
-        <div><span>Galactic</span><strong>≈ 0%</strong></div>
+        <div>
+          <span>Galactic</span>
+          <div class="orbit-progress-value">
+            <strong>≈ 0%</strong>
+            <button id="globe-pause-button" type="button" aria-label="Pause Earth rotation" aria-pressed="false">
+              <svg class="pause-icon" viewBox="0 0 12 12" aria-hidden="true">
+                <rect x="2.25" y="1.5" width="2.5" height="9" rx="0.75"></rect>
+                <rect x="7.25" y="1.5" width="2.5" height="9" rx="0.75"></rect>
+              </svg>
+              <svg class="play-icon" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M3 1.7 10 6 3 10.3V1.7Z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
         <div class="orbit-progress-track"><i style="width:0.15%"></i></div>
       </div>
     </div>
@@ -193,6 +207,12 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
   .orbit-progress-item > div:first-child { @apply flex items-center justify-between gap-2; }
   .orbit-progress-item span { @apply text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50; }
   .orbit-progress-item strong { @apply text-xs font-semibold text-violet-100/85; }
+  .orbit-progress-value { @apply flex items-center gap-1.5; }
+  #globe-pause-button { @apply pointer-events-auto flex size-6 items-center justify-center rounded-full border border-white/15 text-white/55 transition-colors hover:border-violet-200/45 hover:bg-white/10 hover:text-white; }
+  #globe-pause-button svg { @apply size-2.5 fill-current; }
+  #globe-pause-button .play-icon { @apply hidden; }
+  #globe-pause-button[data-paused="true"] .pause-icon { @apply hidden; }
+  #globe-pause-button[data-paused="true"] .play-icon { @apply block; }
   .orbit-progress-track { @apply mt-2 h-px overflow-hidden rounded-full bg-white/15; }
   .orbit-progress-track i { @apply block h-full rounded-full bg-gradient-to-r from-violet-400 to-cyan-300; }
   .section-number { @apply text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/65; }
