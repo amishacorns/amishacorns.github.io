@@ -1,24 +1,80 @@
-<canvas id="earth-globe" class="earth-globe" width="2048" height="2048" aria-hidden="true"></canvas>
+<canvas
+  id="earth-globe"
+  class="earth-globe"
+  width="2048"
+  height="2048"
+  role="img"
+  aria-label="Interactive globe showing places Jordan has visited. Drag to rotate."
+></canvas>
+<canvas
+  id="earth-markers"
+  class="earth-markers"
+  width="2048"
+  height="2048"
+  tabindex="0"
+  aria-label="Drag or use the arrow keys to rotate the travel globe"
+></canvas>
+<div id="earth-tooltip" class="earth-tooltip" role="status" hidden></div>
 
 <style>
-  .earth-globe {
+  .earth-globe,
+  .earth-markers {
     @apply absolute inset-0 h-full w-full;
+  }
+
+  .earth-globe {
     opacity: 0;
     filter: saturate(0.88) brightness(0.96) contrast(1.08);
     transition: opacity 900ms ease;
   }
 
   .earth-globe.ready { opacity: 0.92; }
+
+  .earth-markers {
+    z-index: 2;
+    cursor: grab;
+    opacity: 0;
+    outline: none;
+    touch-action: pan-y;
+    transition: opacity 700ms ease 350ms;
+  }
+
+  .earth-markers.ready { opacity: 0.72; }
+  .earth-markers.ready:hover,
+  .earth-markers.ready:focus-visible,
+  .earth-markers.dragging { opacity: 0.96; }
+  .earth-markers.dragging { cursor: grabbing; }
+  .earth-markers:focus-visible { box-shadow: inset 0 0 0 2px rgb(196 181 253 / 0.55); }
+
+  .earth-tooltip {
+    @apply absolute z-20 max-w-56 rounded-lg border border-violet-200/25 bg-black/80 px-3 py-2 text-center text-xs leading-snug text-white/85 shadow-xl backdrop-blur-md;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 0.7rem));
+  }
 </style>
 
 <script>
-  const canvas = document.getElementById("earth-globe") as HTMLCanvasElement | null
+  import locations from "../data/locations.json"
 
-  if (canvas && !canvas.dataset.initialized) {
+  type TravelLocation = { lat: number; lng: number; title: string }
+  type ProjectedLocation = TravelLocation & { x: number; y: number; depth: number }
+  type MarkerCluster = {
+    x: number
+    y: number
+    depth: number
+    points: ProjectedLocation[]
+  }
+
+  const canvas = document.getElementById("earth-globe") as HTMLCanvasElement | null
+  const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
+  const tooltip = document.getElementById("earth-tooltip") as HTMLDivElement | null
+
+  if (canvas && markerCanvas && tooltip && !canvas.dataset.initialized) {
     canvas.dataset.initialized = "true"
     const gl = canvas.getContext("webgl", { alpha: true, antialias: true })
+    const markerContext = markerCanvas.getContext("2d")
 
-    if (gl) {
+    if (gl && markerContext) {
       const vertexSource = `
         attribute vec2 aPosition;
         varying vec2 vUv;
@@ -32,6 +88,7 @@
         precision mediump float;
         uniform sampler2D uTexture;
         uniform float uRotation;
+        uniform float uTilt;
         varying vec2 vUv;
         const float PI = 3.141592653589793;
 
@@ -41,8 +98,16 @@
           if (radiusSquared > 1.0) discard;
 
           float depth = sqrt(1.0 - radiusSquared);
-          float longitude = atan(point.x, depth) + uRotation;
-          float latitude = asin(clamp(point.y, -1.0, 1.0));
+          float cosine = cos(uTilt);
+          float sine = sin(uTilt);
+          vec3 surface = vec3(point.x, point.y, depth);
+          vec3 world = vec3(
+            surface.x,
+            surface.y * cosine + surface.z * sine,
+            -surface.y * sine + surface.z * cosine
+          );
+          float longitude = atan(world.x, world.z) + uRotation;
+          float latitude = asin(clamp(world.y, -1.0, 1.0));
           vec2 mapUv = vec2(fract(0.5 + longitude / (2.0 * PI)), 0.5 - latitude / PI);
           vec4 color = texture2D(uTexture, vec2(mapUv.x, 1.0 - mapUv.y));
           color.rgb = pow(color.rgb, vec3(0.76));
@@ -84,6 +149,7 @@
           gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
 
           const rotationUniform = gl.getUniformLocation(program, "uRotation")
+          const tiltUniform = gl.getUniformLocation(program, "uTilt")
           const textureUniform = gl.getUniformLocation(program, "uTexture")
           const texture = gl.createTexture()
           gl.activeTexture(gl.TEXTURE0)
@@ -94,41 +160,241 @@
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
           gl.uniform1i(textureUniform, 0)
 
+          let rotation = 0
+          let tilt = 0
+          let cssSize = 0
+          let markerScale = 1
+          let lastFrame = performance.now()
+          let lastDraw = -Infinity
+          let lastInteraction = -Infinity
+          let dragging = false
+          let dragDistance = 0
+          let previousX = 0
+          let previousY = 0
+          let clusters: MarkerCluster[] = []
+          const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          const radians = (degrees: number) => degrees * Math.PI / 180
+          const preparedLocations = (locations as TravelLocation[]).map((location) => ({
+            ...location,
+            latitude: radians(location.lat),
+            longitude: radians(location.lng),
+          }))
+
+          const resizeCanvas = () => {
+            const ratio = Math.min(window.devicePixelRatio || 1, 2)
+            cssSize = canvas.getBoundingClientRect().width
+            const target = Math.min(4096, Math.max(2048, Math.ceil((cssSize * ratio) / 256) * 256))
+            const markerRatio = Math.min(window.devicePixelRatio || 1, 1.25)
+            const markerTarget = Math.min(2048, Math.max(1024, Math.ceil((cssSize * markerRatio) / 256) * 256))
+            markerScale = markerTarget / cssSize
+
+            if (canvas.width !== target || canvas.height !== target) {
+              canvas.width = target
+              canvas.height = target
+            }
+            if (markerCanvas.width !== markerTarget || markerCanvas.height !== markerTarget) {
+              markerCanvas.width = markerTarget
+              markerCanvas.height = markerTarget
+            }
+            gl.viewport(0, 0, canvas.width, canvas.height)
+          }
+
+          const projectMarkers = () => {
+            const radius = cssSize / 2
+            const center = radius
+            const cosineTilt = Math.cos(tilt)
+            const sineTilt = Math.sin(tilt)
+            const projected: ProjectedLocation[] = []
+
+            for (const location of preparedLocations) {
+              const latitudeCosine = Math.cos(location.latitude)
+              const relativeLongitude = location.longitude - rotation
+              const worldX = Math.sin(relativeLongitude) * latitudeCosine
+              const worldY = Math.sin(location.latitude)
+              const worldZ = Math.cos(relativeLongitude) * latitudeCosine
+              const screenY = worldY * cosineTilt - worldZ * sineTilt
+              const screenZ = worldY * sineTilt + worldZ * cosineTilt
+
+              if (screenZ <= 0.025) continue
+              projected.push({
+                lat: location.lat,
+                lng: location.lng,
+                title: location.title,
+                x: center + worldX * radius,
+                y: center - screenY * radius,
+                depth: screenZ,
+              })
+            }
+
+            projected.sort((a, b) => b.depth - a.depth)
+            const mergeDistance = Math.max(8, Math.min(13, cssSize / 170))
+            const nextClusters: MarkerCluster[] = []
+
+            for (const point of projected) {
+              const nearby = nextClusters.find((cluster) =>
+                Math.hypot(cluster.x - point.x, cluster.y - point.y) < mergeDistance
+              )
+              if (nearby) {
+                const count = nearby.points.length
+                nearby.x = (nearby.x * count + point.x) / (count + 1)
+                nearby.y = (nearby.y * count + point.y) / (count + 1)
+                nearby.depth = Math.max(nearby.depth, point.depth)
+                nearby.points.push(point)
+              } else {
+                nextClusters.push({ x: point.x, y: point.y, depth: point.depth, points: [point] })
+              }
+            }
+            return nextClusters
+          }
+
+          const drawMarkers = () => {
+            markerContext.setTransform(1, 0, 0, 1, 0, 0)
+            markerContext.clearRect(0, 0, markerCanvas.width, markerCanvas.height)
+            markerContext.setTransform(markerScale, 0, 0, markerScale, 0, 0)
+            clusters = projectMarkers()
+
+            for (const cluster of clusters.slice().reverse()) {
+              const depthAlpha = 0.38 + cluster.depth * 0.62
+              const countBoost = Math.min(2.1, Math.log2(cluster.points.length + 1) * 0.48)
+              const coreRadius = 1.6 + cluster.depth * 1.15 + countBoost
+
+              markerContext.globalAlpha = 0.13 * depthAlpha
+              markerContext.fillStyle = "#a78bfa"
+              markerContext.beginPath()
+              markerContext.arc(cluster.x, cluster.y, coreRadius * 3.4, 0, Math.PI * 2)
+              markerContext.fill()
+
+              markerContext.globalAlpha = 0.72 * depthAlpha
+              markerContext.strokeStyle = cluster.points.length > 1 ? "#c4b5fd" : "#67e8f9"
+              markerContext.lineWidth = 0.8
+              markerContext.beginPath()
+              markerContext.arc(cluster.x, cluster.y, coreRadius + 1.35, 0, Math.PI * 2)
+              markerContext.stroke()
+
+              markerContext.globalAlpha = 0.96 * depthAlpha
+              markerContext.fillStyle = cluster.points.length > 1 ? "#ddd6fe" : "#a5f3fc"
+              markerContext.shadowColor = cluster.points.length > 1 ? "#8b5cf6" : "#22d3ee"
+              markerContext.shadowBlur = 5
+              markerContext.beginPath()
+              markerContext.arc(cluster.x, cluster.y, coreRadius, 0, Math.PI * 2)
+              markerContext.fill()
+              markerContext.shadowBlur = 0
+            }
+            markerContext.globalAlpha = 1
+          }
+
+          const hideTooltip = () => { tooltip.hidden = true }
+
+          const showTooltip = (clientX: number, clientY: number) => {
+            const rect = markerCanvas.getBoundingClientRect()
+            const x = clientX - rect.left
+            const y = clientY - rect.top
+            let closest: MarkerCluster | undefined
+            let closestDistance = 15
+
+            for (const cluster of clusters) {
+              const distance = Math.hypot(cluster.x - x, cluster.y - y)
+              if (distance < closestDistance) {
+                closest = cluster
+                closestDistance = distance
+              }
+            }
+
+            if (!closest) {
+              hideTooltip()
+              return
+            }
+
+            tooltip.style.left = `${closest.x}px`
+            tooltip.style.top = `${closest.y}px`
+            if (closest.points.length === 1) {
+              tooltip.textContent = closest.points[0].title
+            } else {
+              const names = closest.points.slice(0, 2).map((point) => point.title).join(" · ")
+              const remaining = closest.points.length - 2
+              tooltip.textContent = remaining > 0 ? `${names} · +${remaining} nearby` : names
+            }
+            tooltip.hidden = false
+          }
+
+          markerCanvas.addEventListener("pointerdown", (event) => {
+            if (event.pointerType === "mouse" && event.button !== 0) return
+            dragging = true
+            dragDistance = 0
+            previousX = event.clientX
+            previousY = event.clientY
+            lastInteraction = performance.now()
+            markerCanvas.classList.add("dragging")
+            markerCanvas.setPointerCapture(event.pointerId)
+            hideTooltip()
+          })
+
+          markerCanvas.addEventListener("pointermove", (event) => {
+            lastInteraction = performance.now()
+            if (!dragging) {
+              if (event.pointerType === "mouse") showTooltip(event.clientX, event.clientY)
+              return
+            }
+
+            const deltaX = event.clientX - previousX
+            const deltaY = event.clientY - previousY
+            dragDistance += Math.abs(deltaX) + Math.abs(deltaY)
+            rotation -= deltaX / Math.max(240, cssSize / 2)
+            tilt = Math.max(-1.05, Math.min(1.05, tilt + deltaY / Math.max(240, cssSize / 2)))
+            previousX = event.clientX
+            previousY = event.clientY
+          })
+
+          const finishDrag = (event: PointerEvent) => {
+            if (!dragging) return
+            dragging = false
+            markerCanvas.classList.remove("dragging")
+            if (markerCanvas.hasPointerCapture(event.pointerId)) markerCanvas.releasePointerCapture(event.pointerId)
+            if (dragDistance < 5 && event.pointerType === "mouse") showTooltip(event.clientX, event.clientY)
+          }
+
+          markerCanvas.addEventListener("pointerup", finishDrag)
+          markerCanvas.addEventListener("pointercancel", finishDrag)
+          markerCanvas.addEventListener("pointerleave", () => {
+            if (!dragging) hideTooltip()
+          })
+          markerCanvas.addEventListener("keydown", (event) => {
+            const step = event.shiftKey ? 0.18 : 0.08
+            if (event.key === "ArrowLeft") rotation += step
+            else if (event.key === "ArrowRight") rotation -= step
+            else if (event.key === "ArrowUp") tilt = Math.max(-1.05, tilt - step)
+            else if (event.key === "ArrowDown") tilt = Math.min(1.05, tilt + step)
+            else return
+            event.preventDefault()
+            lastInteraction = performance.now()
+          })
+
           const image = new Image()
           image.src = "/images/earth-night-nasa-8k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-            const resizeCanvas = () => {
-              const ratio = Math.min(window.devicePixelRatio || 1, 2)
-              const cssPixels = canvas.getBoundingClientRect().width
-              const target = Math.min(4096, Math.max(2048, Math.ceil((cssPixels * ratio) / 256) * 256))
-              if (canvas.width !== target || canvas.height !== target) {
-                canvas.width = target
-                canvas.height = target
-              }
-              gl.viewport(0, 0, canvas.width, canvas.height)
-            }
-
             resizeCanvas()
             window.addEventListener("resize", resizeCanvas, { passive: true })
             canvas.classList.add("ready")
+            markerCanvas.classList.add("ready")
             canvas.closest("#planet")?.classList.add("globe-ready")
 
-            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            const start = performance.now()
-            let lastDraw = -Infinity
-
             const draw = (now: number) => {
-              if (reducedMotion || now - lastDraw >= 32) {
-                const elapsed = reducedMotion ? 0 : now - start
-                const rotation = -(elapsed / 180000) * Math.PI * 2
+              if (now - lastDraw >= 42) {
+                const delta = Math.min(64, now - lastFrame)
+                if (!reducedMotion && !dragging && now - lastInteraction > 3600) {
+                  rotation -= (delta / 180000) * Math.PI * 2
+                }
                 gl.uniform1f(rotationUniform, rotation)
+                gl.uniform1f(tiltUniform, tilt)
                 gl.drawArrays(gl.TRIANGLES, 0, 6)
+                drawMarkers()
+                lastFrame = now
                 lastDraw = now
               }
-              if (!reducedMotion) requestAnimationFrame(draw)
+              requestAnimationFrame(draw)
             }
 
             requestAnimationFrame(draw)
