@@ -3,7 +3,7 @@ import type { Site, Page, Links, Socials } from "@types"
 // Global
 export const SITE: Site = {
   TITLE: "Jordan Dotzel",
-  DESCRIPTION: "AI researcher and agent architect writing about agents, AGI safety, and the future they create.",
+  DESCRIPTION: "Agent architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
   AUTHOR: "Jordan Dotzel",
 }
 

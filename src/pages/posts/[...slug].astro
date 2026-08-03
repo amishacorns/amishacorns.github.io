@@ -45,7 +45,12 @@ if (related.length < 3) {
 }
 ---
 
-<PageLayout title={title} description={description}>
+<PageLayout
+  title={title}
+  description={description}
+  image={header?.teaser ? `/images/${header.teaser}` : undefined}
+  imageAlt={title}
+>
   <div class="pt-28 pb-16">
     <Container size="md">
       <a href="/transmissions" class="back-link">← All Transmissions</a>
