@@ -1,0 +1,90 @@
+---
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+
+const experience = [
+  ["Gemini + Cloud, Advanced Development Team", "Agent Architect", "July 2025 — Present"],
+  ["Google, TPU Performance Team", "Student Researcher", "June 2024 — June 2025"],
+  ["Google, Platforms-Aware AutoML", "Student Researcher", "June 2022 — May 2024"],
+  ["Computer Systems Laboratory, Cornell", "PhD Candidate", "August 2019 — June 2025"],
+  ["Datto", "Software Engineer", "June 2017 — June 2018"],
+]
+
+const publications = [
+  { title: "FLIQS: One-Shot Mixed-Precision Floating-Point and Integer Quantization Search", venue: "AutoML 2024 · Best Paper", href: "https://arxiv.org/abs/2308.03290" },
+  { title: "Learning from Students: Applying T-Distributions to Explore Accurate and Efficient Formats for LLMs", venue: "ICML 2024", href: "https://arxiv.org/abs/2405.03103" },
+  { title: "Exploring the Limits of Semantic Image Compression at Micro-Bits per Pixel", venue: "ICLR Tiny Papers 2024", href: "https://arxiv.org/abs/2402.13536" },
+  { title: "Opportunities for Post-Training Dynamic Layer Sparsity in Large Vision and Language Models", venue: "CVPR Workshop 2024", href: "https://openaccess.thecvf.com/content/CVPR2024W/ELVM/papers/Dotzel_Opportunities_for_Post-Training_Dynamic_Layer_Sparsity_in_Large_Vision_and_CVPRW_2024_paper.pdf" },
+  { title: "Radial Networks: Dynamic Layer Routing for High-Performance Large Language Models", venue: "arXiv 2024", href: "https://arxiv.org/abs/2404.04900" },
+  { title: "OverQ: Opportunistic Outlier Quantization for Neural Network Accelerators", venue: "arXiv 2019", href: "https://arxiv.org/abs/1910.06909" },
+  { title: "Improving Neural Network Quantization Without Retraining Using Outlier Channel Splitting", venue: "ICML 2019", href: "https://arxiv.org/abs/1901.09504" },
+  { title: "Building Efficient Deep Neural Networks With Unitary Group Convolutions", venue: "CVPR 2019", href: "https://arxiv.org/abs/1811.07755" },
+  { title: "ShadowLLM: Predictor-based Contextual Sparsity for Large Language Models", venue: "EMNLP 2024", href: "https://arxiv.org/abs/2406.16635" },
+  { title: "M4BRAM: Mixed-Precision Matrix-Matrix Multiplication in FPGA Block RAMs", venue: "FPT 2023", href: "https://arxiv.org/abs/2311.02758" },
+  { title: "Logic Synthesis Meets Machine Learning: Trading Exactness for Generalization", venue: "DATE 2021", href: "https://arxiv.org/abs/2012.02530" },
+  { title: "Enabling Design Methodologies and Future Trends for Edge AI: Specialization and Co-Design", venue: "IEEE Design & Test 2021", href: "https://arxiv.org/abs/2103.15750" },
+]
+---
+
+<PageLayout title="Research" description="Research on efficient neural systems, agents, and the path to AGI.">
+  <TopLayout>
+    <div class="animate max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-violet-300/65">Architecture · Efficiency · Agents</p>
+      <h1 class="mt-3 text-4xl font-semibold text-white">Research</h1>
+      <p class="mt-4 text-lg leading-relaxed text-white/55">I received my PhD from Cornell's Computer Systems Laboratory. My academic work focused on efficient neural architectures, low-precision quantization, and dynamic sparsity; the current work focuses on agents and the systems around them.</p>
+    </div>
+  </TopLayout>
+  <BottomLayout>
+    <div class="space-y-24">
+      <section class="animate">
+        <div class="flex items-end justify-between gap-4">
+          <div>
+            <p class="eyebrow">01 / Trajectory</p>
+            <h2>Experience</h2>
+          </div>
+        </div>
+        <ol class="mt-7 border-l border-white/15 pl-6">
+          {experience.map(([company, role, date]) => (
+            <li class="timeline-item">
+              <p>{date}</p><h3>{company}</h3><span>{role}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="animate">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div><p class="eyebrow">02 / Papers</p><h2>Publications</h2></div>
+          <a class="scholar" href="https://scholar.google.com/citations?user=5H-MYAoAAAAJ" target="_blank">Google Scholar ↗</a>
+        </div>
+        <ol class="mt-7 divide-y divide-white/10 border-y border-white/10">
+          {publications.map((paper, index) => (
+            <li>
+              <a class="paper" href={paper.href} target="_blank">
+                <span class="paper-number">{String(index + 1).padStart(2, "0")}</span>
+                <span><b>{paper.title}</b><small>{paper.venue}</small></span>
+                <span>↗</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+  </BottomLayout>
+</PageLayout>
+
+<style>
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/65; }
+  h2 { @apply mt-2 text-2xl font-semibold text-white; }
+  .timeline-item { @apply relative pb-8 last:pb-0; }
+  .timeline-item::before { content: ""; @apply absolute -left-[1.74rem] top-1 h-2.5 w-2.5 rounded-full border border-violet-200/60 bg-black; }
+  .timeline-item p { @apply text-xs uppercase tracking-wider text-white/35; }
+  .timeline-item h3 { @apply mt-1 text-base font-semibold text-white; }
+  .timeline-item span { @apply text-sm text-white/50; }
+  .scholar { @apply text-sm text-white/55 underline decoration-white/20 underline-offset-4 hover:text-white; }
+  .paper { @apply grid grid-cols-[2rem_1fr_auto] gap-3 py-5 text-white/50 hover:text-white transition-colors; }
+  .paper-number { @apply text-xs text-violet-300/55; }
+  .paper b { @apply block leading-snug text-white; }
+  .paper small { @apply mt-1 block text-xs uppercase tracking-wider text-white/35; }
+</style>

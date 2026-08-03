@@ -1,0 +1,182 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import ArrowCard from "@components/ArrowCard"
+import TwinklingStars from "@components/TwinklingStars.astro"
+import MeteorShower from "@components/MeteorShower.astro"
+import { SITE, SOCIALS } from "@consts"
+
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const selectedPaths = ["/posts/paths/", "/posts/is-sometime-now/", "/posts/granny/"]
+const selected = selectedPaths
+  .map((path) => posts.find((post) => post.data.permalink === path))
+  .filter((post): post is (typeof posts)[number] => Boolean(post))
+
+const featured = [
+  { label: "The path", path: "/posts/paths/", image: "/images/critical.png" },
+  { label: "The danger", path: "/posts/is-sometime-now/", image: "/images/is-sometime-now.jpg" },
+  { label: "The destination", path: "/posts/granny/", image: "/images/granny-family.jpg" },
+]
+---
+
+<PageLayout title="Home" description={SITE.DESCRIPTION}>
+  <div class="absolute inset-0 block dark:hidden">
+    <div id="particles1" class="fixed inset-0"></div>
+    <div id="particles2" class="fixed inset-0"></div>
+    <div id="particles3" class="fixed inset-0"></div>
+  </div>
+
+  <div class="absolute inset-0 bg-black hidden dark:block">
+    <div id="stars1" class="fixed inset-0"></div>
+    <div id="stars2" class="fixed inset-0"></div>
+    <div id="stars3" class="fixed inset-0"></div>
+  </div>
+
+  <div id="galaxy" class="fixed inset-0 pointer-events-none">
+    <div class="hidden dark:block">
+      <TwinklingStars />
+      <MeteorShower />
+    </div>
+  </div>
+
+  <script is:inline src="/js/bg.js"></script>
+
+  <section class="relative h-screen min-h-[680px] w-full overflow-hidden">
+    <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-hidden">
+      <div id="crescent" class="absolute top-0 left-1/2 -translate-x-1/2 w-[250vw] min-h-[100vh] aspect-square rounded-full p-px bg-gradient-to-b from-white/80 from-0% to-transparent to-[5%]">
+        <div id="planet" class="w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
+          <div id="blur" class="w-full h-20 rounded-full bg-violet-300/25 blur-3xl"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate absolute inset-0 flex items-center justify-center">
+      <div class="relative px-5 text-center -translate-y-6">
+        <p class="animated hero-kicker">Agent Architect · AI Researcher</p>
+        <h1 class="animated hero-name">Jordan Dotzel</h1>
+        <p class="animated hero-line">Building agents for the most dynamic era of human discovery.</p>
+        <div id="ctaButtons" class="animated flex flex-wrap gap-3 justify-center mt-7">
+          <a href="/musings" class="hero-primary">Read the musings</a>
+          <a href="/research" class="hero-secondary">View the research</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute inset-x-0 bottom-7 flex justify-center text-xs uppercase tracking-[0.24em] text-white/45">
+      Scroll to enter orbit
+    </div>
+  </section>
+
+  <div class="relative bg-black border-t border-white/10">
+    <div class="mx-auto max-w-screen-md px-5 py-24 space-y-28">
+      <section class="animate grid gap-8 md:grid-cols-[0.7fr_1.3fr]">
+        <div>
+          <p class="section-number">01 / Now</p>
+          <h2 class="section-title">The future is arriving unevenly.</h2>
+        </div>
+        <div class="space-y-5 text-lg leading-relaxed text-white/70">
+          <p>We are currently within the most dynamic and exciting era of human discovery. The number of unanswered questions remains high, and the tools required to probe them are finally being built.</p>
+          <p>General artificial intelligence now has most of its necessary ingredients. It may create the most incredible benefits across society while also becoming the most destabilizing and dangerous technology ever created.</p>
+          <p class="text-white">The research decisions we make now will lead to a society that eventually flourishes, decays, or disappears.</p>
+        </div>
+      </section>
+
+      <section class="animate">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-number">02 / Selected transmissions</p>
+            <h2 class="section-title">Musings</h2>
+          </div>
+          <a class="section-link" href="/musings">All musings →</a>
+        </div>
+
+        <div class="mt-8 grid gap-5 md:grid-cols-3">
+          {selected.map((post) => {
+            const art = featured.find((item) => item.path === post.data.permalink)
+            return (
+              <a class="featured-card" href={post.data.permalink}>
+                <div class="featured-image">
+                  <img src={art?.image} alt="" loading="lazy" />
+                </div>
+                <div class="p-5">
+                  <p class="text-xs uppercase tracking-[0.18em] text-violet-300/75">{art?.label}</p>
+                  <h3 class="mt-2 text-lg font-semibold text-white">{post.data.title}</h3>
+                  <p class="mt-2 text-sm leading-relaxed text-white/55">{post.data.description}</p>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+      </section>
+
+      <section class="animate grid gap-8 md:grid-cols-[0.7fr_1.3fr]">
+        <div>
+          <p class="section-number">03 / Research</p>
+          <h2 class="section-title">Efficient intelligence.</h2>
+        </div>
+        <div>
+          <p class="text-lg leading-relaxed text-white/70">My academic research focused on building more efficient deep learning systems through neural architecture design, low-precision quantization, and dynamic sparsity. The current work moves further up the stack: agents, thought traces, and the systems that will build whatever comes next.</p>
+          <div class="mt-7 grid gap-3">
+            <a class="signal-row" href="https://arxiv.org/abs/2308.03290" target="_blank">
+              <span><b>FLIQS</b><small>Best Paper · AutoML 2024</small></span><span>↗</span>
+            </a>
+            <a class="signal-row" href="https://arxiv.org/abs/2405.03103" target="_blank">
+              <span><b>Learning from Students</b><small>ICML 2024</small></span><span>↗</span>
+            </a>
+            <a class="signal-row" href="https://arxiv.org/abs/2404.04900" target="_blank">
+              <span><b>Radial Networks</b><small>Dynamic routing for large language models</small></span><span>↗</span>
+            </a>
+          </div>
+          <a class="section-link mt-6 inline-flex" href="/research">Research and experience →</a>
+        </div>
+      </section>
+
+      <section class="animate">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-number">04 / Recent transmissions</p>
+            <h2 class="section-title">Latest</h2>
+          </div>
+        </div>
+        <ul class="mt-8 space-y-4">
+          {posts.slice(0, 4).map((post) => <li><ArrowCard entry={post} /></li>)}
+        </ul>
+      </section>
+
+      <section class="animate pb-8">
+        <p class="section-number">05 / Signal</p>
+        <h2 class="section-title">Find me in the noise.</h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          {SOCIALS.map((social) => (
+            <a href={social.HREF} target="_blank" class="signal-row">
+              <span><b>{social.NAME}</b><small>{social.TEXT}</small></span><span>↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+  .hero-kicker { @apply text-xs md:text-sm font-semibold uppercase tracking-[0.24em] text-violet-200/70; }
+  .hero-name { @apply mt-3 text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-[0.04em] text-white; }
+  .hero-line { @apply mx-auto mt-4 max-w-xl text-base md:text-xl text-white/60; }
+  .hero-primary { @apply rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black hover:bg-violet-100 transition-colors; }
+  .hero-secondary { @apply rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors; }
+  .section-number { @apply text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/65; }
+  .section-title { @apply mt-2 text-2xl md:text-3xl font-semibold text-white; }
+  .section-heading-row { @apply flex flex-wrap items-end justify-between gap-5; }
+  .section-link { @apply text-sm text-white/60 underline decoration-white/20 underline-offset-4 hover:text-white hover:decoration-white/60 transition-colors; }
+  .featured-card { @apply overflow-hidden rounded-2xl border border-white/15 bg-white/[0.035] hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.06] transition-all duration-300; }
+  .featured-image { @apply aspect-[4/3] overflow-hidden border-b border-white/10 bg-white/5; }
+  .featured-image img { @apply h-full w-full object-cover opacity-80 grayscale-[15%] transition duration-500; }
+  .featured-card:hover img { @apply opacity-100 scale-[1.03] grayscale-0; }
+  .signal-row { @apply flex items-center justify-between rounded-xl border border-white/15 bg-white/[0.025] px-4 py-3 text-white/65 hover:border-violet-300/40 hover:bg-white/[0.06] hover:text-white transition-colors; }
+  .signal-row span:first-child { @apply flex min-w-0 flex-col; }
+  .signal-row b { @apply truncate text-sm font-semibold text-white; }
+  .signal-row small { @apply truncate text-xs text-white/45; }
+</style>
