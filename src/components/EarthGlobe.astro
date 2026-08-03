@@ -1,4 +1,4 @@
-<canvas id="earth-globe" class="earth-globe" width="1024" height="1024" aria-hidden="true"></canvas>
+<canvas id="earth-globe" class="earth-globe" width="2048" height="2048" aria-hidden="true"></canvas>
 
 <style>
   .earth-globe {
@@ -100,18 +100,34 @@
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-            gl.viewport(0, 0, canvas.width, canvas.height)
+            const resizeCanvas = () => {
+              const ratio = Math.min(window.devicePixelRatio || 1, 2)
+              const cssPixels = canvas.getBoundingClientRect().width
+              const target = Math.min(4096, Math.max(2048, Math.ceil((cssPixels * ratio) / 256) * 256))
+              if (canvas.width !== target || canvas.height !== target) {
+                canvas.width = target
+                canvas.height = target
+              }
+              gl.viewport(0, 0, canvas.width, canvas.height)
+            }
+
+            resizeCanvas()
+            window.addEventListener("resize", resizeCanvas, { passive: true })
             canvas.classList.add("ready")
             canvas.closest("#planet")?.classList.add("globe-ready")
 
             const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
             const start = performance.now()
+            let lastDraw = -Infinity
 
             const draw = (now: number) => {
-              const elapsed = reducedMotion ? 0 : now - start
-              const rotation = -(elapsed / 180000) * Math.PI * 2
-              gl.uniform1f(rotationUniform, rotation)
-              gl.drawArrays(gl.TRIANGLES, 0, 6)
+              if (reducedMotion || now - lastDraw >= 32) {
+                const elapsed = reducedMotion ? 0 : now - start
+                const rotation = -(elapsed / 180000) * Math.PI * 2
+                gl.uniform1f(rotationUniform, rotation)
+                gl.drawArrays(gl.TRIANGLES, 0, 6)
+                lastDraw = now
+              }
               if (!reducedMotion) requestAnimationFrame(draw)
             }
 

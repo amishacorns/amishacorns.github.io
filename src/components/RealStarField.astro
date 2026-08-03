@@ -3,7 +3,7 @@
 <style>
   .real-star-field {
     @apply absolute inset-0 h-full w-full;
-    opacity: 0.9;
+    opacity: 1;
   }
 </style>
 
@@ -63,8 +63,8 @@
           const y = height / 2 - projectionY * scale
           if (x < -8 || x > width + 8 || y < -8 || y > height + 8) continue
 
-          const strength = Math.max(0.05, Math.min(1, (6.35 - magnitude) / 7.2))
-          const radius = 0.38 + Math.pow(strength, 1.75) * 1.85
+          const strength = Math.max(0.12, Math.min(1, (7.2 - magnitude) / 7.8))
+          const radius = 0.52 + Math.pow(strength, 1.65) * 2.15
           const [red, green, blue] = colorForIndex(colorIndex)
           projected.push([x, y, radius, strength, red, green * 1000 + blue])
         }
@@ -74,7 +74,7 @@
           const blue = packed % 1000
           context.beginPath()
           context.arc(x, y, radius, 0, Math.PI * 2)
-          context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${0.12 + strength * 0.72})`
+          context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${0.26 + strength * 0.7})`
           context.fill()
         }
 
