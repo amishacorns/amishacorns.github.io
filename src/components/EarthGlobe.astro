@@ -295,7 +295,8 @@
             for (const cluster of clusters.slice().reverse()) {
               const depthAlpha = 0.38 + cluster.depth * 0.62
               const countBoost = Math.min(2.1, Math.log2(cluster.points.length + 1) * 0.48)
-              const coreRadius = (1.6 + cluster.depth * 1.15 + countBoost) * 3
+              const markerSize = constrainedDevice ? 1.35 : 3
+              const coreRadius = (1.6 + cluster.depth * 1.15 + countBoost) * markerSize
 
               markerContext.globalAlpha = 0.13 * depthAlpha
               markerContext.fillStyle = "#a78bfa"

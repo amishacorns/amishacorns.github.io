@@ -3,7 +3,7 @@
     <button type="button" class="cosmic-readout impact-readout" data-focus-agi aria-label="Focus artificial general intelligence">
       <span>Artificial General Intelligence</span>
       <strong data-countdown="agi">---D --:--:--</strong>
-      <small>Estimated Impact · 13 Jul 2027</small>
+      <small>Estimated Arrival · 13 Jul 2027</small>
     </button>
   </div>
 
@@ -40,6 +40,15 @@
     .agi-impact-event { @apply left-3 top-[13%] scale-75 origin-top-left; }
     .singularity-event { @apply right-2 top-[12%] scale-75 origin-top-right; }
   }
+
+  @media (max-width: 640px) {
+    .agi-impact-event { @apply left-2 top-[12%] h-auto w-44 scale-100; }
+    .singularity-event { @apply right-2 top-[12%] h-auto w-44 scale-100; }
+    .cosmic-readout { @apply w-44 px-2.5 py-2; min-width: 0; }
+    .cosmic-readout span { @apply text-[7px] tracking-[0.12em]; }
+    .cosmic-readout strong { @apply text-[12px] tracking-[0.05em]; }
+    .cosmic-readout small { @apply text-[7px] tracking-[0.04em]; }
+  }
 </style>
 
 <script>
@@ -57,7 +66,7 @@
       singularity: Date.parse("2050-01-01T00:00:00Z"),
     }
     const formatCountdown = (milliseconds: number) => {
-      if (milliseconds <= 0) return "IMPACT"
+      if (milliseconds <= 0) return "ARRIVED"
       const totalSeconds = Math.floor(milliseconds / 1000)
       const days = Math.floor(totalSeconds / 86400)
       const hours = Math.floor((totalSeconds % 86400) / 3600)

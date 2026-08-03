@@ -1,76 +1,26 @@
-<div id="inbound-agi" class="inbound-agi">
-  <svg class="inbound-trajectory" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <defs>
-      <linearGradient id="agi-trajectory-gradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#7f1d1d" stop-opacity="0" />
-        <stop offset="0.62" stop-color="#fb923c" stop-opacity="0.58" />
-        <stop offset="1" stop-color="#ffedd5" stop-opacity="0.9" />
-      </linearGradient>
-    </defs>
-    <path class="trajectory-glow" data-agi-inbound-path d="M 2 5 C 8 8, 10 10, 12 12" />
-    <path class="trajectory-dust" data-agi-inbound-path d="M 2 5 C 8 8, 10 10, 12 12" />
-    <path id="agi-inbound-path" class="trajectory-core" data-agi-inbound-path d="M 2 5 C 8 8, 10 10, 12 12" />
-  </svg>
-
-  <div class="inbound-agi-anchor">
-    <button class="inbound-agi-object" type="button" aria-label="Focus artificial general intelligence">
-      <canvas class="agi-asteroid-mesh" aria-hidden="true"></canvas>
-      <span class="sr-only">Focus artificial general intelligence</span>
-    </button>
-    <div class="inbound-agi-caption" aria-hidden="true">
-      <span>AGI-2027</span>
-      <strong>Artificial General Intelligence</strong>
-    </div>
+<div id="inbound-agi" class="identity-comet agi-impact-comet inbound-agi">
+  <button class="inbound-agi-object" type="button" aria-label="Focus artificial general intelligence">
+    <canvas class="agi-asteroid-mesh" aria-hidden="true"></canvas>
+    <span class="sr-only">Focus artificial general intelligence</span>
+  </button>
+  <div class="inbound-agi-caption" aria-hidden="true">
+    <span>AGI-2027</span>
+    <strong>Artificial General Intelligence</strong>
   </div>
 </div>
 
 <style>
   .inbound-agi {
-    --agi-x: 8vw;
-    --agi-y: 9vh;
-    --agi-scale: 0.36;
-    --agi-opacity: 0;
-    @apply pointer-events-none absolute inset-0 z-[14];
-    opacity: var(--agi-opacity);
-    transition: opacity 260ms ease;
-  }
-
-  .inbound-trajectory {
-    @apply absolute inset-0 h-full w-full overflow-visible;
-    filter: drop-shadow(0 0 9px rgb(251 146 60 / 0.42));
-  }
-
-  .inbound-trajectory path {
-    fill: none;
-    stroke: url(#agi-trajectory-gradient);
-    stroke-linecap: round;
-  }
-  .trajectory-glow { stroke-width: 1.1; opacity: 0.16; filter: blur(4px); }
-  .trajectory-core { stroke-width: 0.22; opacity: 0.58; }
-  .trajectory-dust {
-    stroke-width: 0.3;
-    opacity: 0.35;
-    stroke-dasharray: 0.18 1.4;
-    animation: agi-dust-flow 1.25s linear infinite;
-  }
-
-  @keyframes agi-dust-flow {
-    to { stroke-dashoffset: -3.16; }
-  }
-
-  .inbound-agi-anchor {
-    @apply pointer-events-none absolute;
-    left: var(--agi-x);
-    top: var(--agi-y);
-    width: 19rem;
-    height: 19rem;
-    transform: translate(-50%, -50%) scale(var(--agi-scale));
-    transform-origin: center;
-    will-change: left, top, transform;
+    @apply pointer-events-none absolute left-1/2 top-1/2 z-[14];
+    width: 10rem;
+    height: 10rem;
+    opacity: 0;
+    will-change: transform, opacity;
   }
 
   .inbound-agi-object {
     @apply pointer-events-auto absolute inset-0 cursor-crosshair border-0 bg-transparent p-0;
+    transform: rotate(var(--counter-rotation, 0deg));
     filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.72)) drop-shadow(0 0 16px rgb(251 146 60 / 0.24));
   }
 
@@ -85,7 +35,10 @@
   }
 
   .inbound-agi-caption {
-    @apply absolute left-1/2 top-[calc(100%+0.8rem)] flex -translate-x-1/2 flex-col items-center whitespace-nowrap font-mono uppercase;
+    @apply pointer-events-none absolute left-1/2 top-[calc(100%+0.65rem)] flex -translate-x-1/2 flex-col items-center whitespace-nowrap font-mono uppercase;
+    opacity: 0;
+    transform: translateX(-50%) rotate(var(--counter-rotation, 0deg));
+    transition: opacity 240ms ease;
     text-shadow: 0 0 12px rgb(251 146 60 / 0.42);
   }
 
@@ -93,31 +46,15 @@
   .inbound-agi-caption strong { @apply mt-1 text-[26px] tracking-[0.1em] text-orange-50/80; }
 
   .inbound-agi.agi-focused {
-    --agi-opacity: 1 !important;
+    opacity: 1 !important;
   }
 
-  .inbound-agi.agi-focused .inbound-trajectory { opacity: 0.24; }
-  .inbound-agi.agi-focused .inbound-agi-anchor {
-    left: 50vw;
-    top: 46vh;
-    transform: translate(-50%, -50%) scale(1.05);
-    transition:
-      left 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 720ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  .inbound-agi.agi-focused .inbound-agi-caption { opacity: 1; }
 
   @media (max-width: 700px) {
-    .inbound-agi-anchor {
-      width: 13rem;
-      height: 13rem;
-    }
+    .inbound-agi { width: 7.5rem; height: 7.5rem; }
     .inbound-agi-caption span { @apply text-[10px] tracking-[0.14em]; }
     .inbound-agi-caption strong { @apply text-[18px] tracking-[0.06em]; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .trajectory-dust { animation: none; }
   }
 </style>
 

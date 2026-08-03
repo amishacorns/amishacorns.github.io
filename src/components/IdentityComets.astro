@@ -413,6 +413,8 @@
   }
 
   @media (max-width: 700px) {
+    .identity-trails { opacity: 0.52; }
+
     .agi-impact-mark {
       width: 10rem;
       height: 10rem;
@@ -465,25 +467,7 @@
     const crescent = document.getElementById("crescent")
     if (!crescent || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
-    const seedComets = Array.from(crescent.querySelectorAll<HTMLElement>(".identity-comet[data-repeat-identity]"))
-    if (!crescent.querySelector("[data-orbit-copy]")) {
-      for (let copy = 1; copy < 3; copy += 1) {
-        seedComets.forEach((seed, identityIndex) => {
-          const clone = seed.cloneNode(true) as HTMLElement
-          clone.dataset.orbitCopy = `${copy}-${identityIndex}`
-          clone.dataset.identityIndex = String(identityIndex)
-
-          const gradient = clone.querySelector<SVGElement>("#gemini-gradient")
-          const gradientPath = clone.querySelector<SVGPathElement>('path[fill="url(#gemini-gradient)"]')
-          if (gradient && gradientPath) {
-            const gradientId = `gemini-gradient-${copy}`
-            gradient.id = gradientId
-            gradientPath.setAttribute("fill", `url(#${gradientId})`)
-          }
-          crescent.appendChild(clone)
-        })
-      }
-    }
+    crescent.querySelectorAll("[data-orbit-copy]").forEach((copy) => copy.remove())
 
     const comets = Array.from(crescent.querySelectorAll<HTMLElement>(".identity-comet"))
     if (comets.length === 0) return
@@ -507,12 +491,12 @@
     const orbitConfigs: OrbitConfig[] = comets.map((comet, index) => {
       if (comet.classList.contains("agi-impact-comet")) {
         return {
-          period: 120000,
-          radius: 0.52,
+          period: 52000,
+          radius: 0.58,
           inclination: 0.45,
           node: 0.65,
           phase: 1.35,
-          scale: 1.3,
+          scale: 0.78,
           direction: -1,
         }
       }
@@ -545,7 +529,7 @@
       if (comet.classList.contains("china-comet")) return { key: "PRC", name: "China" }
       if (comet.classList.contains("gemini-comet")) return { key: "GEM", name: "Gemini" }
       if (comet.classList.contains("tesla-comet")) return { key: "TSLA", name: "Tesla" }
-      if (comet.classList.contains("agi-impact-comet")) return { key: "AGI", name: "AGI Impact Asteroid" }
+      if (comet.classList.contains("agi-impact-comet")) return { key: "AGI", name: "Artificial General Intelligence" }
       return { key: "MJOLNIR", name: "Master Chief" }
     }
     const telemetryCleanups: Array<() => void> = []
@@ -560,7 +544,7 @@
         const objectId = metadata.key === "MJOLNIR"
           ? "MJOLNIR-117"
           : metadata.key === "AGI"
-            ? "AGI-IMPACT-001"
+            ? "AGI-ORBIT-001"
             : `${metadata.key}-${String(ordinal).padStart(3, "0")}`
         const config = orbitConfigs[index]
         const estimatedVelocity = 7.3 * (config.radius / 0.6) * (28000 / config.period)
@@ -590,8 +574,11 @@
 
     let focusedComet: HTMLElement | null = null
     let focusStartedAt = 0
+    let returningComet: HTMLElement | null = null
+    let returnStartedAt = 0
     const focusComet = (comet: HTMLElement) => {
       focusedComet = comet
+      returningComet = null
       focusStartedAt = performance.now()
       window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
     }
@@ -659,6 +646,12 @@
         { offset: "60%", color: "#991b1b", opacity: 0.22 },
         { offset: "84%", color: "#fdba74", opacity: 0.46 },
         { offset: "100%", color: "#fff7ed", opacity: 0.8 },
+      ]
+      if (comet.classList.contains("agi-impact-comet")) return [
+        { offset: "0%", color: "#292524", opacity: 0 },
+        { offset: "58%", color: "#57534e", opacity: 0.16 },
+        { offset: "84%", color: "#a8a29e", opacity: 0.34 },
+        { offset: "100%", color: "#fed7aa", opacity: 0.62 },
       ]
       return [
         { offset: "0%", color: "#14532d", opacity: 0 },
@@ -728,6 +721,10 @@
         pauseStartedAt = now
       } else {
         totalPausedTime += now - pauseStartedAt
+        if (focusedComet) {
+          returningComet = focusedComet
+          returnStartedAt = now
+        }
         focusedComet = null
       }
       orbitPaused = nextPaused
@@ -826,25 +823,33 @@
           const config = orbitConfigs[index]
           const theta = config.phase + config.direction * (elapsed / config.period) * Math.PI * 2
           const isImpactAsteroid = comet.classList.contains("agi-impact-comet")
-          const approach = isImpactAsteroid ? Math.min(0.12, Math.max(0, elapsed) / 600000 * 0.12) : 0
-          const radius = Math.min(width, height) * config.radius * (1 - approach)
+          const radius = Math.min(width, height) * config.radius
           const head = projectOrbit(theta, config, globePose, radius)
           const tangentAngle = Math.atan2(head.velocityY, head.velocityX) * 180 / Math.PI + 180
           let depthScale = config.scale * (0.8 + ((head.depth + 1) / 2) * 0.26)
+          if (constrainedDevice) depthScale *= 0.82
           let focusDeltaX = 0
           let focusDeltaY = 0
+          let focusWeight = 0
           if (focusedComet === comet) {
+            const linearFocus = Math.min(1, Math.max(0, (now - focusStartedAt) / 720))
+            focusWeight = linearFocus * linearFocus * (3 - 2 * linearFocus)
+          } else if (returningComet === comet) {
+            const linearReturn = Math.min(1, Math.max(0, (now - returnStartedAt) / 720))
+            const returnProgress = linearReturn * linearReturn * (3 - 2 * linearReturn)
+            focusWeight = 1 - returnProgress
+            if (linearReturn >= 1) returningComet = null
+          }
+          if (focusWeight > 0) {
             const visualRect = crescent.getBoundingClientRect()
             const visualScale = Math.max(0.001, visualRect.width / Math.max(1, width))
             const targetX = (window.innerWidth / 2 - (visualRect.left + visualRect.width / 2)) / visualScale
             const targetY = (window.innerHeight * 0.46 - (visualRect.top + visualRect.height / 2)) / visualScale
-            const linearFocus = Math.min(1, Math.max(0, (now - focusStartedAt) / 720))
-            const focusProgress = linearFocus * linearFocus * (3 - 2 * linearFocus)
-            focusDeltaX = (targetX - head.x) * focusProgress
-            focusDeltaY = (targetY - head.y) * focusProgress
+            focusDeltaX = (targetX - head.x) * focusWeight
+            focusDeltaY = (targetY - head.y) * focusWeight
             head.x += focusDeltaX
             head.y += focusDeltaY
-            depthScale *= 1 + focusProgress * 0.12
+            depthScale *= 1 + focusWeight * (isImpactAsteroid ? 1.05 : 0.12)
           }
 
           const points: ProjectedOrbitPoint[] = []

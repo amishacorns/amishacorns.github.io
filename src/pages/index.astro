@@ -111,7 +111,6 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       <MeteorShower />
     </div>
     <SingularityBlackHole />
-    <AGIImpactAsteroid />
     <CosmicCountdowns />
 
     <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-visible">
@@ -126,6 +125,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
           <div id="blur" class="relative z-10 w-full h-20 rounded-full bg-violet-300/20 blur-3xl"></div>
         </div>
         <IdentityComets />
+        <AGIImpactAsteroid />
       </div>
     </div>
 
@@ -309,22 +309,19 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   #orbit-stage { isolation: isolate; }
 
-  :global(#orbit-stage[data-orbital-focus="agi"] :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events)),
+  :global(#orbit-stage[data-orbital-focus="agi"] :is(#planet, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events, .identity-comet:not(.agi-impact-comet), .identity-trails)),
   :global(#orbit-stage[data-orbital-focus="singularity"] :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #inbound-agi, #cosmic-events)) {
     opacity: 0 !important;
     pointer-events: none !important;
     transition: opacity 220ms ease;
   }
 
-  :global(#orbit-stage.orbital-returning :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #inbound-agi, #cosmic-events)) {
-    transition: opacity 720ms ease !important;
+  :global(#orbit-stage[data-orbital-focus="agi"] #crescent) {
+    background: transparent !important;
   }
 
-  :global(#orbit-stage.orbital-returning .inbound-agi-anchor) {
-    transition:
-      left 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 720ms cubic-bezier(0.4, 0, 0.2, 1);
+  :global(#orbit-stage.orbital-returning :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #inbound-agi, #cosmic-events)) {
+    transition: opacity 720ms ease !important;
   }
 
   :global(#orbit-stage.orbital-returning #deep-singularity) {
@@ -495,8 +492,6 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     const progressDisplay = document.getElementById("orbit-progress")
     const prompt = document.getElementById("orbit-prompt")
     const singularity = document.getElementById("deep-singularity")
-    const inboundAgi = document.getElementById("inbound-agi")
-    const inboundAgiPaths = Array.from(document.querySelectorAll<SVGPathElement>("[data-agi-inbound-path]"))
     const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
     const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
     if (!section || !crescent || !copy || !progressDisplay || !prompt) return
@@ -523,20 +518,6 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       const singularityScale = 0.72 + singularityReveal * 0.3
       const singularityJourney = clamp((progress - 0.48) / 0.34)
       const singularityEase = singularityJourney * singularityJourney * (3 - 2 * singularityJourney)
-      const agiJourney = clamp((progress - 0.04) / 0.34)
-      const agiEase = agiJourney * agiJourney * (3 - 2 * agiJourney)
-      const agiReveal = clamp((progress - 0.04) / 0.12)
-      const agiImpactFade = 1 - clamp((progress - 0.38) / 0.07)
-      const agiImpactShrink = 1 - clamp((progress - 0.36) / 0.09) * 0.78
-      const viewportRatio = window.innerWidth / window.innerHeight
-      const earthX = 50 + eased * 7 + singularityEase * 21
-      const earthTopY = 28 + eased * 7 - singularityEase * 9
-      const earthDiameterVh = 165 * viewportRatio * scale
-      const impactX = earthX + 165 * scale * 0.03
-      const impactY = earthTopY + earthDiameterVh * 0.24
-      const agiX = 3 + agiEase * (impactX - 3)
-      const agiY = 6 + agiEase * (impactY - 6)
-      const agiScale = (0.28 + agiEase * 0.42) * agiImpactShrink
 
       crescent.style.setProperty("--orbit-scale", scale.toFixed(4))
       crescent.style.setProperty("--orbit-x", `${(eased * 7 + singularityEase * 21).toFixed(2)}vw`)
@@ -549,14 +530,6 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
         singularity.style.setProperty("--singularity-reveal", singularityReveal.toFixed(3))
         singularity.style.setProperty("--singularity-scale", singularityScale.toFixed(3))
       }
-      if (inboundAgi) {
-        inboundAgi.style.setProperty("--agi-x", `${agiX.toFixed(2)}vw`)
-        inboundAgi.style.setProperty("--agi-y", `${agiY.toFixed(2)}vh`)
-        inboundAgi.style.setProperty("--agi-scale", agiScale.toFixed(3))
-        inboundAgi.style.setProperty("--agi-opacity", (agiReveal * agiImpactFade).toFixed(3))
-      }
-      const agiPath = `M -4 2 C ${(agiX * 0.18).toFixed(2)} ${(agiY * 0.08).toFixed(2)}, ${(agiX * 0.58).toFixed(2)} ${(agiY * 0.42).toFixed(2)}, ${agiX.toFixed(2)} ${agiY.toFixed(2)}`
-      inboundAgiPaths.forEach((path) => path.setAttribute("d", agiPath))
       ;(window as Window & { __singularityReveal?: number }).__singularityReveal = singularityReveal
       copy.style.visibility = copyOpacity < 0.015 ? "hidden" : "visible"
       progressDisplay.style.visibility = hudOpacity < 0.015 ? "hidden" : "visible"
