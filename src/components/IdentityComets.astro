@@ -39,6 +39,35 @@
     will-change: transform, opacity;
   }
 
+  .google-mark,
+  .cornell-mark,
+  .usa-mark,
+  .gemini-mark {
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .google-mark::after,
+  .cornell-mark::after,
+  .usa-mark::after,
+  .gemini-mark::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 rounded-full;
+    z-index: 20;
+    background:
+      radial-gradient(circle at 29% 23%, rgb(255 255 255 / 0.34), transparent 24%),
+      radial-gradient(circle at 28% 44%, rgb(255 255 255 / 0.2) 0 1.1px, transparent 1.9px),
+      radial-gradient(circle at 60% 25%, rgb(255 255 255 / 0.14) 0 0.9px, transparent 1.7px),
+      radial-gradient(circle at 72% 55%, rgb(0 0 0 / 0.2) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 43% 74%, rgb(0 0 0 / 0.18) 0 1px, transparent 1.8px),
+      radial-gradient(circle at 72% 76%, transparent 18%, rgb(0 0 0 / 0.48) 100%);
+    box-shadow:
+      inset 7px 7px 10px rgb(255 255 255 / 0.08),
+      inset -10px -12px 17px rgb(0 0 0 / 0.52);
+    mix-blend-mode: soft-light;
+    opacity: 0.72;
+  }
+
   .google-comet {
     top: 12%;
     left: calc(100% + 20rem);
@@ -49,7 +78,7 @@
   .google-mark {
     @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/60 bg-black/90 font-bold;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 2.4675rem;
+    font-size: 2.961rem;
     background-image: conic-gradient(from -35deg, #4285f4 0 25%, #34a853 25% 50%, #fbbc05 50% 75%, #ea4335 75%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -107,6 +136,7 @@
   }
 
   .cornell-mark img {
+    @apply relative z-10;
     width: 2.55rem;
     height: 3.3rem;
     object-fit: contain;
@@ -161,8 +191,9 @@
   }
 
   .gemini-mark svg {
-    width: 2.9rem;
-    height: 2.9rem;
+    @apply relative z-10;
+    width: 3.19rem;
+    height: 3.19rem;
     filter: drop-shadow(0 0 8px rgb(85 200 243 / 0.7));
   }
 

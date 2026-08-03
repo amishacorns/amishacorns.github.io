@@ -37,7 +37,8 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   <script is:inline src="/js/bg.js"></script>
 
-  <section id="orbit" class="relative h-screen min-h-[680px] w-full overflow-hidden">
+  <section id="orbit" class="orbit-section relative w-full">
+    <div id="orbit-stage" class="sticky top-0 h-screen min-h-[680px] w-full overflow-hidden">
     <div id="galaxy" class="absolute inset-0 pointer-events-none hidden dark:block">
       <RealStarField />
       <MeteorShower />
@@ -61,7 +62,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       </div>
     </div>
 
-    <div class="animate pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
+    <div id="orbit-copy" class="animate pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
       <div class="relative px-5 text-center -translate-y-6">
         <p class="animated hero-kicker">Agent Architect</p>
         <h1 class="animated hero-name">Jordan Dotzel</h1>
@@ -72,7 +73,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       </div>
     </div>
 
-    <div class="orbit-progress" aria-label="Travel progress">
+    <div id="orbit-progress" class="orbit-progress" aria-label="Travel progress">
       <div class="orbit-progress-item">
         <div><span>Countries</span><strong>{countryProgress}%</strong></div>
         <div class="orbit-progress-track"><i style={`width:${countryProgress}%`}></i></div>
@@ -101,8 +102,9 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       </div>
     </div>
 
-    <div class="absolute inset-x-0 bottom-7 z-30 flex justify-center text-xs uppercase tracking-[0.24em] text-white/45">
+    <div id="orbit-prompt" class="absolute inset-x-0 bottom-7 z-30 flex justify-center text-xs uppercase tracking-[0.24em] text-white/45">
       Scroll to enter orbit
+    </div>
     </div>
   </section>
 
@@ -198,6 +200,27 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 </PageLayout>
 
 <style>
+  .orbit-section {
+    height: 220vh;
+    min-height: 1360px;
+  }
+
+  #orbit-stage { isolation: isolate; }
+
+  #crescent {
+    --orbit-scale: 1;
+    --orbit-y: 0vh;
+    transform: translateX(-50%) translateY(var(--orbit-y)) scale(var(--orbit-scale));
+    transform-origin: 50% 0%;
+    will-change: transform, opacity;
+  }
+
+  #orbit-copy,
+  #orbit-progress,
+  #orbit-prompt {
+    will-change: opacity;
+  }
+
   .hero-kicker { @apply text-xs md:text-sm font-semibold uppercase tracking-[0.24em] text-violet-200/70; }
   .hero-name { @apply mt-3 text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-[0.04em] text-white; }
   .hero-primary { @apply rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black hover:bg-violet-100 transition-colors; }
@@ -267,9 +290,74 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
   }
 
   @media (max-width: 640px) {
+    .orbit-section {
+      height: 200vh;
+      min-height: 1360px;
+    }
     .orbit-progress { @apply gap-1.5; }
     .orbit-progress-item { @apply px-2 py-2; }
     .orbit-progress-item span { @apply text-[8px] tracking-[0.1em]; }
     .orbit-progress-item strong { @apply text-[10px]; }
   }
 </style>
+
+<script>
+  const initializeOrbitSequence = () => {
+    const section = document.getElementById("orbit")
+    const crescent = document.getElementById("crescent")
+    const copy = document.getElementById("orbit-copy")
+    const progressDisplay = document.getElementById("orbit-progress")
+    const prompt = document.getElementById("orbit-prompt")
+    const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
+    const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
+    if (!section || !crescent || !copy || !progressDisplay || !prompt) return
+
+    const orbitWindow = window as Window & { __orbitCleanup?: () => void }
+    orbitWindow.__orbitCleanup?.()
+
+    let frame = 0
+    const clamp = (value: number, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value))
+    const fadeBetween = (progress: number, start: number, end: number) => 1 - clamp((progress - start) / (end - start))
+
+    const render = () => {
+      frame = 0
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY
+      const travel = Math.max(1, section.offsetHeight - window.innerHeight)
+      const progress = clamp((window.scrollY - sectionTop) / travel)
+      const eased = progress * progress * (3 - 2 * progress)
+      const scale = Math.pow(0.022, eased)
+      const earthOpacity = fadeBetween(progress, 0.78, 0.97)
+      const copyOpacity = fadeBetween(progress, 0.04, 0.31)
+      const hudOpacity = fadeBetween(progress, 0.12, 0.43)
+      const promptOpacity = fadeBetween(progress, 0, 0.13)
+
+      crescent.style.setProperty("--orbit-scale", scale.toFixed(4))
+      crescent.style.setProperty("--orbit-y", `${(eased * 14).toFixed(2)}vh`)
+      crescent.style.opacity = earthOpacity.toFixed(3)
+      copy.style.opacity = copyOpacity.toFixed(3)
+      progressDisplay.style.opacity = hudOpacity.toFixed(3)
+      prompt.style.opacity = promptOpacity.toFixed(3)
+      copy.style.visibility = copyOpacity < 0.015 ? "hidden" : "visible"
+      progressDisplay.style.visibility = hudOpacity < 0.015 ? "hidden" : "visible"
+      prompt.style.visibility = promptOpacity < 0.015 ? "hidden" : "visible"
+      if (markerCanvas) markerCanvas.style.pointerEvents = progress > 0.12 ? "none" : ""
+      if (pauseButton) pauseButton.style.pointerEvents = hudOpacity < 0.15 ? "none" : ""
+    }
+
+    const scheduleRender = () => {
+      if (!frame) frame = window.requestAnimationFrame(render)
+    }
+
+    window.addEventListener("scroll", scheduleRender, { passive: true })
+    window.addEventListener("resize", scheduleRender, { passive: true })
+    orbitWindow.__orbitCleanup = () => {
+      window.removeEventListener("scroll", scheduleRender)
+      window.removeEventListener("resize", scheduleRender)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+    render()
+  }
+
+  document.addEventListener("astro:after-swap", initializeOrbitSequence)
+  initializeOrbitSequence()
+</script>
