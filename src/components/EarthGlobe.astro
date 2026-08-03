@@ -256,7 +256,7 @@
             for (const cluster of clusters.slice().reverse()) {
               const depthAlpha = 0.38 + cluster.depth * 0.62
               const countBoost = Math.min(2.1, Math.log2(cluster.points.length + 1) * 0.48)
-              const coreRadius = 1.6 + cluster.depth * 1.15 + countBoost
+              const coreRadius = (1.6 + cluster.depth * 1.15 + countBoost) * 2
 
               markerContext.globalAlpha = 0.13 * depthAlpha
               markerContext.fillStyle = "#a78bfa"
@@ -290,7 +290,7 @@
             const x = clientX - rect.left
             const y = clientY - rect.top
             let closest: MarkerCluster | undefined
-            let closestDistance = 15
+            let closestDistance = 22
 
             for (const cluster of clusters) {
               const distance = Math.hypot(cluster.x - x, cluster.y - y)
@@ -330,12 +330,12 @@
           })
 
           markerCanvas.addEventListener("pointermove", (event) => {
-            lastInteraction = performance.now()
             if (!dragging) {
               if (event.pointerType === "mouse") showTooltip(event.clientX, event.clientY)
               return
             }
 
+            lastInteraction = performance.now()
             const deltaX = event.clientX - previousX
             const deltaY = event.clientY - previousY
             dragDistance += Math.abs(deltaX) + Math.abs(deltaY)
