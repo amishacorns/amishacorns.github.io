@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 import ArrowCard from "@components/ArrowCard"
-import TwinklingStars from "@components/TwinklingStars.astro"
+import RealStarField from "@components/RealStarField.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import IdentityComets from "@components/IdentityComets.astro"
 import EarthGlobe from "@components/EarthGlobe.astro"
@@ -31,26 +31,18 @@ const featured = [
     <div id="particles3" class="fixed inset-0"></div>
   </div>
 
-  <div class="absolute inset-0 bg-black hidden dark:block">
-    <div id="stars1" class="fixed inset-0"></div>
-    <div id="stars2" class="fixed inset-0"></div>
-    <div id="stars3" class="fixed inset-0"></div>
-  </div>
-
-  <div id="galaxy" class="fixed inset-0 pointer-events-none">
-    <div class="hidden dark:block">
-      <TwinklingStars />
-      <MeteorShower />
-    </div>
-  </div>
-
-  <div class="fixed inset-0 z-20 pointer-events-none overflow-hidden">
-    <IdentityComets />
-  </div>
-
   <script is:inline src="/js/bg.js"></script>
 
   <section class="relative h-screen min-h-[680px] w-full overflow-hidden">
+    <div id="galaxy" class="absolute inset-0 pointer-events-none hidden dark:block">
+      <RealStarField />
+      <MeteorShower />
+    </div>
+
+    <div class="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+      <IdentityComets />
+    </div>
+
     <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-hidden">
       <div id="crescent" class="absolute top-0 left-1/2 -translate-x-1/2 w-[165vw] min-h-[100vh] aspect-square rounded-full p-px bg-gradient-to-b from-white/70 from-0% to-transparent to-[6%]">
         <div id="planet" class="relative w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
@@ -206,7 +198,7 @@ const featured = [
     width: 50%;
     height: 100%;
     flex: none;
-    background-image: url('/images/earth-night-texture.png');
+    background-image: url('/images/earth-night-nasa-8k.webp');
     background-position: center top;
     background-repeat: no-repeat;
     background-size: 100% auto;

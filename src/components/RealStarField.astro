@@ -1,0 +1,106 @@
+<canvas id="real-star-field" class="real-star-field" aria-hidden="true"></canvas>
+
+<style>
+  .real-star-field {
+    @apply absolute inset-0 h-full w-full;
+    opacity: 0.9;
+  }
+</style>
+
+<script>
+  type Star = [number, number, number, number]
+
+  const canvas = document.getElementById("real-star-field") as HTMLCanvasElement | null
+
+  if (canvas && !canvas.dataset.initialized) {
+    canvas.dataset.initialized = "true"
+    const context = canvas.getContext("2d")
+
+    if (context) {
+      const degrees = Math.PI / 180
+      const centerRa = 292.5 * degrees
+      const centerDec = 30 * degrees
+      const projectionRadius = 2 * Math.tan((120 * degrees) / 4)
+      let stars: Star[] = []
+
+      const colorForIndex = (index: number) => {
+        if (index < -0.05) return [190, 211, 255]
+        if (index < 0.55) return [229, 237, 255]
+        if (index < 1.1) return [255, 244, 218]
+        return [255, 211, 163]
+      }
+
+      const draw = () => {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2)
+        const width = window.innerWidth
+        const height = Math.max(window.innerHeight, 680)
+        canvas.width = Math.round(width * ratio)
+        canvas.height = Math.round(height * ratio)
+        context.setTransform(ratio, 0, 0, ratio, 0, 0)
+        context.clearRect(0, 0, width, height)
+
+        const sinCenter = Math.sin(centerDec)
+        const cosCenter = Math.cos(centerDec)
+        const scale = width / (2 * projectionRadius)
+        const projected: Array<[number, number, number, number, number, number]> = []
+
+        for (const [raDegrees, decDegrees, magnitude, colorIndex] of stars) {
+          const ra = raDegrees * degrees
+          const dec = decDegrees * degrees
+          let deltaRa = ra - centerRa
+          if (deltaRa > Math.PI) deltaRa -= Math.PI * 2
+          if (deltaRa < -Math.PI) deltaRa += Math.PI * 2
+
+          const sinDec = Math.sin(dec)
+          const cosDec = Math.cos(dec)
+          const cosDistance = sinCenter * sinDec + cosCenter * cosDec * Math.cos(deltaRa)
+          if (cosDistance <= -0.2) continue
+
+          const factor = 2 / (1 + cosDistance)
+          const projectionX = factor * cosDec * Math.sin(deltaRa)
+          const projectionY = factor * (cosCenter * sinDec - sinCenter * cosDec * Math.cos(deltaRa))
+          const x = width / 2 + projectionX * scale
+          const y = height / 2 - projectionY * scale
+          if (x < -8 || x > width + 8 || y < -8 || y > height + 8) continue
+
+          const strength = Math.max(0.05, Math.min(1, (6.35 - magnitude) / 7.2))
+          const radius = 0.38 + Math.pow(strength, 1.75) * 1.85
+          const [red, green, blue] = colorForIndex(colorIndex)
+          projected.push([x, y, radius, strength, red, green * 1000 + blue])
+        }
+
+        for (const [x, y, radius, strength, red, packed] of projected) {
+          const green = Math.floor(packed / 1000)
+          const blue = packed % 1000
+          context.beginPath()
+          context.arc(x, y, radius, 0, Math.PI * 2)
+          context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${0.12 + strength * 0.72})`
+          context.fill()
+        }
+
+        context.save()
+        for (const [x, y, radius, strength, red, packed] of projected) {
+          if (strength < 0.6) continue
+          const green = Math.floor(packed / 1000)
+          const blue = packed % 1000
+          context.beginPath()
+          context.arc(x, y, radius * 0.68, 0, Math.PI * 2)
+          context.shadowColor = `rgba(${red}, ${green}, ${blue}, ${strength * 0.75})`
+          context.shadowBlur = 8 + strength * 7
+          context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${0.45 + strength * 0.5})`
+          context.fill()
+        }
+        context.restore()
+      }
+
+      fetch("/data/bright-stars.json")
+        .then((response) => response.json())
+        .then((catalog: Star[]) => {
+          stars = catalog
+          draw()
+        })
+
+      window.addEventListener("resize", draw, { passive: true })
+    }
+  }
+</script>
