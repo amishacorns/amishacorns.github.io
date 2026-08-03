@@ -385,7 +385,7 @@
               if (now - lastDraw >= 42) {
                 const delta = Math.min(64, now - lastFrame)
                 if (!reducedMotion && !dragging && now - lastInteraction > 3600) {
-                  rotation -= (delta / 180000) * Math.PI * 2
+                  rotation -= (delta / 138462) * Math.PI * 2
                 }
                 gl.uniform1f(rotationUniform, rotation)
                 gl.uniform1f(tiltUniform, tilt)
