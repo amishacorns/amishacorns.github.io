@@ -4,11 +4,11 @@
   .earth-globe {
     @apply absolute inset-0 h-full w-full;
     opacity: 0;
-    filter: saturate(0.72) brightness(0.72) contrast(1.16);
+    filter: saturate(0.88) brightness(0.96) contrast(1.08);
     transition: opacity 900ms ease;
   }
 
-  .earth-globe.ready { opacity: 0.78; }
+  .earth-globe.ready { opacity: 0.92; }
 </style>
 
 <script>
@@ -44,10 +44,11 @@
           float longitude = atan(point.x, depth) + uRotation;
           float latitude = asin(clamp(point.y, -1.0, 1.0));
           vec2 mapUv = vec2(fract(0.5 + longitude / (2.0 * PI)), 0.5 - latitude / PI);
-          vec4 color = texture2D(uTexture, mapUv);
+          vec4 color = texture2D(uTexture, vec2(mapUv.x, 1.0 - mapUv.y));
+          color.rgb = pow(color.rgb, vec3(0.76));
 
           float limb = pow(depth, 0.52);
-          color.rgb *= mix(0.16, 1.0, limb);
+          color.rgb *= mix(0.28, 1.0, limb);
           float edgeAlpha = smoothstep(0.0, 0.018, 1.0 - radiusSquared);
           gl_FragColor = vec4(color.rgb, color.a * edgeAlpha);
         }
@@ -94,7 +95,7 @@
           gl.uniform1i(textureUniform, 0)
 
           const image = new Image()
-          image.src = "/images/earth-night-texture.png"
+          image.src = "/images/earth-night-nasa-8k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
             gl.bindTexture(gl.TEXTURE_2D, texture)

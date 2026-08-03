@@ -4,7 +4,7 @@
 </div>
 
 <div class="identity-comet cornell-comet" aria-hidden="true">
-  <span class="cornell-mark">C</span>
+  <span class="cornell-mark"><img src="/images/cornell-block-c.svg" alt="" /></span>
   <span class="comet-tail cornell-tail"></span>
 </div>
 
@@ -85,11 +85,16 @@
   }
 
   .cornell-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/65 font-bold text-white;
-    background: #b31b1b;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 2.55rem;
+    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/65;
+    background: rgb(0 0 0 / 0.88);
     box-shadow: 0 0 30px rgb(179 27 27 / 0.62), inset 0 0 14px rgb(255 255 255 / 0.14);
+  }
+
+  .cornell-mark img {
+    width: 2.55rem;
+    height: 3.3rem;
+    object-fit: contain;
+    filter: drop-shadow(0 0 7px rgb(179 27 27 / 0.8));
   }
 
   .cornell-tail {
