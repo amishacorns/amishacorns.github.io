@@ -26,6 +26,12 @@
     transform-origin: 72% 38%;
     will-change: transform, opacity;
     filter: saturate(0.88);
+    transition:
+      right 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      width 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 720ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 620ms ease;
   }
 
   .singularity-radiance {
@@ -88,6 +94,21 @@
       repeating-radial-gradient(ellipse at center, transparent 0 4%, rgb(255 255 255 / 0.23) 4.6% 5.2%, transparent 6% 10%),
       radial-gradient(ellipse at center, transparent 0 24%, rgb(255 251 235 / 0.95) 29%, rgb(253 186 116 / 0.9) 36%, rgb(234 88 12 / 0.62) 53%, rgb(127 29 29 / 0.12) 70%, transparent 76%);
     filter: blur(0.45px) drop-shadow(0 0 13px rgb(251 146 60 / 0.65));
+    overflow: hidden;
+  }
+
+  .accretion-disk::before {
+    content: "";
+    @apply absolute -inset-[55%] rounded-full;
+    background: repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg 8deg,
+      rgb(255 247 237 / 0.16) 10deg 12deg,
+      rgb(251 146 60 / 0.1) 13deg 15deg,
+      transparent 17deg 24deg
+    );
+    mix-blend-mode: screen;
+    animation: accretion-spin 13s linear infinite;
   }
 
   .accretion-disk-back {
@@ -118,7 +139,12 @@
     to { filter: blur(0.3px) brightness(1.12) drop-shadow(0 0 19px rgb(251 146 60 / 0.74)); }
   }
 
-  .deep-singularity.scene-paused .accretion-disk-back { animation-play-state: paused; }
+  @keyframes accretion-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk-back,
+  .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk::before { animation-play-state: paused; }
 
   .deep-singularity.singularity-focused {
     right: 50%;
@@ -128,12 +154,6 @@
     opacity: 1 !important;
     transform: translate(50%, -50%) scale(1);
     transform-origin: center;
-    transition:
-      right 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      top 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      width 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 720ms cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 260ms ease;
   }
 
   .deep-singularity.singularity-focused .singularity-caption { opacity: 0.85; }
@@ -149,7 +169,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .accretion-disk-back { animation: none; }
+    .accretion-disk-back,
+    .accretion-disk::before { animation: none; }
   }
 </style>
 

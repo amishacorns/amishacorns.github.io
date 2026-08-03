@@ -316,6 +316,10 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     transition: opacity 220ms ease;
   }
 
+  :global(#orbit-stage.orbital-returning :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #inbound-agi, #cosmic-events)) {
+    transition: opacity 720ms ease !important;
+  }
+
   #crescent {
     --orbit-scale: 1;
     --orbit-x: 0vw;
@@ -570,10 +574,13 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     const focusWindow = window as Window & { __orbitalFocusCleanup?: () => void }
     focusWindow.__orbitalFocusCleanup?.()
     let activeTarget = ""
+    let returnTimer = 0
 
     const setFocus = (event: Event) => {
       const target = (event as CustomEvent<{ target?: string }>).detail?.target ?? ""
       if (!target) return
+      window.clearTimeout(returnTimer)
+      stage.classList.remove("orbital-returning")
       if (activeTarget && activeTarget !== target) {
         window.dispatchEvent(new CustomEvent("orbital:clear-focus"))
       }
@@ -584,9 +591,12 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     const clearFocus = () => {
       if (!activeTarget) return
       activeTarget = ""
+      stage.classList.add("orbital-returning")
       delete stage.dataset.orbitalFocus
       window.dispatchEvent(new CustomEvent("orbital:clear-focus"))
       window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: false } }))
+      window.clearTimeout(returnTimer)
+      returnTimer = window.setTimeout(() => stage.classList.remove("orbital-returning"), 760)
     }
 
     const pointerHandler = (event: PointerEvent) => {
@@ -606,6 +616,8 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     document.addEventListener("pointerdown", pointerHandler, true)
 
     focusWindow.__orbitalFocusCleanup = () => {
+      window.clearTimeout(returnTimer)
+      stage.classList.remove("orbital-returning")
       window.removeEventListener("orbital:focus-mode", setFocus)
       window.removeEventListener("wheel", scrollHandler)
       window.removeEventListener("scroll", scrollHandler)
