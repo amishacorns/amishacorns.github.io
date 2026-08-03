@@ -13,11 +13,27 @@
   <span class="comet-tail usa-tail"></span>
 </div>
 
+<div class="identity-comet gemini-comet" aria-hidden="true">
+  <span class="gemini-mark">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="gemini-gradient" x1="10" y1="54" x2="54" y2="10" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#55c8f3" />
+          <stop offset="0.48" stop-color="#7c8df5" />
+          <stop offset="1" stop-color="#c58af9" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#gemini-gradient)" d="M32 4c2.8 15.4 12.6 25.2 28 28-15.4 2.8-25.2 12.6-28 28C29.2 44.6 19.4 34.8 4 32 19.4 29.2 29.2 19.4 32 4Z" />
+    </svg>
+  </span>
+  <span class="comet-tail gemini-tail"></span>
+</div>
+
 <style>
   .identity-comet {
     @apply absolute flex items-center;
     opacity: 0;
-    animation-duration: 36s;
+    animation-duration: 48s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     will-change: transform, opacity;
@@ -132,25 +148,55 @@
     box-shadow: 0 0 10px rgb(255 255 255 / 0.68);
   }
 
+  .gemini-comet {
+    top: 65%;
+    left: calc(100% + 20rem);
+    filter: drop-shadow(0 0 13px rgb(124 141 245 / 0.72));
+    animation-name: gemini-comet-flight;
+  }
+
+  .gemini-mark {
+    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/65 bg-black/90;
+    box-shadow: 0 0 32px rgb(124 141 245 / 0.48), inset 0 0 16px rgb(255 255 255 / 0.12);
+  }
+
+  .gemini-mark svg {
+    width: 2.9rem;
+    height: 2.9rem;
+    filter: drop-shadow(0 0 8px rgb(85 200 243 / 0.7));
+  }
+
+  .gemini-tail {
+    background: linear-gradient(90deg, rgb(85 200 243 / 0.96), rgb(124 141 245 / 0.72) 44%, rgb(197 138 249 / 0.45) 72%, rgb(197 138 249 / 0));
+    box-shadow: 0 0 11px rgb(124 141 245 / 0.72);
+  }
+
   @keyframes google-comet-flight {
     0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-14deg) scale(0.9); }
     1% { opacity: 1; }
-    29% { opacity: 1; transform: translate3d(-150vw, 30vh, 0) rotate(-14deg) scale(1); }
-    31%, 100% { opacity: 0; transform: translate3d(-160vw, 33vh, 0) rotate(-14deg) scale(1); }
+    23% { opacity: 1; transform: translate3d(-150vw, 30vh, 0) rotate(-14deg) scale(1); }
+    25%, 100% { opacity: 0; transform: translate3d(-160vw, 33vh, 0) rotate(-14deg) scale(1); }
   }
 
   @keyframes cornell-comet-flight {
-    0%, 32% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-16deg) scale(0.9); }
-    33% { opacity: 1; transform: translate3d(0, 0, 0) rotate(-16deg) scale(0.9); }
-    62% { opacity: 1; transform: translate3d(150vw, -25vh, 0) rotate(-16deg) scale(1); }
-    64%, 100% { opacity: 0; transform: translate3d(160vw, -28vh, 0) rotate(-16deg) scale(1); }
+    0%, 49% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-16deg) scale(0.9); }
+    50% { opacity: 1; transform: translate3d(0, 0, 0) rotate(-16deg) scale(0.9); }
+    73% { opacity: 1; transform: translate3d(150vw, -25vh, 0) rotate(-16deg) scale(1); }
+    75%, 100% { opacity: 0; transform: translate3d(160vw, -28vh, 0) rotate(-16deg) scale(1); }
   }
 
   @keyframes usa-comet-flight {
-    0%, 65% { opacity: 0; transform: translate3d(0, 0, 0) rotate(16deg) scale(0.9); }
-    66% { opacity: 1; transform: translate3d(0, 0, 0) rotate(16deg) scale(0.9); }
-    95% { opacity: 1; transform: translate3d(-150vw, -45vh, 0) rotate(16deg) scale(1); }
-    97%, 100% { opacity: 0; transform: translate3d(-160vw, -48vh, 0) rotate(16deg) scale(1); }
+    0%, 74% { opacity: 0; transform: translate3d(0, 0, 0) rotate(16deg) scale(0.9); }
+    75% { opacity: 1; transform: translate3d(0, 0, 0) rotate(16deg) scale(0.9); }
+    98% { opacity: 1; transform: translate3d(-150vw, -45vh, 0) rotate(16deg) scale(1); }
+    100% { opacity: 0; transform: translate3d(-160vw, -48vh, 0) rotate(16deg) scale(1); }
+  }
+
+  @keyframes gemini-comet-flight {
+    0%, 24% { opacity: 0; transform: translate3d(0, 0, 0) rotate(20deg) scale(0.9); }
+    25% { opacity: 1; transform: translate3d(0, 0, 0) rotate(20deg) scale(0.9); }
+    48% { opacity: 1; transform: translate3d(-150vw, -48vh, 0) rotate(20deg) scale(1); }
+    50%, 100% { opacity: 0; transform: translate3d(-160vw, -52vh, 0) rotate(20deg) scale(1); }
   }
 
   @keyframes fire-flicker {
