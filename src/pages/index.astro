@@ -4,6 +4,7 @@ import PageLayout from "@layouts/PageLayout.astro"
 import ArrowCard from "@components/ArrowCard"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
+import IdentityComets from "@components/IdentityComets.astro"
 import { SITE, SOCIALS } from "@consts"
 
 const posts = (await getCollection("blog"))
@@ -42,18 +43,27 @@ const featured = [
     </div>
   </div>
 
+  <div class="fixed inset-0 z-20 pointer-events-none overflow-hidden">
+    <IdentityComets />
+  </div>
+
   <script is:inline src="/js/bg.js"></script>
 
   <section class="relative h-screen min-h-[680px] w-full overflow-hidden">
     <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-hidden">
-      <div id="crescent" class="absolute top-0 left-1/2 -translate-x-1/2 w-[250vw] min-h-[100vh] aspect-square rounded-full p-px bg-gradient-to-b from-white/80 from-0% to-transparent to-[5%]">
-        <div id="planet" class="w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
-          <div id="blur" class="w-full h-20 rounded-full bg-violet-300/25 blur-3xl"></div>
+      <div id="crescent" class="absolute top-0 left-1/2 -translate-x-1/2 w-[165vw] min-h-[100vh] aspect-square rounded-full p-px bg-gradient-to-b from-white/70 from-0% to-transparent to-[6%]">
+        <div id="planet" class="relative w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
+          <div class="earth-rotation" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="earth-shadow" aria-hidden="true"></div>
+          <div id="blur" class="relative z-10 w-full h-20 rounded-full bg-violet-300/20 blur-3xl"></div>
         </div>
       </div>
     </div>
 
-    <div class="animate absolute inset-0 flex items-center justify-center">
+    <div class="animate absolute inset-0 z-30 flex items-center justify-center">
       <div class="relative px-5 text-center -translate-y-6">
         <p class="animated hero-kicker">Agent Architect</p>
         <h1 class="animated hero-name">Jordan Dotzel</h1>
@@ -64,7 +74,7 @@ const featured = [
       </div>
     </div>
 
-    <div class="absolute inset-x-0 bottom-7 flex justify-center text-xs uppercase tracking-[0.24em] text-white/45">
+    <div class="absolute inset-x-0 bottom-7 z-30 flex justify-center text-xs uppercase tracking-[0.24em] text-white/45">
       Scroll to enter orbit
     </div>
   </section>
@@ -177,4 +187,39 @@ const featured = [
   .signal-row span:first-child { @apply flex min-w-0 flex-col; }
   .signal-row b { @apply truncate text-sm font-semibold text-white; }
   .signal-row small { @apply truncate text-xs text-white/45; }
+
+  .earth-rotation {
+    @apply absolute inset-0 flex;
+    width: 200%;
+    opacity: 0.72;
+    filter: saturate(0.7) brightness(0.7) contrast(1.18);
+    animation: earth-rotation 180s linear infinite;
+    will-change: transform;
+  }
+
+  .earth-rotation span {
+    width: 50%;
+    height: 100%;
+    flex: none;
+    background-image: url('/images/earth-night-texture.png');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+  }
+
+  .earth-shadow {
+    @apply absolute inset-0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgb(0 0 0 / 0.01) 0%, rgb(0 0 0 / 0.12) 32%, rgb(0 0 0 / 0.72) 70%),
+      linear-gradient(to bottom, rgb(2 6 23 / 0.08), #000 76%);
+  }
+
+  @keyframes earth-rotation {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .earth-rotation { animation: none; }
+  }
 </style>

@@ -8,92 +8,27 @@
 ---
 
 <div id="meteors">
-  <!-- rotations defined in base.css & tailwind.config.mjs -->
   <div class="shower ur" />
-  <div class="shower dr" /> 
+  <div class="shower dr" />
   <div class="shower dl" />
   <div class="shower ul" />
 </div>
 
-<div class="google-comet" aria-hidden="true">
-  <span class="google-mark">G</span>
-  <span class="google-tail"></span>
-</div>
-
-<style>
-  .google-comet {
-    @apply absolute flex items-center;
-    top: 12%;
-    left: calc(100% + 12rem);
-    opacity: 0;
-    filter: drop-shadow(0 0 10px rgb(96 165 250 / 0.55));
-    animation: google-comet-flight 24s linear infinite;
-    will-change: transform, opacity;
-  }
-
-  .google-mark {
-    @apply relative z-10 flex size-8 items-center justify-center rounded-full border border-white/50 bg-black/85 font-bold;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.2rem;
-    background-image: conic-gradient(from -35deg, #4285f4 0 25%, #34a853 25% 50%, #fbbc05 50% 75%, #ea4335 75%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    box-shadow: 0 0 20px rgb(255 255 255 / 0.2), inset 0 0 12px rgb(255 255 255 / 0.08);
-  }
-
-  .google-tail {
-    width: 11rem;
-    height: 2px;
-    background: linear-gradient(90deg, rgb(66 133 244 / 0.95), rgb(52 168 83 / 0.7) 28%, rgb(251 188 5 / 0.48) 52%, rgb(234 67 53 / 0));
-    box-shadow: 0 0 8px rgb(147 197 253 / 0.65);
-  }
-
-  @keyframes google-comet-flight {
-    0%, 7% {
-      opacity: 0;
-      transform: translate3d(0, 0, 0) rotate(-17deg) scale(0.8);
-    }
-    8% {
-      opacity: 1;
-    }
-    29% {
-      opacity: 1;
-      transform: translate3d(-145vw, 34vh, 0) rotate(-17deg) scale(1);
-    }
-    31%, 100% {
-      opacity: 0;
-      transform: translate3d(-155vw, 37vh, 0) rotate(-17deg) scale(1);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .google-comet { display: none; }
-  }
-</style>
-
 <script>
   function createMeteor () {
-  // create a meteor
-  let meteor = document.createElement("div");
-  meteor.setAttribute("class", "meteor");
-  meteor.style.left = Math.round(Math.random() * window.innerWidth) + "px";
-  meteor.style.top  = Math.round(Math.random() * window.innerHeight) + "px";
-  
-  // append the meteor to a random meteor shower (direction)
-  const showers = document.querySelectorAll(".shower");
-  if (showers.length > 0) {
-    const random = Math.floor(Math.random() * showers.length);
-    const shower = showers[random];
-    shower.append(meteor);
+    const meteor = document.createElement("div")
+    meteor.setAttribute("class", "meteor")
+    meteor.style.left = Math.round(Math.random() * window.innerWidth) + "px"
+    meteor.style.top = Math.round(Math.random() * window.innerHeight) + "px"
+
+    const showers = document.querySelectorAll(".shower")
+    if (showers.length > 0) {
+      const shower = showers[Math.floor(Math.random() * showers.length)]
+      shower.append(meteor)
+    }
+
+    setTimeout(() => meteor.remove(), 3500)
   }
 
-  // remove the meteor after the animation duration
-  setTimeout(() => {
-    meteor.remove();
-  }, 3500);
-}
-
-// Create meteors on interval on two (2) seconds
-setInterval(createMeteor, 1500);
+  setInterval(createMeteor, 1500)
 </script>
