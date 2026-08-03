@@ -5,6 +5,7 @@ import ArrowCard from "@components/ArrowCard"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
 import IdentityComets from "@components/IdentityComets.astro"
+import EarthGlobe from "@components/EarthGlobe.astro"
 import { SITE, SOCIALS } from "@consts"
 
 const posts = (await getCollection("blog"))
@@ -57,6 +58,7 @@ const featured = [
             <span></span>
             <span></span>
           </div>
+          <EarthGlobe />
           <div class="earth-shadow" aria-hidden="true"></div>
           <div id="blur" class="relative z-10 w-full h-20 rounded-full bg-violet-300/20 blur-3xl"></div>
         </div>
@@ -193,9 +195,12 @@ const featured = [
     width: 200%;
     opacity: 0.72;
     filter: saturate(0.7) brightness(0.7) contrast(1.18);
-    animation: earth-rotation 180s linear infinite;
+    animation: earth-rotation 180s linear infinite reverse;
     will-change: transform;
+    transition: opacity 900ms ease;
   }
+
+  .globe-ready .earth-rotation { opacity: 0; }
 
   .earth-rotation span {
     width: 50%;
