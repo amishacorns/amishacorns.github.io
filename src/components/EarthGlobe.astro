@@ -475,7 +475,7 @@
           }
 
           const image = new Image()
-          image.src = constrainedDevice ? "/images/earth-night-nasa-2k.webp" : "/images/earth-night-nasa-8k.webp"
+          image.src = constrainedDevice ? "/images/earth-night-nasa-2k.webp" : "/images/earth-night-nasa-4k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
             gl.bindTexture(gl.TEXTURE_2D, texture)
