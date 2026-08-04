@@ -9,14 +9,12 @@
     const destinations = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-globe-lat][data-globe-lng]"))
     if (!panel || !progress || !title || !closeButton || triggers.length === 0) return
 
-    const travelWindow = window as Window & { __travelIndexCleanup?: () => void }
-    travelWindow.__travelIndexCleanup?.()
     let activePanel = ""
     let activeTrigger: HTMLButtonElement | null = null
     let closeTimer = 0
     const detailTimers = new WeakMap<HTMLDetailsElement, number>()
     const continentDetails = Array.from(panel.querySelectorAll<HTMLDetailsElement>(".continent-group"))
-    const continentHandlers = continentDetails.map((details) => {
+    continentDetails.forEach((details) => {
       const summary = details.querySelector("summary")
       const grid = details.querySelector<HTMLElement>(".country-grid")
       const handler = (event: Event) => {
@@ -53,7 +51,6 @@
         }
       }
       summary?.addEventListener("click", handler)
-      return { summary, handler }
     })
 
     const closePanel = (restoreFocus = false) => {
@@ -109,17 +106,16 @@
       window.requestAnimationFrame(() => panel.setAttribute("data-open", "true"))
     }
 
-    const triggerHandlers = triggers.map((trigger) => {
+    triggers.forEach((trigger) => {
       const handler = () => {
         const name = trigger.dataset.orbitPanel ?? ""
         if (activePanel === name && !panel.hidden) closePanel()
         else openPanel(name, trigger)
       }
       trigger.addEventListener("click", handler)
-      return { trigger, handler }
     })
 
-    const destinationHandlers = destinations.map((destination) => {
+    destinations.forEach((destination) => {
       const handler = () => {
         const lat = Number(destination.dataset.globeLat)
         const lng = Number(destination.dataset.globeLng)
@@ -128,7 +124,6 @@
         closePanel()
       }
       destination.addEventListener("click", handler)
-      return { destination, handler }
     })
 
     const closeHandler = () => closePanel(true)
@@ -140,21 +135,7 @@
     window.addEventListener("keydown", keyHandler)
     window.addEventListener("scroll", scrollHandler, { passive: true })
 
-    travelWindow.__travelIndexCleanup = () => {
-      triggerHandlers.forEach(({ trigger, handler }) => trigger.removeEventListener("click", handler))
-      destinationHandlers.forEach(({ destination, handler }) => destination.removeEventListener("click", handler))
-      continentHandlers.forEach(({ summary, handler }) => summary?.removeEventListener("click", handler))
-      continentDetails.forEach((details) => {
-        const timer = detailTimers.get(details)
-        if (timer) window.clearTimeout(timer)
-      })
-      closeButton.removeEventListener("click", closeHandler)
-      window.removeEventListener("keydown", keyHandler)
-      window.removeEventListener("scroll", scrollHandler)
-      window.clearTimeout(closeTimer)
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeTravelIndex)
   initializeTravelIndex()
 </script>

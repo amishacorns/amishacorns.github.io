@@ -1,26 +1,24 @@
-import type { Site, Page, Links, Socials } from "@types"
-
 // Global
-export const SITE: Site = {
+export const SITE = {
   TITLE: "Jordan Dotzel",
   DESCRIPTION: "Agent architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
   AUTHOR: "Jordan Dotzel",
 }
 
 // Blog Page
-export const BLOG: Page = {
+export const BLOG = {
   TITLE: "Transmissions",
   DESCRIPTION: "Writing on machine intelligence, agents, scientific progress, and the transition to AGI.",
 }
 
 // Search Page
-export const SEARCH: Page = {
+export const SEARCH = {
   TITLE: "Search",
   DESCRIPTION: "Search all transmissions by keyword.",
 }
 
 // Links
-export const LINKS: Links = [
+export const LINKS = [
   { 
     TEXT: "Home", 
     HREF: "/", 
@@ -36,7 +34,7 @@ export const LINKS: Links = [
 ]
 
 // Socials
-export const SOCIALS: Socials = [
+export const SOCIALS = [
   { 
     NAME: "Email",
     ICON: "email", 

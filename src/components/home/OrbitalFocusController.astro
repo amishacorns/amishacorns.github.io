@@ -2,8 +2,6 @@
   const initializeOrbitalFocus = () => {
     const stage = document.getElementById("orbit-stage")
     if (!stage) return
-    const focusWindow = window as Window & { __orbitalFocusCleanup?: () => void }
-    focusWindow.__orbitalFocusCleanup?.()
     let activeTarget = ""
     let returnTimer = 0
 
@@ -46,18 +44,7 @@
     window.addEventListener("keydown", keyHandler)
     document.addEventListener("pointerdown", pointerHandler, true)
 
-    focusWindow.__orbitalFocusCleanup = () => {
-      window.clearTimeout(returnTimer)
-      stage.classList.remove("orbital-returning")
-      window.removeEventListener("orbital:focus-mode", setFocus)
-      window.removeEventListener("wheel", scrollHandler)
-      window.removeEventListener("scroll", scrollHandler)
-      window.removeEventListener("touchstart", scrollHandler)
-      window.removeEventListener("keydown", keyHandler)
-      document.removeEventListener("pointerdown", pointerHandler, true)
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeOrbitalFocus)
   initializeOrbitalFocus()
 </script>

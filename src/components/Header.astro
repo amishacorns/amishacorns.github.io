@@ -1,6 +1,5 @@
 ---
 import { SITE, LINKS, SOCIALS } from "@consts"
-import { cn } from "@lib/utils"
 const { pathname } = Astro.url
 const subpath = pathname.match(/[^/]+/g)
 import Container from "@components/Container.astro"
@@ -24,7 +23,7 @@ const rightSocials = SOCIALS.filter((social) => ["Google Scholar", "Twitter"].in
       <nav class="hidden md:flex items-center justify-center text-sm gap-1">
         {
           LINKS.map((LINK) => (
-            <a href={LINK.HREF} class={cn("h-8 rounded-full px-3 text-current", "flex items-center justify-center", "transition-colors duration-300 ease-in-out", pathname === LINK.HREF || "/" + subpath?.[0] === LINK.HREF ? "bg-white text-black" : "hover:bg-white/20 hover:text-white")}>
+            <a href={LINK.HREF} class:list={["flex h-8 items-center justify-center rounded-full px-3 text-current transition-colors duration-300 ease-in-out", pathname === LINK.HREF || "/" + subpath?.[0] === LINK.HREF ? "bg-white text-black" : "hover:bg-white/20 hover:text-white"]}>
               {LINK.TEXT}
             </a>
           ))
@@ -39,13 +38,13 @@ const rightSocials = SOCIALS.filter((social) => ["Google Scholar", "Twitter"].in
         </a>
       ))}
 
-      <a href="/search" title="Search" aria-label={`Search blog posts and projects on ${SITE.TITLE}`} class={cn("hidden md:flex", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-white/20", "stroke-current hover:stroke-white", "border border-white/25", "transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "/search" ? "pointer-events-none bg-white text-black" : "")}>
+      <a href="/search" title="Search" aria-label={`Search transmissions on ${SITE.TITLE}`} class:list={["hidden size-9 items-center justify-center rounded-full border border-white/25 bg-transparent p-2 stroke-current transition-colors duration-300 ease-in-out hover:bg-white/20 hover:stroke-white md:flex", (pathname === "/search" || "/" + subpath?.[0] === "/search") && "pointer-events-none bg-white text-black"]}>
         <svg class="size-full">
           <use href="/ui.svg#search"></use>
         </svg>
       </a>
 
-      <button id="header-drawer-button" aria-label={`Toggle drawer open and closed`} class={cn("flex md:hidden", "size-9 rounded-full p-2 items-center justify-center", "bg-transparent hover:bg-white/20", "stroke-current hover:stroke-white", "border border-white/25", "transition-colors duration-300 ease-in-out")}>
+      <button id="header-drawer-button" aria-label="Toggle navigation" class="flex size-9 items-center justify-center rounded-full border border-white/25 bg-transparent p-2 stroke-current transition-colors duration-300 ease-in-out hover:bg-white/20 hover:stroke-white md:hidden">
         <svg id="drawer-open" class="size-full">
           <use href="/ui.svg#menu"></use>
         </svg>
@@ -81,18 +80,10 @@ const rightSocials = SOCIALS.filter((social) => ["Google Scholar", "Twitter"].in
 </style>
 
 <script is:inline>
-  function toggleDrawer() {
+  document.getElementById("header-drawer-button")?.addEventListener("click", () => {
     const drawer = document.getElementById("drawer")
     const drawerButton = document.getElementById("header-drawer-button")
     drawer?.classList.toggle("open")
     drawerButton?.classList.toggle("open")
-  }
-
-  function initializeDrawerButton() {
-    const drawerButton = document.getElementById("header-drawer-button")
-    drawerButton?.addEventListener("click", toggleDrawer)
-  }
-
-  document.addEventListener("astro:after-swap", initializeDrawerButton)
-  initializeDrawerButton()
+  })
 </script>

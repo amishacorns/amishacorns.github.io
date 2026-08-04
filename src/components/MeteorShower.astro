@@ -18,9 +18,6 @@
   const initializeMeteorShower = () => {
     const root = document.getElementById("meteors")
     if (!root) return
-    const meteorWindow = window as Window & { __meteorShowerCleanup?: () => void }
-    meteorWindow.__meteorShowerCleanup?.()
-
     type MeteorLife = { remaining: number; started: number; timer: number }
     const active = new Map<HTMLElement, MeteorLife>()
     let paused = false
@@ -105,15 +102,7 @@
     document.addEventListener("visibilitychange", pageVisibilityHandler)
     window.addEventListener("globe:pause-state", pauseHandler)
     startMeteorLoop()
-    meteorWindow.__meteorShowerCleanup = () => {
-      stopMeteorLoop()
-      visibilityObserver.disconnect()
-      document.removeEventListener("visibilitychange", pageVisibilityHandler)
-      window.removeEventListener("globe:pause-state", pauseHandler)
-      clearMeteors()
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeMeteorShower)
   initializeMeteorShower()
 </script>

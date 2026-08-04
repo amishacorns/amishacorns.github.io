@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from "astro:content"
+import { formatDate, truncateText } from "@lib/utils"
+
+interface Props {
+  entry: CollectionEntry<"blog">
+  pill?: boolean
+}
+
+const { entry, pill = false } = Astro.props
+---
+
+<a href={entry.data.permalink} class="group flex items-center gap-3 rounded-lg border border-white/20 p-4 transition-colors duration-300 ease-in-out hover:bg-white/10">
+  <div class="w-full blend group-hover:text-white">
+    <div class="flex flex-wrap items-center gap-2">
+      {pill && <div class="rounded-full border border-white/25 px-2 py-0.5 text-sm capitalize">post</div>}
+      <div class="text-sm uppercase">{formatDate(entry.data.date)}</div>
+    </div>
+    <div class="mt-3 line-clamp-2 font-semibold text-white">{entry.data.title}</div>
+    <div class="line-clamp-2 text-sm">{entry.data.description}</div>
+    <ul class="mt-2 flex flex-wrap gap-1">
+      {entry.data.tags.map((tag) => (
+        <li class="rounded bg-white/20 px-2 py-0.5 text-xs uppercase text-white/75">{truncateText(tag, 20)}</li>
+      ))}
+    </ul>
+  </div>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="stroke-current group-hover:stroke-white">
+    <line x1="5" y1="12" x2="19" y2="12" class="translate-x-4 scale-x-0 transition-all duration-300 ease-in-out group-hover:translate-x-1 group-hover:scale-x-100"></line>
+    <polyline points="12 5 19 12 12 19" class="translate-x-0 transition-all duration-300 ease-in-out group-hover:translate-x-1"></polyline>
+  </svg>
+</a>

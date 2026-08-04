@@ -121,27 +121,13 @@
     to { stroke-dashoffset: -21.4; }
   }
 
-  .google-mark,
-  .cornell-mark,
-  .usa-mark,
-  .china-mark,
-  .gemini-mark,
-  .tesla-mark,
-  .cornell-tech-mark,
-  .master-chief-mark {
+  .identity-comet > span {
     overflow: hidden;
     isolation: isolate;
     transform: rotate(var(--counter-rotation, 0deg));
   }
 
-  .google-mark::after,
-  .cornell-mark::after,
-  .usa-mark::after,
-  .china-mark::after,
-  .gemini-mark::after,
-  .tesla-mark::after,
-  .cornell-tech-mark::after,
-  .master-chief-mark::after {
+  .identity-comet > span::after {
     content: "";
     @apply pointer-events-none absolute inset-0 rounded-full;
     z-index: 20;
@@ -159,12 +145,28 @@
     opacity: 0.72;
   }
 
+  .google-mark,
+  .tesla-mark,
+  .cornell-mark,
+  .gemini-mark,
+  .cornell-tech-mark,
+  .master-chief-mark {
+    @apply relative z-10 flex size-16 items-center justify-center rounded-full;
+  }
+
+  .cornell-mark img,
+  .cornell-tech-mark img,
+  .master-chief-mark img {
+    @apply relative z-10;
+    object-fit: contain;
+  }
+
   .google-comet {
     filter: drop-shadow(0 0 12px rgb(96 165 250 / 0.65));
   }
 
   .google-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/60 bg-black/90 font-bold;
+    @apply border border-white/60 bg-black/90 font-bold;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3.75rem;
     background-image: conic-gradient(from -35deg, #4285f4 0 25%, #34a853 25% 50%, #fbbc05 50% 75%, #ea4335 75%);
@@ -179,7 +181,7 @@
   }
 
   .tesla-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-red-100/55 bg-black/90;
+    @apply border border-red-100/55 bg-black/90;
     box-shadow: 0 0 32px rgb(232 33 39 / 0.5), inset 0 0 16px rgb(255 255 255 / 0.1);
   }
 
@@ -196,16 +198,14 @@
   }
 
   .cornell-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/65;
+    @apply border border-white/65;
     background: rgb(0 0 0 / 0.88);
     box-shadow: 0 0 30px rgb(179 27 27 / 0.62), inset 0 0 14px rgb(255 255 255 / 0.14);
   }
 
   .cornell-mark img {
-    @apply relative z-10;
     width: 2.55rem;
     height: 3.3rem;
-    object-fit: contain;
     transform: scale(0.95);
     filter: drop-shadow(0 0 7px rgb(179 27 27 / 0.8));
   }
@@ -259,7 +259,7 @@
   }
 
   .gemini-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/65 bg-black/90;
+    @apply border border-white/65 bg-black/90;
     box-shadow: 0 0 32px rgb(124 141 245 / 0.48), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
@@ -275,15 +275,13 @@
   }
 
   .cornell-tech-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-white/65 bg-black/90;
+    @apply border border-white/65 bg-black/90;
     box-shadow: 0 0 32px rgb(179 27 52 / 0.5), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
   .cornell-tech-mark img {
-    @apply relative z-10;
     width: 3.22rem;
     height: 3.22rem;
-    object-fit: contain;
     filter: drop-shadow(0 0 7px rgb(179 27 52 / 0.72));
   }
 
@@ -292,15 +290,13 @@
   }
 
   .master-chief-mark {
-    @apply relative z-10 flex size-16 items-center justify-center rounded-full border border-amber-200/70 bg-black/90;
+    @apply border border-amber-200/70 bg-black/90;
     box-shadow: 0 0 34px rgb(250 204 21 / 0.46), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
   .master-chief-mark img {
-    @apply relative z-10;
     width: 3.82rem;
     height: 3.82rem;
-    object-fit: contain;
     filter: drop-shadow(0 0 7px rgb(250 204 21 / 0.65));
   }
 
@@ -367,9 +363,6 @@
     const comets = Array.from(crescent.querySelectorAll<HTMLElement>(".identity-comet"))
     if (comets.length === 0) return
 
-    const orbitWindow = window as Window & { __identityOrbitCleanup?: () => void }
-    orbitWindow.__identityOrbitCleanup?.()
-
     const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8
     const constrainedDevice = window.matchMedia("(max-width: 700px)").matches || deviceMemory <= 4
     const frameInterval = constrainedDevice ? 50 : 33
@@ -427,7 +420,6 @@
       key: comet.dataset.objectKey ?? "UNKNOWN",
       name: comet.dataset.objectName ?? "Unknown",
     })
-    const telemetryCleanups: Array<() => void> = []
     if (telemetry && telemetryName && telemetryId && telemetryVelocity) {
       document.body.appendChild(telemetry)
       comets.forEach((comet, index) => {
@@ -459,11 +451,6 @@
         mark.addEventListener("pointerenter", showTelemetry)
         mark.addEventListener("pointermove", moveTelemetry)
         mark.addEventListener("pointerleave", hideTelemetry)
-        telemetryCleanups.push(() => {
-          mark.removeEventListener("pointerenter", showTelemetry)
-          mark.removeEventListener("pointermove", moveTelemetry)
-          mark.removeEventListener("pointerleave", hideTelemetry)
-        })
       })
     }
 
@@ -772,18 +759,7 @@
       }
     }
     resumeOrbit()
-    orbitWindow.__identityOrbitCleanup = () => {
-      visibilityObserver.disconnect()
-      window.removeEventListener("globe:pause-state", pauseStateHandler)
-      window.removeEventListener("orbit:scroll-state", orbitScrollHandler)
-      window.removeEventListener("orbital:focus-agi", focusAgiHandler)
-      document.removeEventListener("click", orbitalClickHandler)
-      window.cancelAnimationFrame(animationFrame)
-      telemetryCleanups.forEach((cleanup) => cleanup())
-      telemetry?.remove()
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeIdentityOrbits)
   initializeIdentityOrbits()
 </script>

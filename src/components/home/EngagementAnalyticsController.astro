@@ -5,11 +5,7 @@
     const orbitProgress = document.getElementById("orbit-progress")
     if (!mainContent) return
 
-    const analyticsWindow = window as unknown as Window & {
-      __engagementAnalyticsCleanup?: () => void
-      plausible?: (eventName: string) => void
-    }
-    analyticsWindow.__engagementAnalyticsCleanup?.()
+    const analyticsWindow = window as unknown as { plausible?: (eventName: string) => void }
 
     let enteredMainContent = false
     let interactedWithGlobe = false
@@ -33,14 +29,7 @@
     markerCanvas?.addEventListener("keydown", trackGlobeInteraction)
     orbitProgress?.addEventListener("click", trackGlobeInteraction)
 
-    analyticsWindow.__engagementAnalyticsCleanup = () => {
-      mainContentObserver.disconnect()
-      markerCanvas?.removeEventListener("pointerdown", trackGlobeInteraction)
-      markerCanvas?.removeEventListener("keydown", trackGlobeInteraction)
-      orbitProgress?.removeEventListener("click", trackGlobeInteraction)
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeEngagementAnalytics)
   initializeEngagementAnalytics()
 </script>

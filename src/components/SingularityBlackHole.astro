@@ -192,8 +192,6 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
   const initializeDeepSingularity = () => {
     const singularity = document.getElementById("deep-singularity")
     if (!singularity) return
-    const singularityWindow = window as Window & { __deepSingularityCleanup?: () => void }
-    singularityWindow.__deepSingularityCleanup?.()
     const pauseHandler = (event: Event) => {
       const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
       singularity.classList.toggle("scene-paused", paused)
@@ -212,13 +210,7 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     window.addEventListener("globe:pause-state", pauseHandler)
     window.addEventListener("orbital:focus-singularity", focus)
     window.addEventListener("orbital:clear-focus", clearFocus)
-    singularityWindow.__deepSingularityCleanup = () => {
-      window.removeEventListener("globe:pause-state", pauseHandler)
-      window.removeEventListener("orbital:focus-singularity", focus)
-      window.removeEventListener("orbital:clear-focus", clearFocus)
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeDeepSingularity)
   initializeDeepSingularity()
 </script>

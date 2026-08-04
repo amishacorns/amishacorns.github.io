@@ -1,6 +1,5 @@
 ---
 import { SITE, LINKS, SOCIALS } from "@consts"
-import { cn } from "@lib/utils"
 const { pathname } = Astro.url
 const subpath = pathname.match(/[^/]+/g)
 ---
@@ -9,7 +8,7 @@ const subpath = pathname.match(/[^/]+/g)
   <nav class="flex flex-col items-center space-y-2">
     {
       LINKS.map((LINK) => (
-        <a href={LINK.HREF} class={cn("flex items-center justify-center px-3 py-1 rounded-full", "text-current hover:text-white", "hover:bg-white/20", "transition-colors duration-300 ease-in-out", pathname === LINK.HREF || "/" + subpath?.[0] === LINK.HREF ? "pointer-events-none bg-white text-black" : "")}>
+        <a href={LINK.HREF} class:list={["flex items-center justify-center rounded-full px-3 py-1 text-current transition-colors duration-300 ease-in-out hover:bg-white/20 hover:text-white", (pathname === LINK.HREF || "/" + subpath?.[0] === LINK.HREF) && "pointer-events-none bg-white text-black"]}>
           {LINK.TEXT}
         </a>
       ))
@@ -23,7 +22,7 @@ const subpath = pathname.match(/[^/]+/g)
       </a>
     ))}
 
-    <a href="/search" aria-label={`Search blog posts and projects on ${SITE.TITLE}`} class={cn("size-9 rounded-full p-2 items-center justify-center bg-transparent hover:bg-white/20 stroke-current hover:stroke-white border border-white/25 transition-colors duration-300 ease-in-out", pathname === "/search" || "/" + subpath?.[0] === "search" ? "pointer-events-none bg-white text-black" : "")}>
+    <a href="/search" aria-label={`Search transmissions on ${SITE.TITLE}`} class:list={["flex size-9 items-center justify-center rounded-full border border-white/25 bg-transparent p-2 stroke-current transition-colors duration-300 ease-in-out hover:bg-white/20 hover:stroke-white", (pathname === "/search" || "/" + subpath?.[0] === "search") && "pointer-events-none bg-white text-black"]}>
       <svg class="size-full">
         <use href="/ui.svg#search"></use>
       </svg>

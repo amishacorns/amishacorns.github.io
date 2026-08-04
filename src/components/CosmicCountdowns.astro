@@ -60,8 +60,6 @@
     const countdowns = Array.from(document.querySelectorAll<HTMLElement>("[data-countdown]"))
     if (!cosmicEvents || countdowns.length === 0) return
 
-    const countdownWindow = window as Window & { __cosmicCountdownCleanup?: () => void }
-    countdownWindow.__cosmicCountdownCleanup?.()
     const deadlines: Record<string, number> = {
       agi: Date.parse("2027-07-13T00:00:00-07:00"),
       singularity: Date.parse("2050-01-01T00:00:00Z"),
@@ -115,16 +113,7 @@
     const focusSingularity = () => window.dispatchEvent(new CustomEvent("orbital:focus-singularity"))
     focusAgiButton?.addEventListener("click", focusAgi)
     focusSingularityButton?.addEventListener("click", focusSingularity)
-    countdownWindow.__cosmicCountdownCleanup = () => {
-      stopCountdown()
-      visibilityObserver.disconnect()
-      document.removeEventListener("visibilitychange", pageVisibilityHandler)
-      window.removeEventListener("globe:pause-state", pauseHandler)
-      focusAgiButton?.removeEventListener("click", focusAgi)
-      focusSingularityButton?.removeEventListener("click", focusSingularity)
-    }
   }
 
-  document.addEventListener("astro:after-swap", initializeCosmicCountdowns)
   initializeCosmicCountdowns()
 </script>

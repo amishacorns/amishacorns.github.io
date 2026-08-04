@@ -9,4 +9,3 @@ function animate() {
 }
 
 document.addEventListener("DOMContentLoaded", animate)
-document.addEventListener("astro:after-swap", animate)

@@ -70,19 +70,8 @@ import Container from "@components/Container.astro"
 </footer>
 
 <script is:inline>
-  function goBackToTop(event) {
+  document.getElementById("back-to-top")?.addEventListener("click", (event) => {
     event.preventDefault()
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    })
-  }
-
-  function initializeBackToTop() {
-    const backToTop = document.getElementById("back-to-top")
-    backToTop?.addEventListener("click", goBackToTop)
-  }
-
-  document.addEventListener("astro:after-swap", initializeBackToTop)
-  initializeBackToTop()
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  })
 </script>

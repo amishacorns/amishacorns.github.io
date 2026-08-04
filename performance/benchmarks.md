@@ -293,3 +293,33 @@ Cross-device verification used the same five-run, 4x CPU-throttled benchmark:
 | 768 x 1024 @2 | 16.7 ms | 16.8 ms | 3 | 1 | 0.28 px |
 
 The smallest phone now matches the Pixel-sized median. Tablet performance is still close to 60 FPS under the artificial slowdown, so extending the lower-resolution phone rendering profile to tablets is not justified yet.
+
+### 16. Remove the client framework and per-frame asteroid layout work
+
+Replaced the Solid/Fuse search implementation with a small native Astro component and plain browser search. Solid, its Astro integration, Fuse, and two unused class-name helpers were removed, eliminating 103 installed packages. The production client graph fell from 24 modules and four JavaScript chunks to 14 modules and one chunk. The homepage client bundle fell from 47.76 KB to 43.13 KB raw (9.7%), while search no longer downloads the roughly 40 KB of raw framework and search-library chunks it previously required.
+
+The AGI asteroid had also been reading its layout and resetting its WebGL viewport on every animation frame. Its displayed buffer varied only between roughly 263 and 284 pixels, so it now uses one fixed 288-pixel drawing buffer. This removes a forced layout from the hot animation loop without lowering the visible resolution.
+
+Two small identity marks were resized to their actual high-DPI display needs, reducing their combined size from 69.9 KB to 8.1 KB. The two local fonts were converted from WOFF to WOFF2, saving another 8.6 KB. Total Lighthouse transfer fell from 552.6 KB in the retained reference run to 481.1 KB, a 12.9% reduction.
+
+Measured on 2026-08-04 against the local production preview. Lighthouse values are the median of three independent mobile runs; scroll values are the median of seven runs at 4x CPU throttling.
+
+| Cold-load metric | Reference | After | Change |
+| --- | ---: | ---: | ---: |
+| Lighthouse performance | 86 | 92 | +6 points |
+| First contentful paint | 1.1 s | 1.1 s | unchanged |
+| Largest contentful paint | 3.3 s | 2.9 s | -12% |
+| Total blocking time | 310 ms | 181 ms | -42% |
+| Transferred bytes | 552.6 KB | 481.1 KB | -12.9% |
+
+| Constrained scroll metric | Median |
+| --- | ---: |
+| Frame time | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms |
+| 99th-percentile frame time | 33.4 ms |
+| Missed frames | 1 |
+| Severe frames | 0 |
+| Long animation frames | 0 |
+| Earth-to-singularity center error | 0.39 px |
+
+Three plausible optimizations were rejected after measurement: delaying the visual initializers increased total blocking time, pre-rendering all SVG trails increased layout cost, and `content-visibility` on the lower homepage produced no consistent improvement. All three were reverted. The retained changes reduce startup and maintenance cost while preserving the established steady-scroll result.

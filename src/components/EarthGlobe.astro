@@ -458,8 +458,6 @@
           const pauseClickHandler = () => setManualPaused(!manuallyPaused)
           pauseButton?.addEventListener("click", pauseClickHandler)
 
-          const controlsWindow = window as Window & { __earthGlobeControlsCleanup?: () => void }
-          controlsWindow.__earthGlobeControlsCleanup?.()
           const pauseGlobeHandler = (event: Event) => {
             const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused
             setManualPaused(paused ?? true)
@@ -488,27 +486,6 @@
           }
           window.addEventListener("orbit:scroll-state", orbitScrollHandler)
           const image = new Image()
-          controlsWindow.__earthGlobeControlsCleanup = () => {
-            image.onload = null
-            visibilityObserver.disconnect()
-            window.cancelAnimationFrame(globeAnimationFrame)
-            window.removeEventListener("resize", resizeCanvas)
-            window.removeEventListener("globe:set-paused", pauseGlobeHandler)
-            window.removeEventListener("globe:focus-location", focusGlobeHandler)
-            window.removeEventListener("orbit:scroll-state", orbitScrollHandler)
-            markerCanvas.removeEventListener("pointerdown", pointerDownHandler)
-            markerCanvas.removeEventListener("pointermove", pointerMoveHandler)
-            markerCanvas.removeEventListener("pointerup", finishDrag)
-            markerCanvas.removeEventListener("pointercancel", finishDrag)
-            markerCanvas.removeEventListener("keydown", keyDownHandler)
-            pauseButton?.removeEventListener("click", pauseClickHandler)
-            gl.deleteTexture(texture)
-            gl.deleteBuffer(buffer)
-            gl.deleteProgram(program)
-            if (vertexShader) gl.deleteShader(vertexShader)
-            if (fragmentShader) gl.deleteShader(fragmentShader)
-            canvas.removeAttribute("data-initialized")
-          }
           image.src = constrainedDevice ? "/images/earth-night-nasa-2k.webp" : "/images/earth-night-nasa-4k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
