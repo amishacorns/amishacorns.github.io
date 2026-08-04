@@ -197,6 +197,7 @@
           let lastDraw = -Infinity
           let lastInteraction = -Infinity
           let manuallyPaused = false
+          let orbitScrolling = false
           let dragging = false
           let globeVisible = true
           let dragDistance = 0
@@ -221,7 +222,9 @@
 
           const resizeCanvas = () => {
             const ratio = Math.min(window.devicePixelRatio || 1, constrainedDevice ? 1.25 : 2)
-            cssSize = canvas.getBoundingClientRect().width
+            // Use the layout width, not the transformed visual width. Mobile browsers
+            // can fire resize events while the orbit sequence has scaled Earth down.
+            cssSize = canvas.clientWidth
             const target = Math.min(constrainedDevice ? 2048 : 4096, Math.max(constrainedDevice ? 1024 : 2048, Math.ceil((cssSize * ratio) / 256) * 256))
             const markerRatio = Math.min(window.devicePixelRatio || 1, constrainedDevice ? 1 : 1.25)
             const markerTarget = Math.min(constrainedDevice ? 1536 : 2048, Math.max(constrainedDevice ? 768 : 1024, Math.ceil((cssSize * markerRatio) / 256) * 256))
@@ -469,9 +472,14 @@
           }
           window.addEventListener("globe:set-paused", pauseGlobeHandler)
           window.addEventListener("globe:focus-location", focusGlobeHandler)
+          const orbitScrollHandler = (event: Event) => {
+            orbitScrolling = (event as CustomEvent<{ scrolling?: boolean }>).detail?.scrolling ?? false
+          }
+          window.addEventListener("orbit:scroll-state", orbitScrollHandler)
           controlsWindow.__earthGlobeControlsCleanup = () => {
             window.removeEventListener("globe:set-paused", pauseGlobeHandler)
             window.removeEventListener("globe:focus-location", focusGlobeHandler)
+            window.removeEventListener("orbit:scroll-state", orbitScrollHandler)
           }
 
           const image = new Image()
@@ -487,7 +495,7 @@
             canvas.closest("#planet")?.classList.add("globe-ready")
 
             const draw = (now: number) => {
-              if (globeVisible && now - lastDraw >= frameInterval) {
+              if (globeVisible && !orbitScrolling && now - lastDraw >= frameInterval) {
                 const delta = Math.min(64, now - lastFrame)
                 if (targetRotation !== null && targetTilt !== null) {
                   const smoothing = 1 - Math.exp(-delta / 170)

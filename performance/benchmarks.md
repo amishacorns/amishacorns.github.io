@@ -186,3 +186,21 @@ The article now meets the score, blocking-time, and transfer budgets. This exper
 ### 10. Prioritize article hero images
 
 Marked article hero artwork as eager, high-priority content while keeping decoding asynchronous. The Yann article's three-run mobile median held at 2.86 s LCP, with one run improving to 2.71 s and the median score rising from 95 to 96. The change adds no bytes or blocking work and correctly identifies the hero as the page's primary visual, so it is retained.
+
+### 11. Stabilize the mobile orbit transition
+
+Added a repeatable scroll benchmark at a 412 x 830 viewport, 2.625 device-pixel ratio, and 4x CPU throttling. The transition now caches layout measurements, smooths progress, uses a single composite transform, pauses offscreen animation work, and removes the orbital-object layer from the Earth-to-singularity sequence. The Earth path is calculated from the black hole's actual center and reaches it within 0.39 px.
+
+The marker canvas also now sizes itself from the globe's stable layout width rather than its temporarily transformed width. This fixes a mobile-only failure where browser-toolbar resizing during the shrunken-Earth state could make the visited-location circles enormous after scrolling back.
+
+Measured on 2026-08-04 against the local production preview. Results are the median of three runs.
+
+| Metric | Before | After | Change |
+| --- | ---: | ---: | ---: |
+| Median frame time | 33.3 ms | 16.7 ms | -50% |
+| Approximate frame rate | 30 FPS | 60 FPS | +100% |
+| Missed frames | 34 | 1 | -97% |
+| Severe frames | 2 | 0 | -100% |
+| Earth-to-singularity center error | 0.39 px | 0.39 px | unchanged |
+
+The asteroid mesh was also reduced by roughly two thirds on compact screens while retaining its uneven silhouette and texture. An obsolete straight-tail implementation was removed after confirming that the curved SVG trails had fully replaced it, shrinking `IdentityComets.astro` from 942 to 777 lines (17.5%). This experiment is retained.

@@ -1,22 +1,19 @@
 <svg id="identity-trails-back" class="identity-trails identity-trails-back" aria-hidden="true"></svg>
 <svg id="identity-trails-front" class="identity-trails identity-trails-front" aria-hidden="true"></svg>
 
-<div class="identity-comet google-comet" data-repeat-identity aria-hidden="true">
+<div class="identity-comet google-comet" data-object-key="GOOG" data-object-name="Google" aria-hidden="true">
   <span class="google-mark">G</span>
-  <span class="comet-tail google-tail"></span>
 </div>
 
-<div class="identity-comet cornell-comet" data-repeat-identity aria-hidden="true">
+<div class="identity-comet cornell-comet" data-object-key="CU" data-object-name="Cornell" aria-hidden="true">
   <span class="cornell-mark"><img src="/images/cornell-block-c.svg" alt="" /></span>
-  <span class="comet-tail cornell-tail"></span>
 </div>
 
-<div class="identity-comet usa-comet" data-repeat-identity aria-hidden="true">
+<div class="identity-comet usa-comet" data-object-key="USA" data-object-name="United States" aria-hidden="true">
   <span class="usa-mark"></span>
-  <span class="comet-tail usa-tail"></span>
 </div>
 
-<div class="identity-comet china-comet" data-repeat-identity aria-hidden="true">
+<div class="identity-comet china-comet" data-object-key="PRC" data-object-name="China" aria-hidden="true">
   <span class="china-mark">
     <span class="china-star china-star-large">★</span>
     <span class="china-star china-star-one">★</span>
@@ -24,10 +21,9 @@
     <span class="china-star china-star-three">★</span>
     <span class="china-star china-star-four">★</span>
   </span>
-  <span class="comet-tail china-tail"></span>
 </div>
 
-<div class="identity-comet gemini-comet" data-repeat-identity aria-hidden="true">
+<div class="identity-comet gemini-comet" data-object-key="GEM" data-object-name="Gemini" aria-hidden="true">
   <span class="gemini-mark">
     <svg viewBox="0 0 64 64" aria-hidden="true">
       <defs>
@@ -40,31 +36,27 @@
       <path fill="url(#gemini-gradient)" d="M32 4c2.8 15.4 12.6 25.2 28 28-15.4 2.8-25.2 12.6-28 28C29.2 44.6 19.4 34.8 4 32 19.4 29.2 29.2 19.4 32 4Z" />
     </svg>
   </span>
-  <span class="comet-tail gemini-tail"></span>
 </div>
 
-<div class="identity-comet tesla-comet" data-repeat-identity aria-hidden="true">
+<div class="identity-comet tesla-comet" data-object-key="TSLA" data-object-name="Tesla" aria-hidden="true">
   <span class="tesla-mark">
     <svg viewBox="0 0 100 100" aria-hidden="true">
       <path d="M8 25.5C31 15.8 69 15.8 92 25.5l-3.6 8.2C67.5 26.9 32.5 26.9 11.6 33.7L8 25.5Z" />
       <path d="M18.5 35.8c18.6-8.4 44.4-8.4 63 0l-6.7 12.1c-7.4-4.2-13.1-6.3-18.3-6.8L51.7 91h-3.4l-4.8-49.9c-5.2.5-10.9 2.6-18.3 6.8l-6.7-12.1Z" />
     </svg>
   </span>
-  <span class="comet-tail tesla-tail"></span>
 </div>
 
-<div class="identity-comet cornell-tech-comet" aria-hidden="true">
+<div class="identity-comet cornell-tech-comet" data-object-key="CT" data-object-name="Cornell Tech" aria-hidden="true">
   <span class="cornell-tech-mark">
     <img src="/images/cornell-tech-mark.webp" alt="" />
   </span>
-  <span class="comet-tail cornell-tech-tail"></span>
 </div>
 
-<div class="identity-comet master-chief-comet" aria-hidden="true">
+<div class="identity-comet master-chief-comet" data-object-key="MJOLNIR" data-object-name="Master Chief" aria-hidden="true">
   <span class="master-chief-mark">
     <img src="/images/master-chief-helmet-v2.webp" alt="" />
   </span>
-  <span class="comet-tail master-chief-tail"></span>
 </div>
 
 <div id="comet-telemetry" class="comet-telemetry" role="status" hidden>
@@ -136,8 +128,7 @@
   .gemini-mark,
   .tesla-mark,
   .cornell-tech-mark,
-  .master-chief-mark,
-  .agi-impact-mark {
+  .master-chief-mark {
     overflow: hidden;
     isolation: isolate;
     transform: rotate(var(--counter-rotation, 0deg));
@@ -150,8 +141,7 @@
   .gemini-mark::after,
   .tesla-mark::after,
   .cornell-tech-mark::after,
-  .master-chief-mark::after,
-  .agi-impact-mark::after {
+  .master-chief-mark::after {
     content: "";
     @apply pointer-events-none absolute inset-0 rounded-full;
     z-index: 20;
@@ -201,45 +191,6 @@
     filter: drop-shadow(0 0 5px rgb(232 33 39 / 0.65));
   }
 
-  .comet-tail {
-    @apply relative hidden rounded-full;
-    width: 22rem;
-    height: 9px;
-    animation: fire-flicker 280ms ease-in-out infinite alternate;
-  }
-
-  :global(.identity-orbits-paused) .comet-tail {
-    animation-play-state: paused;
-  }
-
-  .comet-tail::before,
-  .comet-tail::after {
-    content: "";
-    @apply absolute inset-x-0 rounded-full;
-    background: inherit;
-    transform-origin: center;
-  }
-
-  .comet-tail::before {
-    top: -11px;
-    height: 31px;
-    opacity: 0.56;
-    filter: blur(11px);
-  }
-
-  .comet-tail::after {
-    top: -7px;
-    height: 23px;
-    opacity: 0.88;
-    filter: blur(2px);
-    clip-path: polygon(0 46%, 12% 18%, 20% 60%, 31% 22%, 43% 68%, 55% 16%, 66% 62%, 78% 24%, 89% 70%, 100% 44%, 100% 58%, 0 58%);
-  }
-
-  .google-tail {
-    background: linear-gradient(90deg, rgb(66 133 244 / 0.98), rgb(52 168 83 / 0.74) 28%, rgb(251 188 5 / 0.5) 52%, rgb(234 67 53 / 0));
-    box-shadow: 0 0 10px rgb(147 197 253 / 0.72);
-  }
-
   .cornell-comet {
     filter: drop-shadow(0 0 13px rgb(179 27 27 / 0.68));
   }
@@ -257,11 +208,6 @@
     object-fit: contain;
     transform: scale(0.95);
     filter: drop-shadow(0 0 7px rgb(179 27 27 / 0.8));
-  }
-
-  .cornell-tail {
-    background: linear-gradient(90deg, rgb(255 255 255 / 0.94), rgb(179 27 27 / 0.5) 48%, rgb(179 27 27 / 0));
-    box-shadow: 0 0 10px rgb(239 68 68 / 0.68);
   }
 
   .usa-comet {
@@ -283,11 +229,6 @@
     background-image: radial-gradient(circle, #fff 0 1px, transparent 1.2px);
     background-position: 1px 1px;
     background-size: 6px 6px;
-  }
-
-  .usa-tail {
-    background: linear-gradient(90deg, rgb(255 255 255 / 0.98) 0 16%, rgb(59 130 246 / 0.82) 38%, rgb(220 38 38 / 0.72) 72%, rgb(220 38 38 / 0));
-    box-shadow: 0 0 10px rgb(255 255 255 / 0.68);
   }
 
   .china-comet {
@@ -313,11 +254,6 @@
   .china-star-three { left: 2.4rem; top: 1.86rem; font-size: 0.56rem; transform: rotate(12deg); }
   .china-star-four { left: 1.98rem; top: 2.35rem; font-size: 0.56rem; transform: rotate(30deg); }
 
-  .china-tail {
-    background: linear-gradient(90deg, rgb(255 222 0 / 0.98), rgb(238 28 37 / 0.78) 54%, rgb(238 28 37 / 0));
-    box-shadow: 0 0 11px rgb(238 28 37 / 0.74);
-  }
-
   .gemini-comet {
     filter: drop-shadow(0 0 13px rgb(124 141 245 / 0.72));
   }
@@ -332,11 +268,6 @@
     width: 3.6845rem;
     height: 3.6845rem;
     filter: drop-shadow(0 0 8px rgb(85 200 243 / 0.7));
-  }
-
-  .gemini-tail {
-    background: linear-gradient(90deg, rgb(85 200 243 / 0.96), rgb(124 141 245 / 0.72) 44%, rgb(197 138 249 / 0.45) 72%, rgb(197 138 249 / 0));
-    box-shadow: 0 0 11px rgb(124 141 245 / 0.72);
   }
 
   .cornell-tech-comet {
@@ -356,11 +287,6 @@
     filter: drop-shadow(0 0 7px rgb(179 27 52 / 0.72));
   }
 
-  .cornell-tech-tail {
-    background: linear-gradient(90deg, rgb(255 255 255 / 0.96), rgb(179 27 52 / 0.74) 48%, rgb(179 27 52 / 0));
-    box-shadow: 0 0 11px rgb(179 27 52 / 0.68);
-  }
-
   .master-chief-comet {
     filter: drop-shadow(0 0 14px rgb(250 204 21 / 0.68));
   }
@@ -378,52 +304,8 @@
     filter: drop-shadow(0 0 7px rgb(250 204 21 / 0.65));
   }
 
-  .master-chief-tail {
-    background: linear-gradient(90deg, rgb(250 204 21 / 0.98), rgb(63 98 18 / 0.8) 52%, rgb(22 101 52 / 0));
-    box-shadow: 0 0 11px rgb(250 204 21 / 0.7);
-  }
-
-  .agi-impact-comet {
-    filter: drop-shadow(0 0 22px rgb(251 146 60 / 0.72));
-  }
-
-  .agi-impact-mark {
-    @apply relative z-10 flex items-center justify-center rounded-full border border-orange-100/35;
-    width: 14rem;
-    height: 14rem;
-    background:
-      radial-gradient(circle at 29% 27%, rgb(255 255 255 / 0.22) 0 2%, transparent 3%),
-      radial-gradient(circle at 66% 38%, rgb(0 0 0 / 0.38) 0 8%, transparent 9%),
-      radial-gradient(circle at 39% 71%, rgb(0 0 0 / 0.3) 0 6%, transparent 7%),
-      radial-gradient(circle at 35% 25%, #8b7252 0%, #493a2a 48%, #17110d 79%);
-    box-shadow:
-      inset 13px 11px 21px rgb(255 255 255 / 0.09),
-      inset -18px -16px 26px rgb(0 0 0 / 0.78),
-      0 0 46px rgb(251 146 60 / 0.38);
-  }
-
-  .agi-impact-mark > span {
-    @apply relative z-10 font-mono text-lg font-bold tracking-[0.2em] text-orange-100/75;
-    text-shadow: 0 0 8px rgb(251 146 60 / 0.55);
-  }
-
-  .agi-impact-tail {
-    background: linear-gradient(90deg, rgb(255 237 213 / 0.98), rgb(251 146 60 / 0.8) 44%, rgb(127 29 29 / 0));
-    box-shadow: 0 0 18px rgb(251 146 60 / 0.78);
-  }
-
   @media (max-width: 700px) {
     .identity-trails { opacity: 0.52; }
-
-    .agi-impact-mark {
-      width: 10rem;
-      height: 10rem;
-    }
-  }
-
-  @keyframes fire-flicker {
-    from { filter: brightness(0.88); transform: scaleY(0.82); }
-    to { filter: brightness(1.18); transform: scaleY(1.22); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -472,6 +354,7 @@
 
   type TrailSet = { front: TrailLayer; back: TrailLayer }
   type TrailStop = { offset: string; color: string; opacity: number }
+  type TrailStopTuple = [offset: string, color: string, opacity: number]
 
   const svgNamespace = "http://www.w3.org/2000/svg"
 
@@ -540,17 +423,10 @@
     const telemetryId = telemetry?.querySelector<HTMLElement>("[data-telemetry-id]")
     const telemetryVelocity = telemetry?.querySelector<HTMLElement>("[data-telemetry-velocity]")
     const identityCounts = new Map<string, number>()
-    const identityMetadata = (comet: HTMLElement) => {
-      if (comet.classList.contains("google-comet")) return { key: "GOOG", name: "Google" }
-      if (comet.classList.contains("cornell-tech-comet")) return { key: "CT", name: "Cornell Tech" }
-      if (comet.classList.contains("cornell-comet")) return { key: "CU", name: "Cornell" }
-      if (comet.classList.contains("usa-comet")) return { key: "USA", name: "United States" }
-      if (comet.classList.contains("china-comet")) return { key: "PRC", name: "China" }
-      if (comet.classList.contains("gemini-comet")) return { key: "GEM", name: "Gemini" }
-      if (comet.classList.contains("tesla-comet")) return { key: "TSLA", name: "Tesla" }
-      if (comet.classList.contains("agi-impact-comet")) return { key: "AGI", name: "Artificial General Intelligence" }
-      return { key: "MJOLNIR", name: "Master Chief" }
-    }
+    const identityMetadata = (comet: HTMLElement) => ({
+      key: comet.dataset.objectKey ?? "UNKNOWN",
+      name: comet.dataset.objectName ?? "Unknown",
+    })
     const telemetryCleanups: Array<() => void> = []
     if (telemetry && telemetryName && telemetryId && telemetryVelocity) {
       document.body.appendChild(telemetry)
@@ -623,62 +499,20 @@
     backTrails.replaceChildren()
     frontTrails.replaceChildren()
 
-    const paletteFor = (comet: HTMLElement): TrailStop[] => {
-      if (comet.classList.contains("google-comet")) return [
-        { offset: "0%", color: "#451a03", opacity: 0 },
-        { offset: "50%", color: "#b45309", opacity: 0.22 },
-        { offset: "82%", color: "#fdba74", opacity: 0.5 },
-        { offset: "100%", color: "#fff7ed", opacity: 0.82 },
-      ]
-      if (comet.classList.contains("cornell-comet")) return [
-        { offset: "0%", color: "#450a0a", opacity: 0 },
-        { offset: "58%", color: "#991b1b", opacity: 0.25 },
-        { offset: "84%", color: "#fb923c", opacity: 0.48 },
-        { offset: "100%", color: "#fff7ed", opacity: 0.8 },
-      ]
-      if (comet.classList.contains("usa-comet")) return [
-        { offset: "0%", color: "#172554", opacity: 0 },
-        { offset: "58%", color: "#7f1d1d", opacity: 0.2 },
-        { offset: "84%", color: "#fdba74", opacity: 0.46 },
-        { offset: "100%", color: "#fffaf0", opacity: 0.82 },
-      ]
-      if (comet.classList.contains("china-comet")) return [
-        { offset: "0%", color: "#450a0a", opacity: 0 },
-        { offset: "62%", color: "#7f1d1d", opacity: 0.18 },
-        { offset: "86%", color: "#d97706", opacity: 0.34 },
-        { offset: "100%", color: "#ffedd5", opacity: 0.64 },
-      ]
-      if (comet.classList.contains("gemini-comet")) return [
-        { offset: "0%", color: "#312e81", opacity: 0 },
-        { offset: "58%", color: "#6366f1", opacity: 0.2 },
-        { offset: "84%", color: "#bae6fd", opacity: 0.44 },
-        { offset: "100%", color: "#f0f9ff", opacity: 0.78 },
-      ]
-      if (comet.classList.contains("tesla-comet")) return [
-        { offset: "0%", color: "#450a0a", opacity: 0 },
-        { offset: "60%", color: "#991b1b", opacity: 0.22 },
-        { offset: "84%", color: "#fb923c", opacity: 0.46 },
-        { offset: "100%", color: "#fff7ed", opacity: 0.8 },
-      ]
-      if (comet.classList.contains("cornell-tech-comet")) return [
-        { offset: "0%", color: "#450a0a", opacity: 0 },
-        { offset: "60%", color: "#991b1b", opacity: 0.22 },
-        { offset: "84%", color: "#fdba74", opacity: 0.46 },
-        { offset: "100%", color: "#fff7ed", opacity: 0.8 },
-      ]
-      if (comet.classList.contains("agi-impact-comet")) return [
-        { offset: "0%", color: "#292524", opacity: 0 },
-        { offset: "58%", color: "#57534e", opacity: 0.16 },
-        { offset: "84%", color: "#a8a29e", opacity: 0.34 },
-        { offset: "100%", color: "#fed7aa", opacity: 0.62 },
-      ]
-      return [
-        { offset: "0%", color: "#14532d", opacity: 0 },
-        { offset: "58%", color: "#3f6212", opacity: 0.2 },
-        { offset: "84%", color: "#fbbf24", opacity: 0.44 },
-        { offset: "100%", color: "#fef3c7", opacity: 0.78 },
-      ]
+    const paletteSpecs: Record<string, TrailStopTuple[]> = {
+      GOOG: [["0%", "#451a03", 0], ["50%", "#b45309", 0.22], ["82%", "#fdba74", 0.5], ["100%", "#fff7ed", 0.82]],
+      CU: [["0%", "#450a0a", 0], ["58%", "#991b1b", 0.25], ["84%", "#fb923c", 0.48], ["100%", "#fff7ed", 0.8]],
+      USA: [["0%", "#172554", 0], ["58%", "#7f1d1d", 0.2], ["84%", "#fdba74", 0.46], ["100%", "#fffaf0", 0.82]],
+      PRC: [["0%", "#450a0a", 0], ["62%", "#7f1d1d", 0.18], ["86%", "#d97706", 0.34], ["100%", "#ffedd5", 0.64]],
+      GEM: [["0%", "#312e81", 0], ["58%", "#6366f1", 0.2], ["84%", "#bae6fd", 0.44], ["100%", "#f0f9ff", 0.78]],
+      TSLA: [["0%", "#450a0a", 0], ["60%", "#991b1b", 0.22], ["84%", "#fb923c", 0.46], ["100%", "#fff7ed", 0.8]],
+      CT: [["0%", "#450a0a", 0], ["60%", "#991b1b", 0.22], ["84%", "#fdba74", 0.46], ["100%", "#fff7ed", 0.8]],
+      AGI: [["0%", "#292524", 0], ["58%", "#57534e", 0.16], ["84%", "#a8a29e", 0.34], ["100%", "#fed7aa", 0.62]],
+      MJOLNIR: [["0%", "#14532d", 0], ["58%", "#3f6212", 0.2], ["84%", "#fbbf24", 0.44], ["100%", "#fef3c7", 0.78]],
     }
+    const paletteFor = (comet: HTMLElement): TrailStop[] =>
+      (paletteSpecs[comet.dataset.objectKey ?? "MJOLNIR"] ?? paletteSpecs.MJOLNIR)
+        .map(([offset, color, opacity]) => ({ offset, color, opacity }))
 
     const createTrailLayer = (
       svg: SVGSVGElement,
@@ -726,6 +560,7 @@
     const startTime = performance.now()
     let orbitVisible = true
     let orbitPaused = false
+    let orbitScrolling = false
     let pauseStartedAt = 0
     let totalPausedTime = 0
     let animationFrame = 0
@@ -750,6 +585,10 @@
       crescent.classList.toggle("identity-orbits-paused", orbitPaused)
     }
     window.addEventListener("globe:pause-state", pauseStateHandler)
+    const orbitScrollHandler = (event: Event) => {
+      orbitScrolling = (event as CustomEvent<{ scrolling?: boolean }>).detail?.scrolling ?? false
+    }
+    window.addEventListener("orbit:scroll-state", orbitScrollHandler)
 
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       orbitVisible = entry?.isIntersecting ?? true
@@ -815,7 +654,8 @@
     }
 
     const draw = (now: number) => {
-      if (orbitVisible && now - lastDraw >= frameInterval) {
+      const objectsVisible = (window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible ?? true
+      if (orbitVisible && objectsVisible && !orbitScrolling && now - lastDraw >= frameInterval) {
         const width = crescent.clientWidth
         const height = crescent.clientHeight
         const globePose = (window as Window & {
@@ -923,6 +763,7 @@
     orbitWindow.__identityOrbitCleanup = () => {
       visibilityObserver.disconnect()
       window.removeEventListener("globe:pause-state", pauseStateHandler)
+      window.removeEventListener("orbit:scroll-state", orbitScrollHandler)
       window.removeEventListener("orbital:focus-agi", focusAgiHandler)
       document.removeEventListener("click", orbitalClickHandler)
       window.cancelAnimationFrame(animationFrame)

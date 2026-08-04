@@ -23,7 +23,7 @@
     aspect-ratio: 1;
     opacity: var(--singularity-reveal);
     transform: translate3d(2vw, -2vh, 0) scale(var(--singularity-scale));
-    transform-origin: 72% 38%;
+    transform-origin: center;
     will-change: transform, opacity;
     filter: saturate(0.88);
   }
@@ -139,6 +139,9 @@
 
   .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk-back,
   .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk::before { animation-play-state: paused; }
+
+  :global(#orbit-stage.orbit-scrolling) .accretion-disk-back,
+  :global(#orbit-stage.orbit-scrolling) .accretion-disk::before { animation-play-state: paused; }
 
   .deep-singularity.singularity-focused {
     right: 50%;

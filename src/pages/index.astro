@@ -124,8 +124,10 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
           <div class="earth-shadow" aria-hidden="true"></div>
           <div id="blur" class="relative z-10 w-full h-20 rounded-full bg-violet-300/20 blur-3xl"></div>
         </div>
-        <IdentityComets />
-        <AGIImpactAsteroid />
+        <div id="orbiting-objects" class="absolute inset-0">
+          <IdentityComets />
+          <AGIImpactAsteroid />
+        </div>
       </div>
     </div>
 
@@ -309,6 +311,10 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   #orbit-stage { isolation: isolate; }
 
+  :global(#orbit-stage.orbit-scrolling :is(.accretion-disk-back, .accretion-disk::before, .identity-trail-dust)) {
+    animation-play-state: paused !important;
+  }
+
   :global(#orbit-stage[data-orbital-focus="agi"] :is(#planet, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events, .identity-comet:not(.agi-impact-comet), .identity-trails)),
   :global(#orbit-stage[data-orbital-focus="singularity"] :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #inbound-agi, #cosmic-events)) {
     opacity: 0 !important;
@@ -337,9 +343,13 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     --orbit-scale: 1;
     --orbit-x: 0vw;
     --orbit-y: 0vh;
-    transform: translateX(calc(-50% + var(--orbit-x))) translateY(var(--orbit-y)) scale(var(--orbit-scale));
+    transform: translate3d(calc(-50% + var(--orbit-x)), var(--orbit-y), 0) scale(var(--orbit-scale));
     transform-origin: 50% 0%;
     will-change: transform, opacity;
+  }
+
+  #orbiting-objects {
+    will-change: opacity;
   }
 
   #orbit-copy,
@@ -472,7 +482,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   @media (max-width: 640px) {
     .orbit-section {
-      height: 124vh;
+      height: 138vh;
     }
     .orbit-progress { @apply gap-1.5; }
     .orbit-progress-item { @apply px-2 py-2; }
@@ -487,42 +497,109 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 <script>
   const initializeOrbitSequence = () => {
     const section = document.getElementById("orbit")
+    const stage = document.getElementById("orbit-stage")
+    const planetContainer = document.getElementById("planetcont")
     const crescent = document.getElementById("crescent")
     const copy = document.getElementById("orbit-copy")
     const progressDisplay = document.getElementById("orbit-progress")
     const prompt = document.getElementById("orbit-prompt")
     const singularity = document.getElementById("deep-singularity")
     const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
+    const orbitingObjects = document.getElementById("orbiting-objects")
     const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
-    if (!section || !crescent || !copy || !progressDisplay || !prompt) return
+    const singularitySystem = singularity?.querySelector<HTMLElement>(".singularity-system")
+    if (!section || !stage || !planetContainer || !crescent || !copy || !progressDisplay || !prompt) return
 
     const orbitWindow = window as Window & { __orbitCleanup?: () => void }
     orbitWindow.__orbitCleanup?.()
 
     let frame = 0
+    let measureFrame = 0
+    let scrollIdleTimer = 0
+    let sectionTop = 0
+    let travel = 1
+    let earthBaseCenterX = 0
+    let earthBaseTop = 0
+    let earthHeight = 1
+    let singularityCenterX = 0
+    let singularityCenterY = 0
+    let targetProgress = 0
+    let renderedProgress = 0
+    let scrolling = false
+    let copyVisible = true
+    let hudVisible = true
+    let promptVisible = true
+    let markersInteractive = true
+    let markersVisible = true
+    let pauseInteractive = true
+    let orbitingObjectsVisible = true
+    ;(window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible = true
     const clamp = (value: number, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value))
     const fadeBetween = (progress: number, start: number, end: number) => 1 - clamp((progress - start) / (end - start))
 
+    const readProgress = () => clamp((window.scrollY - sectionTop) / travel)
+
+    const measure = () => {
+      measureFrame = 0
+      const sectionBounds = section.getBoundingClientRect()
+      const stageBounds = stage.getBoundingClientRect()
+      const singularityBounds = singularitySystem?.getBoundingClientRect()
+      sectionTop = sectionBounds.top + window.scrollY
+      travel = Math.max(1, section.offsetHeight - window.innerHeight)
+      earthBaseCenterX = stage.clientWidth / 2
+      earthBaseTop = planetContainer.offsetTop + crescent.offsetTop
+      earthHeight = crescent.offsetHeight
+      singularityCenterX = singularityBounds
+        ? singularityBounds.left + singularityBounds.width / 2 - stageBounds.left
+        : stage.clientWidth * 0.72
+      singularityCenterY = singularityBounds
+        ? singularityBounds.top + singularityBounds.height / 2 - stageBounds.top
+        : stage.clientHeight * 0.42
+      targetProgress = readProgress()
+      if (!frame) frame = window.requestAnimationFrame(render)
+    }
+
+    const setScrolling = (active: boolean) => {
+      if (scrolling === active) return
+      scrolling = active
+      stage.classList.toggle("orbit-scrolling", scrolling)
+      window.dispatchEvent(new CustomEvent("orbit:scroll-state", { detail: { scrolling } }))
+    }
+
+    const finishScrolling = () => {
+      scrollIdleTimer = 0
+      setScrolling(false)
+    }
+
     const render = () => {
       frame = 0
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY
-      const travel = Math.max(1, section.offsetHeight - window.innerHeight)
-      const progress = clamp((window.scrollY - sectionTop) / travel)
+      targetProgress = readProgress()
+      const distance = targetProgress - renderedProgress
+      renderedProgress = Math.abs(distance) < 0.0005
+        ? targetProgress
+        : renderedProgress + distance * 0.42
+      const progress = renderedProgress
       const eased = progress * progress * (3 - 2 * progress)
       const scale = Math.pow(0.022, eased)
-      const earthOpacity = fadeBetween(progress, 0.63, 0.78)
+      const earthOpacity = fadeBetween(progress, 0.68, 0.84)
       const copyOpacity = fadeBetween(progress, 0.04, 0.31)
       const hudOpacity = fadeBetween(progress, 0.82, 0.98)
       const promptOpacity = fadeBetween(progress, 0, 0.13)
+      const orbitingObjectsOpacity = fadeBetween(progress, 0.04, 0.2)
       const singularityReveal = clamp((progress - 0.42) / 0.38)
       const singularityScale = 0.72 + singularityReveal * 0.3
-      const singularityJourney = clamp((progress - 0.48) / 0.34)
+      const singularityJourney = clamp((progress - 0.28) / 0.5)
       const singularityEase = singularityJourney * singularityJourney * (3 - 2 * singularityJourney)
 
-      crescent.style.setProperty("--orbit-scale", scale.toFixed(4))
-      crescent.style.setProperty("--orbit-x", `${(eased * 7 + singularityEase * 21).toFixed(2)}vw`)
-      crescent.style.setProperty("--orbit-y", `${(eased * 7 - singularityEase * 9).toFixed(2)}vh`)
+      const desiredEarthCenterX = earthBaseCenterX + (singularityCenterX - earthBaseCenterX) * singularityEase
+      const initialEarthCenterY = earthBaseTop + earthHeight / 2
+      const desiredEarthCenterY = initialEarthCenterY + (singularityCenterY - initialEarthCenterY) * singularityEase
+      const orbitX = desiredEarthCenterX - earthBaseCenterX
+      const orbitY = desiredEarthCenterY - (earthBaseTop + earthHeight * scale / 2)
+
+      crescent.style.transform = `translate3d(calc(-50% + ${orbitX.toFixed(2)}px), ${orbitY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`
       crescent.style.opacity = earthOpacity.toFixed(3)
+      if (orbitingObjects) orbitingObjects.style.opacity = orbitingObjectsOpacity.toFixed(3)
       copy.style.opacity = copyOpacity.toFixed(3)
       progressDisplay.style.opacity = hudOpacity.toFixed(3)
       prompt.style.opacity = promptOpacity.toFixed(3)
@@ -531,24 +608,73 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
         singularity.style.setProperty("--singularity-scale", singularityScale.toFixed(3))
       }
       ;(window as Window & { __singularityReveal?: number }).__singularityReveal = singularityReveal
-      copy.style.visibility = copyOpacity < 0.015 ? "hidden" : "visible"
-      progressDisplay.style.visibility = hudOpacity < 0.015 ? "hidden" : "visible"
-      prompt.style.visibility = promptOpacity < 0.015 ? "hidden" : "visible"
-      if (markerCanvas) markerCanvas.style.pointerEvents = earthOpacity < 0.15 ? "none" : ""
-      if (pauseButton) pauseButton.style.pointerEvents = hudOpacity < 0.15 ? "none" : ""
+      const nextCopyVisible = copyOpacity >= 0.015
+      const nextHudVisible = hudOpacity >= 0.015
+      const nextPromptVisible = promptOpacity >= 0.015
+      const nextMarkersInteractive = earthOpacity >= 0.15
+      const nextMarkersVisible = progress < 0.34
+      const nextPauseInteractive = hudOpacity >= 0.15
+      const nextOrbitingObjectsVisible = orbitingObjectsOpacity >= 0.015
+      if (nextCopyVisible !== copyVisible) {
+        copyVisible = nextCopyVisible
+        copy.style.visibility = copyVisible ? "visible" : "hidden"
+      }
+      if (nextHudVisible !== hudVisible) {
+        hudVisible = nextHudVisible
+        progressDisplay.style.visibility = hudVisible ? "visible" : "hidden"
+      }
+      if (nextPromptVisible !== promptVisible) {
+        promptVisible = nextPromptVisible
+        prompt.style.visibility = promptVisible ? "visible" : "hidden"
+      }
+      if (markerCanvas && nextMarkersInteractive !== markersInteractive) {
+        markersInteractive = nextMarkersInteractive
+        markerCanvas.style.pointerEvents = markersInteractive ? "" : "none"
+      }
+      if (markerCanvas && nextMarkersVisible !== markersVisible) {
+        markersVisible = nextMarkersVisible
+        markerCanvas.style.visibility = markersVisible ? "visible" : "hidden"
+      }
+      if (pauseButton && nextPauseInteractive !== pauseInteractive) {
+        pauseInteractive = nextPauseInteractive
+        pauseButton.style.pointerEvents = pauseInteractive ? "" : "none"
+      }
+      if (orbitingObjects && nextOrbitingObjectsVisible !== orbitingObjectsVisible) {
+        orbitingObjectsVisible = nextOrbitingObjectsVisible
+        orbitingObjects.style.visibility = orbitingObjectsVisible ? "visible" : "hidden"
+        ;(window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible = orbitingObjectsVisible
+      }
+
+      if (Math.abs(targetProgress - renderedProgress) >= 0.0005) {
+        frame = window.requestAnimationFrame(render)
+      }
     }
 
     const scheduleRender = () => {
+      targetProgress = readProgress()
+      setScrolling(true)
+      window.clearTimeout(scrollIdleTimer)
+      scrollIdleTimer = window.setTimeout(finishScrolling, 140)
       if (!frame) frame = window.requestAnimationFrame(render)
     }
 
+    const scheduleMeasure = () => {
+      if (measureFrame) return
+      measureFrame = window.requestAnimationFrame(measure)
+    }
+
     window.addEventListener("scroll", scheduleRender, { passive: true })
-    window.addEventListener("resize", scheduleRender, { passive: true })
+    window.addEventListener("resize", scheduleMeasure, { passive: true })
     orbitWindow.__orbitCleanup = () => {
       window.removeEventListener("scroll", scheduleRender)
-      window.removeEventListener("resize", scheduleRender)
+      window.removeEventListener("resize", scheduleMeasure)
+      window.clearTimeout(scrollIdleTimer)
       if (frame) window.cancelAnimationFrame(frame)
+      if (measureFrame) window.cancelAnimationFrame(measureFrame)
+      setScrolling(false)
     }
+    measure()
+    renderedProgress = targetProgress
     render()
   }
 

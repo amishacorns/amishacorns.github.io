@@ -1,4 +1,4 @@
-<div id="inbound-agi" class="identity-comet agi-impact-comet inbound-agi">
+<div id="inbound-agi" class="identity-comet agi-impact-comet inbound-agi" data-object-key="AGI" data-object-name="Artificial General Intelligence">
   <button class="inbound-agi-object" type="button" aria-label="Focus artificial general intelligence">
     <canvas class="agi-asteroid-mesh" aria-hidden="true"></canvas>
     <span class="sr-only">Focus artificial general intelligence</span>
@@ -12,8 +12,8 @@
 <style>
   .inbound-agi {
     @apply pointer-events-none absolute left-1/2 top-1/2 z-[14];
-    width: 10rem;
-    height: 10rem;
+    width: 20rem;
+    height: 20rem;
     opacity: 0;
     will-change: transform, opacity;
   }
@@ -52,7 +52,7 @@
   .inbound-agi.agi-focused .inbound-agi-caption { opacity: 1; }
 
   @media (max-width: 700px) {
-    .inbound-agi { width: 7.5rem; height: 7.5rem; }
+    .inbound-agi { width: 15rem; height: 15rem; }
     .inbound-agi-caption span { @apply text-[10px] tracking-[0.14em]; }
     .inbound-agi-caption strong { @apply text-[18px] tracking-[0.06em]; }
   }
@@ -163,8 +163,8 @@
     ]
 
     const compactMesh = window.matchMedia("(max-width: 700px)").matches
-    const latitudeSegments = compactMesh ? 34 : 46
-    const longitudeSegments = compactMesh ? 52 : 70
+    const latitudeSegments = compactMesh ? 20 : 46
+    const longitudeSegments = compactMesh ? 30 : 70
     const positions: number[] = []
     const normals: number[] = []
     const uvs: number[] = []
@@ -284,6 +284,7 @@
     gl.clearColor(0, 0, 0, 0)
 
     let paused = false
+    let orbitScrolling = false
     let lastTime = performance.now()
     let angleX = 0.31
     let angleY = -0.72
@@ -295,8 +296,9 @@
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
       const ratio = Math.min(window.devicePixelRatio || 1, compactMesh ? 1.5 : 2)
-      const width = Math.max(2, Math.round(bounds.width * ratio))
-      const height = Math.max(2, Math.round(bounds.height * ratio))
+      const renderCap = compactMesh ? 768 : 1280
+      const width = Math.min(renderCap, Math.max(2, Math.round(bounds.width * ratio)))
+      const height = Math.min(renderCap, Math.max(2, Math.round(bounds.height * ratio)))
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width
         canvas.height = height
@@ -306,7 +308,8 @@
     const render = (time: number) => {
       const focused = asteroidContainer?.classList.contains("agi-focused") ?? false
       const frameInterval = focused ? focusedFrameInterval : restingFrameInterval
-      if (time - lastDraw >= frameInterval) {
+      const objectsVisible = (window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible ?? true
+      if (objectsVisible && !orbitScrolling && time - lastDraw >= frameInterval) {
         const elapsed = Math.min(80, time - lastTime)
         lastTime = time
         if (!paused || focused) {
@@ -326,13 +329,18 @@
     const pauseState = (event: Event) => {
       paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
     }
+    const orbitScrollState = (event: Event) => {
+      orbitScrolling = (event as CustomEvent<{ scrolling?: boolean }>).detail?.scrolling ?? false
+    }
     window.addEventListener("globe:pause-state", pauseState)
+    window.addEventListener("orbit:scroll-state", orbitScrollState)
     animationFrame = requestAnimationFrame(render)
 
     asteroidWindow.__asteroidMeshCleanup = () => {
       cancelAnimationFrame(animationFrame)
       surfaceImage.onload = null
       window.removeEventListener("globe:pause-state", pauseState)
+      window.removeEventListener("orbit:scroll-state", orbitScrollState)
       canvas.removeAttribute("data-initialized")
     }
   }
