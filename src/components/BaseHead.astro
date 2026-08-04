@@ -58,6 +58,13 @@ const socialImage = new URL(image, Astro.site)
 <!-- RSS Feed -->
 <link rel="alternate" type="application/rss+xml" title={title} href={`${Astro.site}rss.xml`}/>
 
+<!-- Privacy-friendly analytics by Plausible -->
+<script is:inline async src="https://plausible.io/js/pa-5EHqUGOzcFUJsL8KkEucZ.js"></script>
+<script is:inline>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
 <!-- Global Scripts -->
 <script is:inline src="/js/scroll.js"></script>
 <script is:inline src="/js/animate.js"></script>
