@@ -8,7 +8,7 @@ tags:
   - academia
 description: "AI separates the university's two historical products: educated researchers and research output."
 header:
-  teaser: "lab-of-one.png"
+  teaser: "lab-of-one.webp"
 ---
 
 The university lab has served many purposes, but two have always been tightly linked: producing knowledge and training researchers.

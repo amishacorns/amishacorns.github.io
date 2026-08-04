@@ -11,6 +11,7 @@
     "preview:network": "astro dev --host",
     "generate:asteroid-texture": "node scripts/generate-asteroid-texture.mjs",
     "generate:star-fields": "node scripts/generate-star-fields.mjs",
+    "optimize:content-images": "node scripts/optimize-content-images.mjs",
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

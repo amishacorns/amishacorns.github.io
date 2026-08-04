@@ -164,3 +164,21 @@ Desktop again meets the blocking-time budget. This experiment is retained.
 ### 8. Lower the comet frame rate (rejected)
 
 An attempted cap reduced comet rendering from approximately 20/30 FPS to 15/24 FPS on compact/desktop screens. Despite reducing theoretical sustained work, median startup scores fell from 78/99 to 73/94 and TBT rose on both profiles across three runs. It also reduced the fluidity of the site's most visible motion. The change was reverted in full.
+
+### 9. Compress oversized article artwork
+
+Converted the three 2.77–2.96 MiB PNG hero images for *Yann LeCan't*, *Research Without Researchers*, and *Ban the Boomerboard* into 1,200-pixel WebP assets. The results are 179–200 KiB, a 93–94% reduction, and are used for both article heroes and social metadata. Visual and Open Graph path reviews passed.
+
+Measured on 2026-08-03 against the local production preview. The image-heavy Yann article uses the median of three mobile runs.
+
+| Page and profile | Score | FCP | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Yann article, mobile median (3 runs) | 95 | 0.91 s | 2.86 s | 0 ms | 414 ms | 336 KiB |
+
+Change from the original image-heavy article baseline:
+
+| Score | LCP | Transfer |
+| ---: | ---: | ---: |
+| +21 | -83% | -89% |
+
+The article now meets the score, blocking-time, and transfer budgets. This experiment is retained.
