@@ -14,6 +14,29 @@ This log tracks isolated performance experiments on the production build. Homepa
 | Initial transfer | <= 1,024 KiB | <= 500 KiB |
 | Longest main-thread task | <= 50 ms | <= 50 ms |
 
+## Performance History
+
+The homepage history below uses the comparable simulated-mobile production audits recorded throughout the optimization work. Scores and long-task grouping vary slightly between runs, so the larger directional changes matter more than a single point.
+
+| Milestone | Score | LCP | TBT | Transfer | Primary change |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Original production baseline | 49 | 13.65 s | 1,523 ms | 3,207 KiB | Unoptimized 8K/2K globe and runtime visuals |
+| Right-sized Earth textures | 58 | 4.85 s | 1,252 ms | 995 KiB | Removed the mobile 8K download |
+| Pre-generated AGI surface | 67 | 4.68 s | 641 ms | 1,031 KiB | Removed millions of startup texture calculations |
+| Pre-rendered real star field | 73 | 3.53 s | 694 ms | 966 KiB | Removed the star catalog download and projection loop |
+| Cached orbit geometry | 76 | 3.54 s | 596 ms | 966 KiB | Removed repeated fixed trigonometry |
+| Right-sized comet trails | 78 | 3.54 s | 485 ms | 966 KiB | Reduced per-frame trail geometry |
+| Current optimized build | 93 | 3.01 s | 183 ms | 469 KiB | Lean assets, parked work, native search, and smaller hot loops |
+
+| End-to-end homepage change | Improvement |
+| --- | ---: |
+| Lighthouse performance | 49 → 93 |
+| Largest Contentful Paint | 13.65 s → 3.01 s (-78%) |
+| Total Blocking Time | 1,523 ms → 183 ms (-88%) |
+| Initial transfer | 3,207 KiB → 469 KiB (-85%) |
+| Constrained scroll rate | approximately 30 FPS → 60 FPS |
+| Missed frames in the orbit benchmark | 34 → 1 (-97%) |
+
 ## Baseline
 
 Measured on 2026-08-03 against `https://www.jordandotzel.com/` before performance-specific optimization.
@@ -323,3 +346,31 @@ Measured on 2026-08-04 against the local production preview. Lighthouse values a
 | Earth-to-singularity center error | 0.39 px |
 
 Three plausible optimizations were rejected after measurement: delaying the visual initializers increased total blocking time, pre-rendering all SVG trails increased layout cost, and `content-visibility` on the lower homepage produced no consistent improvement. All three were reverted. The retained changes reduce startup and maintenance cost while preserving the established steady-scroll result.
+
+### 17. Remove global script requests and invisible animation work
+
+Folded the two sub-kilobyte global scripts into the header and footer components that own their behavior, deleting two files and two requests on every route. Four homepage sections and the footer previously completed one-second entrance transitions while still far below the viewport; those meaningless offscreen transitions were removed while preserving the visible hero reveal.
+
+Measured on 2026-08-04 against the local production preview. Lighthouse values are the median of three mobile runs; scroll values are the median of seven runs at 4x CPU throttling.
+
+| Cold-load metric | Median |
+| --- | ---: |
+| Lighthouse performance | 93 |
+| First Contentful Paint | 1.06 s |
+| Largest Contentful Paint | 3.01 s |
+| Total Blocking Time | 183 ms |
+| Main-thread work | 3.35 s |
+| Transferred bytes | 469 KiB |
+| Network requests | 19 |
+
+The results remain inside the previous run-to-run envelope while simplifying the shipped page and removing two requests. The constrained scroll median remains 16.7 ms with one missed frame, no severe frames, and a 0.39-pixel Earth-to-singularity center error.
+
+Two alternatives were rejected and reverted: viewport-triggering every reveal moved occasional transition work into the orbit scroll, and explicitly decoding the Earth texture before WebGL upload did not reduce the measured upload task. The retained version removes work rather than rescheduling it.
+
+### 18. Precompute travel-marker geometry
+
+The globe previously recalculated four trigonometric functions for each of 126 fixed locations on every rendered frame. Latitude and longitude terms are now prepared once, while each frame computes only the shared Earth-rotation and tilt terms. Marker clustering now compares squared distances instead of repeatedly calculating square roots, and marker painting iterates backward without allocating and reversing a copy of the cluster array.
+
+The new projection is algebraically equivalent to the original; a sweep across all locations and 90 rotation angles produced a maximum coordinate difference of `5.33e-16`. In an isolated five-run benchmark of the location-projection loop, median execution fell from 103.3 ms to 6.3 ms, a 94% reduction. This measures the optimized math rather than the complete globe renderer, but it represents recurring CPU and battery work while the Earth is moving.
+
+The production bundle grows by approximately 0.2 KB raw to carry the prepared values, while removing roughly 500 trigonometric calls per rendered globe frame. This experiment is retained.

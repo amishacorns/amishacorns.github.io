@@ -75,7 +75,6 @@ article {
   @apply transition-all duration-300 ease-in-out;
 }
 
-/** styles for public /animation.js */
 .animate {
   opacity: 0;
   transform: translateY(50px);
@@ -92,33 +91,6 @@ article img {
   padding-bottom: 20px;
   display: block;
   margin: 0 auto;
-}
-
-/* Legacy article components, retuned for the dark redesign. */
-.wos-sub,
-.wos-blurb,
-.wos-context,
-.wos-cite,
-.wos-footnote {
-  color: rgb(255 255 255 / 0.48) !important;
-}
-
-.wos-section,
-.wos-note {
-  color: rgb(255 255 255 / 0.8) !important;
-}
-
-.wos-quote,
-.wos-section-response {
-  color: rgb(255 255 255 / 0.72) !important;
-  background: rgb(255 255 255 / 0.045) !important;
-  border-color: rgb(196 181 253 / 0.45) !important;
-  border-radius: 0.75rem !important;
-}
-
-.wos-quote a,
-.wos-cite a {
-  color: rgb(196 181 253) !important;
 }
 
 /**
@@ -158,15 +130,3 @@ article img {
 #meteors .shower.ul {
   @apply rotate-315;
 }
-
-/* Card transition */
-/* .fade-move-enter-active,
-.fade-move-exit-active {
-  transition: all 300ms ease;
-}
-
-.fade-move-enter-from,
-.fade-move-exit-to {
-  opacity: 0;
-  transform: translateY(10px);
-} */

@@ -221,11 +221,17 @@
           }, { threshold: 0.01 })
           visibilityObserver.observe(canvas)
           const radians = (degrees: number) => degrees * Math.PI / 180
-          const preparedLocations = (locations as TravelLocation[]).map((location) => ({
-            ...location,
-            latitude: radians(location.lat),
-            longitude: radians(location.lng),
-          }))
+          const preparedLocations = (locations as TravelLocation[]).map((location) => {
+            const latitude = radians(location.lat)
+            const longitude = radians(location.lng)
+            return {
+              ...location,
+              latitudeCosine: Math.cos(latitude),
+              latitudeSine: Math.sin(latitude),
+              longitudeCosine: Math.cos(longitude),
+              longitudeSine: Math.sin(longitude),
+            }
+          })
 
           const resizeCanvas = () => {
             const ratio = Math.min(window.devicePixelRatio || 1, constrainedDevice ? 1.25 : 2)
@@ -253,14 +259,16 @@
             const center = radius
             const cosineTilt = Math.cos(tilt)
             const sineTilt = Math.sin(tilt)
+            const cosineRotation = Math.cos(rotation)
+            const sineRotation = Math.sin(rotation)
             const projected: ProjectedLocation[] = []
 
             for (const location of preparedLocations) {
-              const latitudeCosine = Math.cos(location.latitude)
-              const relativeLongitude = location.longitude - rotation
-              const worldX = Math.sin(relativeLongitude) * latitudeCosine
-              const worldY = Math.sin(location.latitude)
-              const worldZ = Math.cos(relativeLongitude) * latitudeCosine
+              const relativeLongitudeSine = location.longitudeSine * cosineRotation - location.longitudeCosine * sineRotation
+              const relativeLongitudeCosine = location.longitudeCosine * cosineRotation + location.longitudeSine * sineRotation
+              const worldX = relativeLongitudeSine * location.latitudeCosine
+              const worldY = location.latitudeSine
+              const worldZ = relativeLongitudeCosine * location.latitudeCosine
               const screenY = worldY * cosineTilt - worldZ * sineTilt
               const screenZ = worldY * sineTilt + worldZ * cosineTilt
 
@@ -277,12 +285,19 @@
 
             projected.sort((a, b) => b.depth - a.depth)
             const mergeDistance = Math.max(8, Math.min(13, cssSize / 170))
+            const mergeDistanceSquared = mergeDistance * mergeDistance
             const nextClusters: MarkerCluster[] = []
 
             for (const point of projected) {
-              const nearby = nextClusters.find((cluster) =>
-                Math.hypot(cluster.x - point.x, cluster.y - point.y) < mergeDistance
-              )
+              let nearby: MarkerCluster | undefined
+              for (const cluster of nextClusters) {
+                const deltaX = cluster.x - point.x
+                const deltaY = cluster.y - point.y
+                if (deltaX * deltaX + deltaY * deltaY < mergeDistanceSquared) {
+                  nearby = cluster
+                  break
+                }
+              }
               if (nearby) {
                 const count = nearby.points.length
                 nearby.x = (nearby.x * count + point.x) / (count + 1)
@@ -302,7 +317,8 @@
             markerContext.setTransform(markerScale, 0, 0, markerScale, 0, 0)
             clusters = projectMarkers()
 
-            for (const cluster of clusters.slice().reverse()) {
+            for (let index = clusters.length - 1; index >= 0; index -= 1) {
+              const cluster = clusters[index]
               const depthAlpha = 0.38 + cluster.depth * 0.62
               const countBoost = Math.min(2.1, Math.log2(cluster.points.length + 1) * 0.48)
               const markerSize = constrainedDevice ? 1.35 : 3

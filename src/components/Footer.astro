@@ -4,7 +4,7 @@ import Container from "@components/Container.astro"
 ---
 
 <footer class="relative bg-black/80">
-  <div class="animate">
+  <div>
     <section class="py-5">
       <Container size="md">
         <div class="flex items-center justify-center sm:justify-end">
@@ -70,6 +70,12 @@ import Container from "@components/Container.astro"
 </footer>
 
 <script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".animate").forEach((element, index) => {
+      window.setTimeout(() => element.classList.add("show"), index * 150)
+    })
+  })
+
   document.getElementById("back-to-top")?.addEventListener("click", (event) => {
     event.preventDefault()
     window.scrollTo({ top: 0, behavior: "smooth" })

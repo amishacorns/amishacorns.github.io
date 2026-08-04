@@ -25,6 +25,16 @@ type Person = { name: string; title: string; handle: string; role: string; blurb
 const wallData = isYannLeCant
   ? parse(readFileSync(new URL("../../../_data/wall_of_shame.yml", import.meta.url), "utf8")) as { people: Person[] }
   : null
+const yannIntro = "The point isn't that smart people are sometimes wrong, or that strong opinions should be kept private. The problem is what happens when a leader in AI keeps turning the limitations of one implementation into limits of the entire field, ignores weak exponential improvements as they compound, and uses that confidence to dismiss safety work as premature. A bad prediction is harmless. Negligence about a technology moving this quickly isn't, especially when the person making it has the influence to shape what researchers, companies, and governments take seriously. Every quote below links to the best source I could find.*"
+const readingSource = wallData
+  ? [yannIntro, ...wallData.people.flatMap((person) => [
+      person.title,
+      person.role,
+      person.blurb,
+      ...person.quotes.flatMap((quote) => [quote.context ?? "", quote.text, quote.source]),
+      ...person.section_responses.map((response) => response.text),
+    ])].join(" ")
+  : post.body
 const sectionsFor = (person: Person) => {
   const names = [...new Set(person.quotes.map((quote) => quote.section))]
   return names.map((name) => ({
@@ -65,7 +75,7 @@ if (related.length < 3) {
         <div class="mt-8 flex flex-wrap gap-3 text-xs uppercase tracking-[0.12em] text-white/45">
           <span>{formatDate(date)}</span>
           <span>·</span>
-          <span>{readingTime(post.body)}</span>
+          <span>{readingTime(readingSource)}</span>
         </div>
         <h1>{title}</h1>
         <p>{description}</p>
@@ -77,7 +87,7 @@ if (related.length < 3) {
       <article class="animate article-body">
         {isYannLeCant && wallData ? (
           <div class="prediction-ledger">
-            <p class="ledger-intro">The point isn't that smart people are sometimes wrong, or that strong opinions should be kept private. The problem is what happens when a leader in AI keeps turning the limitations of one implementation into limits of the entire field, ignores weak exponential improvements as they compound, and uses that confidence to dismiss safety work as premature. A bad prediction is harmless. Negligence about a technology moving this quickly isn't, especially when the person making it has the influence to shape what researchers, companies, and governments take seriously. Every quote below links to the best source I could find.*</p>
+            <p class="ledger-intro">{yannIntro}</p>
             {wallData.people.map((person) => (
               <section class="ledger-person">
                 <h2>{person.title}</h2>

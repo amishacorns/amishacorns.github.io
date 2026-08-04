@@ -80,6 +80,22 @@ const rightSocials = SOCIALS.filter((social) => ["Google Scholar", "Twitter"].in
 </style>
 
 <script is:inline>
+  let headerScrollFrame = 0
+  let headerScrolled = false
+  const updateHeader = () => {
+    headerScrollFrame = 0
+    const header = document.getElementById("header")
+    if (!header) return
+    const nextScrolled = window.scrollY > 0
+    if (nextScrolled === headerScrolled) return
+    headerScrolled = nextScrolled
+    header.classList.toggle("scrolled", headerScrolled)
+  }
+  document.addEventListener("scroll", () => {
+    if (!headerScrollFrame) headerScrollFrame = window.requestAnimationFrame(updateHeader)
+  }, { passive: true })
+  updateHeader()
+
   document.getElementById("header-drawer-button")?.addEventListener("click", () => {
     const drawer = document.getElementById("drawer")
     const drawerButton = document.getElementById("header-drawer-button")
