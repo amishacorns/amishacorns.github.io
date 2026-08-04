@@ -16,7 +16,7 @@ const {
   title,
   description,
   image = "/images/jordan-dotzel-social-v2.jpg",
-  imageAlt = "Jordan Dotzel — Agent Architect",
+  imageAlt = "Jordan Dotzel — Neural Architect",
   headline = title,
   type = "website",
   publishedTime,
@@ -33,7 +33,7 @@ const structuredData = {
       "@id": personId,
       name: "Jordan Dotzel",
       url: siteURL.href,
-      jobTitle: "Agent Architect",
+      jobTitle: "Neural Architect",
       sameAs: [
         "https://github.com/amishacorns",
         "https://scholar.google.com/citations?user=5H-MYAoAAAAJ",
@@ -46,7 +46,7 @@ const structuredData = {
       "@id": new URL("/#website", Astro.site).href,
       name: "Jordan Dotzel",
       url: siteURL.href,
-      description: "Agent architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
+      description: "Neural architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
       author: { "@id": personId },
     },
     ...(type === "article" ? [{

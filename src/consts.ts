@@ -1,7 +1,7 @@
 // Global
 export const SITE = {
   TITLE: "Jordan Dotzel",
-  DESCRIPTION: "Agent architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
+  DESCRIPTION: "Neural architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
   AUTHOR: "Jordan Dotzel",
 }
 
