@@ -76,3 +76,23 @@ Change from experiment 1:
 | Desktop | +9 | -10% | -62% | +2% | +37 KiB |
 
 Desktop now meets the blocking-time budget. Mobile blocking time remains above budget but has fallen 58% from the original baseline. The small main-thread variance on desktop is within run-to-run noise, while the blocking-time reduction is consistent and substantial. This experiment is retained.
+
+### 3. Cap the asteroid rendering rate
+
+The asteroid previously submitted WebGL work on every display refresh even at its small resting size. Resting rendering is now capped at approximately 15 FPS on compact devices and 24 FPS on larger screens, rising to 24/30 FPS only for the close-up focus view. Motion speed remains time-based, so the asteroid does not tumble more slowly. The focused visual review passed.
+
+Measured on 2026-08-03 against the local production preview. Mobile uses the median of six runs because its first three blocking-time results were noisy; desktop uses three runs.
+
+| Profile | Score | FCP | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Homepage, mobile median (6 runs) | 66 | 1.28 s | 4.63 s | 682 ms | 3,003 ms | 1,032 KiB |
+| Homepage, desktop median (3 runs) | 99 | 0.35 s | 0.91 s | 69 ms | 873 ms | 1,296 KiB |
+
+Change from experiment 2:
+
+| Profile | Score | LCP | TBT | Main thread | Speed Index |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Mobile | -1 | -1% | +6% | -7% | -7% |
+| Desktop | +1 | 0% | -27% | -12% | -5% |
+
+Mobile blocking time varied, but the broader mobile workload improved: main-thread time, boot-up work, and Speed Index all fell while the score remained effectively flat. The sustained WebGL draw rate is reduced by 75% on compact devices and 60% on desktop. This experiment is retained for low-end-device responsiveness and battery use.

@@ -289,6 +289,9 @@
     let angleY = -0.72
     let angleZ = -0.16
     let animationFrame = 0
+    let lastDraw = -Infinity
+    const restingFrameInterval = compactMesh ? 66 : 42
+    const focusedFrameInterval = compactMesh ? 42 : 33
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
       const ratio = Math.min(window.devicePixelRatio || 1, compactMesh ? 1.5 : 2)
@@ -301,18 +304,23 @@
       gl.viewport(0, 0, canvas.width, canvas.height)
     }
     const render = (time: number) => {
-      const elapsed = Math.min(40, time - lastTime)
-      lastTime = time
-      if (!paused || asteroidContainer?.classList.contains("agi-focused")) {
-        angleX += elapsed * 0.000075
-        angleY += elapsed * 0.00016
-        angleZ += elapsed * 0.000045
+      const focused = asteroidContainer?.classList.contains("agi-focused") ?? false
+      const frameInterval = focused ? focusedFrameInterval : restingFrameInterval
+      if (time - lastDraw >= frameInterval) {
+        const elapsed = Math.min(80, time - lastTime)
+        lastTime = time
+        if (!paused || focused) {
+          angleX += elapsed * 0.000075
+          angleY += elapsed * 0.00016
+          angleZ += elapsed * 0.000045
+        }
+        resize()
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+        gl.uniform3f(anglesLocation, angleX, angleY, angleZ)
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0)
+        canvas.classList.add("ready")
+        lastDraw = time
       }
-      resize()
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-      gl.uniform3f(anglesLocation, angleX, angleY, angleZ)
-      gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0)
-      canvas.classList.add("ready")
       animationFrame = requestAnimationFrame(render)
     }
     const pauseState = (event: Event) => {
