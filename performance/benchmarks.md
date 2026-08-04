@@ -29,12 +29,13 @@ The homepage history below uses the comparable simulated-mobile production audit
 | Current optimized build | 93 | 3.01 s | 183 ms | 469 KiB | Lean assets, parked work, native search, and smaller hot loops |
 | Lean-media build | 90 | 2.26 s | 367 ms | 212 KiB | Explicitly deferred card art and re-encoded persistent visuals |
 | Compact-globe build | 93 | 2.04 s | 296 ms | 185 KiB | Smaller mobile Earth and native-parsed compact location data |
+| Lower-allocation hero | 91 | 2.11 s | 353 ms | 185 KiB | Single-pass trails and delegated controls |
 
 | End-to-end homepage change | Improvement |
 | --- | ---: |
-| Lighthouse performance | 49 → 93 latest median |
-| Largest Contentful Paint | 13.65 s → 2.04 s (-85%) |
-| Total Blocking Time | 1,523 ms → 296 ms latest median (-81%); 183 ms best optimized median |
+| Lighthouse performance | 49 → 91 latest median; 93 best optimized median |
+| Largest Contentful Paint | 13.65 s → 2.11 s (-85%) |
+| Total Blocking Time | 1,523 ms → 353 ms latest median (-77%); 183 ms best optimized median |
 | Initial transfer | 3,207 KiB → 185 KiB (-94%) |
 | Constrained scroll rate | approximately 30 FPS → 60 FPS |
 | Median missed frames in the orbit benchmark | 34 → 0 |
@@ -434,3 +435,27 @@ Measured on 2026-08-04 against the local production preview. Lighthouse values a
 | Earth-to-singularity center error | 0.39 px | 0.39 px | 0.39 px |
 
 Three alternatives were rejected after isolated tests. Disabling WebGL antialiasing did not improve the cold run. Loading the travel panel as a separate on-demand module reduced the entry bundle slightly but made the first and second constrained runs less consistent. Removing the animated dust layer from mobile comet trails did not measurably improve the remaining startup spike, so the full visual was retained. The compact-data and Earth-texture changes are retained.
+
+### 21. Remove animation allocations and per-element listeners
+
+The comet trail renderer previously built three temporary arrays per orbital object on every draw: one array of projected points and separate front/back command arrays. Trail projection, body occlusion, depth splitting, and path construction now happen in one pass. With nine orbital objects, this eliminates 27 short-lived arrays per draw, or approximately 540 allocations per second on the mobile rendering profile. Empty front/back trail layers also stop receiving redundant path and gradient writes until their state changes.
+
+Two interaction systems were simplified at the same time. Comet telemetry now uses two delegated pointer listeners instead of three closures for every object, and the travel index uses one listener for its progress controls and one for its complete panel instead of attaching handlers to every continent, country, planet, and close button. That removes approximately 70 listener registrations while preserving hover telemetry, country targeting, keyboard escape behavior, and the expanding continent transitions. The runtime source is 26 lines shorter; the production module falls slightly from 37.40 KB to 37.20 KB raw while compressed transfer remains effectively unchanged.
+
+The benchmark gained two explicit modes so this work could be measured rather than inferred: independent cold runs launch a fresh browser process for every sample, and idle-hero runs measure the continuously moving globe and comet system without the scroll controller parking that work. The existing scroll benchmark remains the primary interaction test.
+
+Measured on 2026-08-04 at 412 × 830 under a deliberately severe 6x CPU slowdown. Each cold result is the median of five independent browser launches; each warm result is the median of six warmed runs over three seconds.
+
+| Animated-hero metric | Before | After | Change |
+| --- | ---: | ---: | ---: |
+| Independent-cold sampled frames | 140 | 159 | +14% |
+| Independent-cold missed frames | 36 | 21 | -42% |
+| Independent-cold severe frames | 1 | 0 | eliminated |
+| Warm sampled frames | 135 | 160 | +19% |
+| Warm missed frames | 48 | 32 | -33% |
+| Warm severe frames | 3 | 0 | eliminated |
+| Approximate warm frame rate | 45 FPS | 53 FPS | +18% |
+
+The standard 4x CPU orbit benchmark remains at a 16.7 ms median frame, zero warm missed frames, and a 0.39-pixel Earth-to-singularity center error. An attempted metadata implementation that wrote telemetry values into every comet's DOM increased source and bundle size, so it was rejected in favor of the smaller in-memory delegated version. This experiment is retained.
+
+Five mobile cold-load audits produced a 91 median score, 2.11-second LCP, 353 ms of blocking time, and 185 KiB transferred. The load result remains inside the established long-task variance while the isolated animated-hero benchmark improves substantially; the optimization is retained for its repeatable runtime, allocation, listener, and maintainability gains rather than claiming a cold-load improvement.

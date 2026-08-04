@@ -1,56 +1,24 @@
 <script>
-  const initializeTravelIndex = () => {
-    const panel = document.getElementById("orbit-panel")
-    const progress = document.getElementById("orbit-progress")
-    const title = document.getElementById("orbit-panel-title")
-    const closeButton = document.getElementById("orbit-panel-close") as HTMLButtonElement | null
-    const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-orbit-panel]"))
-    const contents = Array.from(document.querySelectorAll<HTMLElement>("[data-orbit-panel-content]"))
-    const destinations = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-globe-lat][data-globe-lng]"))
-    if (!panel || !progress || !title || !closeButton || triggers.length === 0) return
+  const panel = document.getElementById("orbit-panel")
+  const progress = document.getElementById("orbit-progress")
+  const title = document.getElementById("orbit-panel-title")
 
+  if (panel && progress && title) {
+    const triggers = Array.from(progress.querySelectorAll<HTMLButtonElement>("[data-orbit-panel]"))
+    const contents = Array.from(panel.querySelectorAll<HTMLElement>("[data-orbit-panel-content]"))
+    const details = Array.from(panel.querySelectorAll<HTMLDetailsElement>(".continent-group"))
+    const detailTimers = new WeakMap<HTMLDetailsElement, number>()
     let activePanel = ""
     let activeTrigger: HTMLButtonElement | null = null
     let closeTimer = 0
-    const detailTimers = new WeakMap<HTMLDetailsElement, number>()
-    const continentDetails = Array.from(panel.querySelectorAll<HTMLDetailsElement>(".continent-group"))
-    continentDetails.forEach((details) => {
-      const summary = details.querySelector("summary")
-      const grid = details.querySelector<HTMLElement>(".country-grid")
-      const handler = (event: Event) => {
-        if (!summary || !grid) return
-        event.preventDefault()
-        const previousTimer = detailTimers.get(details)
-        if (previousTimer) window.clearTimeout(previousTimer)
 
-        if (!details.open) {
-          details.open = true
-          grid.style.height = "0px"
-          grid.style.opacity = "0"
-          window.requestAnimationFrame(() => {
-            grid.style.height = `${grid.scrollHeight}px`
-            grid.style.opacity = "1"
-          })
-          const timer = window.setTimeout(() => {
-            if (details.open) grid.style.height = "auto"
-          }, 650)
-          detailTimers.set(details, timer)
-        } else {
-          grid.style.height = `${grid.scrollHeight}px`
-          grid.style.opacity = "1"
-          window.requestAnimationFrame(() => {
-            grid.style.height = "0px"
-            grid.style.opacity = "0"
-          })
-          const timer = window.setTimeout(() => {
-            details.open = false
-            grid.style.removeProperty("height")
-            grid.style.removeProperty("opacity")
-          }, 650)
-          detailTimers.set(details, timer)
-        }
-      }
-      summary?.addEventListener("click", handler)
+    const resetDetails = () => details.forEach((item) => {
+      const timer = detailTimers.get(item)
+      if (timer) window.clearTimeout(timer)
+      item.open = false
+      const grid = item.querySelector<HTMLElement>(".country-grid")
+      grid?.style.removeProperty("height")
+      grid?.style.removeProperty("opacity")
     })
 
     const closePanel = (restoreFocus = false) => {
@@ -68,74 +36,81 @@
     }
 
     const openPanel = (name: string, trigger: HTMLButtonElement) => {
-      const labels: Record<string, string> = {
-        countries: "Countries",
-        planetary: "Planets",
-        galactic: "Galaxies",
-      }
       activePanel = name
       activeTrigger = trigger
       window.clearTimeout(closeTimer)
       const triggerRect = trigger.getBoundingClientRect()
       const progressRect = progress.getBoundingClientRect()
-      const pauseRect = document.getElementById("globe-pause-button")?.getBoundingClientRect()
-      let panelLeft = triggerRect.left - progressRect.left
-      let panelWidth = triggerRect.width
-      if (window.innerWidth <= 640) {
-        panelLeft = 0
-        panelWidth = progressRect.width - (pauseRect?.width ?? 0) - 6
-      }
+      const pauseWidth = document.getElementById("globe-pause-button")?.getBoundingClientRect().width ?? 0
+      const compact = window.innerWidth <= 640
+      const panelLeft = compact ? 0 : triggerRect.left - progressRect.left
+      const panelWidth = compact ? progressRect.width - pauseWidth - 6 : triggerRect.width
       panel.style.setProperty("--orbit-panel-left", `${panelLeft}px`)
       panel.style.setProperty("--orbit-panel-width", `${panelWidth}px`)
       panel.style.setProperty("--orbit-panel-max-height", `${Math.max(190, triggerRect.top - 16)}px`)
-      title.textContent = labels[name] ?? "Travel Index"
-      contents.forEach((content) => {
-        content.hidden = content.dataset.orbitPanelContent !== name
-      })
-      continentDetails.forEach((details) => {
-        const timer = detailTimers.get(details)
-        if (timer) window.clearTimeout(timer)
-        details.open = false
-        const grid = details.querySelector<HTMLElement>(".country-grid")
-        grid?.style.removeProperty("height")
-        grid?.style.removeProperty("opacity")
-      })
+      title.textContent = name === "planetary" ? "Planets" : name === "galactic" ? "Galaxies" : "Countries"
+      contents.forEach((content) => { content.hidden = content.dataset.orbitPanelContent !== name })
+      resetDetails()
       triggers.forEach((button) => button.setAttribute("aria-expanded", String(button === trigger)))
       panel.hidden = false
       panel.inert = false
       window.requestAnimationFrame(() => panel.setAttribute("data-open", "true"))
     }
 
-    triggers.forEach((trigger) => {
-      const handler = () => {
-        const name = trigger.dataset.orbitPanel ?? ""
-        if (activePanel === name && !panel.hidden) closePanel()
-        else openPanel(name, trigger)
-      }
-      trigger.addEventListener("click", handler)
-    })
-
-    destinations.forEach((destination) => {
-      const handler = () => {
-        const lat = Number(destination.dataset.globeLat)
-        const lng = Number(destination.dataset.globeLng)
-        if (!Number.isFinite(lat) || !Number.isFinite(lng)) return
-        window.dispatchEvent(new CustomEvent("globe:focus-location", { detail: { lat, lng } }))
-        closePanel()
-      }
-      destination.addEventListener("click", handler)
-    })
-
-    const closeHandler = () => closePanel(true)
-    const keyHandler = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closePanel(true)
+    const toggleDetails = (item: HTMLDetailsElement, grid: HTMLElement) => {
+      const previousTimer = detailTimers.get(item)
+      if (previousTimer) window.clearTimeout(previousTimer)
+      grid.style.height = item.open ? `${grid.scrollHeight}px` : "0px"
+      grid.style.opacity = item.open ? "1" : "0"
+      if (!item.open) item.open = true
+      window.requestAnimationFrame(() => {
+        grid.style.height = item.open && grid.style.height === "0px" ? `${grid.scrollHeight}px` : "0px"
+        grid.style.opacity = grid.style.opacity === "0" ? "1" : "0"
+      })
+      const closing = grid.style.height !== "0px"
+      detailTimers.set(item, window.setTimeout(() => {
+        if (closing) item.open = false
+        grid.style.removeProperty("height")
+        grid.style.removeProperty("opacity")
+      }, 650))
     }
-    const scrollHandler = () => closePanel()
-    closeButton.addEventListener("click", closeHandler)
-    window.addEventListener("keydown", keyHandler)
-    window.addEventListener("scroll", scrollHandler, { passive: true })
 
+    progress.addEventListener("click", (event) => {
+      const target = event.target
+      const trigger = target instanceof Element ? target.closest<HTMLButtonElement>("[data-orbit-panel]") : null
+      if (!trigger) return
+      const name = trigger.dataset.orbitPanel ?? ""
+      if (activePanel === name && !panel.hidden) closePanel()
+      else openPanel(name, trigger)
+    })
+
+    panel.addEventListener("click", (event) => {
+      const target = event.target
+      if (!(target instanceof Element)) return
+      if (target.closest("#orbit-panel-close")) {
+        closePanel(true)
+        return
+      }
+      const summary = target.closest("summary")
+      const item = summary?.closest<HTMLDetailsElement>(".continent-group")
+      const grid = item?.querySelector<HTMLElement>(".country-grid")
+      if (item && grid) {
+        event.preventDefault()
+        toggleDetails(item, grid)
+        return
+      }
+      const destination = target.closest<HTMLButtonElement>("[data-globe-lat][data-globe-lng]")
+      if (!destination) return
+      const lat = Number(destination.dataset.globeLat)
+      const lng = Number(destination.dataset.globeLng)
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) return
+      window.dispatchEvent(new CustomEvent("globe:focus-location", { detail: { lat, lng } }))
+      closePanel()
+    })
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closePanel(true)
+    })
+    window.addEventListener("scroll", () => closePanel(), { passive: true })
   }
-
-  initializeTravelIndex()
 </script>

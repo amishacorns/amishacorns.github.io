@@ -15,11 +15,11 @@
 
 <div class="identity-comet china-comet" data-object-key="PRC" data-object-name="China" aria-hidden="true">
   <span class="china-mark">
-    <span class="china-star china-star-large">★</span>
-    <span class="china-star china-star-one">★</span>
-    <span class="china-star china-star-two">★</span>
-    <span class="china-star china-star-three">★</span>
-    <span class="china-star china-star-four">★</span>
+    <span class="china-star china-star-large">Ã¢Ëœâ€¦</span>
+    <span class="china-star china-star-one">Ã¢Ëœâ€¦</span>
+    <span class="china-star china-star-two">Ã¢Ëœâ€¦</span>
+    <span class="china-star china-star-three">Ã¢Ëœâ€¦</span>
+    <span class="china-star china-star-four">Ã¢Ëœâ€¦</span>
   </span>
 </div>
 
@@ -346,6 +346,7 @@
     glow: SVGPathElement
     dust: SVGPathElement
     gradient: SVGLinearGradientElement
+    path: string
   }
 
   type TrailSet = { front: TrailLayer; back: TrailLayer }
@@ -416,42 +417,41 @@
     const telemetryId = telemetry?.querySelector<HTMLElement>("[data-telemetry-id]")
     const telemetryVelocity = telemetry?.querySelector<HTMLElement>("[data-telemetry-velocity]")
     const identityCounts = new Map<string, number>()
-    const identityMetadata = (comet: HTMLElement) => ({
-      key: comet.dataset.objectKey ?? "UNKNOWN",
-      name: comet.dataset.objectName ?? "Unknown",
-    })
     if (telemetry && telemetryName && telemetryId && telemetryVelocity) {
       document.body.appendChild(telemetry)
+      const metadata = new WeakMap<HTMLElement, { name: string; id: string; velocity: string }>()
       comets.forEach((comet, index) => {
-        const mark = comet.firstElementChild as HTMLElement | null
-        if (!mark) return
-        const metadata = identityMetadata(comet)
-        const ordinal = (identityCounts.get(metadata.key) ?? 0) + 1
-        identityCounts.set(metadata.key, ordinal)
-        const objectId = metadata.key === "MJOLNIR"
+        const key = comet.dataset.objectKey ?? "UNKNOWN"
+        const ordinal = (identityCounts.get(key) ?? 0) + 1
+        identityCounts.set(key, ordinal)
+        const id = key === "MJOLNIR"
           ? "MJOLNIR-117"
-          : metadata.key === "AGI"
+          : key === "AGI"
             ? "AGI-ORBIT-001"
-            : `${metadata.key}-${String(ordinal).padStart(3, "0")}`
+            : `${key}-${String(ordinal).padStart(3, "0")}`
         const config = orbitConfigs[index]
-        const estimatedVelocity = 7.3 * (config.radius / 0.6) * (28000 / config.period)
-
-        const moveTelemetry = (event: PointerEvent) => {
-          telemetry.style.left = `${Math.min(window.innerWidth - 190, event.clientX + 14)}px`
-          telemetry.style.top = `${Math.min(window.innerHeight - 106, event.clientY + 14)}px`
-        }
-        const showTelemetry = (event: PointerEvent) => {
-          telemetryName.textContent = metadata.name
-          telemetryId.textContent = objectId
-          telemetryVelocity.textContent = `${estimatedVelocity.toFixed(2)} km/s`
-          telemetry.hidden = false
-          moveTelemetry(event)
-        }
-        const hideTelemetry = () => { telemetry.hidden = true }
-        mark.addEventListener("pointerenter", showTelemetry)
-        mark.addEventListener("pointermove", moveTelemetry)
-        mark.addEventListener("pointerleave", hideTelemetry)
+        metadata.set(comet, {
+          name: comet.dataset.objectName ?? "Unknown",
+          id,
+          velocity: `${(7.3 * (config.radius / 0.6) * (28000 / config.period)).toFixed(2)} km/s`,
+        })
       })
+      crescent.addEventListener("pointermove", (event) => {
+        const target = event.target
+        const comet = target instanceof Element ? target.closest<HTMLElement>(".identity-comet") : null
+        const data = comet ? metadata.get(comet) : null
+        if (!data) {
+          telemetry.hidden = true
+          return
+        }
+        telemetryName.textContent = data.name
+        telemetryId.textContent = data.id
+        telemetryVelocity.textContent = data.velocity
+        telemetry.style.left = `${Math.min(window.innerWidth - 190, event.clientX + 14)}px`
+        telemetry.style.top = `${Math.min(window.innerHeight - 106, event.clientY + 14)}px`
+        telemetry.hidden = false
+      })
+      crescent.addEventListener("pointerleave", () => { telemetry.hidden = true })
     }
 
     let focusedComet: HTMLElement | null = null
@@ -533,7 +533,7 @@
       core.setAttribute("stroke", `url(#${gradient.id})`)
       core.setAttribute("stroke-width", constrainedDevice ? "3.5" : "5")
       svg.append(definitions, glow, dust, core)
-      return { core, glow, dust, gradient }
+      return { core, glow, dust, gradient, path: "" }
     }
 
     const trailSets: TrailSet[] = comets.map((comet, index) => {
@@ -630,16 +630,18 @@
 
     const updateTrailLayer = (
       layer: TrailLayer,
-      commands: string[],
+      path: string,
       tail: ProjectedOrbitPoint,
       head: ProjectedOrbitPoint,
       centerX: number,
       centerY: number,
     ) => {
-      const path = commands.join(" ")
+      if (path === layer.path) return
+      layer.path = path
       layer.core.setAttribute("d", path)
       layer.glow.setAttribute("d", path)
       layer.dust.setAttribute("d", path)
+      if (!path) return
       layer.gradient.setAttribute("x1", String(centerX + tail.x))
       layer.gradient.setAttribute("y1", String(centerY + tail.y))
       layer.gradient.setAttribute("x2", String(centerX + head.x))
@@ -703,7 +705,10 @@
             depthScale *= 1 + focusWeight * (isImpactAsteroid ? 1.05 : 0.12)
           }
 
-          const points: ProjectedOrbitPoint[] = []
+          let tail: ProjectedOrbitPoint | null = null
+          let previous: ProjectedOrbitPoint | null = null
+          let frontPath = ""
+          let backPath = ""
           for (let sample = 0; sample < trailSamples; sample += 1) {
             const progress = sample / (trailSamples - 1)
             const sampleTheta = theta - config.direction * trailArc * (1 - progress)
@@ -713,33 +718,25 @@
             point.y += Math.cos(now * 0.0034 + index * 1.17 + sample * 1.73) * turbulence * 0.58
             point.x += focusDeltaX
             point.y += focusDeltaY
-            points.push(point)
+            if (!tail) tail = point
+            if (previous) {
+              if (sample === trailSamples - 1) {
+                const deltaX = point.x - previous.x
+                const deltaY = point.y - previous.y
+                const distance = Math.max(0.001, Math.hypot(deltaX, deltaY))
+                const bodyGap = Math.min(distance * 0.82, 34 * depthScale)
+                point.x -= (deltaX / distance) * bodyGap
+                point.y -= (deltaY / distance) * bodyGap
+              }
+              const segment = `M ${(centerX + previous.x).toFixed(1)} ${(centerY + previous.y).toFixed(1)} L ${(centerX + point.x).toFixed(1)} ${(centerY + point.y).toFixed(1)} `
+              if ((previous.depth + point.depth) / 2 >= 0) frontPath += segment
+              else backPath += segment
+            }
+            previous = point
           }
-          const trailHead = points[points.length - 1]
-          const trailPrevious = points[points.length - 2]
-          if (trailHead && trailPrevious) {
-            const trailDeltaX = trailHead.x - trailPrevious.x
-            const trailDeltaY = trailHead.y - trailPrevious.y
-            const trailDistance = Math.max(0.001, Math.hypot(trailDeltaX, trailDeltaY))
-            const bodyGap = Math.min(trailDistance * 0.82, 34 * depthScale)
-            trailHead.x -= (trailDeltaX / trailDistance) * bodyGap
-            trailHead.y -= (trailDeltaY / trailDistance) * bodyGap
-          }
-          const frontCommands: string[] = []
-          const backCommands: string[] = []
-          for (let sample = 1; sample < points.length; sample += 1) {
-            const previous = points[sample - 1]
-            const current = points[sample]
-            const commands = (previous.depth + current.depth) / 2 >= 0 ? frontCommands : backCommands
-            commands.push(
-              `M ${(centerX + previous.x).toFixed(1)} ${(centerY + previous.y).toFixed(1)}`,
-              `L ${(centerX + current.x).toFixed(1)} ${(centerY + current.y).toFixed(1)}`,
-            )
-          }
-          const tail = points[0]
           const trails = trailSets[index]
-          updateTrailLayer(trails.front, frontCommands, tail, trailHead ?? head, centerX, centerY)
-          updateTrailLayer(trails.back, backCommands, tail, trailHead ?? head, centerX, centerY)
+          updateTrailLayer(trails.front, frontPath, tail ?? head, previous ?? head, centerX, centerY)
+          updateTrailLayer(trails.back, backPath, tail ?? head, previous ?? head, centerX, centerY)
 
           comet.style.setProperty("--counter-rotation", `${-tangentAngle}deg`)
           comet.style.transform = `translate(-50%, -50%) translate3d(${head.x.toFixed(1)}px, ${head.y.toFixed(1)}px, 0) rotate(${tangentAngle.toFixed(2)}deg) scale(${depthScale.toFixed(3)})`

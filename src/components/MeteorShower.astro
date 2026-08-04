@@ -18,6 +18,8 @@
   const initializeMeteorShower = () => {
     const root = document.getElementById("meteors")
     if (!root) return
+    const showers = root.querySelectorAll<HTMLElement>(".shower")
+    if (showers.length === 0) return
     type MeteorLife = { remaining: number; started: number; timer: number }
     const active = new Map<HTMLElement, MeteorLife>()
     let paused = false
@@ -37,8 +39,6 @@
       meteor.className = "meteor"
       meteor.style.left = `${Math.round(Math.random() * window.innerWidth)}px`
       meteor.style.top = `${Math.round(Math.random() * window.innerHeight)}px`
-      const showers = root.querySelectorAll<HTMLElement>(".shower")
-      if (showers.length === 0) return
       showers[Math.floor(Math.random() * showers.length)].append(meteor)
       const life: MeteorLife = { remaining: 3500, started: performance.now(), timer: 0 }
       active.set(meteor, life)
