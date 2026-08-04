@@ -160,3 +160,7 @@ Change from experiment 5, excluding rejected experiment 6:
 | Desktop | +4 | 0% | -51% | -9% | -6% |
 
 Desktop again meets the blocking-time budget. This experiment is retained.
+
+### 8. Lower the comet frame rate (rejected)
+
+An attempted cap reduced comet rendering from approximately 20/30 FPS to 15/24 FPS on compact/desktop screens. Despite reducing theoretical sustained work, median startup scores fell from 78/99 to 73/94 and TBT rose on both profiles across three runs. It also reduced the fluidity of the site's most visible motion. The change was reverted in full.
