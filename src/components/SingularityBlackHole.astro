@@ -20,6 +20,9 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       { label: "Classification", value: "Supermassive" },
       { label: "Event Horizon", value: "01 Jan 2050" },
     ]}
+    definition="Here, the singularity begins when machine intelligence becomes a persistent, direct part of human cognition, so memory, reasoning, and learning no longer stop at the biological brain."
+    countdownMeaning="The timer is intended to mark the first durable, high-bandwidth human-machine cognitive integration. Phones, chatbots, and narrow medical implants do not count."
+    context="This is narrower than the usual definition: specifically, the beginning of human-machine merger."
   />
 </div>
 
@@ -163,7 +166,11 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       opacity 620ms ease;
   }
 
-  .deep-singularity.singularity-focused :global(.orbital-focus-card) { opacity: 1; }
+  .deep-singularity.singularity-focused :global(.orbital-focus-card) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 
   @media (max-width: 760px) {
     .deep-singularity {
@@ -194,9 +201,14 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     const focus = () => {
       window.dispatchEvent(new CustomEvent("orbital:focus-mode", { detail: { target: "singularity" } }))
       singularity.classList.add("singularity-focused")
+      singularity.setAttribute("aria-hidden", "false")
       window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
     }
-    const clearFocus = () => singularity.classList.remove("singularity-focused")
+    const clearFocus = () => {
+      singularity.classList.remove("singularity-focused")
+      singularity.setAttribute("aria-hidden", "true")
+      singularity.querySelector(".orbital-focus-card details")?.removeAttribute("open")
+    }
     window.addEventListener("globe:pause-state", pauseHandler)
     window.addEventListener("orbital:focus-singularity", focus)
     window.addEventListener("orbital:clear-focus", clearFocus)

@@ -25,9 +25,9 @@ const selected = selectedPaths
   .filter((post): post is (typeof posts)[number] => Boolean(post))
 
 const featured = [
-  { label: "The path", path: "/posts/paths/", image: "/images/critical.png" },
-  { label: "The danger", path: "/posts/is-sometime-now/", image: "/images/is-sometime-now.jpg" },
-  { label: "The destination", path: "/posts/granny/", image: "/images/granny-family.jpg" },
+  { label: "The path", path: "/posts/paths/", image: "/images/critical-card.webp" },
+  { label: "The danger", path: "/posts/is-sometime-now/", image: "/images/is-sometime-now-card.webp" },
+  { label: "The destination", path: "/posts/granny/", image: "/images/granny-family-card.webp" },
 ]
 
 const continentOrder = ["North America", "South America", "Europe", "Africa", "Asia"]
@@ -103,7 +103,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 <PageLayout title="Home" description={SITE.DESCRIPTION}>
   <section id="orbit" class="orbit-section relative w-full">
     <div id="orbit-stage" class="sticky top-0 h-screen min-h-[680px] w-full overflow-hidden">
-    <div id="galaxy" class="absolute inset-0 pointer-events-none hidden dark:block">
+    <div id="galaxy" class="absolute inset-0 pointer-events-none">
       <MeteorShower />
     </div>
     <SingularityBlackHole />
@@ -249,7 +249,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
             return (
               <a class="featured-card" href={post.data.permalink}>
                 <div class="featured-image">
-                  <img src={art?.image} alt="" loading="lazy" />
+                  <img src={art?.image} alt="" width="800" height="600" loading="lazy" decoding="async" />
                 </div>
                 <div class="p-5">
                   <p class="text-xs uppercase tracking-[0.18em] text-violet-300/75">{art?.label}</p>

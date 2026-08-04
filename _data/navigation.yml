@@ -1,9 +1,0 @@
-main:
-  - title: "About"
-    url: /about/
-
-  - title: "Binsky Map"
-    url: /travel/
-
-  - title: "Musings"
-    url: /musings/

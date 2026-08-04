@@ -15,6 +15,9 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       { label: "Velocity", value: "17.82 km/s" },
       { label: "Impact Date", value: "13 Jul 2027" },
     ]}
+    definition="Here, AGI means a system that outperforms the best human at every intellectual task, including unfamiliar tasks it must learn rather than tasks it has already seen."
+    countdownMeaning="The timer ends at my forecast for when this minimum threshold is first crossed. It marks the arrival of the capability, not universal access, adoption, or deployment."
+    context="This is deliberately stricter than most common industry definitions of AGI."
   />
 </div>
 
@@ -379,6 +382,7 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     const clearFocus = () => {
       container.classList.remove("agi-focused")
       if (focusCard) {
+        focusCard.querySelector("details")?.removeAttribute("open")
         focusCard.classList.remove("focus-card-overlay")
         container.appendChild(focusCard)
       }

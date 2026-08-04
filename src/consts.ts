@@ -7,22 +7,10 @@ export const SITE: Site = {
   AUTHOR: "Jordan Dotzel",
 }
 
-// Work Page
-export const WORK: Page = {
-  TITLE: "Research",
-  DESCRIPTION: "Research on efficient neural systems, agents, and the path to AGI.",
-}
-
 // Blog Page
 export const BLOG: Page = {
   TITLE: "Transmissions",
   DESCRIPTION: "Writing on machine intelligence, agents, scientific progress, and the transition to AGI.",
-}
-
-// Projects Page 
-export const PROJECTS: Page = {
-  TITLE: "Projects",
-  DESCRIPTION: "Recent projects I have worked on.",
 }
 
 // Search Page

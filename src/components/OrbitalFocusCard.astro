@@ -8,12 +8,15 @@ interface Props {
   kicker: string
   title: string
   rows: Row[]
+  definition: string
+  countdownMeaning: string
+  context?: string
 }
 
-const { kicker, title, rows } = Astro.props
+const { kicker, title, rows, definition, countdownMeaning, context } = Astro.props
 ---
 
-<div class="orbital-focus-card" aria-hidden="true">
+<div class="orbital-focus-card">
   <span class="orbital-focus-kicker">{kicker}</span>
   <strong>{title}</strong>
   <dl>
@@ -24,6 +27,23 @@ const { kicker, title, rows } = Astro.props
       </div>
     ))}
   </dl>
+  <details class="orbital-focus-details">
+    <summary>
+      <span>What Does This Mean?</span>
+      <i aria-hidden="true"></i>
+    </summary>
+    <div class="orbital-focus-explanation">
+      <section>
+        <span>Definition</span>
+        <p>{definition}</p>
+      </section>
+      <section>
+        <span>The Countdown</span>
+        <p>{countdownMeaning}</p>
+      </section>
+      {context && <p class="orbital-focus-context">{context}</p>}
+    </div>
+  </details>
 </div>
 
 <style>
@@ -32,8 +52,9 @@ const { kicker, title, rows } = Astro.props
     top: var(--focus-card-top, calc(100% + 0.75rem));
     width: clamp(17rem, 25vw, 21rem);
     opacity: 0;
+    visibility: hidden;
     transform: translateX(-50%) rotate(var(--counter-rotation, 0deg));
-    transition: opacity 240ms ease;
+    transition: opacity 240ms ease, visibility 240ms ease;
     box-shadow: 0 18px 55px rgb(0 0 0 / 0.48), inset 0 1px 0 rgb(255 255 255 / 0.035);
   }
 
@@ -61,12 +82,54 @@ const { kicker, title, rows } = Astro.props
     @apply text-right text-cyan-100/80;
   }
 
+  .orbital-focus-details {
+    @apply mt-2 border-t border-white/[0.07] pt-2;
+  }
+
+  .orbital-focus-details summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-3 text-[9px] font-semibold uppercase tracking-[0.15em] text-cyan-100/60 transition hover:text-cyan-100/90;
+  }
+
+  .orbital-focus-details summary::-webkit-details-marker { display: none; }
+
+  .orbital-focus-details summary i {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 180ms ease;
+  }
+
+  .orbital-focus-details[open] summary i {
+    transform: rotate(225deg) translate(-1px, -1px);
+  }
+
+  .orbital-focus-explanation {
+    @apply mt-3 space-y-3 border-t border-white/[0.07] pt-3;
+  }
+
+  .orbital-focus-explanation section > span {
+    @apply block text-[8px] font-semibold uppercase tracking-[0.16em] text-white/35;
+  }
+
+  .orbital-focus-explanation p {
+    @apply mt-1 text-[11px] leading-[1.55] text-white/70;
+    text-wrap: pretty;
+  }
+
+  .orbital-focus-explanation .orbital-focus-context {
+    @apply border-l border-orange-200/30 pl-2 text-[10px] italic text-white/45;
+  }
+
   .orbital-focus-card.focus-card-overlay {
     position: absolute;
     left: 50%;
     top: clamp(4.5rem, 9vh, 6.5rem);
     width: min(21rem, 82vw);
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
     transform: translateX(-50%);
   }
 

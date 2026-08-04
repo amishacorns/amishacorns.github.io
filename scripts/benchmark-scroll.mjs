@@ -5,6 +5,9 @@ const executablePath = process.env.CHROME_PATH
   ?? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
 const runs = Number(process.env.SCROLL_BENCHMARK_RUNS ?? 3)
 const cpuThrottle = Number(process.env.SCROLL_BENCHMARK_CPU ?? 4)
+const viewportWidth = Number(process.env.SCROLL_BENCHMARK_WIDTH ?? 412)
+const viewportHeight = Number(process.env.SCROLL_BENCHMARK_HEIGHT ?? 830)
+const deviceScaleFactor = Number(process.env.SCROLL_BENCHMARK_DPR ?? 2.625)
 
 const median = (values) => {
   const sorted = [...values].sort((a, b) => a - b)
@@ -20,7 +23,7 @@ const browser = await puppeteer.launch({
 const results = []
 try {
   const page = await browser.newPage()
-  await page.setViewport({ width: 412, height: 830, deviceScaleFactor: 2.625, isMobile: true, hasTouch: true })
+  await page.setViewport({ width: viewportWidth, height: viewportHeight, deviceScaleFactor, isMobile: true, hasTouch: true })
   const devtools = await page.createCDPSession()
   await devtools.send("Emulation.setCPUThrottlingRate", { rate: cpuThrottle })
 
@@ -92,4 +95,4 @@ try {
 const summary = Object.fromEntries(
   Object.keys(results[0]).map((key) => [key, Number(median(results.map((result) => result[key])).toFixed(2))]),
 )
-console.log(JSON.stringify({ url, viewport: "412x830@2.625", cpuThrottle, runs, summary, results }, null, 2))
+console.log(JSON.stringify({ url, viewport: `${viewportWidth}x${viewportHeight}@${deviceScaleFactor}`, cpuThrottle, runs, summary, results }, null, 2))

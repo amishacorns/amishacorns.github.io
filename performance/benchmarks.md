@@ -261,3 +261,35 @@ Measured on 2026-08-04 against the local production preview with seven mobile ru
 | Earth-to-singularity center error | 0.39 px |
 
 The active orbit performance remains unchanged while document startup, generated CSS, repository maintenance, and deployment size improve. This experiment is retained.
+
+### 15. Remove the retired site and lighten below-fold cards
+
+Removed the complete retired Jekyll implementation after independently verifying that all seven posts and all 126 travel locations exist in the Astro site. The live wall-of-shame data remains because the Yann article still consumes it. The repository change deletes 235 obsolete files and approximately 10.1 MB while preserving the generated CNAME, robots file, RSS feed, travel route, and all article routes.
+
+The active site was also narrowed to its real content model: unused project, work, legal, MDX, copy-code, view-transition, and light-theme branches were removed. This reduced client modules from 26 to 24, the search bundle from 22.90 KB to 22.33 KB, and the largest generated CSS file from 51,175 bytes to 50,503 bytes.
+
+Finally, the three lazy homepage transmission-card images now use dedicated 800 x 600 WebP derivatives. Their combined transfer size fell from 604 KB to 168 KB, a 72% reduction, without changing article hero quality.
+
+Measured on 2026-08-04 against the local production preview with five mobile runs at 4x CPU throttling:
+
+| Metric | Median |
+| --- | ---: |
+| Frame time | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms |
+| 99th-percentile frame time | 33.4 ms |
+| Missed frames | 1 |
+| Severe frames | 0 |
+| Long animation frames | 0 |
+| Earth-to-singularity center error | 0.39 px |
+
+The first cold run remains more variable than warm runs on highly constrained devices, but the median active orbit path remains at approximately 60 FPS. This experiment is retained.
+
+Cross-device verification used the same five-run, 4x CPU-throttled benchmark:
+
+| Mobile viewport | Median frame | P95 frame | Missed frames | Severe frames | Center error |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 360 x 640 @3 | 16.7 ms | 16.8 ms | 1 | 0 | 0.39 px |
+| 412 x 830 @2.625 | 16.7 ms | 16.8 ms | 1 | 0 | 0.39 px |
+| 768 x 1024 @2 | 16.7 ms | 16.8 ms | 3 | 1 | 0.28 px |
+
+The smallest phone now matches the Pixel-sized median. Tablet performance is still close to 60 FPS under the artificial slowdown, so extending the lower-resolution phone rendering profile to tablets is not justified yet.
