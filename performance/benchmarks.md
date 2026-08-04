@@ -136,3 +136,7 @@ Change from experiment 4:
 | Desktop | -1.5 | 0% | +21 ms | -2% | -4% |
 
 Desktop long-task grouping remains noisy, while its total main-thread work still improved. The mobile gains and large sustained reduction in animation math are consistent. This experiment is retained.
+
+### 6. Cache orbit dimensions (rejected)
+
+An attempted optimization cached the orbit container's dimensions and updated its SVG viewports only on resize. Reading those dimensions synchronously during startup forced a full layout inside the combined homepage script. Although the mobile median happened to improve, desktop results regressed consistently: score fell to 74, TBT rose to 706 ms, and main-thread work rose to 1,747 ms across three runs. The change was reverted in full.
