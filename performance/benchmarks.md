@@ -459,3 +459,11 @@ Measured on 2026-08-04 at 412 × 830 under a deliberately severe 6x CPU slowdown
 The standard 4x CPU orbit benchmark remains at a 16.7 ms median frame, zero warm missed frames, and a 0.39-pixel Earth-to-singularity center error. An attempted metadata implementation that wrote telemetry values into every comet's DOM increased source and bundle size, so it was rejected in favor of the smaller in-memory delegated version. This experiment is retained.
 
 Five mobile cold-load audits produced a 91 median score, 2.11-second LCP, 353 ms of blocking time, and 185 KiB transferred. The load result remains inside the established long-task variance while the isolated animated-hero benchmark improves substantially; the optimization is retained for its repeatable runtime, allocation, listener, and maintainability gains rather than claiming a cold-load improvement.
+
+### 22. Trim the shared icon sprite and reject marker pooling
+
+The shared interface sprite still contained twelve icons retired with the old theme, sorting controls, and reading interface. Only menu, close, and search remain in use. Removing the dead symbols reduces the sprite from 7,498 bytes to 685 bytes (-91%) without changing any rendered icon. Seven orphaned Jekyll comment records were also removed; they were not read by the Astro build and never reached the deployed site. Together, this removes 141 source lines.
+
+A reusable object pool for the globe's 126 projected travel markers was tested under the independent-cold idle-hero benchmark at 6x CPU slowdown. It reduced short-lived allocations, but increased the critical module by 0.27 KB and produced the same median result as the existing implementation: 160 sampled frames, 21 missed frames, and zero severe frames over three seconds. The pool was rejected because the measurable result did not justify the added state and code.
+
+The retained sprite cleanup leaves the client module unchanged at 37.20 KB raw / 13.19 KB compressed. A final mobile cold-load audit scored 96 with a 1.96-second LCP, 199 ms of blocking time, 184 KiB transferred, and 16 requests. This single audit is recorded as a smoke check rather than a new median; the established five-run median remains the comparison baseline.
