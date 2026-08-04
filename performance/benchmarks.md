@@ -116,3 +116,23 @@ Change from experiment 3:
 | Desktop | -2.5 | -22% | +82 ms | +13% | -79 KiB | -2% |
 
 The mobile result is a strong overall improvement. Desktop blocking time is volatile because the same combined animation script appears as either several short tasks or one long task, but LCP, transfer, and Speed Index improved consistently. The star image is not the source of those script long tasks. This experiment is retained, and splitting or deferring that combined homepage script becomes the next target.
+
+### 5. Cache orbit trigonometry
+
+The comet renderer previously recalculated each orbit's fixed inclination and node trigonometry, plus the shared globe rotation and tilt trigonometry, for every trail sample. Fixed values are now prepared once and globe-pose values once per frame. Only each sample's changing orbital angle still requires sine and cosine. This removes roughly 80% of projection trigonometric calls per animation frame without changing any trajectories or trail geometry. Visual review passed.
+
+Measured on 2026-08-03 against the local production preview after the isolated change.
+
+| Profile | Score | FCP | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Homepage, mobile median (3 runs) | 76 | 1.28 s | 3.54 s | 596 ms | 2,985 ms | 966 KiB |
+| Homepage, desktop median (3 runs) | 95 | 0.35 s | 0.71 s | 172 ms | 973 ms | 1,217 KiB |
+
+Change from experiment 4:
+
+| Profile | Score | LCP | TBT | Main thread | Speed Index |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Mobile | +3 | 0% | -14% | -4% | -4% |
+| Desktop | -1.5 | 0% | +21 ms | -2% | -4% |
+
+Desktop long-task grouping remains noisy, while its total main-thread work still improved. The mobile gains and large sustained reduction in animation math are consistent. This experiment is retained.

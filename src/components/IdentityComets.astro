@@ -442,7 +442,19 @@
     direction: 1 | -1
   }
 
-  type GlobePose = { rotation: number; tilt: number }
+  type PreparedOrbitConfig = OrbitConfig & {
+    cosineInclination: number
+    sineInclination: number
+    cosineNode: number
+    sineNode: number
+  }
+
+  type PreparedGlobePose = {
+    cosineYaw: number
+    sineYaw: number
+    cosinePitch: number
+    sinePitch: number
+  }
   type ProjectedOrbitPoint = {
     x: number
     y: number
@@ -488,9 +500,16 @@
     )
     const planeSlots = orbitPlanes.map(() => 0)
     const planeOffsets = orbitPlanes.map(() => Math.random() * Math.PI * 2)
-    const orbitConfigs: OrbitConfig[] = comets.map((comet, index) => {
+    const prepareOrbitConfig = (config: OrbitConfig): PreparedOrbitConfig => ({
+      ...config,
+      cosineInclination: Math.cos(config.inclination),
+      sineInclination: Math.sin(config.inclination),
+      cosineNode: Math.cos(config.node),
+      sineNode: Math.sin(config.node),
+    })
+    const orbitConfigs: PreparedOrbitConfig[] = comets.map((comet, index) => {
       if (comet.classList.contains("agi-impact-comet")) {
-        return {
+        return prepareOrbitConfig({
           period: 52000,
           radius: 0.58,
           inclination: 0.45,
@@ -498,14 +517,14 @@
           phase: 1.35,
           scale: 0.78,
           direction: -1,
-        }
+        })
       }
       const planeIndex = index % orbitPlanes.length
       const plane = orbitPlanes[planeIndex]
       const slot = planeSlots[planeIndex]++
       const phaseSpacing = (Math.PI * 2) / planeCounts[planeIndex]
       const scale = index < 4 ? 1 : index < 9 ? 0.9 : 0.84
-      return {
+      return prepareOrbitConfig({
         period: plane.period * 1.3875 * (0.78 + Math.random() * 0.44),
         radius: plane.radius * (0.96 + Math.random() * 0.08),
         inclination: plane.inclination + (Math.random() - 0.5) * 0.14,
@@ -513,7 +532,7 @@
         phase: planeOffsets[planeIndex] + slot * phaseSpacing + (Math.random() - 0.5) * 0.24,
         scale,
         direction: Math.random() > 0.5 ? 1 : -1,
-      }
+      })
     })
 
     const telemetry = document.getElementById("comet-telemetry") as HTMLElement | null
@@ -739,42 +758,34 @@
 
     const projectOrbit = (
       theta: number,
-      config: OrbitConfig,
-      pose: GlobePose,
+      config: PreparedOrbitConfig,
+      pose: PreparedGlobePose,
       radius: number,
     ): ProjectedOrbitPoint => {
       const cosineTheta = Math.cos(theta)
       const sineTheta = Math.sin(theta)
-      const cosineInclination = Math.cos(config.inclination)
-      const sineInclination = Math.sin(config.inclination)
-      const cosineNode = Math.cos(config.node)
-      const sineNode = Math.sin(config.node)
 
       const orbitX = cosineTheta
-      const inclinedY = sineTheta * cosineInclination
-      const orbitZ = sineTheta * sineInclination
-      const worldX = orbitX * cosineNode - inclinedY * sineNode
-      const worldY = orbitX * sineNode + inclinedY * cosineNode
+      const inclinedY = sineTheta * config.cosineInclination
+      const orbitZ = sineTheta * config.sineInclination
+      const worldX = orbitX * config.cosineNode - inclinedY * config.sineNode
+      const worldY = orbitX * config.sineNode + inclinedY * config.cosineNode
       const worldZ = orbitZ
 
       const tangentOrbitX = -sineTheta * config.direction
-      const tangentInclinedY = cosineTheta * cosineInclination * config.direction
-      const tangentOrbitZ = cosineTheta * sineInclination * config.direction
-      const tangentWorldX = tangentOrbitX * cosineNode - tangentInclinedY * sineNode
-      const tangentWorldY = tangentOrbitX * sineNode + tangentInclinedY * cosineNode
+      const tangentInclinedY = cosineTheta * config.cosineInclination * config.direction
+      const tangentOrbitZ = cosineTheta * config.sineInclination * config.direction
+      const tangentWorldX = tangentOrbitX * config.cosineNode - tangentInclinedY * config.sineNode
+      const tangentWorldY = tangentOrbitX * config.sineNode + tangentInclinedY * config.cosineNode
       const tangentWorldZ = tangentOrbitZ
 
-      const cosineYaw = Math.cos(pose.rotation)
-      const sineYaw = Math.sin(pose.rotation)
-      const cosinePitch = Math.cos(pose.tilt)
-      const sinePitch = Math.sin(pose.tilt)
-      const yawX = worldX * cosineYaw - worldZ * sineYaw
-      const yawZ = worldX * sineYaw + worldZ * cosineYaw
-      const screenY = worldY * cosinePitch - yawZ * sinePitch
-      const depth = worldY * sinePitch + yawZ * cosinePitch
-      const tangentYawX = tangentWorldX * cosineYaw - tangentWorldZ * sineYaw
-      const tangentYawZ = tangentWorldX * sineYaw + tangentWorldZ * cosineYaw
-      const tangentScreenY = tangentWorldY * cosinePitch - tangentYawZ * sinePitch
+      const yawX = worldX * pose.cosineYaw - worldZ * pose.sineYaw
+      const yawZ = worldX * pose.sineYaw + worldZ * pose.cosineYaw
+      const screenY = worldY * pose.cosinePitch - yawZ * pose.sinePitch
+      const depth = worldY * pose.sinePitch + yawZ * pose.cosinePitch
+      const tangentYawX = tangentWorldX * pose.cosineYaw - tangentWorldZ * pose.sineYaw
+      const tangentYawZ = tangentWorldX * pose.sineYaw + tangentWorldZ * pose.cosineYaw
+      const tangentScreenY = tangentWorldY * pose.cosinePitch - tangentYawZ * pose.sinePitch
 
       return {
         x: yawX * radius,
@@ -810,6 +821,12 @@
         const globePose = (window as Window & {
           __earthGlobePose?: { rotation: number; tilt: number }
         }).__earthGlobePose ?? { rotation: 0, tilt: 0 }
+        const preparedGlobePose: PreparedGlobePose = {
+          cosineYaw: Math.cos(globePose.rotation),
+          sineYaw: Math.sin(globePose.rotation),
+          cosinePitch: Math.cos(globePose.tilt),
+          sinePitch: Math.sin(globePose.tilt),
+        }
         const animationTime = orbitPaused ? pauseStartedAt : now
         const elapsed = animationTime - startTime - totalPausedTime
         const centerX = width / 2
@@ -824,7 +841,7 @@
           const theta = config.phase + config.direction * (elapsed / config.period) * Math.PI * 2
           const isImpactAsteroid = comet.classList.contains("agi-impact-comet")
           const radius = Math.min(width, height) * config.radius
-          const head = projectOrbit(theta, config, globePose, radius)
+          const head = projectOrbit(theta, config, preparedGlobePose, radius)
           const tangentAngle = Math.atan2(head.velocityY, head.velocityX) * 180 / Math.PI + 180
           let depthScale = config.scale * (0.8 + ((head.depth + 1) / 2) * 0.26)
           if (constrainedDevice) depthScale *= 0.82
@@ -856,7 +873,7 @@
           for (let sample = 0; sample < trailSamples; sample += 1) {
             const progress = sample / (trailSamples - 1)
             const sampleTheta = theta - config.direction * trailArc * (1 - progress)
-            const point = projectOrbit(sampleTheta, config, globePose, radius)
+            const point = projectOrbit(sampleTheta, config, preparedGlobePose, radius)
             const turbulence = (1 - progress) * (constrainedDevice ? 3.5 : 7)
             point.x += Math.sin(now * 0.0042 + index * 1.91 + sample * 1.37) * turbulence
             point.y += Math.cos(now * 0.0034 + index * 1.17 + sample * 1.73) * turbulence * 0.58
