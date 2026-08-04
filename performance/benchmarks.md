@@ -182,3 +182,7 @@ Change from the original image-heavy article baseline:
 | +21 | -83% | -89% |
 
 The article now meets the score, blocking-time, and transfer budgets. This experiment is retained.
+
+### 10. Prioritize article hero images
+
+Marked article hero artwork as eager, high-priority content while keeping decoding asynchronous. The Yann article's three-run mobile median held at 2.86 s LCP, with one run improving to 2.71 s and the median score rising from 95 to 96. The change adds no bytes or blocking work and correctly identifies the hero as the page's primary visual, so it is retained.

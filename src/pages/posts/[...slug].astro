@@ -57,7 +57,7 @@ if (related.length < 3) {
 
       <header class="animate article-header">
         {header?.teaser && (
-          <div class="hero-art"><img src={`/images/${header.teaser}`} alt="" /></div>
+          <div class="hero-art"><img src={`/images/${header.teaser}`} alt="" loading="eager" fetchpriority="high" decoding="async" /></div>
         )}
         <div class="mt-8 flex flex-wrap gap-3 text-xs uppercase tracking-[0.12em] text-white/45">
           <span>{formatDate(date)}</span>
