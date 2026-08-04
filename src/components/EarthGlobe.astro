@@ -1,3 +1,11 @@
+---
+import locations from "../data/locations.json"
+
+const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title])
+---
+
+<script is:inline id="earth-location-data" type="application/json" set:html={JSON.stringify(compactLocations)} />
+
 <canvas
   id="earth-globe"
   class="earth-globe"
@@ -64,9 +72,8 @@
 </style>
 
 <script>
-  import locations from "../data/locations.json"
-
   type TravelLocation = { lat: number; lng: number; title: string }
+  type TravelLocationTuple = [lat: number, lng: number, title: string]
   type ProjectedLocation = TravelLocation & { x: number; y: number; depth: number }
   type MarkerCluster = {
     x: number
@@ -81,6 +88,8 @@
   const tooltipTitle = tooltip?.querySelector<HTMLElement>("[data-location-title]")
   const tooltipCoordinates = tooltip?.querySelector<HTMLElement>("[data-location-coordinates]")
   const tooltipCount = tooltip?.querySelector<HTMLElement>("[data-location-count]")
+  const locationData = document.getElementById("earth-location-data")?.textContent
+  const locationTuples = locationData ? JSON.parse(locationData) as TravelLocationTuple[] : []
 
   if (canvas && markerCanvas && tooltip && tooltipTitle && tooltipCoordinates && tooltipCount && !canvas.dataset.initialized) {
     canvas.dataset.initialized = "true"
@@ -221,11 +230,13 @@
           }, { threshold: 0.01 })
           visibilityObserver.observe(canvas)
           const radians = (degrees: number) => degrees * Math.PI / 180
-          const preparedLocations = (locations as TravelLocation[]).map((location) => {
-            const latitude = radians(location.lat)
-            const longitude = radians(location.lng)
+          const preparedLocations = locationTuples.map(([lat, lng, title]) => {
+            const latitude = radians(lat)
+            const longitude = radians(lng)
             return {
-              ...location,
+              lat,
+              lng,
+              title,
               latitudeCosine: Math.cos(latitude),
               latitudeSine: Math.sin(latitude),
               longitudeCosine: Math.cos(longitude),
@@ -502,7 +513,7 @@
           }
           window.addEventListener("orbit:scroll-state", orbitScrollHandler)
           const image = new Image()
-          image.src = constrainedDevice ? "/images/earth-night-nasa-2k.webp" : "/images/earth-night-nasa-4k.webp"
+          image.src = constrainedDevice ? "/images/earth-night-nasa-1536.webp" : "/images/earth-night-nasa-4k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
             gl.bindTexture(gl.TEXTURE_2D, texture)

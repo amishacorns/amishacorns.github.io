@@ -28,15 +28,16 @@ The homepage history below uses the comparable simulated-mobile production audit
 | Right-sized comet trails | 78 | 3.54 s | 485 ms | 966 KiB | Reduced per-frame trail geometry |
 | Current optimized build | 93 | 3.01 s | 183 ms | 469 KiB | Lean assets, parked work, native search, and smaller hot loops |
 | Lean-media build | 90 | 2.26 s | 367 ms | 212 KiB | Explicitly deferred card art and re-encoded persistent visuals |
+| Compact-globe build | 93 | 2.04 s | 296 ms | 185 KiB | Smaller mobile Earth and native-parsed compact location data |
 
 | End-to-end homepage change | Improvement |
 | --- | ---: |
-| Lighthouse performance | 49 → 90 latest median; 93 best optimized median |
-| Largest Contentful Paint | 13.65 s → 2.26 s (-83%) |
-| Total Blocking Time | 1,523 ms → 367 ms latest median; 183 ms best optimized median |
-| Initial transfer | 3,207 KiB → 212 KiB (-93%) |
+| Lighthouse performance | 49 → 93 latest median |
+| Largest Contentful Paint | 13.65 s → 2.04 s (-85%) |
+| Total Blocking Time | 1,523 ms → 296 ms latest median (-81%); 183 ms best optimized median |
+| Initial transfer | 3,207 KiB → 185 KiB (-94%) |
 | Constrained scroll rate | approximately 30 FPS → 60 FPS |
-| Missed frames in the orbit benchmark | 34 → 1 (-97%) |
+| Median missed frames in the orbit benchmark | 34 → 0 |
 
 ## Baseline
 
@@ -404,3 +405,32 @@ Measured on 2026-08-04 against the local production preview after all retained c
 | Earth-to-singularity center error | 0.39 px |
 
 Three related experiments were rejected. SVG geometry sharing via `<use>` reduced attribute writes but made reference resolution much slower. Replacing the trails with two canvases produced a perfect steady-scroll median but created a 534–657 ms cold-start drawing task. Inlining every stylesheet painted about 150 ms earlier, but transferred roughly 10 KB more on the first page and discarded cross-page stylesheet caching; the external stylesheets were retained for the site's multi-page reading flow.
+
+### 20. Compact the globe payload and measure cold starts separately
+
+The 126 travel locations were previously compiled as repeated JavaScript object literals in the homepage's critical module. They are now emitted once as compact coordinate/name tuples in inert page data and parsed natively when the globe initializes. This removes the location catalog from JavaScript evaluation and reduces the critical client module from 43.75 KB to 37.40 KB raw (-14.5%) and from 15.87 KB to 13.17 KB compressed (-17%). The source-of-truth location file and the rendered country index remain unchanged.
+
+The mobile globe now uses a carefully checked 1536 × 768 Earth texture instead of decoding the 2048 × 1024 version. Encoded transfer falls from 67.9 KB to 40.1 KB (-41%), while decoded pixel memory falls from 8 MiB to 4.5 MiB (-44%). In throttled startup traces, the image decode task fell from 42.9 ms to 30.0 ms (-30%) and the complete Earth image-load handler fell from 86.5 ms to 62.9 ms (-27%). Side-by-side phone captures preserve the coastlines, lights, cloud bands, and overall sharpness at the rendered size. Desktop and tablet now use their 4K Earth texture for both the temporary fallback and WebGL globe, avoiding a second Earth request; the superseded 2K asset was removed.
+
+The scroll benchmark now reports the first run and the warm-run median separately. This prevents the site's steady 60 FPS median from hiding intermittent cold-start work and gives the next round a stable target without changing the benchmark's existing all-run summary.
+
+Measured on 2026-08-04 against the local production preview. Lighthouse values are the median of five mobile runs; scroll values are the median of nine runs at 4x CPU throttling.
+
+| Cold-load metric | Experiment 19 | After | Change |
+| --- | ---: | ---: | ---: |
+| Lighthouse performance | 90 | 93 | +3 points |
+| First Contentful Paint | 1.06 s | 1.06 s | unchanged |
+| Largest Contentful Paint | 2.26 s | 2.04 s | -10% |
+| Total Blocking Time | 367 ms | 296 ms | -19%; still run-variable |
+| Transferred bytes | 212 KiB | 185 KiB | -13% |
+| Network requests | 16 | 16 | unchanged |
+
+| Constrained scroll metric | Nine-run median | Warm-run median | Cold first run |
+| --- | ---: | ---: | ---: |
+| Frame time | 16.7 ms | 16.7 ms | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms | 16.8 ms | 66.6 ms |
+| Missed frames | 0 | 0 | 7 |
+| Severe frames | 0 | 0 | 4 |
+| Earth-to-singularity center error | 0.39 px | 0.39 px | 0.39 px |
+
+Three alternatives were rejected after isolated tests. Disabling WebGL antialiasing did not improve the cold run. Loading the travel panel as a separate on-demand module reduced the entry bundle slightly but made the first and second constrained runs less consistent. Removing the animated dust layer from mobile comet trails did not measurably improve the remaining startup spike, so the full visual was retained. The compact-data and Earth-texture changes are retained.

@@ -95,4 +95,20 @@ try {
 const summary = Object.fromEntries(
   Object.keys(results[0]).map((key) => [key, Number(median(results.map((result) => result[key])).toFixed(2))]),
 )
-console.log(JSON.stringify({ url, viewport: `${viewportWidth}x${viewportHeight}@${deviceScaleFactor}`, cpuThrottle, runs, summary, results }, null, 2))
+const warmResults = results.slice(1)
+const warmMedian = warmResults.length
+  ? Object.fromEntries(
+      Object.keys(results[0]).map((key) => [key, Number(median(warmResults.map((result) => result[key])).toFixed(2))]),
+    )
+  : summary
+
+console.log(JSON.stringify({
+  url,
+  viewport: `${viewportWidth}x${viewportHeight}@${deviceScaleFactor}`,
+  cpuThrottle,
+  runs,
+  coldStart: results[0],
+  warmMedian,
+  summary,
+  results,
+}, null, 2))
