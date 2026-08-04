@@ -96,3 +96,23 @@ Change from experiment 2:
 | Desktop | +1 | 0% | -27% | -12% | -5% |
 
 Mobile blocking time varied, but the broader mobile workload improved: main-thread time, boot-up work, and Speed Index all fell while the score remained effectively flat. The sustained WebGL draw rate is reduced by 75% on compact devices and 60% on desktop. This experiment is retained for low-end-device responsiveness and battery use.
+
+### 4. Pre-render the real star field
+
+Replaced the runtime download and projection of 12,495 cataloged stars with responsive desktop and mobile WebP renders generated from the same catalog. The sky remains a real fixed projection, but visitors no longer download the 385 KiB JSON source or execute its trigonometric projection loop. The final assets are 69 KiB for desktop and 83 KiB for mobile. Desktop uses a six-run median because combined homepage-script long tasks varied substantially; mobile uses three runs.
+
+Measured on 2026-08-03 against the local production preview after the isolated change.
+
+| Profile | Score | FCP | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Homepage, mobile median (3 runs) | 73 | 1.28 s | 3.53 s | 694 ms | 3,097 ms | 966 KiB |
+| Homepage, desktop median (6 runs) | 96.5 | 0.35 s | 0.71 s | 151 ms | 988 ms | 1,217 KiB |
+
+Change from experiment 3:
+
+| Profile | Score | LCP | TBT | Main thread | Transfer | Speed Index |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mobile | +7 | -24% | +2% | +3% | -66 KiB | -12% |
+| Desktop | -2.5 | -22% | +82 ms | +13% | -79 KiB | -2% |
+
+The mobile result is a strong overall improvement. Desktop blocking time is volatile because the same combined animation script appears as either several short tasks or one long task, but LCP, transfer, and Speed Index improved consistently. The star image is not the source of those script long tasks. This experiment is retained, and splitting or deferring that combined homepage script becomes the next target.
