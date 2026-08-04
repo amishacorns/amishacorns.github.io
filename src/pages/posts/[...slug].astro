@@ -50,6 +50,9 @@ if (related.length < 3) {
   description={description}
   image={header?.teaser ? `/images/${header.teaser}` : undefined}
   imageAlt={title}
+  type="article"
+  publishedTime={date.toISOString()}
+  tags={tags}
 >
   <div class="pt-28 pb-16">
     <Container size="md">

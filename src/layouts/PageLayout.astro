@@ -5,7 +5,7 @@ import Header from "@components/Header.astro"
 import Footer from "@components/Footer.astro"
 import Drawer from "@components/Drawer.astro"
 import RealStarField from "@components/RealStarField.astro"
-const { title, description, image, imageAlt } = Astro.props
+const { title, description, image, imageAlt, type, publishedTime, tags } = Astro.props
 const isHome = title === "Home"
 const pageTitle = isHome ? `${SITE.TITLE} — Agent Architect` : `${title} | ${SITE.TITLE}`
 import { SITE } from "@consts"
@@ -14,15 +14,16 @@ import { SITE } from "@consts"
 <!doctype html>
 <html lang="en" class="dark">
   <head>
-    <BaseHead title={pageTitle} description={description} image={image} imageAlt={imageAlt} />
+    <BaseHead title={pageTitle} headline={title} description={description} image={image} imageAlt={imageAlt} type={type} publishedTime={publishedTime} tags={tags} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content-root">Skip to content</a>
     <div class:list={["site-star-field", isHome && "site-star-field-home"]}>
       <RealStarField />
     </div>
     <Header />
     <Drawer />
-    <main>
+    <main id="main-content-root">
       <slot />
     </main>
     <Footer />

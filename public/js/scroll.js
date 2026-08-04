@@ -1,10 +1,19 @@
-function onScroll() {
+let scrollFrame = 0
+let headerScrolled = false
+
+function updateHeader() {
+  scrollFrame = 0
   const header = document.getElementById("header")
-  if (window.scrollY > 0) {
-    header.classList.add("scrolled")
-  } else {
-    header.classList.remove("scrolled")
-  }
+  if (!header) return
+  const nextScrolled = window.scrollY > 0
+  if (nextScrolled === headerScrolled) return
+  headerScrolled = nextScrolled
+  header.classList.toggle("scrolled", headerScrolled)
 }
 
-document.addEventListener("scroll", onScroll)
+function onScroll() {
+  if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateHeader)
+}
+
+document.addEventListener("scroll", onScroll, { passive: true })
+updateHeader()

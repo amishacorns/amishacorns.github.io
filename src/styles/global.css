@@ -42,6 +42,10 @@ body {
   @apply relative flex flex-col;
 }
 
+.skip-link {
+  @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-white px-4 py-2 font-semibold text-black transition-transform focus:translate-y-0;
+}
+
 main {
   @apply flex flex-1 flex-col bg-transparent;
 }
@@ -117,21 +121,6 @@ article img {
 .wos-cite a {
   color: rgb(196 181 253) !important;
 }
-
-/**
- * TWINKLE STARS
- */
-
-#twinkle-star.template {
-  @apply absolute -left-full;
-  /* hide offscreen */
-}
-
-#twinkle-star.twinkle {
-  @apply animate-twinkle;
-  /* defined in tailwind.config */
-}
-
 
 /**
  * Meteors

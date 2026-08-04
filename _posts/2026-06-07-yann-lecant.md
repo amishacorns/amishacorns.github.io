@@ -3,14 +3,14 @@ title: "Yann LeCan't Make a Correct Prediction"
 date: 2026-06-07
 permalink: /posts/yann-lecant/
 excerpt: |
-  ![Yann LeCan't](/images/yann-lecant-lifeboat-v3.png){: style="display: block; margin: 0 auto; width: 500px;"}
+  ![Yann LeCan't](/images/yann-lecant-lifeboat-v3.webp){: style="display: block; margin: 0 auto; width: 500px;"}
 
   A running collection of confident claims about what LLMs can't do, plus a few guest appearances.
 tags:
   - artificial intelligence
 description: "A sourced collection of confident claims about what LLMs cannot do, why safety can wait, and why the economic transition will remain gradual."
 header:
-  teaser: "yann-lecant-lifeboat-v3.png"
+  teaser: "yann-lecant-lifeboat-v3.webp"
 ---
 
 <style>
@@ -46,7 +46,7 @@ header:
   }
 </style>
 
-![Yann LeCan't](/images/yann-lecant-lifeboat-v3.png){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
+![Yann LeCan't](/images/yann-lecant-lifeboat-v3.webp){: style="display: block; margin: 0 auto 2em; width: 700px; max-width: 100%;"}
 
 <div class="wos-intro" markdown="1">
 The point isn't that smart people are sometimes wrong, or that strong opinions

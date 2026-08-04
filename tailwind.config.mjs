@@ -23,24 +23,9 @@ export default {
         "315": "315deg",
       },
       animation: {
-        twinkle: "twinkle 2s ease-in-out forwards",
         meteor: "meteor 3s ease-in-out forwards",
       },
       keyframes: {
-        twinkle: {
-          "0%": { 
-            opacity: 0, 
-            transform: "rotate(0deg)" 
-          },
-          "50%": { 
-            opacity: 1,
-            transform: "rotate(180deg)" 
-          },
-          "100%": { 
-            opacity: 0, 
-            transform: "rotate(360deg)" 
-          },
-        },
         meteor: {
           "0%": { 
             opacity: 0, 

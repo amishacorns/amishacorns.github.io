@@ -3,7 +3,7 @@ title: 'Ban the Boomerboard'
 date: 2026-06-19
 permalink: /posts/ban-the-boomer-board/
 excerpt: |
-  ![Ban the Boomerboard](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
+  ![Ban the Boomerboard](/images/ban-the-boomer-board.webp){: style="display: block; margin: 0 auto; width: 500px;"}
 
   The keyboard was a good interface for the typewriter. It should not be the default interface for intelligence.
 tags:
@@ -11,10 +11,10 @@ tags:
   - productivity
 description: "Why the keyboard is throttling communication with intelligent systems—and what offices should do about it."
 header:
-  teaser: "ban-the-boomer-board.png"
+  teaser: "ban-the-boomer-board.webp"
 ---
 
-![Ban the Boomerboard](/images/ban-the-boomer-board.png){: style="display: block; margin: 0 auto; width: 500px;"}
+![Ban the Boomerboard](/images/ban-the-boomer-board.webp){: style="display: block; margin: 0 auto; width: 500px;"}
 
 The modern office is suspiciously quiet.
 

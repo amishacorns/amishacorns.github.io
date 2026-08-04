@@ -14,7 +14,11 @@ const posts = (await getCollection("blog"))
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
   <TopLayout>
     <div class="animate max-w-2xl">
-      <h1 class="text-4xl font-semibold text-white">Transmissions</h1>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <h1 class="text-4xl font-semibold text-white">Transmissions</h1>
+        <a class="rss-link" href="/rss.xml">RSS Feed ↗</a>
+      </div>
+      <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/55">{BLOG.DESCRIPTION}</p>
     </div>
   </TopLayout>
   <BottomLayout>
@@ -45,6 +49,7 @@ const posts = (await getCollection("blog"))
 </PageLayout>
 
 <style>
+  .rss-link { @apply inline-flex rounded-full border border-violet-200/25 bg-violet-300/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-violet-100/75 transition-colors hover:border-violet-200/50 hover:bg-violet-300/10 hover:text-white; }
   .transmission-card { @apply overflow-hidden rounded-2xl border border-white/15 bg-white/[0.025] hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.055] transition-all duration-300; }
   .transmission-image { @apply aspect-[16/10] overflow-hidden border-b border-white/10 bg-white/5; }
   .transmission-image img { @apply h-full w-full object-cover opacity-75 grayscale-[10%] transition duration-500; }

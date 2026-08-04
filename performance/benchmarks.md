@@ -241,3 +241,23 @@ Measured on 2026-08-04 against the local production preview with seven mobile ru
 | Earth-to-singularity center error | 0.39 px |
 
 The active scroll path remains effectively unchanged while idle CPU use drops to zero for these hero processes after the orbit leaves the screen. This experiment is retained.
+
+### 14. Remove dormant UI and unblock document parsing
+
+Six unused components/layouts and their Tailwind candidates were removed, shrinking the shared generated CSS from 52,753 bytes to 51,175 bytes. The global animation and scroll scripts are now deferred instead of blocking HTML parsing, and the header scroll listener coalesces updates into animation frames while avoiding repeated class mutations.
+
+Superseded PNG artwork, an obsolete social preview, unused browser-manifest files, and a generated star catalog that did not need to be publicly served were removed or relocated. This reduced the deployed `public` directory by approximately 9.0 MB, from roughly 11.7 MB to 2.7 MB, without removing any image requested by a live page.
+
+Measured on 2026-08-04 against the local production preview with seven mobile runs at 4x CPU throttling:
+
+| Metric | Median |
+| --- | ---: |
+| Frame time | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms |
+| 99th-percentile frame time | 33.4 ms |
+| Missed frames | 1 |
+| Severe frames | 0 |
+| Long animation frames | 0 |
+| Earth-to-singularity center error | 0.39 px |
+
+The active orbit performance remains unchanged while document startup, generated CSS, repository maintenance, and deployment size improve. This experiment is retained.

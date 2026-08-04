@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 
 const catalog = JSON.parse(
-  await readFile(fileURLToPath(new URL("../public/data/bright-stars.json", import.meta.url)), "utf8"),
+  await readFile(fileURLToPath(new URL("./data/bright-stars.json", import.meta.url)), "utf8"),
 )
 
 const degrees = Math.PI / 180
