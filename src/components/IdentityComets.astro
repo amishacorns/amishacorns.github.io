@@ -831,7 +831,7 @@
         const elapsed = animationTime - startTime - totalPausedTime
         const centerX = width / 2
         const centerY = height / 2
-        const trailSamples = constrainedDevice ? 9 : 15
+        const trailSamples = constrainedDevice ? 7 : 12
         const trailArc = constrainedDevice ? 0.36 : 0.46
         backTrails.setAttribute("viewBox", `0 0 ${width} ${height}`)
         frontTrails.setAttribute("viewBox", `0 0 ${width} ${height}`)

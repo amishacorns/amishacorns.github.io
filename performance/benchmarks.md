@@ -140,3 +140,23 @@ Desktop long-task grouping remains noisy, while its total main-thread work still
 ### 6. Cache orbit dimensions (rejected)
 
 An attempted optimization cached the orbit container's dimensions and updated its SVG viewports only on resize. Reading those dimensions synchronously during startup forced a full layout inside the combined homepage script. Although the mobile median happened to improve, desktop results regressed consistently: score fell to 74, TBT rose to 706 ms, and main-thread work rose to 1,747 ms across three runs. The change was reverted in full.
+
+### 7. Right-size comet trail tessellation
+
+Reduced curved trail sampling from 9 to 7 points on compact screens and from 15 to 12 on larger screens. At the trails' rendered size the curves remain visually indistinguishable, while projection calculations, path-string construction, and SVG path segments fall by approximately 20–22% on every rendered frame. Visual review passed.
+
+Measured on 2026-08-03 against the local production preview after the isolated change.
+
+| Profile | Score | FCP | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Homepage, mobile median (3 runs) | 78 | 1.28 s | 3.54 s | 485 ms | 2,985 ms | 966 KiB |
+| Homepage, desktop median (3 runs) | 99 | 0.33 s | 0.71 s | 85 ms | 882 ms | 1,217 KiB |
+
+Change from experiment 5, excluding rejected experiment 6:
+
+| Profile | Score | LCP | TBT | Main thread | Speed Index |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Mobile | +2 | 0% | -19% | 0% | 0% |
+| Desktop | +4 | 0% | -51% | -9% | -6% |
+
+Desktop again meets the blocking-time budget. This experiment is retained.
