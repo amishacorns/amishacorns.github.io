@@ -222,7 +222,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     </div>
   </section>
 
-  <div class="relative border-t border-white/10 bg-black/80">
+  <div id="main-content" class="relative border-t border-white/10 bg-black/80">
     <div class="mx-auto max-w-screen-md px-5 py-24 space-y-28">
       <section class="animate grid gap-8 md:grid-cols-[0.7fr_1.3fr]">
         <div>
@@ -554,6 +554,53 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   document.addEventListener("astro:after-swap", initializeOrbitSequence)
   initializeOrbitSequence()
+</script>
+
+<script>
+  const initializeEngagementAnalytics = () => {
+    const mainContent = document.getElementById("main-content")
+    const markerCanvas = document.getElementById("earth-markers")
+    const orbitProgress = document.getElementById("orbit-progress")
+    if (!mainContent) return
+
+    const analyticsWindow = window as unknown as Window & {
+      __engagementAnalyticsCleanup?: () => void
+      plausible?: (eventName: string) => void
+    }
+    analyticsWindow.__engagementAnalyticsCleanup?.()
+
+    let enteredMainContent = false
+    let interactedWithGlobe = false
+
+    const track = (eventName: string) => analyticsWindow.plausible?.(eventName)
+    const trackGlobeInteraction = () => {
+      if (interactedWithGlobe) return
+      interactedWithGlobe = true
+      track("Globe Interacted")
+    }
+
+    const mainContentObserver = new IntersectionObserver((entries) => {
+      if (enteredMainContent || !entries.some((entry) => entry.isIntersecting)) return
+      enteredMainContent = true
+      track("Entered Main Content")
+      mainContentObserver.disconnect()
+    }, { threshold: 0.08 })
+
+    mainContentObserver.observe(mainContent)
+    markerCanvas?.addEventListener("pointerdown", trackGlobeInteraction, { passive: true })
+    markerCanvas?.addEventListener("keydown", trackGlobeInteraction)
+    orbitProgress?.addEventListener("click", trackGlobeInteraction)
+
+    analyticsWindow.__engagementAnalyticsCleanup = () => {
+      mainContentObserver.disconnect()
+      markerCanvas?.removeEventListener("pointerdown", trackGlobeInteraction)
+      markerCanvas?.removeEventListener("keydown", trackGlobeInteraction)
+      orbitProgress?.removeEventListener("click", trackGlobeInteraction)
+    }
+  }
+
+  document.addEventListener("astro:after-swap", initializeEngagementAnalytics)
+  initializeEngagementAnalytics()
 </script>
 
 <script>

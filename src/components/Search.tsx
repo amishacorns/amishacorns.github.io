@@ -11,6 +11,7 @@ type Props = {
 export default function Search({ data }: Props) {
   const [query, setQuery] = createSignal("")
   const [results, setResults] = createSignal<CollectionEntry<"blog">[]>([])
+  let searchTracked = false
 
   const fuse = new Fuse(data, {
     keys: ["slug", "data.title", "data.description", "data.tags"],
@@ -30,6 +31,11 @@ export default function Search({ data }: Props) {
   const onSearchInput = (e: Event) => {
     const target = e.target as HTMLInputElement
     setQuery(target.value)
+    if (!searchTracked && target.value.trim().length >= 2) {
+      searchTracked = true
+      const analyticsWindow = window as unknown as Window & { plausible?: (eventName: string) => void }
+      analyticsWindow.plausible?.("Search Used")
+    }
   }
 
   return (
