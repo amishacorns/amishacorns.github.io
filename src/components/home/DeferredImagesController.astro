@@ -1,0 +1,23 @@
+<script>
+  const images = Array.from(document.querySelectorAll<HTMLImageElement>("img[data-deferred-src]"))
+  const load = (image: HTMLImageElement) => {
+    const source = image.dataset.deferredSrc
+    if (!source) return
+    image.src = source
+    delete image.dataset.deferredSrc
+  }
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const image = entry.target as HTMLImageElement
+        observer.unobserve(image)
+        load(image)
+      })
+    }, { rootMargin: "300px 0px" })
+    images.forEach((image) => observer.observe(image))
+  } else {
+    images.forEach(load)
+  }
+</script>

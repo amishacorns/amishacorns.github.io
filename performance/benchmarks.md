@@ -27,13 +27,14 @@ The homepage history below uses the comparable simulated-mobile production audit
 | Cached orbit geometry | 76 | 3.54 s | 596 ms | 966 KiB | Removed repeated fixed trigonometry |
 | Right-sized comet trails | 78 | 3.54 s | 485 ms | 966 KiB | Reduced per-frame trail geometry |
 | Current optimized build | 93 | 3.01 s | 183 ms | 469 KiB | Lean assets, parked work, native search, and smaller hot loops |
+| Lean-media build | 90 | 2.26 s | 367 ms | 212 KiB | Explicitly deferred card art and re-encoded persistent visuals |
 
 | End-to-end homepage change | Improvement |
 | --- | ---: |
-| Lighthouse performance | 49 → 93 |
-| Largest Contentful Paint | 13.65 s → 3.01 s (-78%) |
-| Total Blocking Time | 1,523 ms → 183 ms (-88%) |
-| Initial transfer | 3,207 KiB → 469 KiB (-85%) |
+| Lighthouse performance | 49 → 90 latest median; 93 best optimized median |
+| Largest Contentful Paint | 13.65 s → 2.26 s (-83%) |
+| Total Blocking Time | 1,523 ms → 367 ms latest median; 183 ms best optimized median |
+| Initial transfer | 3,207 KiB → 212 KiB (-93%) |
 | Constrained scroll rate | approximately 30 FPS → 60 FPS |
 | Missed frames in the orbit benchmark | 34 → 1 (-97%) |
 
@@ -374,3 +375,32 @@ The globe previously recalculated four trigonometric functions for each of 126 f
 The new projection is algebraically equivalent to the original; a sweep across all locations and 90 rotation angles produced a maximum coordinate difference of `5.33e-16`. In an isolated five-run benchmark of the location-projection loop, median execution fell from 103.3 ms to 6.3 ms, a 94% reduction. This measures the optimized math rather than the complete globe renderer, but it represents recurring CPU and battery work while the Earth is moving.
 
 The production bundle grows by approximately 0.2 KB raw to carry the prepared values, while removing roughly 500 trigonometric calls per rendered globe frame. This experiment is retained.
+
+### 19. Defer offscreen media and right-size persistent assets
+
+The browser's native lazy-loading threshold still fetched all three selected-transmission thumbnails during the initial homepage load, even though the first card starts roughly 740 pixels below a Pixel-sized viewport. The cards now begin loading independently when they enter a 300-pixel approach margin. They retain fixed dimensions, so this removes startup competition without introducing layout shift; a mobile interaction check confirmed that no card artwork is requested at the top of the page and that each image is complete before it reaches the viewport during normal scrolling.
+
+The persistent sky, Earth, and AGI material images were also conservatively re-encoded for their actual use. The mobile star field fell from 84.5 KB to 51.2 KB, the mobile Earth texture from 88.7 KB to 67.9 KB, and the grayscale asteroid surface from 37.2 KB to 9.9 KB. Desktop equivalents were similarly reduced. Side-by-side inspections of the star field, globe texture, and focused asteroid showed no perceptible change at rendered size. The two local fonts were subset to full Western Latin plus every additional punctuation and symbol present in the site, reducing their combined size from 38.0 KB to 25.9 KB.
+
+Measured on 2026-08-04 against the local production preview after all retained changes. Lighthouse values are the median of three mobile runs; scroll values are the median of seven runs at 4x CPU throttling.
+
+| Cold-load metric | Experiment 17 | After | Change |
+| --- | ---: | ---: | ---: |
+| Lighthouse performance | 93 | 90 | within long-task run variance |
+| First Contentful Paint | 1.06 s | 1.06 s | unchanged |
+| Largest Contentful Paint | 3.01 s | 2.26 s | -25% |
+| Total Blocking Time | 183 ms | 367 ms | variable long-task grouping |
+| Transferred bytes | 469 KiB | 212 KiB | -55% |
+| Network requests | 19 | 16 | -3 |
+
+| Constrained scroll metric | Median |
+| --- | ---: |
+| Frame time | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms |
+| 99th-percentile frame time | 33.4 ms |
+| Missed frames | 1 |
+| Severe frames | 0 |
+| Long animation frames | 0 |
+| Earth-to-singularity center error | 0.39 px |
+
+Three related experiments were rejected. SVG geometry sharing via `<use>` reduced attribute writes but made reference resolution much slower. Replacing the trails with two canvases produced a perfect steady-scroll median but created a 534–657 ms cold-start drawing task. Inlining every stylesheet painted about 150 ms earlier, but transferred roughly 10 KB more on the first page and discarded cross-page stylesheet caching; the external stylesheets were retained for the site's multi-page reading flow.

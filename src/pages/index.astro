@@ -12,6 +12,7 @@ import OrbitSequenceController from "@components/home/OrbitSequenceController.as
 import EngagementAnalyticsController from "@components/home/EngagementAnalyticsController.astro"
 import OrbitalFocusController from "@components/home/OrbitalFocusController.astro"
 import TravelIndexController from "@components/home/TravelIndexController.astro"
+import DeferredImagesController from "@components/home/DeferredImagesController.astro"
 import { SITE } from "@consts"
 import locations from "../data/locations.json"
 
@@ -249,7 +250,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
             return (
               <a class="featured-card" href={post.data.permalink}>
                 <div class="featured-image">
-                  <img src={art?.image} alt="" width="800" height="600" loading="lazy" decoding="async" />
+                  <img data-deferred-src={art?.image} alt="" width="800" height="600" loading="eager" decoding="async" />
                 </div>
                 <div class="p-5">
                   <p class="text-xs uppercase tracking-[0.18em] text-violet-300/75">{art?.label}</p>
@@ -299,6 +300,8 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     </div>
   </div>
 </PageLayout>
+
+<DeferredImagesController />
 
 <style>
   .orbit-section {

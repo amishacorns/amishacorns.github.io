@@ -89,7 +89,7 @@ const renderStarField = async ({ cssWidth, cssHeight, output, magnitudeLimit }) 
   }
 
   await sharp(pixels, { raw: { width, height, channels: 4 } })
-    .webp({ quality: 88, alphaQuality: 90, effort: 6 })
+    .webp({ quality: 74, alphaQuality: 82, smartSubsample: true, effort: 6 })
     .toFile(fileURLToPath(new URL(`../public/images/${output}`, import.meta.url)))
 }
 

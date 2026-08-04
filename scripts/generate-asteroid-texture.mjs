@@ -65,5 +65,5 @@ const crackOverlay = Buffer.from(
 
 await sharp(pixels, { raw: { width: size, height: size, channels: 4 } })
   .composite([{ input: crackOverlay }])
-  .webp({ quality: 88, effort: 6 })
+  .webp({ quality: 70, smartSubsample: true, effort: 6 })
   .toFile(fileURLToPath(new URL("../public/images/agi-asteroid-surface.webp", import.meta.url)))
