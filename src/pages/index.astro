@@ -523,6 +523,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     let earthHeight = 1
     let singularityCenterX = 0
     let singularityCenterY = 0
+    let viewportCenterY = 0
     let targetProgress = 0
     let renderedProgress = 0
     let scrolling = false
@@ -533,6 +534,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
     let markersVisible = true
     let pauseInteractive = true
     let orbitingObjectsVisible = true
+    let singularityActive = false
     ;(window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible = true
     const clamp = (value: number, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value))
     const fadeBetween = (progress: number, start: number, end: number) => 1 - clamp((progress - start) / (end - start))
@@ -555,6 +557,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       singularityCenterY = singularityBounds
         ? singularityBounds.top + singularityBounds.height / 2 - stageBounds.top
         : stage.clientHeight * 0.42
+      viewportCenterY = stage.clientHeight * 0.52
       targetProgress = readProgress()
       if (!frame) frame = window.requestAnimationFrame(render)
     }
@@ -590,10 +593,14 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       const singularityScale = 0.72 + singularityReveal * 0.3
       const singularityJourney = clamp((progress - 0.28) / 0.5)
       const singularityEase = singularityJourney * singularityJourney * (3 - 2 * singularityJourney)
+      const centeringJourney = clamp(progress / 0.22)
+      const centeringEase = centeringJourney * centeringJourney * (3 - 2 * centeringJourney)
 
       const desiredEarthCenterX = earthBaseCenterX + (singularityCenterX - earthBaseCenterX) * singularityEase
       const initialEarthCenterY = earthBaseTop + earthHeight / 2
-      const desiredEarthCenterY = initialEarthCenterY + (singularityCenterY - initialEarthCenterY) * singularityEase
+      const centeredEarthY = Math.min(initialEarthCenterY, viewportCenterY)
+      const preSingularityCenterY = initialEarthCenterY + (centeredEarthY - initialEarthCenterY) * centeringEase
+      const desiredEarthCenterY = preSingularityCenterY + (singularityCenterY - preSingularityCenterY) * singularityEase
       const orbitX = desiredEarthCenterX - earthBaseCenterX
       const orbitY = desiredEarthCenterY - (earthBaseTop + earthHeight * scale / 2)
 
@@ -606,6 +613,11 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
       if (singularity) {
         singularity.style.setProperty("--singularity-reveal", singularityReveal.toFixed(3))
         singularity.style.setProperty("--singularity-scale", singularityScale.toFixed(3))
+        const nextSingularityActive = singularityReveal >= 0.02
+        if (nextSingularityActive !== singularityActive) {
+          singularityActive = nextSingularityActive
+          singularity.classList.toggle("singularity-active", singularityActive)
+        }
       }
       ;(window as Window & { __singularityReveal?: number }).__singularityReveal = singularityReveal
       const nextCopyVisible = copyOpacity >= 0.015

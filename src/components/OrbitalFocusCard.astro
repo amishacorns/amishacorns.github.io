@@ -1,0 +1,83 @@
+---
+interface Row {
+  label: string
+  value: string
+}
+
+interface Props {
+  kicker: string
+  title: string
+  rows: Row[]
+}
+
+const { kicker, title, rows } = Astro.props
+---
+
+<div class="orbital-focus-card" aria-hidden="true">
+  <span class="orbital-focus-kicker">{kicker}</span>
+  <strong>{title}</strong>
+  <dl>
+    {rows.map((row) => (
+      <div>
+        <dt>{row.label}</dt>
+        <dd>{row.value}</dd>
+      </div>
+    ))}
+  </dl>
+</div>
+
+<style>
+  .orbital-focus-card {
+    @apply pointer-events-none absolute left-1/2 z-30 -translate-x-1/2 rounded-xl border border-white/10 bg-black/75 px-4 py-3 font-mono backdrop-blur-md;
+    top: var(--focus-card-top, calc(100% + 0.75rem));
+    width: clamp(17rem, 25vw, 21rem);
+    opacity: 0;
+    transform: translateX(-50%) rotate(var(--counter-rotation, 0deg));
+    transition: opacity 240ms ease;
+    box-shadow: 0 18px 55px rgb(0 0 0 / 0.48), inset 0 1px 0 rgb(255 255 255 / 0.035);
+  }
+
+  .orbital-focus-kicker {
+    @apply block text-[8px] font-semibold uppercase tracking-[0.22em] text-cyan-200/45;
+  }
+
+  .orbital-focus-card > strong {
+    @apply mt-1 block text-sm font-semibold text-white;
+  }
+
+  .orbital-focus-card dl {
+    @apply mt-2 border-t border-white/[0.07] pt-1;
+  }
+
+  .orbital-focus-card dl > div {
+    @apply mt-1.5 flex items-center justify-between gap-5 text-[10px];
+  }
+
+  .orbital-focus-card dt {
+    @apply font-medium uppercase tracking-[0.14em] text-white/35;
+  }
+
+  .orbital-focus-card dd {
+    @apply text-right text-cyan-100/80;
+  }
+
+  .orbital-focus-card.focus-card-overlay {
+    position: absolute;
+    left: 50%;
+    top: clamp(4.5rem, 9vh, 6.5rem);
+    width: min(21rem, 82vw);
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 700px) {
+    .orbital-focus-card {
+      width: min(18rem, 82vw);
+      @apply px-3 py-2.5;
+    }
+
+    .orbital-focus-card.focus-card-overlay {
+      top: 4.25rem;
+    }
+  }
+</style>

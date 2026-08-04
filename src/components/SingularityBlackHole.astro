@@ -1,3 +1,7 @@
+---
+import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
+---
+
 <div id="deep-singularity" class="deep-singularity" aria-hidden="true">
   <div class="singularity-radiance"></div>
   <div class="singularity-system">
@@ -8,16 +12,22 @@
     <div class="photon-ring"></div>
     <div class="accretion-disk accretion-disk-front"></div>
   </div>
-  <div class="singularity-caption">
-    <span>SGR-2050</span>
-    <strong>The Singularity</strong>
-  </div>
+  <OrbitalFocusCard
+    kicker="Deep Space Object"
+    title="The Singularity"
+    rows={[
+      { label: "Object ID", value: "SGR-2050" },
+      { label: "Classification", value: "Supermassive" },
+      { label: "Event Horizon", value: "01 Jan 2050" },
+    ]}
+  />
 </div>
 
 <style>
   .deep-singularity {
     --singularity-reveal: 0;
     --singularity-scale: 0.72;
+    --focus-card-top: 66%;
     @apply pointer-events-none absolute right-[-6vw] top-[3vh] z-[3];
     width: clamp(28rem, 58vw, 62rem);
     aspect-ratio: 1;
@@ -119,15 +129,6 @@
     filter: blur(0.2px) drop-shadow(0 0 11px rgb(255 237 213 / 0.72));
   }
 
-  .singularity-caption {
-    @apply absolute left-1/2 top-[65%] flex -translate-x-1/2 flex-col items-center whitespace-nowrap font-mono uppercase;
-    opacity: calc(var(--singularity-reveal) * 0.72);
-    text-shadow: 0 0 12px rgb(251 146 60 / 0.4);
-  }
-
-  .singularity-caption span { @apply text-[8px] tracking-[0.24em] text-orange-200/45; }
-  .singularity-caption strong { @apply mt-1 text-xs tracking-[0.18em] text-orange-50/70; }
-
   @keyframes disk-pulse {
     from { filter: blur(0.45px) brightness(0.86) drop-shadow(0 0 11px rgb(251 146 60 / 0.5)); }
     to { filter: blur(0.3px) brightness(1.12) drop-shadow(0 0 19px rgb(251 146 60 / 0.74)); }
@@ -139,6 +140,9 @@
 
   .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk-back,
   .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk::before { animation-play-state: paused; }
+
+  .deep-singularity:not(.singularity-active):not(.singularity-focused) .accretion-disk-back,
+  .deep-singularity:not(.singularity-active):not(.singularity-focused) .accretion-disk::before { animation-play-state: paused; }
 
   :global(#orbit-stage.orbit-scrolling) .accretion-disk-back,
   :global(#orbit-stage.orbit-scrolling) .accretion-disk::before { animation-play-state: paused; }
@@ -159,7 +163,7 @@
       opacity 620ms ease;
   }
 
-  .deep-singularity.singularity-focused .singularity-caption { opacity: 0.85; }
+  .deep-singularity.singularity-focused :global(.orbital-focus-card) { opacity: 1; }
 
   @media (max-width: 760px) {
     .deep-singularity {
@@ -167,8 +171,8 @@
       top: 8vh;
       width: 42rem;
     }
-    .singularity-caption { display: none; }
-    .deep-singularity.singularity-focused .singularity-caption { display: flex; }
+    .deep-singularity :global(.orbital-focus-card) { display: none; }
+    .deep-singularity.singularity-focused :global(.orbital-focus-card) { display: block; }
   }
 
   @media (prefers-reduced-motion: reduce) {

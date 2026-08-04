@@ -1,16 +1,26 @@
+---
+import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
+---
+
 <div id="inbound-agi" class="identity-comet agi-impact-comet inbound-agi" data-object-key="AGI" data-object-name="Artificial General Intelligence">
   <button class="inbound-agi-object" type="button" aria-label="Focus artificial general intelligence">
     <canvas class="agi-asteroid-mesh" aria-hidden="true"></canvas>
     <span class="sr-only">Focus artificial general intelligence</span>
   </button>
-  <div class="inbound-agi-caption" aria-hidden="true">
-    <span>AGI-2027</span>
-    <strong>Artificial General Intelligence</strong>
-  </div>
+  <OrbitalFocusCard
+    kicker="Inbound Object"
+    title="Artificial General Intelligence"
+    rows={[
+      { label: "Object ID", value: "AGI-2027" },
+      { label: "Velocity", value: "17.82 km/s" },
+      { label: "Impact Date", value: "13 Jul 2027" },
+    ]}
+  />
 </div>
 
 <style>
   .inbound-agi {
+    --focus-card-top: calc(100% + 0.75rem);
     @apply pointer-events-none absolute left-1/2 top-1/2 z-[14];
     width: 20rem;
     height: 20rem;
@@ -34,27 +44,12 @@
     opacity: 1;
   }
 
-  .inbound-agi-caption {
-    @apply pointer-events-none absolute left-1/2 top-[calc(100%+0.65rem)] flex -translate-x-1/2 flex-col items-center whitespace-nowrap font-mono uppercase;
-    opacity: 0;
-    transform: translateX(-50%) rotate(var(--counter-rotation, 0deg));
-    transition: opacity 240ms ease;
-    text-shadow: 0 0 12px rgb(251 146 60 / 0.42);
-  }
-
-  .inbound-agi-caption span { @apply text-[14px] tracking-[0.2em] text-orange-200/55; }
-  .inbound-agi-caption strong { @apply mt-1 text-[26px] tracking-[0.1em] text-orange-50/80; }
-
   .inbound-agi.agi-focused {
     opacity: 1 !important;
   }
 
-  .inbound-agi.agi-focused .inbound-agi-caption { opacity: 1; }
-
   @media (max-width: 700px) {
     .inbound-agi { width: 15rem; height: 15rem; }
-    .inbound-agi-caption span { @apply text-[10px] tracking-[0.14em]; }
-    .inbound-agi-caption strong { @apply text-[18px] tracking-[0.06em]; }
   }
 </style>
 
@@ -348,6 +343,8 @@
   const initializeInboundAgi = () => {
     const container = document.getElementById("inbound-agi")
     const asteroid = container?.querySelector<HTMLButtonElement>(".inbound-agi-object")
+    const focusCard = container?.querySelector<HTMLElement>(".orbital-focus-card")
+    const stage = document.getElementById("orbit-stage")
     if (!container || !asteroid) return
     const agiWindow = window as Window & { __inboundAgiCleanup?: () => void }
     agiWindow.__inboundAgiCleanup?.()
@@ -355,12 +352,22 @@
     const focus = () => {
       window.dispatchEvent(new CustomEvent("orbital:focus-mode", { detail: { target: "agi" } }))
       container.classList.add("agi-focused")
+      if (focusCard && stage) {
+        stage.appendChild(focusCard)
+        focusCard.classList.add("focus-card-overlay")
+      }
       window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
     }
-    const clearFocus = () => container.classList.remove("agi-focused")
+    const clearFocus = () => {
+      container.classList.remove("agi-focused")
+      if (focusCard) {
+        focusCard.classList.remove("focus-card-overlay")
+        container.appendChild(focusCard)
+      }
+    }
     const pauseState = (event: Event) => {
       const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
-      if (!paused) container.classList.remove("agi-focused")
+      if (!paused) clearFocus()
     }
 
     asteroid.addEventListener("click", focus)
@@ -368,6 +375,7 @@
     window.addEventListener("orbital:clear-focus", clearFocus)
     window.addEventListener("globe:pause-state", pauseState)
     agiWindow.__inboundAgiCleanup = () => {
+      clearFocus()
       asteroid.removeEventListener("click", focus)
       window.removeEventListener("orbital:focus-agi", focus)
       window.removeEventListener("orbital:clear-focus", clearFocus)

@@ -204,3 +204,20 @@ Measured on 2026-08-04 against the local production preview. Results are the med
 | Earth-to-singularity center error | 0.39 px | 0.39 px | unchanged |
 
 The asteroid mesh was also reduced by roughly two thirds on compact screens while retaining its uneven silhouette and texture. An obsolete straight-tail implementation was removed after confirming that the curved SVG trails had fully replaced it, shrinking `IdentityComets.astro` from 942 to 777 lines (17.5%). This experiment is retained.
+
+### 12. Center the desktop orbit and suspend hidden singularity motion
+
+The desktop Earth now moves from its initially below-viewport geometric center to the visible center of the screen during the first 22% of the orbit transition, then travels from that stable position into the singularity. The mobile path remains unchanged. The accretion-disk animations now remain paused until the singularity is visible or explicitly focused, eliminating continuous animation work for an invisible element at the top of the page.
+
+Measured on 2026-08-04 against the local production preview with seven mobile runs at 4x CPU throttling:
+
+| Metric | Median |
+| --- | ---: |
+| Frame time | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms |
+| Missed frames | 1 |
+| Severe frames | 0 |
+| Long animation frames | 0 |
+| Earth-to-singularity center error | 0.39 px |
+
+An alternative experiment that cancelled and restarted all three animation loops during active scrolling raised the median missed-frame count from one to three. It was rejected and reverted in full.
