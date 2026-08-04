@@ -9,6 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "preview:network": "astro dev --host",
+    "generate:asteroid-texture": "node scripts/generate-asteroid-texture.mjs",
     "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

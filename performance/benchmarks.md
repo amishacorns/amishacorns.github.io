@@ -56,3 +56,23 @@ Change from the original production baseline:
 | Desktop | +28 | -59% | -62% | -46% | -60% |
 
 The mobile audit no longer requests the 8K texture and now meets the 1 MiB transfer budget. This experiment is retained. The original baseline was measured against the public deployment while this experiment was measured against a local production preview, so subsequent experiments should use this result as their consistent local comparison point.
+
+### 2. Pre-generate the AGI asteroid surface
+
+Replaced the visitor-side generation of a 512×512 procedural noise texture with an equivalent deterministic WebP generated ahead of time. This removes more than three million trigonometric hash calculations from page startup. The 37 KiB asset preserves the asteroid's grain, cracks, lighting, and tumbling; a production build and close-up visual review passed.
+
+Measured on 2026-08-03 against the local production preview after the isolated change.
+
+| Profile | Score | FCP | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Homepage, mobile median (3 runs) | 67 | 1.29 s | 4.68 s | 641 ms | 3,237 ms | 1,031 KiB |
+| Homepage, desktop median (3 runs) | 98 | 0.33 s | 0.91 s | 94 ms | 995 ms | 1,296 KiB |
+
+Change from experiment 1:
+
+| Profile | Score | LCP | TBT | Main thread | Transfer |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Mobile | +9 | -4% | -49% | -8% | +36 KiB |
+| Desktop | +9 | -10% | -62% | +2% | +37 KiB |
+
+Desktop now meets the blocking-time budget. Mobile blocking time remains above budget but has fallen 58% from the original baseline. The small main-thread variance on desktop is within run-to-run noise, while the blocking-time reduction is consistent and substantial. This experiment is retained.

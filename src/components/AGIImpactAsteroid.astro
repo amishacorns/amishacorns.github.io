@@ -259,73 +259,22 @@
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer)
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW)
 
-    let seed = 928371
-    const random = () => {
-      seed = (seed * 1664525 + 1013904223) >>> 0
-      return seed / 4294967296
-    }
-    const textureCanvas = document.createElement("canvas")
-    textureCanvas.width = 512
-    textureCanvas.height = 512
-    const textureContext = textureCanvas.getContext("2d")
-    if (!textureContext) return
-    const textureImage = textureContext.createImageData(512, 512)
-    const hash2 = (x: number, y: number) => {
-      const value = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123
-      return value - Math.floor(value)
-    }
-    const valueNoise = (x: number, y: number, cellSize: number) => {
-      const gridX = Math.floor(x / cellSize)
-      const gridY = Math.floor(y / cellSize)
-      const fractionX = (x / cellSize) - gridX
-      const fractionY = (y / cellSize) - gridY
-      const smoothX = fractionX * fractionX * (3 - 2 * fractionX)
-      const smoothY = fractionY * fractionY * (3 - 2 * fractionY)
-      const top = hash2(gridX, gridY) * (1 - smoothX) + hash2(gridX + 1, gridY) * smoothX
-      const bottom = hash2(gridX, gridY + 1) * (1 - smoothX) + hash2(gridX + 1, gridY + 1) * smoothX
-      return top * (1 - smoothY) + bottom * smoothY
-    }
-    for (let y = 0; y < 512; y += 1) {
-      for (let x = 0; x < 512; x += 1) {
-        const index = (y * 512 + x) * 4
-        const layeredNoise =
-          0.24 +
-          valueNoise(x, y, 88) * 0.36 +
-          valueNoise(x, y, 31) * 0.24 +
-          valueNoise(x, y, 9) * 0.1 +
-          (random() - 0.5) * 0.06
-        const value = Math.max(25, Math.min(218, Math.round(layeredNoise * 190)))
-        textureImage.data[index] = value
-        textureImage.data[index + 1] = value
-        textureImage.data[index + 2] = value
-        textureImage.data[index + 3] = 255
-      }
-    }
-    textureContext.putImageData(textureImage, 0, 0)
-    textureContext.lineCap = "round"
-    for (let crackIndex = 0; crackIndex < 36; crackIndex += 1) {
-      let x = random() * 512
-      let y = random() * 512
-      textureContext.beginPath()
-      textureContext.moveTo(x, y)
-      const segments = 3 + Math.floor(random() * 6)
-      for (let segment = 0; segment < segments; segment += 1) {
-        x += (random() - 0.5) * 54
-        y += (random() - 0.5) * 54
-        textureContext.lineTo(x, y)
-      }
-      textureContext.strokeStyle = `rgba(8, 6, 4, ${0.34 + random() * 0.42})`
-      textureContext.lineWidth = 1.5 + random() * 3.2
-      textureContext.stroke()
-    }
-
     const texture = gl.createTexture()
     gl.bindTexture(gl.TEXTURE_2D, texture)
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1)
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureCanvas)
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([104, 104, 104, 255]))
     gl.generateMipmap(gl.TEXTURE_2D)
+
+    const surfaceImage = new Image()
+    surfaceImage.decoding = "async"
+    surfaceImage.onload = () => {
+      gl.bindTexture(gl.TEXTURE_2D, texture)
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, surfaceImage)
+      gl.generateMipmap(gl.TEXTURE_2D)
+    }
+    surfaceImage.src = "/images/agi-asteroid-surface.webp"
 
     const anglesLocation = gl.getUniformLocation(program, "uAngles")
     gl.uniform1i(gl.getUniformLocation(program, "uSurface"), 0)
@@ -374,6 +323,7 @@
 
     asteroidWindow.__asteroidMeshCleanup = () => {
       cancelAnimationFrame(animationFrame)
+      surfaceImage.onload = null
       window.removeEventListener("globe:pause-state", pauseState)
       canvas.removeAttribute("data-initialized")
     }
