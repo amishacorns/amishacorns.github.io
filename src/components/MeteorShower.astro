@@ -24,6 +24,7 @@
     type MeteorLife = { remaining: number; started: number; timer: number }
     const active = new Map<HTMLElement, MeteorLife>()
     let paused = false
+    let orbitVisible = true
 
     const scheduleRemoval = (meteor: HTMLElement, life: MeteorLife) => {
       life.started = performance.now()
@@ -34,7 +35,7 @@
     }
 
     const createMeteor = () => {
-      if (paused) return
+      if (paused || !orbitVisible || document.hidden) return
       const meteor = document.createElement("div")
       meteor.className = "meteor"
       meteor.style.left = `${Math.round(Math.random() * window.innerWidth)}px`
@@ -45,6 +46,25 @@
       const life: MeteorLife = { remaining: 3500, started: performance.now(), timer: 0 }
       active.set(meteor, life)
       scheduleRemoval(meteor, life)
+    }
+
+    const clearMeteors = () => {
+      active.forEach((life, meteor) => {
+        window.clearTimeout(life.timer)
+        meteor.remove()
+      })
+      active.clear()
+    }
+
+    let interval = 0
+    const stopMeteorLoop = () => {
+      if (!interval) return
+      window.clearInterval(interval)
+      interval = 0
+    }
+    const startMeteorLoop = () => {
+      if (interval || document.hidden || !orbitVisible) return
+      interval = window.setInterval(createMeteor, 1500)
     }
 
     const pauseHandler = (event: Event) => {
@@ -65,16 +85,32 @@
       })
     }
 
-    const interval = window.setInterval(createMeteor, 1500)
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      orbitVisible = entry?.isIntersecting ?? true
+      if (orbitVisible) startMeteorLoop()
+      else {
+        stopMeteorLoop()
+        clearMeteors()
+      }
+    }, { threshold: 0.01 })
+    visibilityObserver.observe(root.closest("#orbit") ?? root)
+    const pageVisibilityHandler = () => {
+      if (document.hidden) {
+        stopMeteorLoop()
+        clearMeteors()
+      } else {
+        startMeteorLoop()
+      }
+    }
+    document.addEventListener("visibilitychange", pageVisibilityHandler)
     window.addEventListener("globe:pause-state", pauseHandler)
+    startMeteorLoop()
     meteorWindow.__meteorShowerCleanup = () => {
-      window.clearInterval(interval)
+      stopMeteorLoop()
+      visibilityObserver.disconnect()
+      document.removeEventListener("visibilitychange", pageVisibilityHandler)
       window.removeEventListener("globe:pause-state", pauseHandler)
-      active.forEach((life, meteor) => {
-        window.clearTimeout(life.timer)
-        meteor.remove()
-      })
-      active.clear()
+      clearMeteors()
     }
   }
 

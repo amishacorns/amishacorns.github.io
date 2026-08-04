@@ -205,12 +205,19 @@
           let previousY = 0
           let clusters: MarkerCluster[] = []
           let selectedLocation = ""
+          let globeAnimationFrame = 0
+          let resumeGlobe = () => {}
           const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
           const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8
           const constrainedDevice = window.matchMedia("(max-width: 700px)").matches || deviceMemory <= 4
           const frameInterval = constrainedDevice ? 66 : 42
           const visibilityObserver = new IntersectionObserver(([entry]) => {
             globeVisible = entry?.isIntersecting ?? true
+            if (globeVisible) resumeGlobe()
+            else if (globeAnimationFrame) {
+              window.cancelAnimationFrame(globeAnimationFrame)
+              globeAnimationFrame = 0
+            }
           }, { threshold: 0.01 })
           visibilityObserver.observe(canvas)
           const radians = (degrees: number) => degrees * Math.PI / 180
@@ -380,7 +387,7 @@
             tooltip.hidden = false
           }
 
-          markerCanvas.addEventListener("pointerdown", (event) => {
+          const pointerDownHandler = (event: PointerEvent) => {
             if (event.pointerType === "mouse" && event.button !== 0) return
             targetRotation = null
             targetTilt = null
@@ -392,9 +399,9 @@
             markerCanvas.classList.add("dragging")
             markerCanvas.setPointerCapture(event.pointerId)
             hideTooltip()
-          })
+          }
 
-          markerCanvas.addEventListener("pointermove", (event) => {
+          const pointerMoveHandler = (event: PointerEvent) => {
             if (!dragging) return
 
             lastInteraction = performance.now()
@@ -406,7 +413,7 @@
             publishGlobePose()
             previousX = event.clientX
             previousY = event.clientY
-          })
+          }
 
           const finishDrag = (event: PointerEvent) => {
             if (!dragging) return
@@ -416,9 +423,7 @@
             if (dragDistance < 5) showTooltip(event.clientX, event.clientY)
           }
 
-          markerCanvas.addEventListener("pointerup", finishDrag)
-          markerCanvas.addEventListener("pointercancel", finishDrag)
-          markerCanvas.addEventListener("keydown", (event) => {
+          const keyDownHandler = (event: KeyboardEvent) => {
             const step = event.shiftKey ? 0.18 : 0.08
             targetRotation = null
             targetTilt = null
@@ -430,7 +435,12 @@
             event.preventDefault()
             lastInteraction = performance.now()
             publishGlobePose()
-          })
+          }
+          markerCanvas.addEventListener("pointerdown", pointerDownHandler)
+          markerCanvas.addEventListener("pointermove", pointerMoveHandler)
+          markerCanvas.addEventListener("pointerup", finishDrag)
+          markerCanvas.addEventListener("pointercancel", finishDrag)
+          markerCanvas.addEventListener("keydown", keyDownHandler)
 
           const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
           const setManualPaused = (paused: boolean) => {
@@ -445,7 +455,8 @@
               detail: { paused: manuallyPaused },
             }))
           }
-          pauseButton?.addEventListener("click", () => setManualPaused(!manuallyPaused))
+          const pauseClickHandler = () => setManualPaused(!manuallyPaused)
+          pauseButton?.addEventListener("click", pauseClickHandler)
 
           const controlsWindow = window as Window & { __earthGlobeControlsCleanup?: () => void }
           controlsWindow.__earthGlobeControlsCleanup?.()
@@ -476,13 +487,28 @@
             orbitScrolling = (event as CustomEvent<{ scrolling?: boolean }>).detail?.scrolling ?? false
           }
           window.addEventListener("orbit:scroll-state", orbitScrollHandler)
+          const image = new Image()
           controlsWindow.__earthGlobeControlsCleanup = () => {
+            image.onload = null
+            visibilityObserver.disconnect()
+            window.cancelAnimationFrame(globeAnimationFrame)
+            window.removeEventListener("resize", resizeCanvas)
             window.removeEventListener("globe:set-paused", pauseGlobeHandler)
             window.removeEventListener("globe:focus-location", focusGlobeHandler)
             window.removeEventListener("orbit:scroll-state", orbitScrollHandler)
+            markerCanvas.removeEventListener("pointerdown", pointerDownHandler)
+            markerCanvas.removeEventListener("pointermove", pointerMoveHandler)
+            markerCanvas.removeEventListener("pointerup", finishDrag)
+            markerCanvas.removeEventListener("pointercancel", finishDrag)
+            markerCanvas.removeEventListener("keydown", keyDownHandler)
+            pauseButton?.removeEventListener("click", pauseClickHandler)
+            gl.deleteTexture(texture)
+            gl.deleteBuffer(buffer)
+            gl.deleteProgram(program)
+            if (vertexShader) gl.deleteShader(vertexShader)
+            if (fragmentShader) gl.deleteShader(fragmentShader)
+            canvas.removeAttribute("data-initialized")
           }
-
-          const image = new Image()
           image.src = constrainedDevice ? "/images/earth-night-nasa-2k.webp" : "/images/earth-night-nasa-4k.webp"
           image.onload = () => {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
@@ -495,6 +521,7 @@
             canvas.closest("#planet")?.classList.add("globe-ready")
 
             const draw = (now: number) => {
+              globeAnimationFrame = 0
               if (globeVisible && !orbitScrolling && now - lastDraw >= frameInterval) {
                 const delta = Math.min(64, now - lastFrame)
                 if (targetRotation !== null && targetTilt !== null) {
@@ -520,10 +547,15 @@
                 lastFrame = now
                 lastDraw = now
               }
-              requestAnimationFrame(draw)
+              resumeGlobe()
             }
 
-            requestAnimationFrame(draw)
+            resumeGlobe = () => {
+              if (!globeAnimationFrame && globeVisible) {
+                globeAnimationFrame = requestAnimationFrame(draw)
+              }
+            }
+            resumeGlobe()
           }
         }
       }

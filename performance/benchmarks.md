@@ -221,3 +221,23 @@ Measured on 2026-08-04 against the local production preview with seven mobile ru
 | Earth-to-singularity center error | 0.39 px |
 
 An alternative experiment that cancelled and restarted all three animation loops during active scrolling raised the median missed-frame count from one to three. It was rejected and reverted in full.
+
+### 13. Shorten the orbit handoff and park offscreen work
+
+The first content panel now rises into the final part of the orbit sequence instead of waiting below it. The visible desktop gap between the orbit HUD and the first content fell from roughly 140 px to roughly 20 px; the same handoff was visually verified at a 412 x 830 mobile viewport.
+
+The homepage now stops its countdown timer, shooting-star creation, globe rendering, comet rendering, and AGI asteroid rendering once the orbit leaves the viewport, then resumes them when the visitor returns. The unused light-theme runtime and its 1,750 generated particle-shadow declarations were removed. Four unrelated homepage controllers were also extracted from `index.astro`, reducing that page from 964 lines to 503 lines without changing its runtime behavior.
+
+Measured on 2026-08-04 against the local production preview with seven mobile runs at 4x CPU throttling:
+
+| Metric | Median |
+| --- | ---: |
+| Frame time | 16.7 ms |
+| 95th-percentile frame time | 16.8 ms |
+| 99th-percentile frame time | 33.4 ms |
+| Missed frames | 1 |
+| Severe frames | 0 |
+| Long animation frames | 0 |
+| Earth-to-singularity center error | 0.39 px |
+
+The active scroll path remains effectively unchanged while idle CPU use drops to zero for these hero processes after the orbit leaves the screen. This experiment is retained.

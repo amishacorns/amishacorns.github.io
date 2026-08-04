@@ -1,0 +1,46 @@
+<script>
+  const initializeEngagementAnalytics = () => {
+    const mainContent = document.getElementById("main-content")
+    const markerCanvas = document.getElementById("earth-markers")
+    const orbitProgress = document.getElementById("orbit-progress")
+    if (!mainContent) return
+
+    const analyticsWindow = window as unknown as Window & {
+      __engagementAnalyticsCleanup?: () => void
+      plausible?: (eventName: string) => void
+    }
+    analyticsWindow.__engagementAnalyticsCleanup?.()
+
+    let enteredMainContent = false
+    let interactedWithGlobe = false
+
+    const track = (eventName: string) => analyticsWindow.plausible?.(eventName)
+    const trackGlobeInteraction = () => {
+      if (interactedWithGlobe) return
+      interactedWithGlobe = true
+      track("Globe Interacted")
+    }
+
+    const mainContentObserver = new IntersectionObserver((entries) => {
+      if (enteredMainContent || !entries.some((entry) => entry.isIntersecting)) return
+      enteredMainContent = true
+      track("Entered Main Content")
+      mainContentObserver.disconnect()
+    }, { threshold: 0.08 })
+
+    mainContentObserver.observe(mainContent)
+    markerCanvas?.addEventListener("pointerdown", trackGlobeInteraction, { passive: true })
+    markerCanvas?.addEventListener("keydown", trackGlobeInteraction)
+    orbitProgress?.addEventListener("click", trackGlobeInteraction)
+
+    analyticsWindow.__engagementAnalyticsCleanup = () => {
+      mainContentObserver.disconnect()
+      markerCanvas?.removeEventListener("pointerdown", trackGlobeInteraction)
+      markerCanvas?.removeEventListener("keydown", trackGlobeInteraction)
+      orbitProgress?.removeEventListener("click", trackGlobeInteraction)
+    }
+  }
+
+  document.addEventListener("astro:after-swap", initializeEngagementAnalytics)
+  initializeEngagementAnalytics()
+</script>

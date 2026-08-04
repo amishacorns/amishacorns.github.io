@@ -280,12 +280,14 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
 
     let paused = false
     let orbitScrolling = false
+    let asteroidVisible = true
     let lastTime = performance.now()
     let angleX = 0.31
     let angleY = -0.72
     let angleZ = -0.16
     let animationFrame = 0
     let lastDraw = -Infinity
+    let resumeAsteroid = () => {}
     const restingFrameInterval = compactMesh ? 66 : 42
     const focusedFrameInterval = compactMesh ? 42 : 33
     const resize = () => {
@@ -301,10 +303,11 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       gl.viewport(0, 0, canvas.width, canvas.height)
     }
     const render = (time: number) => {
+      animationFrame = 0
       const focused = asteroidContainer?.classList.contains("agi-focused") ?? false
       const frameInterval = focused ? focusedFrameInterval : restingFrameInterval
       const objectsVisible = (window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible ?? true
-      if (objectsVisible && !orbitScrolling && time - lastDraw >= frameInterval) {
+      if (asteroidVisible && objectsVisible && !orbitScrolling && time - lastDraw >= frameInterval) {
         const elapsed = Math.min(80, time - lastTime)
         lastTime = time
         if (!paused || focused) {
@@ -319,7 +322,7 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
         canvas.classList.add("ready")
         lastDraw = time
       }
-      animationFrame = requestAnimationFrame(render)
+      resumeAsteroid()
     }
     const pauseState = (event: Event) => {
       paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
@@ -329,10 +332,25 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     }
     window.addEventListener("globe:pause-state", pauseState)
     window.addEventListener("orbit:scroll-state", orbitScrollState)
-    animationFrame = requestAnimationFrame(render)
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      asteroidVisible = entry?.isIntersecting ?? true
+      if (asteroidVisible) resumeAsteroid()
+      else if (animationFrame) {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = 0
+      }
+    }, { threshold: 0.01 })
+    visibilityObserver.observe(canvas.closest("#orbit") ?? canvas)
+    resumeAsteroid = () => {
+      if (!animationFrame && asteroidVisible) {
+        animationFrame = requestAnimationFrame(render)
+      }
+    }
+    resumeAsteroid()
 
     asteroidWindow.__asteroidMeshCleanup = () => {
       cancelAnimationFrame(animationFrame)
+      visibilityObserver.disconnect()
       surfaceImage.onload = null
       window.removeEventListener("globe:pause-state", pauseState)
       window.removeEventListener("orbit:scroll-state", orbitScrollState)

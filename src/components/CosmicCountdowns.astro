@@ -82,8 +82,30 @@
         if (deadline) countdown.textContent = formatCountdown(deadline - now)
       })
     }
-    updateCountdowns()
-    const interval = window.setInterval(updateCountdowns, 1000)
+    let interval = 0
+    let orbitVisible = true
+    const stopCountdown = () => {
+      if (!interval) return
+      window.clearInterval(interval)
+      interval = 0
+    }
+    const startCountdown = () => {
+      if (interval || document.hidden || !orbitVisible) return
+      updateCountdowns()
+      interval = window.setInterval(updateCountdowns, 1000)
+    }
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      orbitVisible = entry?.isIntersecting ?? true
+      if (orbitVisible) startCountdown()
+      else stopCountdown()
+    }, { threshold: 0.01 })
+    visibilityObserver.observe(cosmicEvents.closest("#orbit") ?? cosmicEvents)
+    const pageVisibilityHandler = () => {
+      if (document.hidden) stopCountdown()
+      else startCountdown()
+    }
+    document.addEventListener("visibilitychange", pageVisibilityHandler)
+    startCountdown()
     const pauseHandler = (event: Event) => {
       const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
       cosmicEvents.classList.toggle("cosmic-events-paused", paused)
@@ -94,7 +116,9 @@
     focusAgiButton?.addEventListener("click", focusAgi)
     focusSingularityButton?.addEventListener("click", focusSingularity)
     countdownWindow.__cosmicCountdownCleanup = () => {
-      window.clearInterval(interval)
+      stopCountdown()
+      visibilityObserver.disconnect()
+      document.removeEventListener("visibilitychange", pageVisibilityHandler)
       window.removeEventListener("globe:pause-state", pauseHandler)
       focusAgiButton?.removeEventListener("click", focusAgi)
       focusSingularityButton?.removeEventListener("click", focusSingularity)
