@@ -22,6 +22,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
   tabindex="0"
   aria-label="Drag or use the arrow keys to rotate the travel globe"
 ></canvas>
+<div id="earth-labels" class="earth-labels" aria-label="Visible visited locations"></div>
 <div id="earth-tooltip" class="earth-tooltip" role="status" hidden>
   <span>Visited Location</span>
   <strong data-location-title>Unknown</strong>
@@ -50,6 +51,38 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
     outline: none;
     touch-action: pan-y;
     transition: opacity 700ms ease 350ms;
+  }
+
+  .earth-labels {
+    @apply absolute inset-0 h-full w-full;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  :global(.earth-location-label) {
+    @apply absolute rounded border border-cyan-200/45 bg-black/80 font-mono font-semibold text-cyan-50/90 shadow-md backdrop-blur-sm;
+    height: 17px;
+    padding: 0 5px;
+    font-size: 10px;
+    line-height: 15px;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  :global(.earth-location-label:hover),
+  :global(.earth-location-label:focus-visible) {
+    border-color: rgb(165 243 252 / 0.85);
+    background: rgb(0 0 0 / 0.94);
+    color: white;
+    outline: none;
+  }
+  @media (max-width: 640px) {
+    :global(.earth-location-label) {
+      height: 14px;
+      padding: 0 4px;
+      font-size: 8px;
+      line-height: 12px;
+    }
   }
 
   .earth-markers.ready { opacity: 0.72; }
@@ -81,9 +114,17 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
     depth: number
     points: ProjectedLocation[]
   }
+  type MarkerLabel = {
+    cluster: MarkerCluster
+    labelLeft: number
+    labelTop: number
+    labelRight: number
+    labelBottom: number
+  }
 
   const canvas = document.getElementById("earth-globe") as HTMLCanvasElement | null
   const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
+  const labelLayer = document.getElementById("earth-labels") as HTMLDivElement | null
   const tooltip = document.getElementById("earth-tooltip") as HTMLDivElement | null
   const tooltipTitle = tooltip?.querySelector<HTMLElement>("[data-location-title]")
   const tooltipCoordinates = tooltip?.querySelector<HTMLElement>("[data-location-coordinates]")
@@ -91,11 +132,10 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
   const locationData = document.getElementById("earth-location-data")?.textContent
   const locationTuples = locationData ? JSON.parse(locationData) as TravelLocationTuple[] : []
 
-  if (canvas && markerCanvas && tooltip && tooltipTitle && tooltipCoordinates && tooltipCount && !canvas.dataset.initialized) {
+  if (canvas && markerCanvas && labelLayer && tooltip && tooltipTitle && tooltipCoordinates && tooltipCount && !canvas.dataset.initialized) {
     canvas.dataset.initialized = "true"
     const gl = canvas.getContext("webgl", { alpha: true, antialias: true })
     const markerContext = markerCanvas.getContext("2d")
-
     if (gl && markerContext) {
       const vertexSource = `
         attribute vec2 aPosition;
@@ -213,6 +253,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
           let previousX = 0
           let previousY = 0
           let clusters: MarkerCluster[] = []
+          let markerLabels: MarkerLabel[] = []
+          let lastLabelDraw = -Infinity
           let selectedLocation = ""
           let globeAnimationFrame = 0
           let resumeGlobe = () => {}
@@ -262,6 +304,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
               markerCanvas.width = markerTarget
               markerCanvas.height = markerTarget
             }
+            lastLabelDraw = -Infinity
             gl.viewport(0, 0, canvas.width, canvas.height)
           }
 
@@ -322,6 +365,59 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             return nextClusters
           }
 
+          const clearLabels = () => {
+            labelLayer.replaceChildren()
+            markerLabels = []
+          }
+
+          const drawMarkerLabels = (now: number) => {
+            clearLabels()
+            const labelHeight = constrainedDevice ? 14 : 17
+            const labelLimit = constrainedDevice ? 10 : 24
+            const labelGap = constrainedDevice ? 5 : 7
+            const fragment = document.createDocumentFragment()
+            for (const cluster of clusters) {
+              if (markerLabels.length >= labelLimit || cluster.depth < 0.16) continue
+              const city = cluster.points[0].title.split(",")[0].trim()
+              const label = cluster.points.length > 1 ? `${city} +${cluster.points.length - 1}` : city
+              const labelWidth = Math.ceil(label.length * (constrainedDevice ? 4.8 : 6.1) + (constrainedDevice ? 8 : 11))
+              const candidates = [
+                [cluster.x - labelWidth / 2, cluster.y - labelHeight - labelGap],
+                [cluster.x + labelGap, cluster.y - labelHeight / 2],
+                [cluster.x - labelWidth / 2, cluster.y + labelGap],
+                [cluster.x - labelWidth - labelGap, cluster.y - labelHeight / 2],
+              ]
+              const position = candidates.find(([left, top]) => {
+                const right = left + labelWidth
+                const bottom = top + labelHeight
+                if (left < 4 || top < 4 || right > cssSize - 4 || bottom > cssSize - 4) return false
+                return !markerLabels.some((placed) =>
+                  left < placed.labelRight + 3 && right > placed.labelLeft - 3 &&
+                  top < placed.labelBottom + 3 && bottom > placed.labelTop - 3
+                )
+              })
+              if (!position) continue
+              const [left, top] = position
+              const right = left + labelWidth
+              const bottom = top + labelHeight
+              const button = document.createElement("button")
+              button.type = "button"
+              button.className = "earth-location-label"
+              button.textContent = label
+              button.setAttribute("aria-label", `Open ${label}`)
+              button.style.left = `${left}px`
+              button.style.top = `${top}px`
+              button.style.width = `${labelWidth}px`
+              button.style.opacity = `${0.62 + cluster.depth * 0.34}`
+              button.addEventListener("pointerdown", (event) => event.stopPropagation())
+              button.addEventListener("click", () => showClusterTooltip(cluster))
+              fragment.append(button)
+              markerLabels.push({ cluster, labelLeft: left, labelTop: top, labelRight: right, labelBottom: bottom })
+            }
+            labelLayer.append(fragment)
+            lastLabelDraw = now
+          }
+
           const drawMarkers = () => {
             markerContext.setTransform(1, 0, 0, 1, 0, 0)
             markerContext.clearRect(0, 0, markerCanvas.width, markerCanvas.height)
@@ -357,6 +453,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
               markerContext.fill()
               markerContext.shadowBlur = 0
             }
+
             markerContext.globalAlpha = 1
             if (selectedLocation) {
               const selectedCluster = clusters.find((cluster) =>
@@ -380,6 +477,20 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
           const coordinateLabel = (value: number, positive: string, negative: string) =>
             `${Math.abs(value).toFixed(2)}°${value >= 0 ? positive : negative}`
 
+          const showClusterTooltip = (cluster: MarkerCluster) => {
+            selectedLocation = cluster.points[0].title
+            tooltip.style.left = `${cluster.x}px`
+            tooltip.style.top = `${cluster.y}px`
+            tooltipTitle.textContent = cluster.points.length === 1
+              ? cluster.points[0].title
+              : `${cluster.points[0].title} + ${cluster.points.length - 1} nearby`
+            const averageLat = cluster.points.reduce((sum, point) => sum + point.lat, 0) / cluster.points.length
+            const averageLng = cluster.points.reduce((sum, point) => sum + point.lng, 0) / cluster.points.length
+            tooltipCoordinates.textContent = `${coordinateLabel(averageLat, "N", "S")} · ${coordinateLabel(averageLng, "E", "W")}`
+            tooltipCount.textContent = `${cluster.points.length}`
+            tooltip.hidden = false
+          }
+
           const showTooltip = (clientX: number, clientY: number) => {
             const rect = markerCanvas.getBoundingClientRect()
             const localScale = cssSize / Math.max(1, rect.width)
@@ -401,17 +512,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
               return
             }
 
-            selectedLocation = closest.points[0].title
-            tooltip.style.left = `${closest.x}px`
-            tooltip.style.top = `${closest.y}px`
-            tooltipTitle.textContent = closest.points.length === 1
-              ? closest.points[0].title
-              : `${closest.points[0].title} + ${closest.points.length - 1} nearby`
-            const averageLat = closest.points.reduce((sum, point) => sum + point.lat, 0) / closest.points.length
-            const averageLng = closest.points.reduce((sum, point) => sum + point.lng, 0) / closest.points.length
-            tooltipCoordinates.textContent = `${coordinateLabel(averageLat, "N", "S")} · ${coordinateLabel(averageLng, "E", "W")}`
-            tooltipCount.textContent = `${closest.points.length}`
-            tooltip.hidden = false
+            showClusterTooltip(closest)
           }
 
           const pointerDownHandler = (event: PointerEvent) => {
@@ -425,6 +526,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             lastInteraction = performance.now()
             markerCanvas.classList.add("dragging")
             markerCanvas.setPointerCapture(event.pointerId)
+            clearLabels()
             hideTooltip()
           }
 
@@ -448,6 +550,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             markerCanvas.classList.remove("dragging")
             if (markerCanvas.hasPointerCapture(event.pointerId)) markerCanvas.releasePointerCapture(event.pointerId)
             if (dragDistance < 5) showTooltip(event.clientX, event.clientY)
+            lastLabelDraw = -Infinity
           }
 
           const keyDownHandler = (event: KeyboardEvent) => {
@@ -548,6 +651,11 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
                 gl.uniform1f(singularityUniform, singularityStrength)
                 gl.drawArrays(gl.TRIANGLES, 0, 6)
                 drawMarkers()
+                if (dragging) {
+                  if (markerLabels.length) clearLabels()
+                } else if (now - lastLabelDraw >= (constrainedDevice ? 1200 : 600)) {
+                  drawMarkerLabels(now)
+                }
                 lastFrame = now
                 lastDraw = now
               }

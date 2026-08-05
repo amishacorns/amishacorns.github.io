@@ -467,3 +467,23 @@ The shared interface sprite still contained twelve icons retired with the old th
 A reusable object pool for the globe's 126 projected travel markers was tested under the independent-cold idle-hero benchmark at 6x CPU slowdown. It reduced short-lived allocations, but increased the critical module by 0.27 KB and produced the same median result as the existing implementation: 160 sampled frames, 21 missed frames, and zero severe frames over three seconds. The pool was rejected because the measurable result did not justify the added state and code.
 
 The retained sprite cleanup leaves the client module unchanged at 37.20 KB raw / 13.19 KB compressed. A final mobile cold-load audit scored 96 with a 1.96-second LCP, 199 ms of blocking time, 184 KiB transferred, and 16 requests. This single audit is recorded as a smoke check rather than a new median; the established five-run median remains the comparison baseline.
+
+### 23. Add adaptive city labels without sacrificing the hero frame budget
+
+Visible travel locations now receive small, clickable telemetry labels. The label pass prioritizes front-facing cities, clusters nearby points, tests four placements, rejects collisions, and caps output at ten labels on constrained devices or twenty-four on desktop. Labels disappear during a drag and refresh after the globe settles, so they remain useful without fighting direct manipulation. Clicking a label opens the existing coordinates and signal-count panel.
+
+The first implementation painted labels into a second full-resolution canvas several times per second. It was visually correct but reduced the severe mobile idle-hero median to 116 sampled frames with 57 missed and two severe frames, so it was rejected. The retained implementation uses a lightweight DOM layer and refreshes only as fast as the globe's slow rotation requires: every 1.2 seconds on constrained devices and every 0.6 seconds elsewhere.
+
+Measured on 2026-08-05 at 412 × 830. The animated-hero result is the median of five independent cold launches at 6x CPU slowdown; the orbit result is the warm median of five runs at 4x CPU slowdown.
+
+| Metric | Experiment 22 baseline | Adaptive labels | Change |
+| --- | ---: | ---: | ---: |
+| Animated-hero sampled frames | 160 | 154 | -4% |
+| Animated-hero missed frames | 21 | 25 | +4 frames |
+| Animated-hero severe frames | 0 | 0 | unchanged |
+| Orbit median frame time | 16.7 ms | 16.7 ms | unchanged |
+| Orbit 95th-percentile frame time | 16.8 ms | 16.8 ms | unchanged |
+| Orbit warm missed frames | 0 | 1 | +1 frame |
+| Earth-to-singularity center error | 0.39 px | 0.39 px | unchanged |
+
+The same change also removes the homepage's fixed negative content margin. The first content section now starts below the hero and rises progressively with orbit scroll, preventing it from covering the Countries, Planets, and Galaxies HUD at page load. The client module is 38.54 KB raw / 13.75 KB compressed; the 0.56 KB compressed increase includes both interactions. This implementation is retained because it stays close to the established idle-hero baseline and preserves a smooth 60 FPS warm scroll profile.

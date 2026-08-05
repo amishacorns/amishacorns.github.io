@@ -11,6 +11,7 @@
     const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
     const orbitingObjects = document.getElementById("orbiting-objects")
     const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
+    const mainContent = document.getElementById("main-content")
     const singularitySystem = singularity?.querySelector<HTMLElement>(".singularity-system")
     if (!section || !stage || !planetContainer || !crescent || !copy || !progressDisplay || !prompt) return
 
@@ -96,6 +97,7 @@
       const singularityEase = singularityJourney * singularityJourney * (3 - 2 * singularityJourney)
       const centeringJourney = clamp(progress / 0.22)
       const centeringEase = centeringJourney * centeringJourney * (3 - 2 * centeringJourney)
+      const contentRise = eased * 50
 
       const desiredEarthCenterX = earthBaseCenterX + (singularityCenterX - earthBaseCenterX) * singularityEase
       const initialEarthCenterY = earthBaseTop + earthHeight / 2
@@ -111,6 +113,7 @@
       copy.style.opacity = copyOpacity.toFixed(3)
       progressDisplay.style.opacity = hudOpacity.toFixed(3)
       prompt.style.opacity = promptOpacity.toFixed(3)
+      mainContent?.style.setProperty("--content-rise", `${contentRise.toFixed(2)}vh`)
       if (singularity) {
         singularity.style.setProperty("--singularity-reveal", singularityReveal.toFixed(3))
         singularity.style.setProperty("--singularity-scale", singularityScale.toFixed(3))

@@ -309,7 +309,8 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
   }
 
   #main-content {
-    margin-top: -50vh;
+    transform: translate3d(0, calc(-1 * var(--content-rise, 0vh)), 0);
+    will-change: transform;
   }
 
   #orbit-stage { isolation: isolate; }
