@@ -27,7 +27,6 @@ const mobileStars = [
       data-mobile-x={mobileStars[index]?.[0]}
       data-mobile-y={mobileStars[index]?.[1]}
     >
-      <span class="paper-star-core" aria-hidden="true"></span>
       <span class="paper-star-card">
         <small>{String(index + 1).padStart(2, "0")} / {paper.venue}</small>
         <strong>{paper.title}</strong>
@@ -52,17 +51,12 @@ const mobileStars = [
   .research-constellation-home.ready .paper-star { opacity: 0.62; }
   .research-constellation-research.ready .paper-star { opacity: 0.78; }
 
-  .paper-star-core {
-    @apply absolute left-1/2 top-1/2 block size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white;
-    box-shadow: 0 0 5px rgb(255 255 255 / 0.95), 0 0 14px rgb(196 181 253 / 0.8);
-  }
-
   .paper-star::after {
     content: "";
     @apply absolute inset-1.5 rounded-full border border-violet-100/25;
     transform: scale(0.72);
     transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
-    opacity: 0.35;
+    opacity: 0;
   }
 
   .paper-star:hover,
