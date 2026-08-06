@@ -22,7 +22,7 @@ import { SITE } from "@consts"
     <div class:list={["site-star-field", isHome && "site-star-field-home"]}>
       <RealStarField />
     </div>
-    <ResearchConstellation mode={title === "Research" ? "research" : isHome ? "home" : "quiet"} />
+    {isHome && <ResearchConstellation mode="home" />}
     <Header />
     <Drawer />
     <main id="main-content-root">

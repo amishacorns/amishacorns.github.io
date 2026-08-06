@@ -1,61 +1,76 @@
+---
+import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
+---
+
 <svg id="identity-trails-back" class="identity-trails identity-trails-back" aria-hidden="true"></svg>
 <svg id="identity-trails-front" class="identity-trails identity-trails-front" aria-hidden="true"></svg>
 
 <div class="identity-comet google-comet" data-object-key="GOOG" data-object-name="Google" aria-hidden="true">
-  <span class="google-mark">G</span>
+  <span class="google-mark"><span class="comet-emblem google-emblem">G</span></span>
 </div>
 
 <div class="identity-comet cornell-comet" data-object-key="CU" data-object-name="Cornell" aria-hidden="true">
-  <span class="cornell-mark"><img src="/images/cornell-block-c.svg" alt="" /></span>
+  <span class="cornell-mark"><span class="comet-emblem"><img src="/images/cornell-block-c.svg" alt="" /></span></span>
 </div>
 
 <div class="identity-comet usa-comet" data-object-key="USA" data-object-name="United States" aria-hidden="true">
-  <span class="usa-mark"></span>
+  <span class="usa-mark"><span class="comet-emblem usa-emblem"></span></span>
 </div>
 
 <div class="identity-comet china-comet" data-object-key="PRC" data-object-name="China" aria-hidden="true">
   <span class="china-mark">
-    <span class="china-star china-star-large">Ã¢Ëœâ€¦</span>
-    <span class="china-star china-star-one">Ã¢Ëœâ€¦</span>
-    <span class="china-star china-star-two">Ã¢Ëœâ€¦</span>
-    <span class="china-star china-star-three">Ã¢Ëœâ€¦</span>
-    <span class="china-star china-star-four">Ã¢Ëœâ€¦</span>
+    <span class="comet-emblem china-emblem">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <path id="china-five-point-star" d="M0-10 2.35-3.24 9.51-3.09 3.8 1.24 5.88 8.09 0 4-5.88 8.09-3.8 1.24-9.51-3.09-2.35-3.24Z" />
+        </defs>
+        <use href="#china-five-point-star" transform="translate(18 21) scale(1.05)" />
+        <use href="#china-five-point-star" transform="translate(34 11) rotate(24) scale(.38)" />
+        <use href="#china-five-point-star" transform="translate(42 19) rotate(47) scale(.38)" />
+        <use href="#china-five-point-star" transform="translate(42 31) rotate(70) scale(.38)" />
+        <use href="#china-five-point-star" transform="translate(34 40) rotate(24) scale(.38)" />
+      </svg>
+    </span>
   </span>
 </div>
 
 <div class="identity-comet gemini-comet" data-object-key="GEM" data-object-name="Gemini" aria-hidden="true">
   <span class="gemini-mark">
-    <svg viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <linearGradient id="gemini-gradient" x1="10" y1="54" x2="54" y2="10" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stop-color="#55c8f3" />
-          <stop offset="0.48" stop-color="#7c8df5" />
-          <stop offset="1" stop-color="#c58af9" />
-        </linearGradient>
-      </defs>
-      <path fill="url(#gemini-gradient)" d="M32 4c2.8 15.4 12.6 25.2 28 28-15.4 2.8-25.2 12.6-28 28C29.2 44.6 19.4 34.8 4 32 19.4 29.2 29.2 19.4 32 4Z" />
-    </svg>
+    <span class="comet-emblem">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="gemini-gradient" x1="10" y1="54" x2="54" y2="10" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#55c8f3" />
+            <stop offset="0.48" stop-color="#7c8df5" />
+            <stop offset="1" stop-color="#c58af9" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#gemini-gradient)" d="M32 4c2.8 15.4 12.6 25.2 28 28-15.4 2.8-25.2 12.6-28 28C29.2 44.6 19.4 34.8 4 32 19.4 29.2 29.2 19.4 32 4Z" />
+      </svg>
+    </span>
   </span>
 </div>
 
 <div class="identity-comet tesla-comet" data-object-key="TSLA" data-object-name="Tesla" aria-hidden="true">
   <span class="tesla-mark">
-    <svg viewBox="0 0 100 100" aria-hidden="true">
-      <path d="M8 25.5C31 15.8 69 15.8 92 25.5l-3.6 8.2C67.5 26.9 32.5 26.9 11.6 33.7L8 25.5Z" />
-      <path d="M18.5 35.8c18.6-8.4 44.4-8.4 63 0l-6.7 12.1c-7.4-4.2-13.1-6.3-18.3-6.8L51.7 91h-3.4l-4.8-49.9c-5.2.5-10.9 2.6-18.3 6.8l-6.7-12.1Z" />
-    </svg>
+    <span class="comet-emblem">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M8 25.5C31 15.8 69 15.8 92 25.5l-3.6 8.2C67.5 26.9 32.5 26.9 11.6 33.7L8 25.5Z" />
+        <path d="M18.5 35.8c18.6-8.4 44.4-8.4 63 0l-6.7 12.1c-7.4-4.2-13.1-6.3-18.3-6.8L51.7 91h-3.4l-4.8-49.9c-5.2.5-10.9 2.6-18.3 6.8l-6.7-12.1Z" />
+      </svg>
+    </span>
   </span>
 </div>
 
 <div class="identity-comet cornell-tech-comet" data-object-key="CT" data-object-name="Cornell Tech" aria-hidden="true">
   <span class="cornell-tech-mark">
-    <img src="/images/cornell-tech-mark.webp" alt="" />
+    <span class="comet-emblem"><img src="/images/cornell-tech-mark.webp" alt="" /></span>
   </span>
 </div>
 
 <div class="identity-comet master-chief-comet" data-object-key="MJOLNIR" data-object-name="Master Chief" aria-hidden="true">
   <span class="master-chief-mark">
-    <img src="/images/master-chief-helmet-v2.webp" alt="" />
+    <span class="comet-emblem"><img src="/images/master-chief-helmet-v2.webp" alt="" /></span>
   </span>
 </div>
 
@@ -66,16 +81,68 @@
   <span><b>Velocity</b><i data-telemetry-velocity>--- km/s</i></span>
 </div>
 
+<div id="identity-comet-focus-home">
+  <canvas id="focused-comet-mesh" class="focused-comet-mesh" width="320" height="320" hidden aria-hidden="true"></canvas>
+  <OrbitalFocusCard
+    kicker="Orbital Object"
+    title="Orbital Object"
+    rows={[
+      { label: "Object ID", value: "---" },
+      { label: "Velocity", value: "--- km/s" },
+      { label: "Orbit", value: "Earth" },
+    ]}
+    definition="A personal landmark moving through this site's orbital layer."
+    countdownMeaning="This object is decorative. Its telemetry is intentionally approximate."
+    context="Click anywhere outside the object or panel to return to Earth."
+  />
+</div>
+
 <style>
   .identity-comet {
     @apply pointer-events-none absolute left-1/2 top-1/2 flex items-center;
-    opacity: 0.9;
-    will-change: transform, opacity;
+    opacity: 1;
+    will-change: transform;
   }
 
   .identity-comet > :first-child {
     pointer-events: auto;
     cursor: pointer;
+  }
+
+  .identity-comet.comet-focused > :first-child {
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .identity-comet.comet-focused.comet-dragging > :first-child {
+    cursor: grabbing;
+  }
+
+  .focused-comet-mesh {
+    @apply pointer-events-none absolute z-30;
+    width: 240%;
+    height: 240%;
+    left: -70%;
+    top: -70%;
+    filter: drop-shadow(0 12px 18px rgb(0 0 0 / 0.72)) drop-shadow(0 0 12px rgb(251 146 60 / 0.18));
+  }
+
+  .focused-comet-mesh[hidden] { display: none; }
+
+  .identity-comet.comet-focused > span {
+    overflow: visible;
+    clip-path: none;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    filter: none;
+  }
+
+  .identity-comet.comet-focused > span::before,
+  .identity-comet.comet-focused > span::after,
+  .identity-comet.comet-focused :global(.orbit-comet-sphere) {
+    opacity: 0;
   }
 
   .comet-telemetry {
@@ -124,8 +191,42 @@
   .identity-comet > span {
     overflow: hidden;
     isolation: isolate;
+    background-color: #030405;
+    filter: saturate(var(--comet-saturation, 0.68)) brightness(var(--depth-light, 1)) contrast(1.06);
+    clip-path: polygon(50% 0%, 65% 3%, 79% 10%, 90% 22%, 97% 38%, 98% 55%, 93% 70%, 82% 85%, 67% 95%, 50% 100%, 33% 96%, 18% 87%, 7% 73%, 1% 57%, 3% 40%, 10% 24%, 22% 11%, 36% 4%);
     transform: rotate(var(--counter-rotation, 0deg));
+    transform-style: preserve-3d;
   }
+
+  .identity-comet > span::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0;
+    z-index: 15;
+    background-image: url("/images/agi-asteroid-surface.webp");
+    background-position: 42% 48%;
+    background-size: 145% 145%;
+    mix-blend-mode: soft-light;
+    opacity: 0.58;
+    animation: comet-grain-turn var(--surface-period, 8.4s) ease-in-out infinite alternate;
+    animation-delay: var(--surface-delay, -1.7s);
+  }
+
+  .comet-emblem {
+    @apply absolute inset-0 z-10 flex items-center justify-center rounded-full;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  :global(.orbit-comet-sphere) {
+    @apply pointer-events-none absolute inset-0 z-30 size-full;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  :global(.identity-comet.orbit-sphere-ready .orbit-comet-sphere) { opacity: 1; }
+  :global(.identity-comet.orbit-sphere-ready .comet-emblem) { opacity: 0; }
+  :global(.identity-comet.orbit-sphere-ready > span::before),
+  :global(.identity-comet.orbit-sphere-ready > span::after) { opacity: 0; }
 
   .identity-comet > span::after {
     content: "";
@@ -133,6 +234,13 @@
     z-index: 20;
     background:
       radial-gradient(circle at 29% 23%, rgb(255 255 255 / 0.34), transparent 24%),
+      radial-gradient(circle at 23% 63%, rgb(0 0 0 / 0.54) 0 5%, rgb(255 255 255 / 0.11) 5.8% 7%, transparent 8%),
+      radial-gradient(circle at 69% 35%, rgb(0 0 0 / 0.48) 0 3.5%, rgb(255 255 255 / 0.09) 4.2% 5.3%, transparent 6.2%),
+      radial-gradient(circle at 61% 77%, rgb(0 0 0 / 0.43) 0 2.5%, rgb(255 255 255 / 0.08) 3.2% 4.2%, transparent 5%),
+      radial-gradient(ellipse at 42% 32%, rgb(0 0 0 / 0.38) 0 2.2%, rgb(255 255 255 / 0.06) 2.9% 3.8%, transparent 4.7%),
+      radial-gradient(ellipse at 78% 66%, rgb(0 0 0 / 0.42) 0 3%, rgb(255 255 255 / 0.07) 3.7% 4.8%, transparent 5.7%),
+      radial-gradient(ellipse at 37% 82%, rgb(0 0 0 / 0.36) 0 1.7%, rgb(255 255 255 / 0.06) 2.3% 3.1%, transparent 3.8%),
+      radial-gradient(ellipse at 82% 20%, rgb(0 0 0 / 0.32) 0 1.5%, rgb(255 255 255 / 0.05) 2.1% 2.8%, transparent 3.5%),
       radial-gradient(circle at 28% 44%, rgb(255 255 255 / 0.2) 0 1.1px, transparent 1.9px),
       radial-gradient(circle at 60% 25%, rgb(255 255 255 / 0.14) 0 0.9px, transparent 1.7px),
       radial-gradient(circle at 72% 55%, rgb(0 0 0 / 0.2) 0 1.2px, transparent 2px),
@@ -142,7 +250,23 @@
       inset 7px 7px 10px rgb(255 255 255 / 0.08),
       inset -10px -12px 17px rgb(0 0 0 / 0.52);
     mix-blend-mode: soft-light;
-    opacity: 0.72;
+    opacity: 0.88;
+    animation: comet-light-roll 5.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes comet-light-roll {
+    from { transform: translate3d(-3%, -1%, 0) rotate(-3deg); }
+    to { transform: translate3d(4%, 2%, 0) rotate(4deg); }
+  }
+
+  @keyframes comet-grain-turn {
+    from { background-position: 34% 45%; transform: scale(1.08) rotate(-2deg); }
+    to { background-position: 62% 52%; transform: scale(1.16) rotate(3deg); }
+  }
+
+  :global(.identity-orbits-paused .identity-comet:not(.comet-focused) > span::before),
+  :global(.identity-orbits-paused .identity-comet:not(.comet-focused) > span::after) {
+    animation-play-state: paused;
   }
 
   .google-mark,
@@ -162,18 +286,24 @@
   }
 
   .google-comet {
+    --surface-period: 7.9s;
+    --surface-delay: -3.1s;
     filter: drop-shadow(0 0 12px rgb(96 165 250 / 0.65));
   }
 
   .google-mark {
-    @apply border border-white/60 bg-black/90 font-bold;
+    @apply border border-white/60 bg-black;
+    box-shadow: 0 0 32px rgb(255 255 255 / 0.3), inset 7px 6px 15px rgb(255 255 255 / 0.1), inset -11px -12px 18px rgb(0 0 0 / 0.75);
+  }
+
+  .google-emblem {
+    @apply font-bold;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3.75rem;
     background-image: conic-gradient(from -35deg, #4285f4 0 25%, #34a853 25% 50%, #fbbc05 50% 75%, #ea4335 75%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    box-shadow: 0 0 32px rgb(255 255 255 / 0.3), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
   .tesla-comet {
@@ -181,7 +311,7 @@
   }
 
   .tesla-mark {
-    @apply border border-red-100/55 bg-black/90;
+    @apply border border-red-100/55 bg-black;
     box-shadow: 0 0 32px rgb(232 33 39 / 0.5), inset 0 0 16px rgb(255 255 255 / 0.1);
   }
 
@@ -199,14 +329,13 @@
 
   .cornell-mark {
     @apply border border-white/65;
-    background: rgb(0 0 0 / 0.88);
+    background: #030405;
     box-shadow: 0 0 30px rgb(179 27 27 / 0.62), inset 0 0 14px rgb(255 255 255 / 0.14);
   }
 
   .cornell-mark img {
-    width: 2.55rem;
-    height: 3.3rem;
-    transform: scale(0.95);
+    width: 3rem;
+    height: 3.85rem;
     filter: drop-shadow(0 0 7px rgb(179 27 27 / 0.8));
   }
 
@@ -216,11 +345,15 @@
 
   .usa-mark {
     @apply relative z-10 block size-16 overflow-hidden rounded-full border border-white/75;
-    background: repeating-linear-gradient(to bottom, #b22234 0 7.7%, #fff 7.7% 15.4%);
-    box-shadow: 0 0 30px rgb(255 255 255 / 0.46);
+    background: #030405;
+    box-shadow: 0 0 30px rgb(255 255 255 / 0.46), inset -10px -12px 17px rgb(0 0 0 / 0.6);
   }
 
-  .usa-mark::before {
+  .usa-emblem {
+    background: repeating-linear-gradient(to bottom, #b22234 0 7.7%, #fff 7.7% 15.4%);
+  }
+
+  .usa-emblem::before {
     content: "";
     @apply absolute left-0 top-0;
     width: 58%;
@@ -232,34 +365,36 @@
   }
 
   .china-comet {
+    --comet-saturation: 0.5;
+    --surface-period: 9.1s;
+    --surface-delay: -5.4s;
     filter: drop-shadow(0 0 13px rgb(238 28 37 / 0.72));
   }
 
   .china-mark {
     @apply relative z-10 block size-16 overflow-hidden rounded-full border border-yellow-200/75;
+    background: #030405;
+    box-shadow: 0 0 32px rgb(238 28 37 / 0.58), inset -10px -12px 17px rgb(0 0 0 / 0.62);
+  }
+
+  .china-emblem {
     background: #ee1c25;
-    box-shadow: 0 0 32px rgb(238 28 37 / 0.58), inset 0 0 14px rgb(255 255 255 / 0.1);
   }
 
-  .china-star {
-    @apply absolute z-10 text-yellow-300;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1;
-    text-shadow: 0 0 5px rgb(255 222 0 / 0.5);
+  .china-mark svg {
+    @apply relative z-10 size-full;
+    fill: #ffde00;
+    filter: drop-shadow(0 0 4px rgb(255 222 0 / 0.45));
   }
-
-  .china-star-large { left: 0.58rem; top: 0.82rem; font-size: 1.42rem; }
-  .china-star-one { left: 2.08rem; top: 0.53rem; font-size: 0.56rem; transform: rotate(22deg); }
-  .china-star-two { left: 2.45rem; top: 1.12rem; font-size: 0.56rem; transform: rotate(42deg); }
-  .china-star-three { left: 2.4rem; top: 1.86rem; font-size: 0.56rem; transform: rotate(12deg); }
-  .china-star-four { left: 1.98rem; top: 2.35rem; font-size: 0.56rem; transform: rotate(30deg); }
 
   .gemini-comet {
+    --surface-period: 8.8s;
+    --surface-delay: -4.2s;
     filter: drop-shadow(0 0 13px rgb(124 141 245 / 0.72));
   }
 
   .gemini-mark {
-    @apply border border-white/65 bg-black/90;
+    @apply border border-white/65 bg-black;
     box-shadow: 0 0 32px rgb(124 141 245 / 0.48), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
@@ -275,7 +410,7 @@
   }
 
   .cornell-tech-mark {
-    @apply border border-white/65 bg-black/90;
+    @apply border border-white/65 bg-black;
     box-shadow: 0 0 32px rgb(179 27 52 / 0.5), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
@@ -290,7 +425,7 @@
   }
 
   .master-chief-mark {
-    @apply border border-amber-200/70 bg-black/90;
+    @apply border border-amber-200/70 bg-black;
     box-shadow: 0 0 34px rgb(250 204 21 / 0.46), inset 0 0 16px rgb(255 255 255 / 0.12);
   }
 
@@ -306,10 +441,14 @@
 
   @media (prefers-reduced-motion: reduce) {
     .identity-comet { display: none; }
+    .identity-comet > span::before,
+    .identity-comet > span::after { animation: none; }
   }
 </style>
 
 <script>
+  import { createFocusedCometMesh, loadOrbitCometAtlas, type OrbitCometAtlas } from "../scripts/focusedCometMesh"
+
   type OrbitConfig = {
     period: number
     radius: number
@@ -352,8 +491,28 @@
   type TrailSet = { front: TrailLayer; back: TrailLayer }
   type TrailStop = { offset: string; color: string; opacity: number }
   type TrailStopTuple = [offset: string, color: string, opacity: number]
+  type OrbitSpriteState = {
+    atlas: OrbitCometAtlas
+    canvas: HTMLCanvasElement
+    context: CanvasRenderingContext2D
+  }
 
   const svgNamespace = "http://www.w3.org/2000/svg"
+
+  const prepareCometSurfaces = () => {
+    document.querySelectorAll<HTMLElement>(".identity-comet > span").forEach((body, bodyIndex) => {
+      if (body.querySelector(":scope > .orbit-comet-sphere")) return
+      const canvas = document.createElement("canvas")
+      canvas.className = "orbit-comet-sphere"
+      // Match the atlas frame exactly. CSS scales the canvas to the comet body,
+      // so rendering an intermediate 80 px buffer only adds per-frame resampling.
+      canvas.width = 72
+      canvas.height = 72
+      canvas.setAttribute("aria-hidden", "true")
+      canvas.dataset.spriteIndex = String(bodyIndex)
+      body.prepend(canvas)
+    })
+  }
 
   const initializeIdentityOrbits = () => {
     const crescent = document.getElementById("crescent")
@@ -366,11 +525,41 @@
 
     const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8
     const constrainedDevice = window.matchMedia("(max-width: 700px)").matches || deviceMemory <= 4
-    const frameInterval = constrainedDevice ? 50 : 33
+    const preferredFrameInterval = constrainedDevice ? 33 : 16
+    let adaptiveFrameInterval = preferredFrameInterval
+    let spriteRenderingEnabled = true
+    let orbitMotionEnabled = true
+    let slowAnimationTicks = 0
+    let previousAnimationTick = performance.now()
+    const orbitSprites = new WeakMap<HTMLElement, OrbitSpriteState>()
+    const prepareOrbitSprites = async () => {
+      for (const comet of comets) {
+        if (!spriteRenderingEnabled) break
+        if (comet.classList.contains("agi-impact-comet")) continue
+        const canvas = comet.querySelector<HTMLCanvasElement>(".orbit-comet-sphere")
+        const context = canvas?.getContext("2d")
+        if (!canvas || !context) continue
+        context.imageSmoothingEnabled = true
+        context.imageSmoothingQuality = "high"
+        const atlas = await loadOrbitCometAtlas(comet.dataset.objectKey ?? "UNKNOWN")
+        if (!spriteRenderingEnabled) break
+        orbitSprites.set(comet, { atlas, canvas, context })
+        if (spriteRenderingEnabled) comet.classList.add("orbit-sphere-ready")
+      }
+    }
+    const idleCallback = (window as Window & { requestIdleCallback?: typeof window.requestIdleCallback }).requestIdleCallback
+    // Keep image decoding away from the hero's first interaction window on phones.
+    // The lightweight bodies are already visible while these richer atlases wait.
+    const atlasStartDelay = constrainedDevice ? 8000 : 2500
+    setTimeout(() => {
+      if (!spriteRenderingEnabled) return
+      if (idleCallback) idleCallback(() => void prepareOrbitSprites(), { timeout: 500 })
+      else void prepareOrbitSprites()
+    }, atlasStartDelay)
     const orbitPlanes = [
-      { period: 22000, radius: 0.54, inclination: 0.38, node: 1.57 },
-      { period: 28000, radius: 0.6, inclination: -0.75, node: 1.22 },
-      { period: 34000, radius: 0.66, inclination: 1.05, node: 1.9 },
+      { period: 22000, radius: 0.54, inclination: 0.72, node: 0.18 },
+      { period: 28000, radius: 0.6, inclination: -0.82, node: 1.05 },
+      { period: 34000, radius: 0.66, inclination: 1.02, node: 2.18 },
     ]
     const planeCounts = orbitPlanes.map((_, planeIndex) =>
       comets.filter((_, cometIndex) => cometIndex % orbitPlanes.length === planeIndex).length
@@ -392,7 +581,7 @@
           inclination: 0.45,
           node: 0.65,
           phase: 1.35,
-          scale: 0.78,
+          scale: 1.56,
           direction: -1,
         })
       }
@@ -417,25 +606,25 @@
     const telemetryId = telemetry?.querySelector<HTMLElement>("[data-telemetry-id]")
     const telemetryVelocity = telemetry?.querySelector<HTMLElement>("[data-telemetry-velocity]")
     const identityCounts = new Map<string, number>()
+    const metadata = new WeakMap<HTMLElement, { name: string; id: string; velocity: string }>()
+    comets.forEach((comet, index) => {
+      const key = comet.dataset.objectKey ?? "UNKNOWN"
+      const ordinal = (identityCounts.get(key) ?? 0) + 1
+      identityCounts.set(key, ordinal)
+      const id = key === "MJOLNIR"
+        ? "MJOLNIR-117"
+        : key === "AGI"
+          ? "SI-2027"
+          : `${key}-${String(ordinal).padStart(3, "0")}`
+      const config = orbitConfigs[index]
+      metadata.set(comet, {
+        name: comet.dataset.objectName ?? "Unknown",
+        id,
+        velocity: `${(7.3 * (config.radius / 0.6) * (28000 / config.period)).toFixed(2)} km/s`,
+      })
+    })
     if (telemetry && telemetryName && telemetryId && telemetryVelocity) {
       document.body.appendChild(telemetry)
-      const metadata = new WeakMap<HTMLElement, { name: string; id: string; velocity: string }>()
-      comets.forEach((comet, index) => {
-        const key = comet.dataset.objectKey ?? "UNKNOWN"
-        const ordinal = (identityCounts.get(key) ?? 0) + 1
-        identityCounts.set(key, ordinal)
-        const id = key === "MJOLNIR"
-          ? "MJOLNIR-117"
-          : key === "AGI"
-            ? "AGI-ORBIT-001"
-            : `${key}-${String(ordinal).padStart(3, "0")}`
-        const config = orbitConfigs[index]
-        metadata.set(comet, {
-          name: comet.dataset.objectName ?? "Unknown",
-          id,
-          velocity: `${(7.3 * (config.radius / 0.6) * (28000 / config.period)).toFixed(2)} km/s`,
-        })
-      })
       crescent.addEventListener("pointermove", (event) => {
         const target = event.target
         const comet = target instanceof Element ? target.closest<HTMLElement>(".identity-comet") : null
@@ -458,11 +647,47 @@
     let focusStartedAt = 0
     let returningComet: HTMLElement | null = null
     let returnStartedAt = 0
+    const focusCardHome = document.getElementById("identity-comet-focus-home")
+    const focusCard = focusCardHome?.querySelector<HTMLElement>(".orbital-focus-card")
+    const focusCardTitle = focusCard?.querySelector<HTMLElement>(":scope > strong")
+    const focusCardValues = focusCard ? Array.from(focusCard.querySelectorAll<HTMLElement>("dd")) : []
+    const stage = document.getElementById("orbit-stage")
+    const focusedMeshCanvas = document.getElementById("focused-comet-mesh") as HTMLCanvasElement | null
+    const focusedMeshHome = focusedMeshCanvas?.parentElement ?? null
+    const focusedMesh = focusedMeshCanvas ? createFocusedCometMesh(focusedMeshCanvas) : null
     const focusComet = (comet: HTMLElement) => {
       focusedComet = comet
       returningComet = null
       focusStartedAt = performance.now()
       window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
+      resumeOrbit()
+    }
+    const openCometFocus = (comet: HTMLElement) => {
+      const data = metadata.get(comet)
+      if (!data || comet.classList.contains("agi-impact-comet")) return
+      comets.forEach((candidate) => candidate.classList.toggle("comet-focused", candidate === comet))
+      const mark = comet.firstElementChild as HTMLElement | null
+      if (mark) focusedMesh?.focus(comet.dataset.objectKey ?? "UNKNOWN", mark)
+      if (focusCardTitle) focusCardTitle.textContent = data.name
+      if (focusCardValues[0]) focusCardValues[0].textContent = data.id
+      if (focusCardValues[1]) focusCardValues[1].textContent = data.velocity
+      if (focusCardValues[2]) focusCardValues[2].textContent = "Earth"
+      focusCard?.querySelector("details")?.removeAttribute("open")
+      if (focusCard && stage) {
+        stage.appendChild(focusCard)
+        focusCard.classList.add("focus-card-overlay")
+      }
+      if (telemetry) telemetry.hidden = true
+      window.dispatchEvent(new CustomEvent("orbital:focus-mode", { detail: { target: "comet" } }))
+      focusComet(comet)
+    }
+    const clearCometFocus = () => {
+      comets.forEach((comet) => comet.classList.remove("comet-focused"))
+      focusedMesh?.clear()
+      if (focusedMeshCanvas && focusedMeshHome) focusedMeshHome.appendChild(focusedMeshCanvas)
+      focusCard?.querySelector("details")?.removeAttribute("open")
+      focusCard?.classList.remove("focus-card-overlay")
+      if (focusCard && focusCardHome) focusCardHome.appendChild(focusCard)
     }
     const focusAgiHandler = () => {
       const impactAsteroid = comets.find((comet) => comet.classList.contains("agi-impact-comet"))
@@ -475,14 +700,75 @@
       const mark = comet?.firstElementChild
       if (!mark || (target !== mark && !mark.contains(target))) return
       if (comet.classList.contains("agi-impact-comet")) focusComet(comet)
-      else window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
+      else openCometFocus(comet)
     }
     document.addEventListener("click", orbitalClickHandler)
     window.addEventListener("orbital:focus-agi", focusAgiHandler)
+    window.addEventListener("orbital:clear-focus", clearCometFocus)
+
+    comets.filter((comet) => !comet.classList.contains("agi-impact-comet")).forEach((comet) => {
+      const mark = comet.firstElementChild as HTMLElement | null
+      if (!mark) return
+
+      let dragging = false
+      let dragDistance = 0
+      let previousX = 0
+      let previousY = 0
+      let suppressClick = false
+
+      const pointerDown = (event: PointerEvent) => {
+        if (!comet.classList.contains("comet-focused")) return
+        dragging = true
+        dragDistance = 0
+        previousX = event.clientX
+        previousY = event.clientY
+        comet.classList.add("comet-dragging")
+        focusedMesh?.setDragging(true)
+        mark.setPointerCapture(event.pointerId)
+        event.preventDefault()
+      }
+      const pointerMove = (event: PointerEvent) => {
+        if (!dragging) return
+        const deltaX = event.clientX - previousX
+        const deltaY = event.clientY - previousY
+        dragDistance += Math.abs(deltaX) + Math.abs(deltaY)
+        focusedMesh?.rotateBy(deltaX, deltaY)
+        previousX = event.clientX
+        previousY = event.clientY
+        event.preventDefault()
+      }
+      const pointerUp = (event: PointerEvent) => {
+        if (!dragging) return
+        dragging = false
+        suppressClick = dragDistance > 4
+        comet.classList.remove("comet-dragging")
+        focusedMesh?.setDragging(false)
+        if (mark.hasPointerCapture(event.pointerId)) mark.releasePointerCapture(event.pointerId)
+        if (suppressClick) {
+          event.preventDefault()
+          window.setTimeout(() => { suppressClick = false }, 0)
+        }
+      }
+      const click = (event: MouseEvent) => {
+        if (!suppressClick) return
+        suppressClick = false
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      mark.addEventListener("pointerdown", pointerDown)
+      mark.addEventListener("pointermove", pointerMove)
+      mark.addEventListener("pointerup", pointerUp)
+      mark.addEventListener("pointercancel", pointerUp)
+      mark.addEventListener("click", click)
+    })
 
     const backTrails = document.getElementById("identity-trails-back") as SVGSVGElement | null
     const frontTrails = document.getElementById("identity-trails-front") as SVGSVGElement | null
-    if (!backTrails || !frontTrails) return
+    const backOrbitHost = document.getElementById("orbiting-objects-backdrop")
+    const frontOrbitHost = document.getElementById("orbiting-objects")
+    if (!backTrails || !frontTrails || !backOrbitHost || !frontOrbitHost) return
+    backOrbitHost.append(backTrails)
     backTrails.replaceChildren()
     frontTrails.replaceChildren()
 
@@ -552,6 +838,8 @@
     let totalPausedTime = 0
     let animationFrame = 0
     let lastDraw = -Infinity
+    let lastTrailDraw = -Infinity
+    let trailViewBox = ""
     let resumeOrbit = () => {}
 
     const pauseStateHandler = (event: Event) => {
@@ -650,8 +938,21 @@
 
     const draw = (now: number) => {
       animationFrame = 0
+      const animationTickGap = now - previousAnimationTick
+      previousAnimationTick = now
+      if (now - startTime > 1000 && spriteRenderingEnabled && !focusedComet && orbitVisible && document.visibilityState === "visible") {
+        slowAnimationTicks = animationTickGap > 24
+          ? slowAnimationTicks + 1
+          : Math.max(0, slowAnimationTicks - 1)
+        if (slowAnimationTicks >= 6) {
+          spriteRenderingEnabled = false
+          orbitMotionEnabled = false
+          adaptiveFrameInterval = constrainedDevice ? 50 : 33
+          comets.forEach((comet) => comet.classList.remove("orbit-sphere-ready"))
+        }
+      }
       const objectsVisible = (window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible ?? true
-      if (orbitVisible && objectsVisible && !orbitScrolling && now - lastDraw >= frameInterval) {
+      if ((orbitMotionEnabled || focusedComet) && orbitVisible && (objectsVisible || focusedComet) && (!orbitScrolling || focusedComet) && now - lastDraw >= adaptiveFrameInterval) {
         const width = crescent.clientWidth
         const height = crescent.clientHeight
         const globePose = (window as Window & {
@@ -665,19 +966,64 @@
         }
         const animationTime = orbitPaused ? pauseStartedAt : now
         const elapsed = animationTime - startTime - totalPausedTime
+        const visualRect = crescent.getBoundingClientRect()
+        const visualScale = Math.max(0.001, visualRect.width / Math.max(1, width))
+        const visibleLocalSpan = Math.min(
+          width,
+          height,
+          window.innerWidth / visualScale,
+          window.innerHeight / visualScale,
+        )
         const centerX = width / 2
-        const centerY = height / 2
-        const trailSamples = constrainedDevice ? 7 : 12
+        const visibleCenterY = (window.innerHeight * 0.52 - visualRect.top) / visualScale
+        const centerY = Math.min(height / 2, Math.max(0, visibleCenterY))
+        const orbitOffsetY = centerY - height / 2
+        const lowDetail = constrainedDevice && adaptiveFrameInterval > preferredFrameInterval
+        const trailSamples = lowDetail ? 4 : constrainedDevice ? 7 : 12
         const trailArc = constrainedDevice ? 0.36 : 0.46
-        backTrails.setAttribute("viewBox", `0 0 ${width} ${height}`)
-        frontTrails.setAttribute("viewBox", `0 0 ${width} ${height}`)
+        const nextTrailViewBox = `0 0 ${width} ${height}`
+        if (nextTrailViewBox !== trailViewBox) {
+          trailViewBox = nextTrailViewBox
+          backTrails.setAttribute("viewBox", trailViewBox)
+          frontTrails.setAttribute("viewBox", trailViewBox)
+        }
+        const renderTrails = now - lastTrailDraw >= (focusedComet ? preferredFrameInterval : 66)
 
         comets.forEach((comet, index) => {
           const config = orbitConfigs[index]
           const theta = config.phase + config.direction * (elapsed / config.period) * Math.PI * 2
-          const isImpactAsteroid = comet.classList.contains("agi-impact-comet")
-          const radius = Math.min(width, height) * config.radius
+          const radius = visibleLocalSpan * config.radius
           const head = projectOrbit(theta, config, preparedGlobePose, radius)
+          const sprite = orbitSprites.get(comet)
+          if (sprite && spriteRenderingEnabled) {
+            const { atlas, canvas, context } = sprite
+            const rotationPeriod = 6200 + index * 230
+            const framePosition = (((elapsed + index * 911) / rotationPeriod) * atlas.frameCount) % atlas.frameCount
+            const firstFrame = Math.floor(framePosition)
+            const secondFrame = (firstFrame + 1) % atlas.frameCount
+            const blend = framePosition - firstFrame
+            const drawFrame = (frame: number) => context.drawImage(
+              atlas.canvas,
+              (frame % atlas.columns) * atlas.frameSize,
+              Math.floor(frame / atlas.columns) * atlas.frameSize,
+              atlas.frameSize,
+              atlas.frameSize,
+              0,
+              0,
+              canvas.width,
+              canvas.height,
+            )
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            context.globalAlpha = 1
+            if (lowDetail) {
+              drawFrame(blend < 0.5 ? firstFrame : secondFrame)
+            } else {
+              drawFrame(firstFrame)
+              context.globalAlpha = blend
+              drawFrame(secondFrame)
+            }
+            context.globalAlpha = 1
+          }
           const tangentAngle = Math.atan2(head.velocityY, head.velocityX) * 180 / Math.PI + 180
           let depthScale = config.scale * (0.8 + ((head.depth + 1) / 2) * 0.26)
           if (constrainedDevice) depthScale *= 0.82
@@ -694,69 +1040,74 @@
             if (linearReturn >= 1) returningComet = null
           }
           if (focusWeight > 0) {
-            const visualRect = crescent.getBoundingClientRect()
-            const visualScale = Math.max(0.001, visualRect.width / Math.max(1, width))
             const targetX = (window.innerWidth / 2 - (visualRect.left + visualRect.width / 2)) / visualScale
             const targetY = (window.innerHeight * 0.46 - (visualRect.top + visualRect.height / 2)) / visualScale
             focusDeltaX = (targetX - head.x) * focusWeight
-            focusDeltaY = (targetY - head.y) * focusWeight
+            focusDeltaY = (targetY - (head.y + orbitOffsetY)) * focusWeight
             head.x += focusDeltaX
             head.y += focusDeltaY
-            depthScale *= 1 + focusWeight * (isImpactAsteroid ? 1.05 : 0.12)
+            const focusGrowth = comet.classList.contains("agi-impact-comet") ? 0.025 : 1.05
+            depthScale *= 1 + focusWeight * focusGrowth
           }
 
-          let tail: ProjectedOrbitPoint | null = null
-          let previous: ProjectedOrbitPoint | null = null
-          let frontPath = ""
-          let backPath = ""
-          for (let sample = 0; sample < trailSamples; sample += 1) {
-            const progress = sample / (trailSamples - 1)
-            const sampleTheta = theta - config.direction * trailArc * (1 - progress)
-            const point = projectOrbit(sampleTheta, config, preparedGlobePose, radius)
-            const turbulence = (1 - progress) * (constrainedDevice ? 3.5 : 7)
-            point.x += Math.sin(now * 0.0042 + index * 1.91 + sample * 1.37) * turbulence
-            point.y += Math.cos(now * 0.0034 + index * 1.17 + sample * 1.73) * turbulence * 0.58
-            point.x += focusDeltaX
-            point.y += focusDeltaY
-            if (!tail) tail = point
-            if (previous) {
-              if (sample === trailSamples - 1) {
-                const deltaX = point.x - previous.x
-                const deltaY = point.y - previous.y
-                const distance = Math.max(0.001, Math.hypot(deltaX, deltaY))
-                const bodyGap = Math.min(distance * 0.82, 34 * depthScale)
-                point.x -= (deltaX / distance) * bodyGap
-                point.y -= (deltaY / distance) * bodyGap
+          if (renderTrails) {
+            let tail: ProjectedOrbitPoint | null = null
+            let previous: ProjectedOrbitPoint | null = null
+            let frontPath = ""
+            let backPath = ""
+            for (let sample = 0; sample < trailSamples; sample += 1) {
+              const progress = sample / (trailSamples - 1)
+              const sampleTheta = theta - config.direction * trailArc * (1 - progress)
+              const point = projectOrbit(sampleTheta, config, preparedGlobePose, radius)
+              const turbulence = (1 - progress) * (constrainedDevice ? 3.5 : 7)
+              point.x += Math.sin(now * 0.0042 + index * 1.91 + sample * 1.37) * turbulence
+              point.y += Math.cos(now * 0.0034 + index * 1.17 + sample * 1.73) * turbulence * 0.58
+              point.x += focusDeltaX
+              point.y += focusDeltaY
+              if (!tail) tail = point
+              if (previous) {
+                if (sample === trailSamples - 1) {
+                  const deltaX = point.x - previous.x
+                  const deltaY = point.y - previous.y
+                  const distance = Math.max(0.001, Math.hypot(deltaX, deltaY))
+                  const bodyGap = Math.min(distance * 0.82, 34 * depthScale)
+                  point.x -= (deltaX / distance) * bodyGap
+                  point.y -= (deltaY / distance) * bodyGap
+                }
+                const segment = `M ${(centerX + previous.x).toFixed(1)} ${(centerY + previous.y).toFixed(1)} L ${(centerX + point.x).toFixed(1)} ${(centerY + point.y).toFixed(1)} `
+                if ((previous.depth + point.depth) / 2 >= 0) frontPath += segment
+                else backPath += segment
               }
-              const segment = `M ${(centerX + previous.x).toFixed(1)} ${(centerY + previous.y).toFixed(1)} L ${(centerX + point.x).toFixed(1)} ${(centerY + point.y).toFixed(1)} `
-              if ((previous.depth + point.depth) / 2 >= 0) frontPath += segment
-              else backPath += segment
+              previous = point
             }
-            previous = point
+            const trails = trailSets[index]
+            updateTrailLayer(trails.front, frontPath, tail ?? head, previous ?? head, centerX, centerY)
+            updateTrailLayer(trails.back, backPath, tail ?? head, previous ?? head, centerX, centerY)
           }
-          const trails = trailSets[index]
-          updateTrailLayer(trails.front, frontPath, tail ?? head, previous ?? head, centerX, centerY)
-          updateTrailLayer(trails.back, backPath, tail ?? head, previous ?? head, centerX, centerY)
 
           comet.style.setProperty("--counter-rotation", `${-tangentAngle}deg`)
-          comet.style.transform = `translate(-50%, -50%) translate3d(${head.x.toFixed(1)}px, ${head.y.toFixed(1)}px, 0) rotate(${tangentAngle.toFixed(2)}deg) scale(${depthScale.toFixed(3)})`
-          const orbitalOpacity = 0.62 + ((head.depth + 1) / 2) * 0.38
-          const colorMute = isImpactAsteroid ? 1 : comet.classList.contains("china-comet") ? 0.5 : 0.62
-          comet.style.opacity = focusedComet === comet ? "1" : (orbitalOpacity * colorMute).toFixed(3)
-          comet.style.zIndex = focusedComet === comet ? "80" : head.depth >= 0 ? "22" : "6"
+          comet.style.transform = `translate(-50%, -50%) translate3d(${head.x.toFixed(1)}px, ${(head.y + orbitOffsetY).toFixed(1)}px, 0) rotate(${tangentAngle.toFixed(2)}deg) scale(${depthScale.toFixed(3)})`
+          const depthLight = 0.74 + ((head.depth + 1) / 2) * 0.26
+          comet.style.setProperty("--depth-light", focusedComet === comet ? "1" : depthLight.toFixed(3))
+          const orbitHost = focusedComet === comet || head.depth >= 0 ? frontOrbitHost : backOrbitHost
+          if (comet.parentElement !== orbitHost) orbitHost.append(comet)
+          const nextZIndex = focusedComet === comet ? "80" : "22"
+          if (comet.style.zIndex !== nextZIndex) comet.style.zIndex = nextZIndex
         })
+        if (renderTrails) lastTrailDraw = now
         lastDraw = now
       }
       resumeOrbit()
     }
 
     resumeOrbit = () => {
-      if (!animationFrame && orbitVisible) {
+      if (!animationFrame && orbitVisible && (orbitMotionEnabled || focusedComet)) {
         animationFrame = window.requestAnimationFrame(draw)
       }
     }
     resumeOrbit()
   }
 
+  prepareCometSurfaces()
   initializeIdentityOrbits()
 </script>

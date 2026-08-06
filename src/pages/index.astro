@@ -26,7 +26,7 @@ const selected = selectedPaths
   .filter((post): post is (typeof posts)[number] => Boolean(post))
 
 const featured = [
-  { label: "The path", path: "/posts/paths/", image: "/images/critical-card.webp" },
+  { label: "The path", path: "/posts/paths/", image: "/images/critical-card-superintelligence-v2.webp" },
   { label: "The danger", path: "/posts/is-sometime-now/", image: "/images/is-sometime-now-card.webp" },
   { label: "The destination", path: "/posts/granny/", image: "/images/granny-family-card.webp" },
 ]
@@ -112,6 +112,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
     <div id="planetcont" class="animate absolute inset-0 top-[28%] overflow-visible">
       <div id="crescent" class="absolute top-0 left-1/2 -translate-x-1/2 w-[165vw] min-h-[100vh] aspect-square rounded-full p-px bg-gradient-to-b from-white/70 from-0% to-transparent to-[6%]">
+        <div id="orbiting-objects-backdrop" class="pointer-events-none absolute inset-0 z-[5]"></div>
         <div id="planet" class="relative z-10 w-full h-full bg-black rounded-full p-px overflow-hidden flex justify-center">
           <div class="earth-rotation" aria-hidden="true">
             <span></span>
@@ -121,7 +122,7 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
           <div class="earth-shadow" aria-hidden="true"></div>
           <div id="blur" class="relative z-10 w-full h-20 rounded-full bg-violet-300/20 blur-3xl"></div>
         </div>
-        <div id="orbiting-objects" class="absolute inset-0">
+        <div id="orbiting-objects" class="pointer-events-none absolute inset-0 z-40">
           <IdentityComets />
           <AGIImpactAsteroid />
         </div>
@@ -315,19 +316,21 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
 
   #orbit-stage { isolation: isolate; }
 
-  :global(#orbit-stage.orbit-scrolling :is(.accretion-disk-back, .accretion-disk::before, .identity-trail-dust)) {
-    animation-play-state: paused !important;
-  }
-
-  :global(#orbit-stage[data-orbital-focus="agi"] :is(#planet, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events, .identity-comet:not(.agi-impact-comet), .identity-trails)),
+  :global(#orbit-stage[data-orbital-focus="agi"] :is(#planet, #earth-labels, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events, .identity-comet:not(.agi-impact-comet), .identity-trails)),
+  :global(#orbit-stage[data-orbital-focus="comet"] :is(#planet, #earth-labels, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #cosmic-events, .identity-comet:not(.comet-focused), .identity-trails)),
   :global(#orbit-stage[data-orbital-focus="singularity"] :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #inbound-agi, #cosmic-events)) {
     opacity: 0 !important;
     pointer-events: none !important;
     transition: opacity 220ms ease;
   }
 
-  :global(#orbit-stage[data-orbital-focus="agi"] #crescent) {
+  :global(#orbit-stage:is([data-orbital-focus="agi"], [data-orbital-focus="comet"]) #crescent) {
     background: transparent !important;
+  }
+
+  :global(#orbit-stage:is([data-orbital-focus="agi"], [data-orbital-focus="comet"]) #orbiting-objects) {
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   :global(#orbit-stage.orbital-returning :is(#crescent, #orbit-copy, #orbit-progress, #orbit-prompt, #deep-singularity, #inbound-agi, #cosmic-events)) {
@@ -445,6 +448,10 @@ const countryProgress = ((countryCount / 195) * 100).toFixed(1)
   .signal-row span:first-child { @apply flex min-w-0 flex-col; }
   .signal-row b { @apply truncate text-sm font-semibold text-white; }
   .signal-row small { @apply truncate text-xs text-white/45; }
+
+  :global(#orbit-stage.orbit-scrolling :is(.accretion-disk-back, .accretion-disk::before, .identity-trail-dust)) {
+    animation-play-state: paused !important;
+  }
 
   .earth-rotation {
     @apply absolute inset-0 flex;

@@ -92,6 +92,7 @@ const rightSocials = SOCIALS.filter((social) => ["Google Scholar", "Twitter"].in
     header.classList.toggle("scrolled", headerScrolled)
   }
   document.addEventListener("scroll", () => {
+    if ((window.scrollY > 0) === headerScrolled) return
     if (!headerScrollFrame) headerScrollFrame = window.requestAnimationFrame(updateHeader)
   }, { passive: true })
   updateHeader()

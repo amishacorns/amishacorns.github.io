@@ -2,22 +2,22 @@
 import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
 ---
 
-<div id="inbound-agi" class="identity-comet agi-impact-comet inbound-agi" data-object-key="AGI" data-object-name="Artificial General Intelligence">
-  <button class="inbound-agi-object" type="button" aria-label="Focus artificial general intelligence">
+<div id="inbound-agi" class="identity-comet agi-impact-comet inbound-agi" data-object-key="AGI" data-object-name="Superintelligence">
+  <button class="inbound-agi-object" type="button" aria-label="Focus superintelligence">
     <canvas class="agi-asteroid-mesh" width="288" height="288" aria-hidden="true"></canvas>
-    <span class="sr-only">Focus artificial general intelligence</span>
+    <span class="sr-only">Focus superintelligence</span>
   </button>
   <OrbitalFocusCard
     kicker="Inbound Object"
-    title="Artificial General Intelligence"
+    title="Superintelligence"
     rows={[
-      { label: "Object ID", value: "AGI-2027" },
+      { label: "Object ID", value: "SI-2027" },
       { label: "Velocity", value: "17.82 km/s" },
-      { label: "Impact Date", value: "13 Jul 2027" },
+      { label: "Impact Date", value: "01 Oct 2027" },
     ]}
-    definition="Here, AGI means a system that outperforms the best human at every intellectual task, including unfamiliar tasks it must learn rather than tasks it has already seen."
+    definition="Here, superintelligence means a system that outperforms the best human at every intellectual task, including unfamiliar tasks it must learn rather than tasks it has already seen."
     countdownMeaning="The timer ends at my forecast for when this minimum threshold is first crossed. It marks the arrival of the capability, not universal access, adoption, or deployment."
-    context="This is deliberately stricter than most common industry definitions of AGI."
+    context="This is deliberately stricter than many common definitions of superintelligence."
   />
 </div>
 
@@ -49,6 +49,15 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
 
   .inbound-agi.agi-focused {
     opacity: 1 !important;
+  }
+
+  .inbound-agi.agi-focused .inbound-agi-object {
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .inbound-agi.agi-focused .inbound-agi-object.dragging {
+    cursor: grabbing;
   }
 
   @media (max-width: 700px) {
@@ -104,7 +113,8 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       varying vec2 vUv;
 
       void main() {
-        float textureValue = texture2D(uSurface, vUv).r;
+        vec3 surfaceColor = texture2D(uSurface, vUv).rgb;
+        float textureValue = dot(surfaceColor, vec3(0.2126, 0.7152, 0.0722));
         float textureEast = texture2D(uSurface, vUv + vec2(0.0024, 0.0)).r;
         float textureNorth = texture2D(uSurface, vUv + vec2(0.0, 0.0024)).r;
         vec3 normal = normalize(vNormal + vec3((textureValue - textureEast) * 0.8, (textureValue - textureNorth) * 0.8, 0.0));
@@ -112,7 +122,7 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
         float diffuse = max(dot(normal, lightDirection), 0.0);
         float halfLight = max(dot(normal, normalize(lightDirection + vec3(0.0, 0.0, 1.0))), 0.0);
         float grain = mix(0.62, 1.28, textureValue);
-        vec3 rock = mix(vec3(0.075, 0.063, 0.052), vec3(0.49, 0.39, 0.285), smoothstep(0.16, 0.84, textureValue));
+        vec3 rock = mix(surfaceColor, vec3(textureValue), 0.12);
         float cavity = smoothstep(-0.28, 0.7, normal.z);
         vec3 color = rock * (0.17 + diffuse * 0.9) * grain * mix(0.8, 1.0, cavity);
         color += vec3(0.34, 0.215, 0.12) * pow(halfLight, 18.0) * 0.16;
@@ -144,24 +154,40 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     gl.linkProgram(program)
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return
 
-    type Crater = { direction: [number, number, number]; radius: number; depth: number }
+    type Crater = {
+      direction: [number, number, number]
+      depth: number
+      coreCosine: number
+      rimCosine: number
+    }
     const direction = (longitude: number, latitude: number): [number, number, number] => {
       const latitudeCosine = Math.cos(latitude)
       return [latitudeCosine * Math.cos(longitude), Math.sin(latitude), latitudeCosine * Math.sin(longitude)]
     }
+    const crater = (longitude: number, latitude: number, radius: number, depth: number): Crater => ({
+      direction: direction(longitude, latitude),
+      depth,
+      coreCosine: Math.cos(radius),
+      rimCosine: Math.cos(radius * 1.28),
+    })
     const craters: Crater[] = [
-      { direction: direction(0.28, 0.35), radius: 0.34, depth: 0.18 },
-      { direction: direction(-0.72, -0.08), radius: 0.22, depth: 0.12 },
-      { direction: direction(1.16, -0.48), radius: 0.18, depth: 0.105 },
-      { direction: direction(2.02, 0.23), radius: 0.25, depth: 0.13 },
-      { direction: direction(-2.14, 0.56), radius: 0.14, depth: 0.08 },
-      { direction: direction(0.91, 0.7), radius: 0.12, depth: 0.07 },
-      { direction: direction(-1.44, -0.62), radius: 0.17, depth: 0.09 },
+      crater(0.28, 0.35, 0.34, 0.18),
+      crater(-0.72, -0.08, 0.22, 0.12),
+      crater(1.16, -0.48, 0.18, 0.105),
+      crater(2.02, 0.23, 0.25, 0.13),
+      crater(-2.14, 0.56, 0.14, 0.08),
+      crater(0.91, 0.7, 0.12, 0.07),
+      crater(-1.44, -0.62, 0.17, 0.09),
+      crater(2.62, -0.24, 0.09, 0.05),
+      crater(-2.7, -0.3, 0.08, 0.045),
+      crater(1.72, 0.58, 0.1, 0.055),
+      crater(-0.18, -0.72, 0.075, 0.04),
+      crater(0.56, -0.31, 0.105, 0.06),
     ]
 
     const compactMesh = window.matchMedia("(max-width: 700px)").matches
-    const latitudeSegments = compactMesh ? 20 : 46
-    const longitudeSegments = compactMesh ? 30 : 70
+    const latitudeSegments = compactMesh ? 28 : 56
+    const longitudeSegments = compactMesh ? 42 : 84
     const positions: number[] = []
     const normals: number[] = []
     const uvs: number[] = []
@@ -182,25 +208,25 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
         const rockyShape =
           0.052 * Math.sin(nx * 4.3 + ny * 2.1 - nz * 3.7 + 0.4) +
           0.032 * Math.sin(nx * 7.1 - ny * 5.3 + nz * 2.9 - 0.7) +
-          0.018 * Math.sin((nx + ny - nz) * 12.4)
-        let radius = (1 + rockyShape) * (1 + nx * 0.065)
+          0.022 * Math.sin((nx + ny - nz) * 12.4) +
+          0.011 * Math.sin((nx * 1.7 - ny * 0.8 + nz * 1.3) * 23.6) +
+          0.006 * Math.sin((nx - ny * 1.4 - nz * 0.6) * 38.2)
+        let radius = (1 + rockyShape) * (1 + nx * 0.045 - ny * 0.025)
 
         for (const crater of craters) {
           const dot = Math.max(-1, Math.min(1, nx * crater.direction[0] + ny * crater.direction[1] + nz * crater.direction[2]))
-          const angularDistance = Math.acos(dot)
-          const normalizedDistance = angularDistance / crater.radius
-          if (normalizedDistance < 1) {
+          if (dot > crater.coreCosine) {
+            const normalizedDistance = Math.sqrt((1 - dot) / (1 - crater.coreCosine))
             radius -= crater.depth * Math.pow(1 - normalizedDistance * normalizedDistance, 2)
-          } else if (normalizedDistance < 1.28) {
-            const rimPosition = (normalizedDistance - 1) / 0.28
+          } else if (dot > crater.rimCosine) {
+            const rimPosition = (crater.coreCosine - dot) / (crater.coreCosine - crater.rimCosine)
             radius += crater.depth * 0.24 * Math.sin(rimPosition * Math.PI)
           }
         }
 
-        const neck = 1 - 0.105 * Math.exp(-(nx * nx) / 0.06)
         const chippedEdge = Math.max(0, 1 - Math.hypot(nx - 0.55, ny + 0.48, nz - 0.34) / 0.34)
         radius -= chippedEdge * 0.12
-        positions.push(nx * radius * 1.22, ny * radius * neck * 0.94, nz * radius * neck * 0.9)
+        positions.push(nx * radius * 1.12, ny * radius * 0.96, nz * radius * 0.92)
         normals.push(0, 0, 0)
         uvs.push(u, 1 - v)
       }
@@ -271,7 +297,7 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, surfaceImage)
       gl.generateMipmap(gl.TEXTURE_2D)
     }
-    surfaceImage.src = "/images/agi-asteroid-surface.webp"
+    surfaceImage.src = "/images/agi-asteroid-surface-v2.webp"
 
     const anglesLocation = gl.getUniformLocation(program, "uAngles")
     gl.uniform1i(gl.getUniformLocation(program, "uSurface"), 0)
@@ -287,20 +313,45 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     let angleX = 0.31
     let angleY = -0.72
     let angleZ = -0.16
+    let dragging = false
+    let dragDistance = 0
+    let previousPointerX = 0
+    let previousPointerY = 0
+    let suppressClick = false
     let animationFrame = 0
     let lastDraw = -Infinity
     let resumeAsteroid = () => {}
     const restingFrameInterval = compactMesh ? 66 : 42
     const focusedFrameInterval = compactMesh ? 42 : 33
+    let adaptiveRestingFrameInterval = restingFrameInterval
+    let previousAnimationTick = performance.now()
+    let slowAnimationTicks = 0
+    let recoveredAnimationTicks = 0
     const render = (time: number) => {
       animationFrame = 0
       const focused = asteroidContainer?.classList.contains("agi-focused") ?? false
-      const frameInterval = focused ? focusedFrameInterval : restingFrameInterval
+      const tickGap = time - previousAnimationTick
+      previousAnimationTick = time
+      if (compactMesh && !focused) {
+        if (tickGap > 24) {
+          slowAnimationTicks += 1
+          recoveredAnimationTicks = 0
+        } else {
+          slowAnimationTicks = Math.max(0, slowAnimationTicks - 1)
+          if (adaptiveRestingFrameInterval > restingFrameInterval) recoveredAnimationTicks += 1
+        }
+        if (slowAnimationTicks >= 6) adaptiveRestingFrameInterval = 500
+        else if (recoveredAnimationTicks >= 180) {
+          adaptiveRestingFrameInterval = restingFrameInterval
+          recoveredAnimationTicks = 0
+        }
+      }
+      const frameInterval = focused ? focusedFrameInterval : adaptiveRestingFrameInterval
       const objectsVisible = (window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible ?? true
-      if (asteroidVisible && objectsVisible && !orbitScrolling && time - lastDraw >= frameInterval) {
+      if (asteroidVisible && (objectsVisible || focused) && (!orbitScrolling || focused) && time - lastDraw >= frameInterval) {
         const elapsed = Math.min(80, time - lastTime)
         lastTime = time
-        if (!paused || focused) {
+        if ((!paused || focused) && !dragging) {
           angleX += elapsed * 0.000075
           angleY += elapsed * 0.00016
           angleZ += elapsed * 0.000045
@@ -336,6 +387,48 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
       }
     }
     resumeAsteroid()
+
+    const asteroid = canvas.closest<HTMLButtonElement>(".inbound-agi-object")
+    const pointerDown = (event: PointerEvent) => {
+      if (!asteroidContainer?.classList.contains("agi-focused") || !asteroid) return
+      dragging = true
+      dragDistance = 0
+      previousPointerX = event.clientX
+      previousPointerY = event.clientY
+      asteroid.classList.add("dragging")
+      asteroid.setPointerCapture(event.pointerId)
+      event.preventDefault()
+    }
+    const pointerMove = (event: PointerEvent) => {
+      if (!dragging) return
+      const deltaX = event.clientX - previousPointerX
+      const deltaY = event.clientY - previousPointerY
+      dragDistance += Math.abs(deltaX) + Math.abs(deltaY)
+      angleY += deltaX * 0.011
+      angleX += deltaY * 0.011
+      previousPointerX = event.clientX
+      previousPointerY = event.clientY
+      event.preventDefault()
+    }
+    const pointerUp = (event: PointerEvent) => {
+      if (!dragging || !asteroid) return
+      dragging = false
+      suppressClick = dragDistance > 4
+      window.setTimeout(() => { suppressClick = false }, 0)
+      asteroid.classList.remove("dragging")
+      if (asteroid.hasPointerCapture(event.pointerId)) asteroid.releasePointerCapture(event.pointerId)
+      event.preventDefault()
+    }
+    asteroid?.addEventListener("pointerdown", pointerDown)
+    asteroid?.addEventListener("pointermove", pointerMove)
+    asteroid?.addEventListener("pointerup", pointerUp)
+    asteroid?.addEventListener("pointercancel", pointerUp)
+    asteroid?.addEventListener("click", (event) => {
+      if (!suppressClick) return
+      suppressClick = false
+      event.preventDefault()
+      event.stopImmediatePropagation()
+    })
 
   }
 

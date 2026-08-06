@@ -10,6 +10,7 @@
     "preview": "astro preview",
     "preview:network": "astro dev --host",
     "generate:asteroid-texture": "node scripts/generate-asteroid-texture.mjs",
+    "generate:comet-atlases": "node scripts/generate-comet-atlases.mjs",
     "generate:star-fields": "node scripts/generate-star-fields.mjs",
     "benchmark:scroll": "node scripts/benchmark-scroll.mjs",
     "astro": "astro"

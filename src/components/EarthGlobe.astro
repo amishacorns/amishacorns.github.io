@@ -227,6 +227,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
     placement: number
     offsetX: number
     offsetY: number
+    width: number
+    height: number
     labelLeft: number
     labelTop: number
     labelRight: number
@@ -395,7 +397,6 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
           let lastLabelDraw = -Infinity
           let selectedLocation = ""
           let galleryRequest = 0
-          let galleryOwnsPause = false
           let activeAlbum: TravelAlbum | null = null
           let activePhotoIndex = 0
           const localAlbumSlugs = new Map<string, string>()
@@ -530,8 +531,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
               const top = currentCluster.y + markerLabel.offsetY
               markerLabel.labelLeft = left
               markerLabel.labelTop = top
-              markerLabel.labelRight = left + markerLabel.button.offsetWidth
-              markerLabel.labelBottom = top + markerLabel.button.offsetHeight
+              markerLabel.labelRight = left + markerLabel.width
+              markerLabel.labelBottom = top + markerLabel.height
               markerLabel.button.style.transform = `translate3d(${left}px, ${top}px, 0)`
               if (markerLabel.button.dataset.entering !== "true") {
                 markerLabel.button.style.opacity = `${0.62 + currentCluster.depth * 0.34}`
@@ -606,6 +607,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
                 placement,
                 offsetX: left - cluster.x,
                 offsetY: top - cluster.y,
+                width: labelWidth,
+                height: labelHeight,
                 labelLeft: left,
                 labelTop: top,
                 labelRight: right,
@@ -679,12 +682,6 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             }
           }
 
-          const releaseGalleryPause = () => {
-            if (!galleryOwnsPause) return
-            galleryOwnsPause = false
-            window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: false } }))
-          }
-
           const positionGalleryOverlay = () => {
             if (!tooltip.classList.contains("gallery-overlay") || window.innerWidth <= 640) return
             const selectedLabel = markerLabels.find((markerLabel) => markerLabel.key === selectedLocation)
@@ -702,7 +699,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             tooltip.style.setProperty("--gallery-top", `${top}px`)
           }
 
-          const resetGallery = (resumeGlobe = true) => {
+          const resetGallery = () => {
             galleryRequest += 1
             tooltip.classList.remove("has-gallery")
             tooltip.classList.remove("gallery-overlay")
@@ -712,7 +709,6 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             if (gallery) gallery.hidden = true
             galleryGrid?.replaceChildren()
             activeAlbum = null
-            if (resumeGlobe) releaseGalleryPause()
           }
 
           const renderLightboxPhoto = (index: number) => {
@@ -834,11 +830,6 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             gallery.hidden = false
             positionGalleryOverlay()
             galleryStatus.textContent = "Receiving…"
-            if (!manuallyPaused) {
-              galleryOwnsPause = true
-              window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
-            }
-
             let albumPromise = albumCache.get(title)
             if (!albumPromise) {
               albumPromise = resolveAlbum(title)

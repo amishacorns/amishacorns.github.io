@@ -31,7 +31,7 @@
     const pointerHandler = (event: PointerEvent) => {
       if (!activeTarget) return
       const target = event.target
-      if (target instanceof Element && target.closest("[data-focus-agi], [data-focus-singularity], .inbound-agi-object, .orbital-focus-card")) return
+      if (target instanceof Element && target.closest("[data-focus-agi], [data-focus-singularity], .inbound-agi-object, .singularity-system, .identity-comet, .orbital-focus-card")) return
       clearFocus()
     }
 

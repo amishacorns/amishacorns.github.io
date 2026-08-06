@@ -10,6 +10,7 @@
     const singularity = document.getElementById("deep-singularity")
     const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
     const orbitingObjects = document.getElementById("orbiting-objects")
+    const orbitingObjectsBackdrop = document.getElementById("orbiting-objects-backdrop")
     const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
     const mainContent = document.getElementById("main-content")
     const singularitySystem = singularity?.querySelector<HTMLElement>(".singularity-system")
@@ -90,7 +91,7 @@
       const copyOpacity = fadeBetween(progress, 0.04, 0.31)
       const hudOpacity = fadeBetween(progress, 0.82, 0.98)
       const promptOpacity = fadeBetween(progress, 0, 0.13)
-      const orbitingObjectsOpacity = fadeBetween(progress, 0.04, 0.2)
+      const orbitingObjectsOpacity = earthOpacity
       const singularityReveal = clamp((progress - 0.42) / 0.38)
       const singularityScale = 0.72 + singularityReveal * 0.3
       const singularityJourney = clamp((progress - 0.28) / 0.5)
@@ -110,6 +111,7 @@
       crescent.style.transform = `translate3d(calc(-50% + ${orbitX.toFixed(2)}px), ${orbitY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`
       crescent.style.opacity = earthOpacity.toFixed(3)
       if (orbitingObjects) orbitingObjects.style.opacity = orbitingObjectsOpacity.toFixed(3)
+      if (orbitingObjectsBackdrop) orbitingObjectsBackdrop.style.opacity = orbitingObjectsOpacity.toFixed(3)
       copy.style.opacity = copyOpacity.toFixed(3)
       progressDisplay.style.opacity = hudOpacity.toFixed(3)
       prompt.style.opacity = promptOpacity.toFixed(3)
@@ -158,6 +160,7 @@
       if (orbitingObjects && nextOrbitingObjectsVisible !== orbitingObjectsVisible) {
         orbitingObjectsVisible = nextOrbitingObjectsVisible
         orbitingObjects.style.visibility = orbitingObjectsVisible ? "visible" : "hidden"
+        if (orbitingObjectsBackdrop) orbitingObjectsBackdrop.style.visibility = orbitingObjectsVisible ? "visible" : "hidden"
         ;(window as Window & { __orbitObjectsVisible?: boolean }).__orbitObjectsVisible = orbitingObjectsVisible
       }
 

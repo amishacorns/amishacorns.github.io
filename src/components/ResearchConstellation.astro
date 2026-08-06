@@ -26,6 +26,7 @@ const mobileStars = [
       data-desktop-y={desktopStars[index]?.[1]}
       data-mobile-x={mobileStars[index]?.[0]}
       data-mobile-y={mobileStars[index]?.[1]}
+      style={`--paper-pulse-delay: -${(index * 0.83).toFixed(2)}s`}
     >
       <span class="paper-star-card">
         <small>{String(index + 1).padStart(2, "0")} / {paper.venue}</small>
@@ -53,10 +54,31 @@ const mobileStars = [
 
   .paper-star::after {
     content: "";
-    @apply absolute inset-1.5 rounded-full border border-violet-100/25;
+    @apply absolute inset-1.5 rounded-full border border-cyan-100/70;
+    box-shadow: 0 0 14px rgb(103 232 249 / 0.55), 0 0 30px rgb(167 139 250 / 0.22);
     transform: scale(0.72);
     transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
     opacity: 0.38;
+  }
+
+  .research-constellation.ready .paper-star::after {
+    animation: paper-star-signal 7.4s ease-in-out infinite;
+    animation-delay: var(--paper-pulse-delay, 0s);
+  }
+
+  @keyframes paper-star-signal {
+    0%, 68%, 100% {
+      opacity: 0.12;
+      transform: scale(0.72);
+    }
+    74% {
+      opacity: 1;
+      transform: scale(1.18);
+    }
+    82% {
+      opacity: 0.3;
+      transform: scale(0.82);
+    }
   }
 
   .paper-star[data-occluded="true"] {
@@ -74,6 +96,7 @@ const mobileStars = [
     border-color: rgb(221 214 254 / 0.72);
     opacity: 1;
     transform: scale(1);
+    animation-play-state: paused;
   }
 
   .paper-star-card {
@@ -142,6 +165,7 @@ const mobileStars = [
     .paper-star,
     .paper-star::after,
     .paper-star-card { transition: none; }
+    .research-constellation.ready .paper-star::after { animation: none; }
   }
 </style>
 
@@ -170,7 +194,8 @@ const mobileStars = [
         const y = Number(star.dataset.screenY)
         const insideEarth = radiusX > 0 && radiusY > 0
           && ((x - centerX) / radiusX) ** 2 + ((y - centerY) / radiusY) ** 2 <= 1
-        star.dataset.occluded = String(insideEarth)
+        const nextOcclusion = String(insideEarth)
+        if (star.dataset.occluded !== nextOcclusion) star.dataset.occluded = nextOcclusion
       })
     }
 

@@ -30,6 +30,9 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
   .deep-singularity {
     --singularity-reveal: 0;
     --singularity-scale: 0.72;
+    --singularity-pitch: 0deg;
+    --singularity-yaw: 0deg;
+    --singularity-roll: -13deg;
     --focus-card-top: 66%;
     @apply pointer-events-none absolute right-[-6vw] top-[3vh] z-[3];
     width: clamp(28rem, 58vw, 62rem);
@@ -55,7 +58,8 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
   .singularity-system {
     @apply absolute inset-[14%] rounded-full;
     perspective: 900px;
-    transform: rotate(-13deg);
+    transform: rotateZ(var(--singularity-roll)) rotateX(var(--singularity-pitch)) rotateY(var(--singularity-yaw));
+    transform-style: preserve-3d;
     filter: drop-shadow(0 0 34px rgb(251 146 60 / 0.22));
   }
 
@@ -144,11 +148,12 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
   .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk-back,
   .deep-singularity.scene-paused:not(.singularity-focused) .accretion-disk::before { animation-play-state: paused; }
 
+  :global(#orbit-stage.orbit-scrolling) .accretion-disk-back,
+  :global(#orbit-stage.orbit-scrolling) .accretion-disk::before { animation-play-state: paused; }
+
   .deep-singularity:not(.singularity-active):not(.singularity-focused) .accretion-disk-back,
   .deep-singularity:not(.singularity-active):not(.singularity-focused) .accretion-disk::before { animation-play-state: paused; }
 
-  :global(#orbit-stage.orbit-scrolling) .accretion-disk-back,
-  :global(#orbit-stage.orbit-scrolling) .accretion-disk::before { animation-play-state: paused; }
 
   .deep-singularity.singularity-focused {
     right: 50%;
@@ -172,6 +177,16 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     pointer-events: auto;
   }
 
+  .deep-singularity.singularity-focused .singularity-system {
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .deep-singularity.singularity-focused .singularity-system.dragging {
+    cursor: grabbing;
+  }
+
   @media (max-width: 760px) {
     .deep-singularity {
       right: -26vw;
@@ -192,6 +207,16 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
   const initializeDeepSingularity = () => {
     const singularity = document.getElementById("deep-singularity")
     if (!singularity) return
+    const system = singularity.querySelector<HTMLElement>(".singularity-system")
+    let pitch = 0
+    let yaw = 0
+    let dragging = false
+    let previousX = 0
+    let previousY = 0
+    const updateOrientation = () => {
+      singularity.style.setProperty("--singularity-pitch", `${pitch.toFixed(2)}deg`)
+      singularity.style.setProperty("--singularity-yaw", `${yaw.toFixed(2)}deg`)
+    }
     const pauseHandler = (event: Event) => {
       const paused = (event as CustomEvent<{ paused?: boolean }>).detail?.paused ?? true
       singularity.classList.toggle("scene-paused", paused)
@@ -210,6 +235,36 @@ import OrbitalFocusCard from "@components/OrbitalFocusCard.astro"
     window.addEventListener("globe:pause-state", pauseHandler)
     window.addEventListener("orbital:focus-singularity", focus)
     window.addEventListener("orbital:clear-focus", clearFocus)
+
+    const pointerDown = (event: PointerEvent) => {
+      if (!singularity.classList.contains("singularity-focused") || !system) return
+      dragging = true
+      previousX = event.clientX
+      previousY = event.clientY
+      system.classList.add("dragging")
+      system.setPointerCapture(event.pointerId)
+      event.preventDefault()
+    }
+    const pointerMove = (event: PointerEvent) => {
+      if (!dragging) return
+      yaw += (event.clientX - previousX) * 0.32
+      pitch = Math.max(-48, Math.min(48, pitch - (event.clientY - previousY) * 0.25))
+      previousX = event.clientX
+      previousY = event.clientY
+      updateOrientation()
+      event.preventDefault()
+    }
+    const pointerUp = (event: PointerEvent) => {
+      if (!dragging || !system) return
+      dragging = false
+      system.classList.remove("dragging")
+      if (system.hasPointerCapture(event.pointerId)) system.releasePointerCapture(event.pointerId)
+      event.preventDefault()
+    }
+    system?.addEventListener("pointerdown", pointerDown)
+    system?.addEventListener("pointermove", pointerMove)
+    system?.addEventListener("pointerup", pointerUp)
+    system?.addEventListener("pointercancel", pointerUp)
   }
 
   initializeDeepSingularity()

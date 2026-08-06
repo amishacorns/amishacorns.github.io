@@ -1,14 +1,14 @@
 // Global
 export const SITE = {
   TITLE: "Jordan Dotzel",
-  DESCRIPTION: "Neural architect researching and writing about machine intelligence, agents, scientific progress, and the transition to AGI.",
+  DESCRIPTION: "Neural architect researching and writing about machine intelligence, agents, scientific progress, and the transition to superintelligence.",
   AUTHOR: "Jordan Dotzel",
 }
 
 // Blog Page
 export const BLOG = {
   TITLE: "Transmissions",
-  DESCRIPTION: "Writing on machine intelligence, agents, scientific progress, and the transition to AGI.",
+  DESCRIPTION: "Writing on machine intelligence, agents, scientific progress, and the transition to superintelligence.",
 }
 
 // Search Page

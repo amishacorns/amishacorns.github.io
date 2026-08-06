@@ -8,6 +8,7 @@ const cpuThrottle = Number(process.env.SCROLL_BENCHMARK_CPU ?? 4)
 const coldMode = process.env.SCROLL_BENCHMARK_COLD === "true"
 const action = process.env.SCROLL_BENCHMARK_ACTION ?? "scroll"
 const animationDuration = Number(process.env.SCROLL_BENCHMARK_DURATION ?? 1500)
+const settleDuration = Number(process.env.SCROLL_BENCHMARK_SETTLE ?? 1500)
 const viewportWidth = Number(process.env.SCROLL_BENCHMARK_WIDTH ?? 412)
 const viewportHeight = Number(process.env.SCROLL_BENCHMARK_HEIGHT ?? 830)
 const deviceScaleFactor = Number(process.env.SCROLL_BENCHMARK_DPR ?? 2.625)
@@ -43,19 +44,32 @@ try {
       browser = await launchBrowser()
       page = await createPage(browser)
     }
-    await page.goto(url, { waitUntil: "networkidle0" })
-    const result = await page.evaluate(async ({ action, animationDuration }) => {
+    await page.goto(url, { waitUntil: "load" })
+    const result = await page.evaluate(async ({ action, animationDuration, settleDuration }) => {
       const section = document.getElementById("orbit")
       if (!section) throw new Error("Orbit section not found")
       window.scrollTo(0, 0)
-      await new Promise((resolve) => setTimeout(resolve, 250))
+      if (action.endsWith("-no-comets")) window.__orbitObjectsVisible = false
+      await document.fonts.ready
+      await new Promise((resolve) => setTimeout(resolve, settleDuration))
 
       const frameGaps = []
       const longFrames = []
       let observer
       if (PerformanceObserver.supportedEntryTypes.includes("long-animation-frame")) {
         observer = new PerformanceObserver((list) => {
-          longFrames.push(...list.getEntries().map((entry) => entry.duration))
+          longFrames.push(...list.getEntries().map((entry) => ({
+            duration: entry.duration,
+            blockingDuration: entry.blockingDuration,
+            renderDelay: Math.max(0, entry.renderStart - entry.startTime),
+            styleAndLayoutDuration: Math.max(0, entry.startTime + entry.duration - entry.styleAndLayoutStart),
+            scripts: Array.from(entry.scripts ?? []).map((script) => ({
+              sourceURL: script.sourceURL,
+              functionName: script.sourceFunctionName,
+              invoker: script.invoker,
+              duration: script.duration,
+            })),
+          })))
         })
         observer.observe({ type: "long-animation-frame" })
       }
@@ -69,7 +83,7 @@ try {
           frameGaps.push(now - previous)
           previous = now
           const progress = Math.min(1, (now - start) / duration)
-          if (action === "scroll") window.scrollTo(0, travel * progress)
+          if (action.startsWith("scroll")) window.scrollTo(0, travel * progress)
           if (progress < 1) requestAnimationFrame(step)
           else resolve()
         }
@@ -97,10 +111,11 @@ try {
         missedFrames: sorted.filter((gap) => gap > 24).length,
         severeFrames: sorted.filter((gap) => gap > 50).length,
         longAnimationFrames: longFrames.length,
-        maxLongAnimationFrameMs: longFrames.length ? Math.max(...longFrames) : 0,
+        maxLongAnimationFrameMs: longFrames.length ? Math.max(...longFrames.map((frame) => frame.duration)) : 0,
+        longAnimationDetails: longFrames.sort((a, b) => b.duration - a.duration).slice(0, 3),
         impactDistance,
       }
-    }, { action, animationDuration })
+    }, { action, animationDuration, settleDuration })
     results.push(result)
     if (coldMode) {
       await browser.close()
@@ -111,13 +126,14 @@ try {
   await browser?.close()
 }
 
+const numericKeys = Object.keys(results[0]).filter((key) => typeof results[0][key] === "number")
 const summary = Object.fromEntries(
-  Object.keys(results[0]).map((key) => [key, Number(median(results.map((result) => result[key])).toFixed(2))]),
+  numericKeys.map((key) => [key, Number(median(results.map((result) => result[key])).toFixed(2))]),
 )
 const warmResults = coldMode ? [] : results.slice(1)
 const warmMedian = warmResults.length
   ? Object.fromEntries(
-      Object.keys(results[0]).map((key) => [key, Number(median(warmResults.map((result) => result[key])).toFixed(2))]),
+      numericKeys.map((key) => [key, Number(median(warmResults.map((result) => result[key])).toFixed(2))]),
     )
   : summary
 

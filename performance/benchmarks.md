@@ -487,3 +487,36 @@ Measured on 2026-08-05 at 412 × 830. The animated-hero result is the median of 
 | Earth-to-singularity center error | 0.39 px | 0.39 px | unchanged |
 
 The same change also removes the homepage's fixed negative content margin. The first content section now starts below the hero and rises progressively with orbit scroll, preventing it from covering the Countries, Planets, and Galaxies HUD at page load. The client module is 38.54 KB raw / 13.75 KB compressed; the 0.56 KB compressed increase includes both interactions. This implementation is retained because it stays close to the established idle-hero baseline and preserves a smooth 60 FPS warm scroll profile.
+
+### 24. Retain dimensional comets with an adaptive performance ceiling
+
+The orbital objects now use richer spherical rotation, muted multiscale surface variation, and pre-rendered WebP atlases. Generating those atlases in the browser was rejected because it added substantial startup work. The retained implementation generates eight atlases at build time, loads them sequentially after the first interaction window, and leaves the lighter bodies visible while they wait. The critical client module is 58.85 KB raw / 20.64 KB compressed; moving the atlas generator out of the runtime saves approximately 1.7 KB raw / 0.6 KB compressed compared with the runtime-generated version.
+
+The first unrestricted implementation caused a serious constrained-device regression: under 6x CPU slowdown, the three-second animated hero fell to roughly 44-54 sampled frames with 36-40 severe frames. The retained renderer continuously measures animation gaps. Capable devices keep the richer 60 FPS desktop or 30 FPS mobile animation; a phone that sustains gaps above 28 ms switches only the orbit bodies to the lightweight renderer. The Earth, trails, direct manipulation, and focused 3D object inspection remain available. Research-star pulses were also moved from animated shadows and borders to compositor-only opacity and scale.
+
+Measured on 2026-08-05 at 412 x 830. The animated-hero result is the median of five independent cold launches at 6x CPU slowdown. The orbit result is the warm median of five runs at 4x CPU slowdown.
+
+| Metric | Experiment 23 | Retained dimensional renderer | Change |
+| --- | ---: | ---: | ---: |
+| Animated-hero sampled frames | 154 | 158 | +3% |
+| Animated-hero missed frames | 25 | 23 | -2 frames |
+| Animated-hero severe frames | 0 | 0 | unchanged |
+| Orbit sampled frames over 1.5 s | about 89 | 82 | about -8% |
+| Orbit median frame time | 16.7 ms | 16.7 ms | unchanged |
+| Orbit 95th-percentile frame time | 16.8 ms | 33.4 ms | one 30 FPS tier |
+| Orbit severe frames | 0 | 0 | unchanged |
+| Earth-to-singularity center error | 0.39 px | 0.39 px | unchanged |
+
+Independent cold-process orbit runs still show a variable startup spike, with a median of seven severe frames in the latest three-run sample. Disabling every comet during the same test produced the same spike, so it is not attributed to the new orbital renderer. Warm interaction has no severe or long-animation frames. This remaining cold-start path is recorded rather than hidden and should be the next performance target.
+
+### 25. Bound the oversized AGI renderer and halve comet-atlas memory
+
+Doubling the resting AGI object exposed a real mobile ceiling. In the 6x CPU idle-hero test, the first version fell to 108 sampled frames over three seconds, with 58 missed and eight severe frames. The retained renderer measures sustained animation gaps and reduces only the resting asteroid's repaint rate on a struggling phone; focused inspection keeps its responsive rate. In the matching recovery sample, the result rose to 164 frames with 17 missed and zero severe frames. The large object and focused interaction remain unchanged on capable hardware.
+
+The identity-comet tier now performs the same capability check after a one-second startup grace period. A capable browser keeps the full rotating sprites. A browser that sustains sub-42-FPS gaps leaves the decorative fleet visible and interactive but parks its automatic orbit; selecting an object resumes its focused 3D renderer. This also ends the otherwise permanent animation-frame loop after fallback and avoids beginning atlas decode on a device that has already demonstrated that it cannot afford it.
+
+The deferred orbit atlases were reduced from 96 to 48 keyframes. Adjacent frames were already blended every rendered frame, so this preserves smooth apparent rotation while cutting the eight WebP files from 422.7 KiB to 235.2 KiB (-44%) and decoded atlas pixels from approximately 15.9 MiB to 8.0 MiB (-50%). Their render buffers now match the 72-pixel source frames instead of resampling through an 80-pixel intermediate buffer.
+
+Two smaller recurring costs were removed. Research stars now write their Earth-occlusion state only when it changes, and the comet renderer no longer rewrites unchanged opacity and stacking values every frame. In the matched 4x mobile scroll sample immediately around those changes, the warm median improved from 75 to 81 sampled frames over 1.5 seconds, missed frames fell from 24 to 9, and severe frames fell from one to zero. Later headless samples continued to show substantial cold-run variance, so this is recorded as a matched local result rather than a new universal baseline.
+
+Comet-tail geometry now refreshes at 15 FPS while the bodies retain their higher capable-device rate. The trails move on 22-52-second periods and keep an independent dust animation, so their visual displacement between geometry refreshes is subpixel at normal size. An attempted SVG `<use>` geometry-sharing implementation reduced attribute writes but increased reference-resolution and style cost; it was measured, rejected, and reverted.
