@@ -759,7 +759,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
               fragment.append(button)
             })
             galleryGrid.append(fragment)
-            window.requestAnimationFrame(positionGalleryOverlay)
+            positionGalleryOverlay()
           }
 
           const htmlToText = (value = "") => {
@@ -829,7 +829,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             tooltip.classList.add("gallery-overlay")
             tooltip.classList.add("has-gallery")
             gallery.hidden = false
-            window.requestAnimationFrame(positionGalleryOverlay)
+            positionGalleryOverlay()
             galleryStatus.textContent = "Receiving…"
             if (!manuallyPaused) {
               galleryOwnsPause = true
