@@ -5,6 +5,7 @@ import Header from "@components/Header.astro"
 import Footer from "@components/Footer.astro"
 import Drawer from "@components/Drawer.astro"
 import RealStarField from "@components/RealStarField.astro"
+import ResearchConstellation from "@components/ResearchConstellation.astro"
 const { title, description, image, imageAlt, type, publishedTime, tags } = Astro.props
 const isHome = title === "Home"
 const pageTitle = isHome ? `${SITE.TITLE} — Neural Architect` : `${title} | ${SITE.TITLE}`
@@ -21,6 +22,7 @@ import { SITE } from "@consts"
     <div class:list={["site-star-field", isHome && "site-star-field-home"]}>
       <RealStarField />
     </div>
+    <ResearchConstellation mode={title === "Research" ? "research" : isHome ? "home" : "quiet"} />
     <Header />
     <Drawer />
     <main id="main-content-root">

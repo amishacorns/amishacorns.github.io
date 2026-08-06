@@ -1,0 +1,186 @@
+---
+import { publications } from "../data/publications"
+
+const { mode = "quiet" } = Astro.props
+
+// Centers of the brightest rendered stars in the desktop and mobile sky maps.
+const desktopStars = [
+  [809, 403], [1037, 849], [742, 195], [1464, 782], [1144, 299], [1657, 397], [1190, 462],
+  [1106, 381], [1864, 243], [1154, 18], [178, 378], [538, 755], [14, 257], [1755, 600],
+]
+const mobileStars = [
+  [72, 265], [141, 853], [337, 478], [47, 768], [237, 470], [432, 290], [475, 910],
+  [219, 409], [201, 265], [343, 973], [485, 469], [522, 917], [77, 819], [429, 581],
+]
+---
+
+<nav class:list={["research-constellation", `research-constellation-${mode}`]} aria-label="Research constellation" data-research-constellation>
+  {publications.map((paper, index) => (
+    <a
+      class="paper-star"
+      href={paper.href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`${paper.title}, ${paper.venue}`}
+      data-desktop-x={desktopStars[index]?.[0]}
+      data-desktop-y={desktopStars[index]?.[1]}
+      data-mobile-x={mobileStars[index]?.[0]}
+      data-mobile-y={mobileStars[index]?.[1]}
+    >
+      <span class="paper-star-core" aria-hidden="true"></span>
+      <span class="paper-star-card">
+        <small>{String(index + 1).padStart(2, "0")} / {paper.venue}</small>
+        <strong>{paper.title}</strong>
+        <em>Open Paper ↗</em>
+      </span>
+    </a>
+  ))}
+</nav>
+
+<style>
+  .research-constellation {
+    @apply pointer-events-none fixed inset-0 z-40 overflow-hidden;
+  }
+
+  .paper-star {
+    @apply pointer-events-auto absolute left-0 top-0 block size-9 rounded-full opacity-0 outline-none;
+    transform: translate3d(var(--paper-star-x, -5rem), var(--paper-star-y, -5rem), 0);
+    transition: opacity 350ms ease;
+  }
+
+  .research-constellation.ready .paper-star { opacity: 0.5; }
+  .research-constellation-home.ready .paper-star { opacity: 0.62; }
+  .research-constellation-research.ready .paper-star { opacity: 0.78; }
+
+  .paper-star-core {
+    @apply absolute left-1/2 top-1/2 block size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white;
+    box-shadow: 0 0 5px rgb(255 255 255 / 0.95), 0 0 14px rgb(196 181 253 / 0.8);
+  }
+
+  .paper-star::after {
+    content: "";
+    @apply absolute inset-1.5 rounded-full border border-violet-100/25;
+    transform: scale(0.72);
+    transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+    opacity: 0.35;
+  }
+
+  .paper-star:hover,
+  .paper-star:focus-visible,
+  .paper-star[data-active="true"] { opacity: 1 !important; }
+
+  .paper-star:hover::after,
+  .paper-star:focus-visible::after,
+  .paper-star[data-active="true"]::after {
+    border-color: rgb(221 214 254 / 0.72);
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .paper-star-card {
+    @apply pointer-events-none absolute bottom-[calc(100%+0.45rem)] left-1/2 z-50 w-72 -translate-x-1/2 rounded-lg border border-violet-200/25 bg-black/90 px-3 py-2.5 text-left font-mono opacity-0 shadow-2xl shadow-violet-950/45 backdrop-blur-md;
+    transform-origin: bottom center;
+    transition: opacity 160ms ease, transform 180ms ease;
+    transform: translate(-50%, 5px) scale(0.97);
+  }
+
+  .paper-star:hover .paper-star-card,
+  .paper-star:focus-visible .paper-star-card,
+  .paper-star[data-active="true"] .paper-star-card {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  .paper-star-card small { @apply block text-[8px] font-semibold uppercase tracking-[0.15em] text-violet-200/50; }
+  .paper-star-card strong { @apply mt-1 block text-xs leading-relaxed text-white/90; }
+  .paper-star-card em { @apply mt-2 block text-[8px] not-italic uppercase tracking-[0.14em] text-cyan-100/55; }
+
+  .paper-star[data-card-x="start"] .paper-star-card {
+    left: 0;
+    transform: translate(0, 5px) scale(0.97);
+    transform-origin: bottom left;
+  }
+  .paper-star[data-card-x="start"]:hover .paper-star-card,
+  .paper-star[data-card-x="start"]:focus-visible .paper-star-card,
+  .paper-star[data-card-x="start"][data-active="true"] .paper-star-card { transform: translate(0, 0) scale(1); }
+
+  .paper-star[data-card-x="end"] .paper-star-card {
+    left: auto;
+    right: 0;
+    transform: translate(0, 5px) scale(0.97);
+    transform-origin: bottom right;
+  }
+  .paper-star[data-card-x="end"]:hover .paper-star-card,
+  .paper-star[data-card-x="end"]:focus-visible .paper-star-card,
+  .paper-star[data-card-x="end"][data-active="true"] .paper-star-card { transform: translate(0, 0) scale(1); }
+
+  .paper-star[data-card-y="below"] .paper-star-card {
+    bottom: auto;
+    top: calc(100% + 0.45rem);
+    transform-origin: top center;
+  }
+
+  @media (max-width: 700px) {
+    .paper-star { @apply size-10; }
+    .paper-star-card { @apply w-60; }
+    .research-constellation.ready .paper-star { opacity: 0.55; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paper-star,
+    .paper-star::after,
+    .paper-star-card { transition: none; }
+  }
+</style>
+
+<script>
+  const constellation = document.querySelector<HTMLElement>("[data-research-constellation]")
+  if (constellation && !constellation.dataset.initialized) {
+    constellation.dataset.initialized = "true"
+    const paperStars = Array.from(constellation.querySelectorAll<HTMLAnchorElement>(".paper-star"))
+    let positionFrame = 0
+
+    const positionStars = () => {
+      positionFrame = 0
+      const mobile = window.innerWidth <= 700
+      const imageWidth = mobile ? 563 : 1920
+      const imageHeight = mobile ? 1020 : 1080
+      const scale = Math.max(window.innerWidth / imageWidth, window.innerHeight / imageHeight)
+      const offsetX = (window.innerWidth - imageWidth * scale) / 2
+      const offsetY = (window.innerHeight - imageHeight * scale) / 2
+
+      paperStars.forEach((star) => {
+        const sourceX = Number(mobile ? star.dataset.mobileX : star.dataset.desktopX)
+        const sourceY = Number(mobile ? star.dataset.mobileY : star.dataset.desktopY)
+        const x = offsetX + sourceX * scale
+        const y = offsetY + sourceY * scale
+        star.style.setProperty("--paper-star-x", `${x - star.offsetWidth / 2}px`)
+        star.style.setProperty("--paper-star-y", `${y - star.offsetHeight / 2}px`)
+        star.dataset.cardX = x < 180 ? "start" : x > window.innerWidth - 180 ? "end" : "center"
+        star.dataset.cardY = y < 150 ? "below" : "above"
+      })
+
+      constellation.classList.add("ready")
+    }
+
+    const schedulePosition = () => {
+      if (!positionFrame) positionFrame = window.requestAnimationFrame(positionStars)
+    }
+
+    const coarsePointer = window.matchMedia("(hover: none)")
+    paperStars.forEach((star) => {
+      star.addEventListener("click", (event) => {
+        if (!coarsePointer.matches || star.dataset.active === "true") return
+        event.preventDefault()
+        paperStars.forEach((candidate) => delete candidate.dataset.active)
+        star.dataset.active = "true"
+      })
+    })
+    document.addEventListener("pointerdown", (event) => {
+      if ((event.target as Element | null)?.closest(".paper-star")) return
+      paperStars.forEach((star) => delete star.dataset.active)
+    })
+    window.addEventListener("resize", schedulePosition, { passive: true })
+    schedulePosition()
+  }
+</script>
