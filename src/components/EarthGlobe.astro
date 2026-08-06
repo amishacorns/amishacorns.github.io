@@ -23,12 +23,34 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
   aria-label="Drag or use the arrow keys to rotate the travel globe"
 ></canvas>
 <div id="earth-labels" class="earth-labels" aria-label="Visible visited locations"></div>
-<div id="earth-tooltip" class="earth-tooltip" role="status" hidden>
+<div id="earth-tooltip" class="earth-tooltip" role="dialog" aria-label="Visited location details" hidden>
+  <button class="earth-tooltip-close" type="button" aria-label="Close city album" data-gallery-close>×</button>
   <span>Visited Location</span>
   <strong data-location-title>Unknown</strong>
-  <div><b>Coordinates</b><i data-location-coordinates>--</i></div>
-  <div><b>Signals</b><i data-location-count>--</i></div>
+  <div class="earth-tooltip-row"><b>Coordinates</b><i data-location-coordinates>--</i></div>
+  <div class="earth-tooltip-row"><b>Signals</b><i data-location-count>--</i></div>
+  <section class="earth-location-gallery" data-location-gallery hidden>
+    <div class="earth-gallery-heading">
+      <b>Visual Archive</b>
+      <i data-gallery-status>Receiving…</i>
+    </div>
+    <div class="earth-gallery-grid" data-gallery-grid></div>
+    <p data-gallery-note>Temporary stock imagery · large files load only when opened</p>
+  </section>
 </div>
+
+<dialog id="earth-photo-lightbox" class="earth-photo-lightbox" aria-label="Travel photograph viewer">
+  <button class="earth-lightbox-close" type="button" aria-label="Close photograph" data-lightbox-close>×</button>
+  <button class="earth-lightbox-nav earth-lightbox-previous" type="button" aria-label="Previous photograph" data-lightbox-previous>‹</button>
+  <figure>
+    <img alt="" data-lightbox-image />
+    <figcaption>
+      <span data-lightbox-caption></span>
+      <a href="#" target="_blank" rel="noreferrer" data-lightbox-credit></a>
+    </figcaption>
+  </figure>
+  <button class="earth-lightbox-nav earth-lightbox-next" type="button" aria-label="Next photograph" data-lightbox-next>›</button>
+</dialog>
 
 <style>
   .earth-globe,
@@ -61,6 +83,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
 
   :global(.earth-location-label) {
     @apply absolute rounded border border-cyan-200/45 bg-black/80 font-mono font-semibold text-cyan-50/90 shadow-md backdrop-blur-sm;
+    left: 0;
+    top: 0;
     height: 17px;
     padding: 0 5px;
     font-size: 10px;
@@ -68,6 +92,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
     white-space: nowrap;
     pointer-events: auto;
     cursor: pointer;
+    will-change: transform, opacity;
+    transition: opacity 180ms ease;
   }
   :global(.earth-location-label:hover),
   :global(.earth-location-label:focus-visible) {
@@ -93,15 +119,95 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
   .earth-markers:focus-visible { box-shadow: inset 0 0 0 2px rgb(196 181 253 / 0.55); }
 
   .earth-tooltip {
-    @apply absolute z-20 min-w-52 rounded-lg border border-cyan-200/25 bg-black/85 px-3 py-2 text-left font-mono shadow-xl backdrop-blur-md;
+    @apply absolute z-20 rounded-lg border border-cyan-200/25 bg-black/85 px-3 py-2 text-left font-mono shadow-xl backdrop-blur-md;
+    width: 13rem;
     pointer-events: none;
     transform: translate(-50%, calc(-100% - 0.7rem));
+    transform-origin: bottom center;
+    transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, background-color 220ms ease;
   }
+  .earth-tooltip.has-gallery {
+    width: min(23rem, calc(100vw - 2rem));
+    pointer-events: auto;
+    border-color: rgb(165 243 252 / 0.34);
+    background: rgb(0 0 0 / 0.92);
+  }
+  .earth-tooltip.gallery-overlay {
+    position: fixed;
+    z-index: 120;
+    left: var(--gallery-left, max(1rem, 3vw)) !important;
+    right: auto;
+    top: var(--gallery-top, max(6rem, 12vh)) !important;
+    transform: none;
+  }
+  .earth-tooltip-close {
+    @apply absolute right-2 top-1 hidden h-6 w-6 cursor-pointer border-0 bg-transparent p-0 text-lg leading-6 text-white/45 transition hover:text-white;
+  }
+  .earth-tooltip.has-gallery .earth-tooltip-close { display: block; }
   .earth-tooltip > span { @apply block text-[8px] font-semibold uppercase tracking-[0.2em] text-cyan-200/45; }
   .earth-tooltip strong { @apply mt-0.5 block max-w-48 text-xs font-semibold text-white/90; }
-  .earth-tooltip div { @apply mt-1 flex items-center justify-between gap-4 text-[9px]; }
-  .earth-tooltip b { @apply font-medium uppercase tracking-[0.12em] text-white/35; }
-  .earth-tooltip i { @apply not-italic text-cyan-100/75; }
+  .earth-tooltip-row { @apply mt-1 flex items-center justify-between gap-4 text-[9px]; }
+  .earth-tooltip-row b { @apply font-medium uppercase tracking-[0.12em] text-white/35; }
+  .earth-tooltip-row i { @apply not-italic text-cyan-100/75; }
+
+  .earth-location-gallery {
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: max-height 340ms cubic-bezier(0.22, 1, 0.36, 1), margin-top 260ms ease, opacity 220ms ease, transform 260ms ease;
+  }
+  .earth-tooltip.has-gallery .earth-location-gallery {
+    max-height: 18rem;
+    margin-top: 0.65rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .earth-gallery-heading { @apply mb-1.5 flex items-center justify-between gap-3; }
+  .earth-gallery-heading b { @apply text-[8px] font-semibold uppercase tracking-[0.18em] text-cyan-100/60; }
+  .earth-gallery-heading i { @apply text-[8px] not-italic text-white/35; }
+  .earth-gallery-grid { @apply grid grid-cols-3 gap-1.5; }
+  :global(.earth-gallery-photo) {
+    @apply relative aspect-[3/2] cursor-zoom-in overflow-hidden rounded border border-white/10 bg-white/5 p-0 transition hover:border-cyan-100/55 focus-visible:border-cyan-100/70 focus-visible:outline-none;
+  }
+  :global(.earth-gallery-photo img) {
+    @apply h-full w-full object-cover opacity-0 transition duration-500;
+    transform: scale(1.025);
+  }
+  :global(.earth-gallery-photo.ready img) { opacity: 0.9; }
+  :global(.earth-gallery-photo:hover img),
+  :global(.earth-gallery-photo:focus-visible img) { opacity: 1; transform: scale(1.06); }
+  .earth-location-gallery > p { @apply mt-1.5 text-[7px] uppercase tracking-[0.1em] text-white/25; }
+
+  .earth-photo-lightbox {
+    @apply m-auto max-h-[94vh] w-[min(92vw,72rem)] overflow-visible rounded-xl border border-white/15 bg-black/95 p-3 text-white shadow-2xl backdrop:bg-black/85;
+  }
+  .earth-photo-lightbox[open] { animation: earth-lightbox-enter 220ms ease-out; }
+  .earth-photo-lightbox figure { @apply m-0 flex max-h-[88vh] flex-col; }
+  .earth-photo-lightbox img { @apply min-h-0 w-full flex-1 rounded-lg object-contain; }
+  .earth-photo-lightbox figcaption { @apply flex items-center justify-between gap-4 px-1 pt-2 font-mono text-[10px] text-white/55; }
+  .earth-photo-lightbox figcaption span { @apply min-w-0 truncate; }
+  .earth-photo-lightbox figcaption a { @apply shrink-0 text-cyan-100/65 underline decoration-white/15 underline-offset-2 hover:text-white; }
+  .earth-lightbox-close { @apply absolute right-3 top-3 z-10 h-9 w-9 cursor-pointer rounded-full border border-white/15 bg-black/70 text-xl text-white/70 backdrop-blur transition hover:border-white/35 hover:text-white; }
+  .earth-lightbox-nav { @apply absolute top-1/2 z-10 h-12 w-10 -translate-y-1/2 cursor-pointer rounded-full border border-white/10 bg-black/55 text-3xl text-white/60 backdrop-blur transition hover:border-white/35 hover:text-white; }
+  .earth-lightbox-previous { @apply left-3; }
+  .earth-lightbox-next { @apply right-3; }
+  @keyframes earth-lightbox-enter { from { opacity: 0; transform: scale(0.975); } }
+
+  @media (max-width: 640px) {
+    .earth-tooltip.has-gallery { width: min(21rem, calc(100vw - 1.25rem)); }
+    .earth-tooltip.gallery-overlay {
+      left: 50% !important;
+      right: auto;
+      top: auto !important;
+      bottom: 1rem;
+      transform: translateX(-50%);
+    }
+    .earth-gallery-grid { @apply gap-1; }
+    .earth-photo-lightbox { @apply w-[96vw] p-2; }
+    .earth-photo-lightbox figcaption { @apply flex-col items-start gap-1; }
+  }
 </style>
 
 <script>
@@ -115,20 +221,49 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
     points: ProjectedLocation[]
   }
   type MarkerLabel = {
+    key: string
     cluster: MarkerCluster
+    button: HTMLButtonElement
+    placement: number
+    offsetX: number
+    offsetY: number
     labelLeft: number
     labelTop: number
     labelRight: number
     labelBottom: number
   }
+  type TravelPhoto = { thumb: string; full: string; alt: string; credit: string; source: string; license?: string }
+  type TravelAlbum = { city: string; demo?: boolean; source?: "local" | "wikimedia"; photos: TravelPhoto[] }
+  type CommonsMetadataValue = { value?: string }
+  type CommonsImageInfo = {
+    mime?: string
+    thumburl?: string
+    url?: string
+    user?: string
+    extmetadata?: Record<string, CommonsMetadataValue>
+  }
+  type CommonsPage = { title?: string; imageinfo?: CommonsImageInfo[] }
 
   const canvas = document.getElementById("earth-globe") as HTMLCanvasElement | null
   const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
   const labelLayer = document.getElementById("earth-labels") as HTMLDivElement | null
   const tooltip = document.getElementById("earth-tooltip") as HTMLDivElement | null
+  const tooltipHome = tooltip?.parentElement
   const tooltipTitle = tooltip?.querySelector<HTMLElement>("[data-location-title]")
   const tooltipCoordinates = tooltip?.querySelector<HTMLElement>("[data-location-coordinates]")
   const tooltipCount = tooltip?.querySelector<HTMLElement>("[data-location-count]")
+  const gallery = tooltip?.querySelector<HTMLElement>("[data-location-gallery]")
+  const galleryGrid = tooltip?.querySelector<HTMLElement>("[data-gallery-grid]")
+  const galleryStatus = tooltip?.querySelector<HTMLElement>("[data-gallery-status]")
+  const galleryNote = tooltip?.querySelector<HTMLElement>("[data-gallery-note]")
+  const galleryClose = tooltip?.querySelector<HTMLButtonElement>("[data-gallery-close]")
+  const lightbox = document.getElementById("earth-photo-lightbox") as HTMLDialogElement | null
+  const lightboxImage = lightbox?.querySelector<HTMLImageElement>("[data-lightbox-image]")
+  const lightboxCaption = lightbox?.querySelector<HTMLElement>("[data-lightbox-caption]")
+  const lightboxCredit = lightbox?.querySelector<HTMLAnchorElement>("[data-lightbox-credit]")
+  const lightboxClose = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-close]")
+  const lightboxPrevious = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-previous]")
+  const lightboxNext = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-next]")
   const locationData = document.getElementById("earth-location-data")?.textContent
   const locationTuples = locationData ? JSON.parse(locationData) as TravelLocationTuple[] : []
 
@@ -256,6 +391,12 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
           let markerLabels: MarkerLabel[] = []
           let lastLabelDraw = -Infinity
           let selectedLocation = ""
+          let galleryRequest = 0
+          let galleryOwnsPause = false
+          let activeAlbum: TravelAlbum | null = null
+          let activePhotoIndex = 0
+          const localAlbumSlugs = new Map<string, string>()
+          const albumCache = new Map<string, Promise<TravelAlbum>>()
           let globeAnimationFrame = 0
           let resumeGlobe = () => {}
           const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -370,14 +511,41 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             markerLabels = []
           }
 
+          const updateMarkerLabels = () => {
+            for (const markerLabel of markerLabels) {
+              const currentCluster = clusters.find((cluster) =>
+                cluster.points.some((point) => point.title === markerLabel.key)
+              )
+              if (!currentCluster || currentCluster.depth < 0.08) {
+                markerLabel.button.style.opacity = "0"
+                markerLabel.button.style.pointerEvents = "none"
+                continue
+              }
+
+              markerLabel.cluster = currentCluster
+              const left = currentCluster.x + markerLabel.offsetX
+              const top = currentCluster.y + markerLabel.offsetY
+              markerLabel.labelLeft = left
+              markerLabel.labelTop = top
+              markerLabel.labelRight = left + markerLabel.button.offsetWidth
+              markerLabel.labelBottom = top + markerLabel.button.offsetHeight
+              markerLabel.button.style.transform = `translate3d(${left}px, ${top}px, 0)`
+              if (markerLabel.button.dataset.entering !== "true") {
+                markerLabel.button.style.opacity = `${0.62 + currentCluster.depth * 0.34}`
+              }
+              markerLabel.button.style.pointerEvents = "auto"
+            }
+          }
+
           const drawMarkerLabels = (now: number) => {
-            clearLabels()
             const labelHeight = constrainedDevice ? 14 : 17
             const labelLimit = constrainedDevice ? 10 : 24
             const labelGap = constrainedDevice ? 5 : 7
-            const fragment = document.createDocumentFragment()
+            const previousLabels = new Map(markerLabels.map((markerLabel) => [markerLabel.key, markerLabel]))
+            const nextLabels: MarkerLabel[] = []
             for (const cluster of clusters) {
-              if (markerLabels.length >= labelLimit || cluster.depth < 0.16) continue
+              if (nextLabels.length >= labelLimit || cluster.depth < 0.16) continue
+              const key = cluster.points[0].title
               const city = cluster.points[0].title.split(",")[0].trim()
               const label = cluster.points.length > 1 ? `${city} +${cluster.points.length - 1}` : city
               const labelWidth = Math.ceil(label.length * (constrainedDevice ? 4.8 : 6.1) + (constrainedDevice ? 8 : 11))
@@ -387,34 +555,70 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
                 [cluster.x - labelWidth / 2, cluster.y + labelGap],
                 [cluster.x - labelWidth - labelGap, cluster.y - labelHeight / 2],
               ]
-              const position = candidates.find(([left, top]) => {
+              const previous = previousLabels.get(key)
+              const candidateOrder = previous
+                ? [previous.placement, 0, 1, 2, 3].filter((value, index, values) => values.indexOf(value) === index)
+                : [0, 1, 2, 3]
+              const placement = candidateOrder.find((candidateIndex) => {
+                const [left, top] = candidates[candidateIndex]
                 const right = left + labelWidth
                 const bottom = top + labelHeight
                 if (left < 4 || top < 4 || right > cssSize - 4 || bottom > cssSize - 4) return false
-                return !markerLabels.some((placed) =>
+                return !nextLabels.some((placed) =>
                   left < placed.labelRight + 3 && right > placed.labelLeft - 3 &&
                   top < placed.labelBottom + 3 && bottom > placed.labelTop - 3
                 )
               })
-              if (!position) continue
-              const [left, top] = position
+              if (placement === undefined) continue
+              const [left, top] = candidates[placement]
               const right = left + labelWidth
               const bottom = top + labelHeight
-              const button = document.createElement("button")
-              button.type = "button"
-              button.className = "earth-location-label"
-              button.textContent = label
+              const button = previous?.button ?? document.createElement("button")
+              if (!previous) {
+                button.type = "button"
+                button.className = "earth-location-label"
+                button.dataset.entering = "true"
+                button.style.opacity = "0"
+                button.addEventListener("pointerdown", (event) => event.stopPropagation())
+                button.addEventListener("click", () => {
+                  const current = markerLabels.find((markerLabel) => markerLabel.button === button)
+                  if (current) showClusterTooltip(current.cluster)
+                })
+                labelLayer.append(button)
+                window.requestAnimationFrame(() => {
+                  button.dataset.entering = "false"
+                  const current = markerLabels.find((markerLabel) => markerLabel.button === button)
+                  if (current) button.style.opacity = `${0.62 + current.cluster.depth * 0.34}`
+                })
+              }
+              button.dataset.visible = "true"
+              if (button.textContent !== label) button.textContent = label
               button.setAttribute("aria-label", `Open ${label}`)
-              button.style.left = `${left}px`
-              button.style.top = `${top}px`
               button.style.width = `${labelWidth}px`
-              button.style.opacity = `${0.62 + cluster.depth * 0.34}`
-              button.addEventListener("pointerdown", (event) => event.stopPropagation())
-              button.addEventListener("click", () => showClusterTooltip(cluster))
-              fragment.append(button)
-              markerLabels.push({ cluster, labelLeft: left, labelTop: top, labelRight: right, labelBottom: bottom })
+              previousLabels.delete(key)
+              nextLabels.push({
+                key,
+                cluster,
+                button,
+                placement,
+                offsetX: left - cluster.x,
+                offsetY: top - cluster.y,
+                labelLeft: left,
+                labelTop: top,
+                labelRight: right,
+                labelBottom: bottom,
+              })
             }
-            labelLayer.append(fragment)
+            for (const outgoing of previousLabels.values()) {
+              outgoing.button.dataset.visible = "false"
+              outgoing.button.style.opacity = "0"
+              outgoing.button.style.pointerEvents = "none"
+              window.setTimeout(() => {
+                if (outgoing.button.dataset.visible === "false") outgoing.button.remove()
+              }, 190)
+            }
+            markerLabels = nextLabels
+            updateMarkerLabels()
             lastLabelDraw = now
           }
 
@@ -455,13 +659,16 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             }
 
             markerContext.globalAlpha = 1
+            if (markerLabels.length) updateMarkerLabels()
             if (selectedLocation) {
               const selectedCluster = clusters.find((cluster) =>
                 cluster.points.some((point) => point.title === selectedLocation)
               )
               if (selectedCluster) {
-                tooltip.style.left = `${selectedCluster.x}px`
-                tooltip.style.top = `${selectedCluster.y}px`
+                if (!tooltip.classList.contains("gallery-overlay")) {
+                  tooltip.style.left = `${selectedCluster.x}px`
+                  tooltip.style.top = `${selectedCluster.y}px`
+                }
                 tooltip.hidden = false
               } else {
                 tooltip.hidden = true
@@ -469,8 +676,187 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             }
           }
 
+          const releaseGalleryPause = () => {
+            if (!galleryOwnsPause) return
+            galleryOwnsPause = false
+            window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: false } }))
+          }
+
+          const positionGalleryOverlay = () => {
+            if (!tooltip.classList.contains("gallery-overlay") || window.innerWidth <= 640) return
+            const selectedLabel = markerLabels.find((markerLabel) => markerLabel.key === selectedLocation)
+            if (!selectedLabel) return
+            const anchor = selectedLabel.button.getBoundingClientRect()
+            const panel = tooltip.getBoundingClientRect()
+            const gap = 14
+            const margin = 16
+            const anchorY = anchor.top + anchor.height / 2
+            let left = anchor.right + gap
+            if (left + panel.width > window.innerWidth - margin) left = anchor.left - panel.width - gap
+            left = Math.max(margin, Math.min(left, window.innerWidth - panel.width - margin))
+            const top = Math.max(margin, Math.min(anchorY - panel.height / 2, window.innerHeight - panel.height - margin))
+            tooltip.style.setProperty("--gallery-left", `${left}px`)
+            tooltip.style.setProperty("--gallery-top", `${top}px`)
+          }
+
+          const resetGallery = (resumeGlobe = true) => {
+            galleryRequest += 1
+            tooltip.classList.remove("has-gallery")
+            tooltip.classList.remove("gallery-overlay")
+            tooltip.style.removeProperty("--gallery-left")
+            tooltip.style.removeProperty("--gallery-top")
+            if (tooltipHome && tooltip.parentElement !== tooltipHome) tooltipHome.append(tooltip)
+            if (gallery) gallery.hidden = true
+            galleryGrid?.replaceChildren()
+            activeAlbum = null
+            if (resumeGlobe) releaseGalleryPause()
+          }
+
+          const renderLightboxPhoto = (index: number) => {
+            if (!activeAlbum || !lightboxImage || !lightboxCaption || !lightboxCredit) return
+            const total = activeAlbum.photos.length
+            activePhotoIndex = (index + total) % total
+            const photo = activeAlbum.photos[activePhotoIndex]
+            lightboxImage.src = photo.full
+            lightboxImage.alt = photo.alt
+            lightboxCaption.textContent = `${activeAlbum.city} · ${activePhotoIndex + 1} / ${total}`
+            lightboxCredit.textContent = photo.license
+              ? `Photo by ${photo.credit} · ${photo.license}`
+              : `Photo by ${photo.credit}`
+            lightboxCredit.href = photo.source
+          }
+
+          const openLightbox = (album: TravelAlbum, index: number) => {
+            if (!lightbox) return
+            activeAlbum = album
+            renderLightboxPhoto(index)
+            if (!lightbox.open) lightbox.showModal()
+          }
+
+          const renderGallery = (album: TravelAlbum) => {
+            if (!galleryGrid || !galleryStatus) return
+            galleryGrid.replaceChildren()
+            galleryStatus.textContent = `${album.photos.length} photographs`
+            if (galleryNote) {
+              galleryNote.textContent = album.source === "wikimedia"
+                ? "Temporary Wikimedia Commons imagery · large files load only when opened"
+                : "Temporary stock imagery · large files load only when opened"
+            }
+            const fragment = document.createDocumentFragment()
+            album.photos.forEach((photo, index) => {
+              const button = document.createElement("button")
+              button.type = "button"
+              button.className = "earth-gallery-photo"
+              button.setAttribute("aria-label", `Open photograph ${index + 1} of ${album.photos.length}`)
+              const image = document.createElement("img")
+              image.alt = photo.alt
+              image.loading = "lazy"
+              image.decoding = "async"
+              image.addEventListener("load", () => button.classList.add("ready"), { once: true })
+              image.src = photo.thumb
+              button.append(image)
+              button.addEventListener("click", () => openLightbox(album, index))
+              fragment.append(button)
+            })
+            galleryGrid.append(fragment)
+            window.requestAnimationFrame(positionGalleryOverlay)
+          }
+
+          const htmlToText = (value = "") => {
+            const template = document.createElement("template")
+            template.innerHTML = value
+            return (template.content.textContent ?? "").replace(/\s+/g, " ").trim()
+          }
+
+          const largerCommonsThumbnail = (url: string) =>
+            url.replace(/\/\d+px-([^/?]+)(\?.*)?$/, "/1600px-$1$2")
+
+          const fetchCommonsAlbum = async (title: string): Promise<TravelAlbum> => {
+            const parameters = new URLSearchParams({
+              action: "query",
+              generator: "search",
+              gsrsearch: title,
+              gsrnamespace: "6",
+              gsrlimit: "20",
+              prop: "imageinfo",
+              iiprop: "url|mime|user|extmetadata",
+              iiurlwidth: "480",
+              iiextmetadatafilter: "Artist|LicenseShortName|ImageDescription",
+              format: "json",
+              origin: "*",
+            })
+            const response = await fetch(`https://commons.wikimedia.org/w/api.php?${parameters}`)
+            if (!response.ok) throw new Error(`Commons request failed: ${response.status}`)
+            const payload = await response.json() as { query?: { pages?: Record<string, CommonsPage> } }
+            const supportedTypes = new Set(["image/jpeg", "image/png", "image/webp"])
+            const unsuitablePlaceholder = /\b(map|flag|coat of arms|bomb(?:ing)?|war|battle|diagram|logo|emblem|seal|grave|cemetery)\b/i
+            const photos = Object.values(payload.query?.pages ?? {}).flatMap((page) => {
+              const info = page.imageinfo?.[0]
+              if (!page.title || !info?.thumburl || !supportedTypes.has(info.mime ?? "")) return []
+              const metadata = info.extmetadata ?? {}
+              const filename = page.title.replace(/^File:/, "").replace(/\.[^.]+$/, "")
+              const description = htmlToText(metadata.ImageDescription?.value)
+              if (unsuitablePlaceholder.test(`${filename} ${description}`)) return []
+              const credit = htmlToText(metadata.Artist?.value) || info.user || "Wikimedia Commons contributor"
+              const license = htmlToText(metadata.LicenseShortName?.value)
+              return [{
+                thumb: info.thumburl,
+                full: largerCommonsThumbnail(info.thumburl),
+                alt: (description || filename).slice(0, 220),
+                credit,
+                source: `https://commons.wikimedia.org/wiki/${encodeURIComponent(page.title.replace(/ /g, "_"))}`,
+                license,
+              } satisfies TravelPhoto]
+            }).slice(0, 6)
+            if (!photos.length) throw new Error(`No Commons photographs found for ${title}`)
+            return { city: title, demo: true, source: "wikimedia", photos }
+          }
+
+          const resolveAlbum = async (title: string): Promise<TravelAlbum> => {
+            const localSlug = localAlbumSlugs.get(title)
+            if (!localSlug) return fetchCommonsAlbum(title)
+            const response = await fetch(`/data/travel/${localSlug}.json`)
+            if (!response.ok) throw new Error(`Album request failed: ${response.status}`)
+            const album = await response.json() as TravelAlbum
+            return { ...album, source: "local" }
+          }
+
+          const loadLocationGallery = async (title: string) => {
+            resetGallery()
+            if (!gallery || !galleryStatus) return
+            const request = galleryRequest
+            if (tooltip.parentElement !== document.body) document.body.append(tooltip)
+            tooltip.classList.add("gallery-overlay")
+            tooltip.classList.add("has-gallery")
+            gallery.hidden = false
+            window.requestAnimationFrame(positionGalleryOverlay)
+            galleryStatus.textContent = "Receiving…"
+            if (!manuallyPaused) {
+              galleryOwnsPause = true
+              window.dispatchEvent(new CustomEvent("globe:set-paused", { detail: { paused: true } }))
+            }
+
+            let albumPromise = albumCache.get(title)
+            if (!albumPromise) {
+              albumPromise = resolveAlbum(title)
+              albumCache.set(title, albumPromise)
+            }
+
+            try {
+              const album = await albumPromise
+              if (request !== galleryRequest || selectedLocation !== title) return
+              activeAlbum = album
+              renderGallery(album)
+            } catch {
+              albumCache.delete(title)
+              if (request !== galleryRequest) return
+              galleryStatus.textContent = "Archive unavailable"
+            }
+          }
+
           const hideTooltip = (clearSelection = true) => {
             tooltip.hidden = true
+            resetGallery()
             if (clearSelection) selectedLocation = ""
           }
 
@@ -489,6 +875,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
             tooltipCoordinates.textContent = `${coordinateLabel(averageLat, "N", "S")} · ${coordinateLabel(averageLng, "E", "W")}`
             tooltipCount.textContent = `${cluster.points.length}`
             tooltip.hidden = false
+            void loadLocationGallery(selectedLocation)
           }
 
           const showTooltip = (clientX: number, clientY: number) => {
@@ -573,6 +960,25 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
           markerCanvas.addEventListener("keydown", keyDownHandler)
 
           const pauseButton = document.getElementById("globe-pause-button") as HTMLButtonElement | null
+          const closeLightbox = () => {
+            if (!lightbox) return
+            if (lightbox.open) lightbox.close()
+            lightboxImage?.removeAttribute("src")
+          }
+          tooltip.addEventListener("pointerdown", (event) => event.stopPropagation())
+          galleryClose?.addEventListener("click", () => hideTooltip())
+          lightboxClose?.addEventListener("click", closeLightbox)
+          lightboxPrevious?.addEventListener("click", () => renderLightboxPhoto(activePhotoIndex - 1))
+          lightboxNext?.addEventListener("click", () => renderLightboxPhoto(activePhotoIndex + 1))
+          lightbox?.addEventListener("click", (event) => {
+            if (event.target === lightbox) closeLightbox()
+          })
+          lightbox?.addEventListener("close", () => lightboxImage?.removeAttribute("src"))
+          window.addEventListener("keydown", (event) => {
+            if (!lightbox?.open) return
+            if (event.key === "ArrowLeft") renderLightboxPhoto(activePhotoIndex - 1)
+            else if (event.key === "ArrowRight") renderLightboxPhoto(activePhotoIndex + 1)
+          })
           const setManualPaused = (paused: boolean) => {
             manuallyPaused = paused
             if (pauseButton) {
@@ -653,7 +1059,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
                 drawMarkers()
                 if (dragging) {
                   if (markerLabels.length) clearLabels()
-                } else if (now - lastLabelDraw >= (constrainedDevice ? 1200 : 600)) {
+                } else if (now - lastLabelDraw >= (constrainedDevice ? 1600 : 1000)) {
                   drawMarkerLabels(now)
                 }
                 lastFrame = now
