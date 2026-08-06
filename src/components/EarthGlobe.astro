@@ -77,7 +77,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
 
   .earth-labels {
     @apply absolute inset-0 h-full w-full;
-    z-index: 3;
+    z-index: 30;
     pointer-events: none;
   }
 
@@ -247,6 +247,7 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
   const canvas = document.getElementById("earth-globe") as HTMLCanvasElement | null
   const markerCanvas = document.getElementById("earth-markers") as HTMLCanvasElement | null
   const labelLayer = document.getElementById("earth-labels") as HTMLDivElement | null
+  const crescent = canvas?.closest<HTMLElement>("#crescent")
   const tooltip = document.getElementById("earth-tooltip") as HTMLDivElement | null
   const tooltipHome = tooltip?.parentElement
   const tooltipTitle = tooltip?.querySelector<HTMLElement>("[data-location-title]")
@@ -269,6 +270,8 @@ const compactLocations = locations.map(({ lat, lng, title }) => [lat, lng, title
 
   if (canvas && markerCanvas && labelLayer && tooltip && tooltipTitle && tooltipCoordinates && tooltipCount && !canvas.dataset.initialized) {
     canvas.dataset.initialized = "true"
+    // Keep labels in the planet's coordinate system without clipping them at its circular edge.
+    if (crescent && labelLayer.parentElement !== crescent) crescent.append(labelLayer)
     const gl = canvas.getContext("webgl", { alpha: true, antialias: true })
     const markerContext = markerCanvas.getContext("2d")
     if (gl && markerContext) {

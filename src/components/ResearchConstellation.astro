@@ -83,9 +83,17 @@ const mobileStars = [
     transform: translate(-50%, 5px) scale(0.97);
   }
 
+  .paper-star-card::after {
+    content: "";
+    @apply absolute inset-x-0;
+    bottom: -0.55rem;
+    height: 0.55rem;
+  }
+
   .paper-star:hover .paper-star-card,
   .paper-star:focus-visible .paper-star-card,
   .paper-star[data-active="true"] .paper-star-card {
+    pointer-events: auto;
     opacity: 1;
     transform: translate(-50%, 0) scale(1);
   }
@@ -117,6 +125,11 @@ const mobileStars = [
     bottom: auto;
     top: calc(100% + 0.45rem);
     transform-origin: top center;
+  }
+
+  .paper-star[data-card-y="below"] .paper-star-card::after {
+    bottom: auto;
+    top: -0.55rem;
   }
 
   @media (max-width: 700px) {
