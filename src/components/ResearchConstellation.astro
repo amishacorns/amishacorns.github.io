@@ -56,7 +56,12 @@ const mobileStars = [
     @apply absolute inset-1.5 rounded-full border border-violet-100/25;
     transform: scale(0.72);
     transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
-    opacity: 0;
+    opacity: 0.38;
+  }
+
+  .paper-star[data-occluded="true"] {
+    pointer-events: none;
+    opacity: 0 !important;
   }
 
   .paper-star:hover,
@@ -132,33 +137,67 @@ const mobileStars = [
   if (constellation && !constellation.dataset.initialized) {
     constellation.dataset.initialized = "true"
     const paperStars = Array.from(constellation.querySelectorAll<HTMLAnchorElement>(".paper-star"))
+    const starField = document.querySelector<HTMLElement>(".site-star-field")
+    const planet = document.getElementById("planet")
     let positionFrame = 0
+    let occlusionFrame = 0
+
+    const updateEarthOcclusion = () => {
+      occlusionFrame = 0
+      if (!planet) return
+
+      const planetBounds = planet.getBoundingClientRect()
+      const radiusX = planetBounds.width / 2
+      const radiusY = planetBounds.height / 2
+      const centerX = planetBounds.left + radiusX
+      const centerY = planetBounds.top + radiusY
+
+      paperStars.forEach((star) => {
+        const x = Number(star.dataset.screenX)
+        const y = Number(star.dataset.screenY)
+        const insideEarth = radiusX > 0 && radiusY > 0
+          && ((x - centerX) / radiusX) ** 2 + ((y - centerY) / radiusY) ** 2 <= 1
+        star.dataset.occluded = String(insideEarth)
+      })
+    }
 
     const positionStars = () => {
       positionFrame = 0
       const mobile = window.innerWidth <= 700
       const imageWidth = mobile ? 563 : 1920
       const imageHeight = mobile ? 1020 : 1080
-      const scale = Math.max(window.innerWidth / imageWidth, window.innerHeight / imageHeight)
-      const offsetX = (window.innerWidth - imageWidth * scale) / 2
-      const offsetY = (window.innerHeight - imageHeight * scale) / 2
+      const fieldBounds = starField?.getBoundingClientRect()
+      const fieldWidth = fieldBounds?.width ?? window.innerWidth
+      const fieldHeight = fieldBounds?.height ?? window.innerHeight
+      const fieldLeft = fieldBounds?.left ?? 0
+      const fieldTop = fieldBounds?.top ?? 0
+      const scale = Math.max(fieldWidth / imageWidth, fieldHeight / imageHeight)
+      const offsetX = fieldLeft + (fieldWidth - imageWidth * scale) / 2
+      const offsetY = fieldTop + (fieldHeight - imageHeight * scale) / 2
 
       paperStars.forEach((star) => {
         const sourceX = Number(mobile ? star.dataset.mobileX : star.dataset.desktopX)
         const sourceY = Number(mobile ? star.dataset.mobileY : star.dataset.desktopY)
         const x = offsetX + sourceX * scale
         const y = offsetY + sourceY * scale
+        star.dataset.screenX = String(x)
+        star.dataset.screenY = String(y)
         star.style.setProperty("--paper-star-x", `${x - star.offsetWidth / 2}px`)
         star.style.setProperty("--paper-star-y", `${y - star.offsetHeight / 2}px`)
         star.dataset.cardX = x < 180 ? "start" : x > window.innerWidth - 180 ? "end" : "center"
         star.dataset.cardY = y < 150 ? "below" : "above"
       })
 
+      updateEarthOcclusion()
       constellation.classList.add("ready")
     }
 
     const schedulePosition = () => {
       if (!positionFrame) positionFrame = window.requestAnimationFrame(positionStars)
+    }
+
+    const scheduleOcclusion = () => {
+      if (!occlusionFrame) occlusionFrame = window.requestAnimationFrame(updateEarthOcclusion)
     }
 
     const coarsePointer = window.matchMedia("(hover: none)")
@@ -175,6 +214,7 @@ const mobileStars = [
       paperStars.forEach((star) => delete star.dataset.active)
     })
     window.addEventListener("resize", schedulePosition, { passive: true })
+    if (planet) window.addEventListener("scroll", scheduleOcclusion, { passive: true })
     schedulePosition()
   }
 </script>
