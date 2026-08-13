@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="940" viewBox="0 0 340 940" role="img" aria-labelledby="title desc">
+  <title id="title">From Apprentice Hierarchy to Agent Hierarchy</title>
+  <desc id="desc">A traditional research group routes a research direction through a professor and graduate researchers. An agentic research group routes the same direction through a lead model and specialized agents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101014"/><stop offset="1" stop-color="#070708"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#6d28d9"/></linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#64748b"/></marker>
+    <style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.title{fill:#f8fafc;font-size:18px;font-weight:650}.sub{fill:#94a3b8;font-size:12px}.era{fill:#a78bfa;font-size:11px;font-weight:700;letter-spacing:.07em}.node-title{fill:#fff;font-size:15px;font-weight:650;text-anchor:middle}.node-sub{fill:#d8dce7;font-size:12px;text-anchor:middle}.arrow{stroke:#64748b;stroke-width:2;fill:none;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect x="1" y="1" width="338" height="938" rx="20" fill="url(#bg)" stroke="#fff" stroke-opacity=".12"/>
+  <text x="20" y="29" class="title">From Apprentice Hierarchy</text>
+  <text x="20" y="50" class="title">to Agent Hierarchy</text>
+  <text x="20" y="72" class="sub">The structure survives when the labor becomes software.</text>
+
+  <text x="20" y="96" class="era">Human Research Group</text>
+  <rect x="40" y="114" width="260" height="58" rx="12" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".2"/><text x="170" y="140" class="node-title">Research Direction</text><text x="170" y="159" class="node-sub">A problem worth pursuing</text>
+  <path d="M170 172V196" class="arrow"/>
+  <rect x="40" y="201" width="260" height="58" rx="12" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".2"/><text x="170" y="227" class="node-title">Professor</text><text x="170" y="246" class="node-sub">Selects and supervises</text>
+  <path d="M170 259V283" class="arrow"/>
+  <rect x="40" y="288" width="260" height="64" rx="12" fill="url(#accent)"/><text x="170" y="316" class="node-title">Graduate Researchers</text><text x="170" y="337" class="node-sub">Execute and coordinate</text>
+  <path d="M170 352V376" class="arrow"/>
+  <rect x="40" y="381" width="260" height="58" rx="12" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".2"/><text x="170" y="407" class="node-title">Parallel Projects</text><text x="170" y="426" class="node-sub">Bound by trained headcount</text>
+
+  <line x1="20" y1="474" x2="320" y2="474" stroke="#fff" stroke-opacity=".12"/>
+  <text x="20" y="508" class="era">Agentic Research Group</text>
+  <rect x="40" y="526" width="260" height="58" rx="12" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".2"/><text x="170" y="552" class="node-title">Research Direction</text><text x="170" y="571" class="node-sub">A problem worth pursuing</text>
+  <path d="M170 584V608" class="arrow"/>
+  <rect x="40" y="613" width="260" height="58" rx="12" fill="url(#accent)"/><text x="170" y="639" class="node-title">Lead Model</text><text x="170" y="658" class="node-sub">Decomposes and supervises</text>
+  <path d="M170 671V695" class="arrow"/>
+  <rect x="40" y="700" width="260" height="64" rx="12" fill="url(#accent)"/><text x="170" y="728" class="node-title">Specialized Agents</text><text x="170" y="749" class="node-sub">Execute, check, and reproduce</text>
+  <path d="M170 764V788" class="arrow"/>
+  <rect x="40" y="793" width="260" height="58" rx="12" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".2"/><text x="170" y="819" class="node-title">Parallel Projects</text><text x="170" y="838" class="node-sub">Bound by inference and compute</text>
+
+  <text x="170" y="892" class="sub" text-anchor="middle">The scarce execution layer moves from</text><text x="170" y="910" class="sub" text-anchor="middle">trained people to machine intelligence.</text>
+</svg>

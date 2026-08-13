@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="520" viewBox="0 0 760 520" role="img" aria-labelledby="title desc">
+  <title id="title">A PhD Spans Five AI Generations</title>
+  <desc id="desc">A logarithmic chart normalizing AI capability per dollar to one in 2023, extending the reported tenfold annual cost trend to ten thousand in 2027, and showing continued, slowing, and immediate plateau scenarios through 2032.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101014"/><stop offset="1" stop-color="#070708"/></linearGradient>
+    <style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.title{fill:#f8fafc;font-size:25px;font-weight:600}.sub{fill:#94a3b8;font-size:14px}.axis{fill:#94a3b8;font-size:11px}.year{fill:#cbd5e1;font-size:11px;text-anchor:middle}.label{fill:#f8fafc;font-size:12px;font-weight:600}.note{fill:#94a3b8;font-size:11px}.grid{stroke:#fff;stroke-opacity:.1;stroke-width:1}.frame{stroke:#fff;stroke-opacity:.16;fill:none}.historical{stroke:#a78bfa;stroke-width:3;fill:none}.continued{stroke:#a78bfa;stroke-width:2.5;fill:none;stroke-dasharray:7 5}.slowing{stroke:#f8fafc;stroke-opacity:.8;stroke-width:2;fill:none}.plateau{stroke:#94a3b8;stroke-width:2;fill:none;stroke-dasharray:3 5}.human{stroke:#f8fafc;stroke-opacity:.8;stroke-width:2;fill:none}</style>
+  </defs>
+  <rect x="1" y="1" width="758" height="518" rx="24" fill="url(#bg)" stroke="#fff" stroke-opacity=".12"/>
+  <text x="42" y="48" class="title">A PhD Spans Five AI Generations</text>
+  <text x="42" y="73" class="sub">AI indexed to 1× in 2023; a human researcher is assumed to be 100K×.</text>
+
+  <text x="30" y="265" class="axis" text-anchor="middle" transform="rotate(-90 30 265)">Capability Per Dollar (2023 AI = 1×)</text>
+  <rect x="94" y="121" width="622" height="286" class="frame"/>
+  <g class="grid">
+    <line x1="94" y1="407" x2="716" y2="407"/><line x1="94" y1="343" x2="716" y2="343"/>
+    <line x1="94" y1="280" x2="716" y2="280"/><line x1="94" y1="216" x2="716" y2="216"/>
+    <line x1="94" y1="153" x2="716" y2="153"/><line x1="94" y1="121" x2="716" y2="121"/>
+  </g>
+  <g class="axis" text-anchor="end">
+    <text x="82" y="411">1×</text><text x="82" y="347">100×</text><text x="82" y="284">10K×</text>
+    <text x="82" y="220">1M×</text><text x="82" y="157">100M×</text><text x="82" y="125">1B×</text>
+  </g>
+
+  <line x1="372" y1="121" x2="372" y2="407" stroke="#fff" stroke-opacity=".22" stroke-width="1"/>
+  <text x="363" y="137" class="note" text-anchor="end">PhD Begins</text>
+
+  <path d="M104 407 L171 375 L238 343" class="historical"/>
+  <path d="M238 343 L305 312 L372 280" class="continued"/>
+  <path d="M372 280 L439 248 L506 216 L573 185 L640 153 L706 121" class="continued"/>
+  <path d="M372 280 L439 258 L506 239 L573 224 L640 214 L706 208" class="slowing"/>
+  <path d="M372 280 L439 280 L506 280 L573 280 L640 280 L706 280" class="plateau"/>
+  <path d="M104 248 L706 248" class="human"/>
+
+  <g fill="#a78bfa">
+    <circle cx="104" cy="407" r="4"/><circle cx="171" cy="375" r="4"/><circle cx="238" cy="343" r="4"/>
+  </g>
+  <g fill="#0b0b0e" stroke="#a78bfa" stroke-width="2"><circle cx="305" cy="312" r="4"/><circle cx="372" cy="280" r="4"/></g>
+  <g fill="#f8fafc">
+    <circle cx="439" cy="258" r="3"/><circle cx="506" cy="239" r="3"/><circle cx="573" cy="224" r="3"/><circle cx="640" cy="214" r="3"/><circle cx="706" cy="208" r="3"/>
+  </g>
+
+  <text x="699" y="111" class="label" text-anchor="end">1B× · Historical Pace</text>
+  <text x="699" y="200" class="label" text-anchor="end">1.8M× · Slowing</text>
+  <text x="699" y="272" class="label" text-anchor="end">10K× · Plateau</text>
+  <text x="699" y="240" class="label" text-anchor="end">100K× · Human Researcher</text>
+
+  <g class="year">
+    <text x="104" y="428">2023</text><text x="171" y="428">2024</text><text x="238" y="428">2025</text><text x="305" y="428">2026</text><text x="372" y="428">2027</text>
+    <text x="439" y="428">2028</text><text x="506" y="428">2029</text><text x="573" y="428">2030</text><text x="640" y="428">2031</text><text x="706" y="428">2032</text>
+  </g>
+
+  <path d="M372 447V454H706V447" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+  <text x="539" y="472" class="label" text-anchor="middle">Five-Year PhD · Roughly $300K</text>
+  <text x="380" y="500" class="note" text-anchor="middle">Historical cost trend [3]. Slowing case: 5×, 4×, 3×, 2×, and 1.5× annually. Illustrative projections.</text>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="850" viewBox="0 0 340 850" role="img" aria-labelledby="title desc">
+  <title id="title">The Unbundling of the University Lab</title>
+  <desc id="desc">Before AI, graduate researchers produced both education and research. After AI, universities produce educated researchers while compute-rich institutions produce research output.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101014"/><stop offset="1" stop-color="#070708"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#6d28d9"/></linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#64748b"/></marker>
+    <style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.title{fill:#f8fafc;font-size:19px;font-weight:650}.sub{fill:#94a3b8;font-size:12px}.era{fill:#64748b;font-size:12px;font-weight:700;letter-spacing:.12em}.box-title{fill:#fff;font-size:15px;font-weight:650;text-anchor:middle}.box-sub{fill:#d8dce7;font-size:12px;text-anchor:middle}.arrow{stroke:#64748b;stroke-width:2;fill:none;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect x="1" y="1" width="338" height="848" rx="20" fill="url(#bg)" stroke="#fff" stroke-opacity=".12"/>
+  <text x="20" y="37" class="title">The Unbundling of the University Lab</text><text x="20" y="59" class="sub">One institution used to produce two outputs.</text>
+  <text x="20" y="94" class="era">Before</text>
+  <rect x="70" y="112" width="200" height="58" rx="13" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".2"/><text x="170" y="138" class="box-title">University Lab</text><text x="170" y="157" class="box-sub">Capital + Professor</text>
+  <path d="M170 170V203" class="arrow"/><rect x="70" y="208" width="200" height="58" rx="13" fill="url(#accent)"/><text x="170" y="234" class="box-title">Graduate Researchers</text><text x="170" y="253" class="box-sub">Training + Execution</text>
+  <path d="M135 266V293H83V319" class="arrow"/><path d="M205 266V293H257V319" class="arrow"/>
+  <rect x="20" y="324" width="126" height="66" rx="12" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".2"/><text x="83" y="351" class="box-title">Educated</text><text x="83" y="370" class="box-title">Researchers</text>
+  <rect x="194" y="324" width="126" height="66" rx="12" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".2"/><text x="257" y="351" class="box-title">Research</text><text x="257" y="370" class="box-title">Output</text>
+  <line x1="20" y1="430" x2="320" y2="430" stroke="#fff" stroke-opacity=".12"/><text x="20" y="465" class="era">After</text>
+  <rect x="40" y="487" width="260" height="58" rx="13" fill="url(#accent)"/><text x="170" y="513" class="box-title">Universities</text><text x="170" y="532" class="box-sub">Education Infrastructure</text>
+  <path d="M170 545V578" class="arrow"/><rect x="60" y="583" width="220" height="54" rx="12" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".2"/><text x="170" y="616" class="box-title">Educated Researchers</text>
+  <rect x="40" y="678" width="260" height="62" rx="13" fill="url(#accent)"/><text x="170" y="705" class="box-title">Compute-Rich Institutions</text><text x="170" y="725" class="box-sub">Models + Tokens + Infrastructure</text>
+  <path d="M170 740V773" class="arrow"/><rect x="60" y="778" width="220" height="46" rx="12" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".2"/><text x="170" y="807" class="box-title">Research Output</text>
+</svg>
