@@ -2,6 +2,9 @@
 title: 'All Paths Lead to Superintelligence'
 date: 2025-02-12
 permalink: /posts/paths/
+topics:
+  - AI
+  - Ethics
 tags:
   - artificial intelligence
   - research

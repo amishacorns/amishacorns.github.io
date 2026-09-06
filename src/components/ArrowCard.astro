@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content"
 import { formatDate, truncateText } from "@lib/utils"
+import { tagHref } from "@lib/topics"
 
 interface Props {
   entry: CollectionEntry<"blog">
@@ -10,22 +11,29 @@ interface Props {
 const { entry, pill = false } = Astro.props
 ---
 
-<a href={entry.data.permalink} class="group flex items-center gap-3 rounded-lg border border-white/20 p-4 transition-colors duration-300 ease-in-out hover:bg-white/10">
+<div class="group relative flex items-center gap-3 rounded-lg border border-white/20 p-4 transition-colors duration-300 ease-in-out hover:bg-white/10">
   <div class="w-full blend group-hover:text-white">
     <div class="flex flex-wrap items-center gap-2">
       {pill && <div class="rounded-full border border-white/25 px-2 py-0.5 text-sm capitalize">post</div>}
       <div class="text-sm uppercase">{formatDate(entry.data.date)}</div>
     </div>
-    <div class="mt-3 line-clamp-2 font-semibold text-white">{entry.data.title}</div>
+    <h3 class="mt-3 font-semibold text-white"><a href={entry.data.permalink} class="card-link"><span class="line-clamp-2">{entry.data.title}</span></a></h3>
     <div class="line-clamp-2 text-sm">{entry.data.description}</div>
-    <ul class="mt-2 flex flex-wrap gap-1">
+    <ul class="mt-2 flex flex-wrap gap-1" aria-label="Tags">
       {entry.data.tags.map((tag) => (
-        <li class="rounded bg-white/20 px-2 py-0.5 text-xs uppercase text-white/75">{truncateText(tag, 20)}</li>
+        <li><a href={tagHref(tag)} class="tag-link relative z-10 inline-block rounded bg-white/20 px-2 py-0.5 text-xs uppercase text-white/75 transition-colors hover:bg-violet-300/20 hover:text-white" aria-label={`Browse transmissions tagged ${tag}`} title={tag}>{truncateText(tag, 20)}</a></li>
       ))}
     </ul>
   </div>
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="stroke-current group-hover:stroke-white">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="stroke-current group-hover:stroke-white" aria-hidden="true" focusable="false">
     <line x1="5" y1="12" x2="19" y2="12" class="translate-x-4 scale-x-0 transition-all duration-300 ease-in-out group-hover:translate-x-1 group-hover:scale-x-100"></line>
     <polyline points="12 5 19 12 12 19" class="translate-x-0 transition-all duration-300 ease-in-out group-hover:translate-x-1"></polyline>
   </svg>
-</a>
+</div>
+
+<style>
+  .card-link::after { content: ""; @apply absolute inset-0 rounded-lg; }
+  .card-link:focus-visible { outline: none; }
+  .card-link:focus-visible::after,
+  .tag-link:focus-visible { @apply outline outline-2 outline-offset-2 outline-violet-300; }
+</style>

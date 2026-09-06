@@ -2,6 +2,8 @@
 title: 'Ban the Boomerboard'
 date: 2026-06-19
 permalink: /posts/ban-the-boomer-board/
+topics:
+  - AI
 tags:
   - artificial intelligence
   - productivity

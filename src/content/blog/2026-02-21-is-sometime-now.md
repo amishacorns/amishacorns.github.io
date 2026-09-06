@@ -2,6 +2,9 @@
 title: 'Is Sometime Now?'
 date: 2026-02-21
 permalink: /posts/is-sometime-now/
+topics:
+  - AI
+  - Ethics
 tags:
   - artificial intelligence
   - philosophy

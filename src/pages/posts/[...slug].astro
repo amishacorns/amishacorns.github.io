@@ -6,6 +6,7 @@ import PageLayout from "@layouts/PageLayout.astro"
 import Container from "@components/Container.astro"
 import ArrowCard from "@components/ArrowCard.astro"
 import { formatDate, readingTime } from "@lib/utils"
+import { tagHref } from "@lib/topics"
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog")
@@ -79,8 +80,8 @@ if (related.length < 3) {
         </div>
         <h1>{title}</h1>
         <p>{description}</p>
-        <ul class="mt-5 flex flex-wrap gap-2">
-          {tags.map((tag) => <li>{tag}</li>)}
+        <ul class="mt-5 flex flex-wrap gap-2" aria-label="Tags">
+          {tags.map((tag) => <li><a class="article-tag" href={tagHref(tag)}>{tag}</a></li>)}
         </ul>
       </header>
 
@@ -131,7 +132,7 @@ if (related.length < 3) {
   .hero-art img { @apply block max-h-[620px] w-full object-contain; }
   .article-header h1 { @apply mt-3 text-3xl md:text-5xl font-semibold leading-tight text-white; }
   .article-header > p { @apply mt-4 max-w-2xl text-lg leading-relaxed text-white/55; }
-  .article-header li { @apply rounded-full bg-white/10 px-2.5 py-1 text-xs uppercase tracking-wide text-white/60; }
+  .article-tag { @apply inline-block rounded-full bg-white/10 px-2.5 py-1 text-xs uppercase tracking-wide text-white/60 transition-colors hover:bg-violet-300/20 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300; }
   .article-body { @apply mx-auto mt-14 max-w-3xl; }
   .prediction-ledger { @apply text-base leading-relaxed text-white/70; }
   .ledger-intro { @apply text-lg leading-relaxed text-white/75; }

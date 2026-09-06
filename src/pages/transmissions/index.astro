@@ -5,10 +5,12 @@ import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import { BLOG } from "@consts"
 import { formatDate } from "@lib/utils"
+import { TOPICS, tagHref } from "@lib/topics"
 
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort((a, b) => a.localeCompare(b))
 ---
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
@@ -22,36 +24,208 @@ const posts = (await getCollection("blog"))
     </div>
   </TopLayout>
   <BottomLayout>
-    <div class="animate grid gap-5 md:grid-cols-2">
-      {posts.map((post, index) => (
-        <a class:list={["transmission-card", index === 0 && "md:col-span-2 md:grid md:grid-cols-2"]} href={post.data.permalink}>
-          {post.data.header?.teaser && (
-            <div class:list={["transmission-image", index === 0 ? "md:aspect-[16/9]" : ""]}>
-              <img src={`/images/${post.data.header.teaser}`} alt="" loading="lazy" />
-            </div>
-          )}
-          <div class="p-5 md:p-6 flex flex-col justify-between">
-            <div>
-              <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.12em] text-white/40">
-                <span>{formatDate(post.data.date)}</span>
-                <span>·</span>
-                <span>{post.data.tags[0]}</span>
-              </div>
-              <h2 class:list={["mt-3 font-semibold text-white", index === 0 ? "text-2xl" : "text-xl"]}>{post.data.title}</h2>
-              <p class="mt-3 leading-relaxed text-white/55">{post.data.description}</p>
-            </div>
-            <span class="mt-6 text-sm text-violet-200/70">Read transmission →</span>
+    <div class="animate" data-archive>
+      <div class="archive-controls mb-8" data-controls hidden>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by topic">
+          <button type="button" class="topic-filter" data-topic="" aria-pressed="true" aria-controls="transmission-results">
+            All <span class="topic-count">{posts.length}</span>
+          </button>
+          {TOPICS.map((topic) => (
+            <button type="button" class="topic-filter" data-topic={topic.toLowerCase()} aria-pressed="false" aria-controls="transmission-results">
+              {topic} <span class="topic-count">{posts.filter((post) => post.data.topics.includes(topic)).length}</span>
+            </button>
+          ))}
+        </div>
+        <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
+          <div>
+            <label class="filter-label" for="transmission-search">Search</label>
+            <input class="filter-input" id="transmission-search" data-query type="search" placeholder="Search transmissions…" autocomplete="off" aria-controls="transmission-results" />
           </div>
-        </a>
-      ))}
+          <div>
+            <label class="filter-label" for="transmission-tag">Tag</label>
+            <select class="filter-input sm:min-w-48" id="transmission-tag" data-tag aria-controls="transmission-results">
+              <option value="">All tags</option>
+              {tags.map((tag) => <option value={tag.toLowerCase()}>{tag}</option>)}
+            </select>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
+          <p class="text-white/55" data-status role="status" aria-live="polite" aria-atomic="true">{posts.length} transmissions</p>
+          <button class="clear-filters" type="button" data-clear hidden>Clear filters</button>
+        </div>
+      </div>
+      <div id="transmission-results" class="grid gap-5 md:grid-cols-2">
+        {posts.map((post, index) => (
+          <div
+            class:list={["transmission-card", index === 0 && "is-featured"]}
+            data-post
+            data-topics={JSON.stringify(post.data.topics.map((topic) => topic.toLowerCase()))}
+            data-tags={JSON.stringify(post.data.tags.map((tag) => tag.toLowerCase()))}
+            data-search={[post.data.title, post.data.description, ...post.data.tags, ...post.data.topics].join(" ").toLowerCase()}
+          >
+            {post.data.header?.teaser && (
+              <div class="transmission-image">
+                <img src={"/images/" + post.data.header.teaser} alt="" loading="lazy" />
+              </div>
+            )}
+            <div class="p-5 md:p-6 flex flex-col justify-between">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.12em] text-white/40">
+                  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                  {post.data.topics.length > 0 && <><span>·</span><span>{post.data.topics.join(" · ")}</span></>}
+                </div>
+                <h2 class="mt-3 text-xl font-semibold text-white"><a class="post-link" href={post.data.permalink}>{post.data.title}</a></h2>
+                <p class="mt-3 leading-relaxed text-white/55">{post.data.description}</p>
+                <ul class="relative z-10 mt-4 flex w-fit flex-wrap gap-2" aria-label="Tags">
+                  {post.data.tags.map((tag) => <li><a class="tag-link" data-archive-tag={tag.toLowerCase()} href={tagHref(tag)}>{tag}</a></li>)}
+                </ul>
+              </div>
+              <span class="mt-6 text-sm text-violet-200/70" aria-hidden="true">Read transmission →</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="empty-state" data-empty hidden>
+        <h2 class="text-xl font-semibold text-white">No matching transmissions</h2>
+        <p class="mt-2 text-white/55">Try another topic, tag, or search term.</p>
+        <button class="clear-filters mt-5" type="button" data-reset>Show all transmissions</button>
+      </div>
     </div>
   </BottomLayout>
 </PageLayout>
 
+<script>
+  const root = document.querySelector<HTMLElement>("[data-archive]")!
+  const controls = root.querySelector<HTMLElement>("[data-controls]")!
+  const input = root.querySelector<HTMLInputElement>("[data-query]")!
+  const tagSelect = root.querySelector<HTMLSelectElement>("[data-tag]")!
+  const status = root.querySelector<HTMLElement>("[data-status]")!
+  const clear = root.querySelector<HTMLButtonElement>("[data-clear]")!
+  const empty = root.querySelector<HTMLElement>("[data-empty]")!
+  const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-topic]"))
+  const tagLinks = Array.from(root.querySelectorAll<HTMLAnchorElement>("[data-archive-tag]"))
+  const items = Array.from(root.querySelectorAll<HTMLElement>("[data-post]")).map((element) => ({
+    element,
+    topics: JSON.parse(element.dataset.topics!) as string[],
+    tags: JSON.parse(element.dataset.tags!) as string[],
+    search: element.dataset.search!,
+  }))
+  let topic = ""
+  let tag = ""
+
+  const filterURL = (selectedTag = tag) => {
+    const url = new URL(window.location.href)
+    for (const [key, value] of [["topic", topic], ["tag", selectedTag], ["q", input.value.trim()]]) {
+      if (value) url.searchParams.set(key, value)
+      else url.searchParams.delete(key)
+    }
+    return url
+  }
+
+  const render = () => {
+    const tokens = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean)
+    let count = 0
+    for (const item of items) {
+      const matches = (!topic || item.topics.includes(topic)) && (!tag || item.tags.includes(tag)) && tokens.every((token) => item.search.includes(token))
+      item.element.hidden = !matches
+      item.element.classList.toggle("is-featured", matches && count === 0)
+      if (matches) count++
+    }
+    for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.topic === topic))
+    for (const link of tagLinks) {
+      const url = filterURL(link.dataset.archiveTag)
+      link.href = url.pathname + url.search
+      if (link.dataset.archiveTag === tag) link.setAttribute("aria-current", "true")
+      else link.removeAttribute("aria-current")
+    }
+    const topicName = buttons.find((button) => button.dataset.topic === topic)?.firstChild?.textContent?.trim()
+    const context = [topic && topicName, tag && 'tagged “' + tag + '”', input.value.trim() && 'matching “' + input.value.trim() + '”'].filter(Boolean).join(" · ")
+    status.textContent = count + " of " + items.length + " transmission" + (items.length === 1 ? "" : "s") + (context ? " · " + context : "")
+    empty.hidden = count > 0
+    clear.hidden = !topic && !tag && !input.value
+  }
+
+  const update = (historyMode: "push" | "replace") => {
+    const url = filterURL()
+    if (url.href !== window.location.href) {
+      if (historyMode === "push") history.pushState(null, "", url)
+      else history.replaceState(null, "", url)
+    }
+    render()
+  }
+
+  const readURL = () => {
+    const params = new URLSearchParams(window.location.search)
+    const requestedTopic = params.get("topic")?.toLowerCase() ?? ""
+    topic = buttons.some((button) => button.dataset.topic === requestedTopic) ? requestedTopic : ""
+    tag = params.get("tag")?.toLowerCase() ?? ""
+    // Keep an unknown tag visible so an old or mistyped link has a clear empty state.
+    tagSelect.querySelector("[data-unknown-tag]")?.remove()
+    if (tag && !Array.from(tagSelect.options).some((option) => option.value === tag)) {
+      const option = new Option(tag, tag)
+      option.dataset.unknownTag = ""
+      tagSelect.add(option)
+    }
+    tagSelect.value = tag
+    input.value = params.get("q") ?? ""
+    render()
+  }
+
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    topic = button.dataset.topic!
+    update("push")
+  }))
+  tagSelect.addEventListener("change", () => {
+    tag = tagSelect.value
+    update("push")
+  })
+  input.addEventListener("input", () => update("replace"))
+  tagLinks.forEach((link) => link.addEventListener("click", (event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    event.preventDefault()
+    tag = link.dataset.archiveTag!
+    tagSelect.value = tag
+    update("push")
+  }))
+  const reset = () => {
+    topic = ""
+    tag = ""
+    input.value = ""
+    tagSelect.value = ""
+    update("push")
+    input.focus()
+  }
+  clear.addEventListener("click", reset)
+  root.querySelector("[data-reset]")!.addEventListener("click", reset)
+  window.addEventListener("popstate", readURL)
+  readURL()
+  controls.hidden = false
+</script>
+
 <style>
+  [hidden] { display: none !important; }
   .rss-link { @apply inline-flex rounded-full border border-violet-200/25 bg-violet-300/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-violet-100/75 transition-colors hover:border-violet-200/50 hover:bg-violet-300/10 hover:text-white; }
-  .transmission-card { @apply overflow-hidden rounded-2xl border border-white/15 bg-white/[0.025] hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.055] transition-all duration-300; }
+  .topic-filter { @apply inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.025] px-4 py-2 text-sm text-white/65 transition-colors hover:border-violet-200/40 hover:text-white; }
+  .topic-filter[aria-pressed="true"] { @apply border-violet-300/60 bg-violet-300/15 text-violet-100; }
+  .topic-count { @apply text-xs opacity-60; }
+  .filter-label { @apply mb-2 block text-xs uppercase tracking-[0.12em] text-white/50; }
+  .filter-input { @apply min-h-11 w-full rounded-lg border border-white/15 bg-black/60 px-3 py-2 text-sm text-white/80 placeholder:text-white/35; }
+  .clear-filters { @apply text-violet-200 underline decoration-violet-300/30 underline-offset-4 hover:decoration-violet-200; }
+  .transmission-card { @apply relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.025] hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.055] transition-all duration-300; }
+  .transmission-card.is-featured { @apply md:col-span-2 md:grid md:grid-cols-2; }
+  .transmission-card.is-featured h2 { @apply text-2xl; }
   .transmission-image { @apply aspect-[16/10] overflow-hidden border-b border-white/10 bg-white/5; }
+  .is-featured .transmission-image { @apply md:aspect-[16/9]; }
   .transmission-image img { @apply h-full w-full object-cover opacity-75 grayscale-[10%] transition duration-500; }
   .transmission-card:hover img { @apply scale-[1.025] opacity-100 grayscale-0; }
+  .post-link::after { content: ""; @apply absolute inset-0; }
+  .post-link:focus-visible { outline: none; }
+  .post-link:focus-visible::after { @apply rounded-2xl outline outline-2 -outline-offset-4 outline-violet-200; }
+  .tag-link { @apply inline-block rounded border border-white/10 px-2 py-1 text-xs text-white/60 transition-colors hover:border-violet-300/40 hover:text-violet-100; }
+  .tag-link[aria-current] { @apply border-violet-300/50 text-violet-100; }
+  .empty-state { @apply rounded-2xl border border-white/15 px-6 py-14 text-center; }
+  button:focus-visible, input:focus-visible, select:focus-visible, .tag-link:focus-visible, .rss-link:focus-visible { @apply outline outline-2 outline-offset-4 outline-violet-200; }
+  @media (prefers-reduced-motion: reduce) {
+    .transmission-card, .transmission-image img { transition: none; transform: none; }
+  }
 </style>

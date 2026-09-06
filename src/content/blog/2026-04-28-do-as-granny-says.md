@@ -2,6 +2,10 @@
 title: 'Should We Do as Granny Says?'
 date: 2026-04-28
 permalink: /posts/granny/
+topics:
+  - Ethics
+  - AI
+  - Consciousness
 tags:
   - artificial intelligence
   - philosophy

@@ -2,6 +2,8 @@
 title: 'The Human Paradox'
 date: 2026-08-02 12:00:00 -0700
 permalink: /posts/the-human-paradox/
+topics:
+  - Consciousness
 redirect_from:
   - /posts/why-are-you-human/
 excerpt: |
