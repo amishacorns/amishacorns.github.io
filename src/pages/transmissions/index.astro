@@ -33,7 +33,7 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
             </button>
           ))}
         </div>
-        <p class="text-xs text-white/55" data-status role="status" aria-live="polite" aria-atomic="true">{posts.length} transmissions</p>
+        <p class="sr-only" data-status role="status" aria-live="polite" aria-atomic="true"></p>
       </div>
       <div id="transmission-results" class="grid gap-5 md:grid-cols-2">
         {posts.map((post, index) => (
