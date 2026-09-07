@@ -11,12 +11,6 @@ export const BLOG = {
   DESCRIPTION: "Writing on machine intelligence, agents, scientific progress, and the transition to superintelligence.",
 }
 
-// Search Page
-export const SEARCH = {
-  TITLE: "Search",
-  DESCRIPTION: "Search all transmissions by keyword.",
-}
-
 // Links
 export const LINKS = [
   { 
