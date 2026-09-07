@@ -18,13 +18,7 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
   <TopLayout>
-    <div class="animate max-w-2xl">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <h1 class="text-4xl font-semibold text-white">Transmissions</h1>
-        <a class="rss-link" href="/rss.xml">RSS Feed ↗</a>
-      </div>
-      <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/55">{BLOG.DESCRIPTION}</p>
-    </div>
+    <h1 class="animate text-4xl font-semibold text-white">Transmissions</h1>
   </TopLayout>
   <BottomLayout>
     <div class="animate" data-archive>
@@ -140,7 +134,6 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
 
 <style>
   [hidden] { display: none !important; }
-  .rss-link { @apply inline-flex rounded-full border border-violet-200/25 bg-violet-300/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-violet-100/75 transition-colors hover:border-violet-200/50 hover:bg-violet-300/10 hover:text-white; }
   .tag-filter { @apply inline-flex min-h-7 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.025] px-2.5 py-1 text-xs leading-4 text-white/65 transition-colors hover:border-violet-200/40 hover:text-white; }
   .tag-filter[aria-pressed="true"] { @apply border-violet-300/60 bg-violet-300/15 text-violet-100; }
   .tag-count { @apply text-[10px] leading-none opacity-60; }
@@ -151,7 +144,7 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
   .is-featured .transmission-image { @apply md:aspect-[16/9]; }
   .transmission-image img { @apply h-full w-full object-cover opacity-75 grayscale-[10%] transition duration-500; }
   .transmission-card:hover img { @apply scale-[1.025] opacity-100 grayscale-0; }
-  button:focus-visible, .transmission-card:focus-visible, .rss-link:focus-visible { @apply outline outline-2 outline-offset-4 outline-violet-200; }
+  button:focus-visible, .transmission-card:focus-visible { @apply outline outline-2 outline-offset-4 outline-violet-200; }
   @media (prefers-reduced-motion: reduce) {
     .transmission-card, .transmission-image img { transition: none; transform: none; }
   }
