@@ -2,12 +2,10 @@
 title: 'All Paths Lead to Superintelligence'
 date: 2025-02-12
 permalink: /posts/paths/
-topics:
-  - AI
-  - Ethics
 tags:
   - artificial intelligence
   - research
+  - ethics
 description: "As superintelligence approaches, the fastest path to progress in every field begins to run through artificial intelligence."
 header:
   teaser: "critical-superintelligence-v2.png"

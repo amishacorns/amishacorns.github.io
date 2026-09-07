@@ -2,13 +2,11 @@
 title: 'Should We Do as Granny Says?'
 date: 2026-04-28
 permalink: /posts/granny/
-topics:
-  - Ethics
-  - AI
-  - Consciousness
 tags:
   - artificial intelligence
   - philosophy
+  - ethics
+  - consciousness
 description: "Human values should be a place for superintelligence to begin, not a place for moral discovery to stop."
 header:
   teaser: "granny-family.jpg"

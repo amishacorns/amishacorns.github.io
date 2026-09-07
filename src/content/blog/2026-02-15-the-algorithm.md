@@ -2,8 +2,6 @@
 title: 'The Algorithm'
 date: 2026-02-15
 permalink: /posts/the-algorithm/
-topics:
-  - AI
 tags:
   - artificial intelligence
   - philosophy

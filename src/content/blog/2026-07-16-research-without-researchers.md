@@ -2,8 +2,6 @@
 title: 'Research Without Researchers'
 date: 2026-07-16
 permalink: /posts/research-without-researchers/
-topics:
-  - AI
 tags:
   - artificial intelligence
   - research

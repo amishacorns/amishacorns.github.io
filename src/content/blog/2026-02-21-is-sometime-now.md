@@ -2,12 +2,10 @@
 title: 'Is Sometime Now?'
 date: 2026-02-21
 permalink: /posts/is-sometime-now/
-topics:
-  - AI
-  - Ethics
 tags:
   - artificial intelligence
   - philosophy
+  - ethics
 description: "Every scientific field eventually produces knowledge too dangerous to distribute freely, and artificial intelligence may bring many of those limits at once."
 header:
   teaser: "is-sometime-now.jpg"

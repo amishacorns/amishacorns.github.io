@@ -5,15 +5,15 @@ import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
 import { BLOG } from "@consts"
 import { formatDate } from "@lib/utils"
-import { TOPICS, getPostTopics } from "@lib/topics"
 
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .map((post) => ({ ...post, topics: getPostTopics(post.data.topics) }))
-const availableTopics = TOPICS
-  .map((topic) => ({ topic, count: posts.filter((post) => post.topics.includes(topic)).length }))
-  .filter(({ count }) => count > 0)
+  .map((post) => ({ ...post, tags: [...new Set(post.data.tags.map((tag) => tag.toLowerCase()))] }))
+const availableTags = [...new Set([...posts.flatMap((post) => post.tags), "health", "ethics"])]
+  .sort((a, b) => a.localeCompare(b))
+  .map((tag) => ({ tag, count: posts.filter((post) => post.tags.includes(tag)).length }))
+const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
 ---
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
@@ -29,13 +29,13 @@ const availableTopics = TOPICS
   <BottomLayout>
     <div class="animate" data-archive>
       <div class="mb-6 flex flex-wrap items-center justify-between gap-4" data-controls hidden>
-        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by topic">
-          <button type="button" class="topic-filter" data-topic="" data-label="All" aria-pressed="true" aria-controls="transmission-results">
-            All <span class="topic-count">{posts.length}</span>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by tag">
+          <button type="button" class="tag-filter" data-tag="" data-label="All" aria-pressed="true" aria-controls="transmission-results">
+            All <span class="tag-count">{posts.length}</span>
           </button>
-          {availableTopics.map(({ topic, count }) => (
-            <button type="button" class="topic-filter" data-topic={topic.toLowerCase()} data-label={topic} aria-pressed="false" aria-controls="transmission-results">
-              {topic} <span class="topic-count">{count}</span>
+          {availableTags.map(({ tag, count }) => (
+            <button type="button" class="tag-filter" data-tag={tag} data-label={tagLabel(tag)} aria-pressed="false" aria-controls="transmission-results">
+              {tagLabel(tag)} <span class="tag-count">{count}</span>
             </button>
           ))}
         </div>
@@ -47,7 +47,7 @@ const availableTopics = TOPICS
             class:list={["transmission-card", index === 0 && "is-featured"]}
             href={post.data.permalink}
             data-post
-            data-topics={JSON.stringify(post.topics.map((topic) => topic.toLowerCase()))}
+            data-tags={JSON.stringify(post.tags)}
           >
             {post.data.header?.teaser && (
               <div class="transmission-image">
@@ -59,7 +59,7 @@ const availableTopics = TOPICS
                 <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.12em] text-white/40">
                   <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
                   <span>·</span>
-                  <span>{post.topics.join(" · ")}</span>
+                  <span>{post.tags.map(tagLabel).join(" · ")}</span>
                 </div>
                 <h2 class="mt-3 text-xl font-semibold text-white">{post.data.title}</h2>
                 <p class="mt-3 leading-relaxed text-white/55">{post.data.description}</p>
@@ -69,7 +69,10 @@ const availableTopics = TOPICS
           </a>
         ))}
       </div>
-      {posts.length === 0 && <p class="py-12 text-center text-white/55">No transmissions yet.</p>}
+      <div class="rounded-2xl border border-white/15 px-6 py-12 text-center" data-empty hidden>
+        <p class="text-white/65">No published transmissions with this tag yet.</p>
+        <button class="mt-4 text-sm text-violet-200 underline underline-offset-4" type="button" data-reset>Show all transmissions</button>
+      </div>
     </div>
   </BottomLayout>
 </PageLayout>
@@ -78,18 +81,19 @@ const availableTopics = TOPICS
   const root = document.querySelector<HTMLElement>("[data-archive]")!
   const controls = root.querySelector<HTMLElement>("[data-controls]")!
   const status = root.querySelector<HTMLElement>("[data-status]")!
-  const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-topic]"))
+  const empty = root.querySelector<HTMLElement>("[data-empty]")!
+  const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-tag]"))
   const items = Array.from(root.querySelectorAll<HTMLElement>("[data-post]")).map((element) => ({
     element,
-    topics: JSON.parse(element.dataset.topics!) as string[],
+    tags: JSON.parse(element.dataset.tags!) as string[],
   }))
-  let topic = ""
+  let tag = ""
 
   const filterURL = () => {
     const url = new URL(window.location.href)
-    if (topic) url.searchParams.set("topic", topic)
-    else url.searchParams.delete("topic")
-    url.searchParams.delete("tag")
+    if (tag) url.searchParams.set("tag", tag)
+    else url.searchParams.delete("tag")
+    url.searchParams.delete("topic")
     url.searchParams.delete("q")
     return url
   }
@@ -97,30 +101,38 @@ const availableTopics = TOPICS
   const render = () => {
     let count = 0
     for (const item of items) {
-      const matches = !topic || item.topics.includes(topic)
+      const matches = !tag || item.tags.includes(tag)
       item.element.hidden = !matches
       item.element.classList.toggle("is-featured", matches && count === 0)
       if (matches) count++
     }
-    for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.topic === topic))
-    const label = buttons.find((button) => button.dataset.topic === topic)!.dataset.label
-    status.textContent = count + " transmission" + (count === 1 ? "" : "s") + (topic ? " · " + label : "")
+    for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.tag === tag))
+    const label = buttons.find((button) => button.dataset.tag === tag)!.dataset.label
+    status.textContent = count + " transmission" + (count === 1 ? "" : "s") + (tag ? " · " + label : "")
+    empty.hidden = count > 0
   }
 
   const readURL = () => {
-    const requestedTopic = new URLSearchParams(window.location.search).get("topic")?.toLowerCase() ?? ""
-    topic = buttons.some((button) => button.dataset.topic === requestedTopic) ? requestedTopic : ""
+    const params = new URLSearchParams(window.location.search)
+    let requestedTag = (params.get("tag") ?? params.get("topic") ?? "").toLowerCase()
+    if (requestedTag === "ai") requestedTag = "artificial intelligence"
+    tag = buttons.some((button) => button.dataset.tag === requestedTag) ? requestedTag : ""
     const url = filterURL()
     if (url.href !== window.location.href) history.replaceState(null, "", url)
     render()
   }
 
-  buttons.forEach((button) => button.addEventListener("click", () => {
-    topic = button.dataset.topic!
+  const selectTag = (selected: string) => {
+    tag = selected
     const url = filterURL()
     if (url.href !== window.location.href) history.pushState(null, "", url)
     render()
-  }))
+  }
+  buttons.forEach((button) => button.addEventListener("click", () => selectTag(button.dataset.tag!)))
+  root.querySelector("[data-reset]")!.addEventListener("click", () => {
+    selectTag("")
+    buttons[0].focus()
+  })
   window.addEventListener("popstate", readURL)
   readURL()
   controls.hidden = false
@@ -129,9 +141,9 @@ const availableTopics = TOPICS
 <style>
   [hidden] { display: none !important; }
   .rss-link { @apply inline-flex rounded-full border border-violet-200/25 bg-violet-300/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-violet-100/75 transition-colors hover:border-violet-200/50 hover:bg-violet-300/10 hover:text-white; }
-  .topic-filter { @apply inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.025] px-4 py-2 text-sm text-white/65 transition-colors hover:border-violet-200/40 hover:text-white; }
-  .topic-filter[aria-pressed="true"] { @apply border-violet-300/60 bg-violet-300/15 text-violet-100; }
-  .topic-count { @apply text-xs opacity-60; }
+  .tag-filter { @apply inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.025] px-4 py-2 text-sm text-white/65 transition-colors hover:border-violet-200/40 hover:text-white; }
+  .tag-filter[aria-pressed="true"] { @apply border-violet-300/60 bg-violet-300/15 text-violet-100; }
+  .tag-count { @apply text-xs opacity-60; }
   .transmission-card { @apply relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.025] hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.055] transition-all duration-300; }
   .transmission-card.is-featured { @apply md:col-span-2 md:grid md:grid-cols-2; }
   .transmission-card.is-featured h2 { @apply text-2xl; }

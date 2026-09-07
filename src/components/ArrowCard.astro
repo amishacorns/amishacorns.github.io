@@ -13,7 +13,7 @@ const { entry } = Astro.props
   <div class="w-full blend group-hover:text-white">
     <div class="flex flex-wrap items-center gap-2">
       <time class="text-sm uppercase" datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
-      {entry.data.topics.length > 0 && <><span aria-hidden="true">·</span><span class="text-xs uppercase text-white/55">{entry.data.topics.join(" · ")}</span></>}
+      {entry.data.tags.length > 0 && <><span aria-hidden="true">·</span><span class="text-xs uppercase text-white/55">{entry.data.tags.join(" · ")}</span></>}
     </div>
     <h3 class="mt-3 font-semibold text-white"><a href={entry.data.permalink} class="card-link"><span class="line-clamp-2">{entry.data.title}</span></a></h3>
     <div class="line-clamp-2 text-sm">{entry.data.description}</div>
