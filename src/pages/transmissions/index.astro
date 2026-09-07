@@ -28,8 +28,8 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
   </TopLayout>
   <BottomLayout>
     <div class="animate" data-archive>
-      <div class="mb-6 flex flex-wrap items-center justify-between gap-4" data-controls hidden>
-        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by tag">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3" data-controls hidden>
+        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Filter by tag">
           <button type="button" class="tag-filter" data-tag="" data-label="All" aria-pressed="true" aria-controls="transmission-results">
             All <span class="tag-count">{posts.length}</span>
           </button>
@@ -39,7 +39,7 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
             </button>
           ))}
         </div>
-        <p class="text-sm text-white/55" data-status role="status" aria-live="polite" aria-atomic="true">{posts.length} transmissions</p>
+        <p class="text-xs text-white/55" data-status role="status" aria-live="polite" aria-atomic="true">{posts.length} transmissions</p>
       </div>
       <div id="transmission-results" class="grid gap-5 md:grid-cols-2">
         {posts.map((post, index) => (
@@ -141,9 +141,9 @@ const tagLabel = (tag: string) => tag.split(" ").map((word) => word.charAt(0).to
 <style>
   [hidden] { display: none !important; }
   .rss-link { @apply inline-flex rounded-full border border-violet-200/25 bg-violet-300/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-violet-100/75 transition-colors hover:border-violet-200/50 hover:bg-violet-300/10 hover:text-white; }
-  .tag-filter { @apply inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.025] px-4 py-2 text-sm text-white/65 transition-colors hover:border-violet-200/40 hover:text-white; }
+  .tag-filter { @apply inline-flex min-h-7 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.025] px-2.5 py-1 text-xs leading-4 text-white/65 transition-colors hover:border-violet-200/40 hover:text-white; }
   .tag-filter[aria-pressed="true"] { @apply border-violet-300/60 bg-violet-300/15 text-violet-100; }
-  .tag-count { @apply text-xs opacity-60; }
+  .tag-count { @apply text-[10px] leading-none opacity-60; }
   .transmission-card { @apply relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.025] hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.055] transition-all duration-300; }
   .transmission-card.is-featured { @apply md:col-span-2 md:grid md:grid-cols-2; }
   .transmission-card.is-featured h2 { @apply text-2xl; }
