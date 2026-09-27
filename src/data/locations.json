@@ -633,5 +633,20 @@
     "lat": 3.139,
     "lng": 101.6869,
     "title": "Kuala Lumpur, Malaysia"
+  },
+  {
+    "lat": 55.9533,
+    "lng": -3.1883,
+    "title": "Edinburgh, Scotland, UK"
+  },
+  {
+    "lat": 57.2736,
+    "lng": -6.2155,
+    "title": "Isle of Skye, Scotland, UK"
+  },
+  {
+    "lat": 53.3498,
+    "lng": -6.2603,
+    "title": "Dublin, Ireland"
   }
 ]
